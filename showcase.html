@@ -210,14 +210,51 @@ function drawStem(ctx, cx, cy, baseScale) {
     const [tx2, ty2, tz2] = transform(wob, (t2-0.5)*4, 0);
     const [sx1, sy1, , f1] = project(tx1, ty1, tz1, cx, cy, baseScale);
     const [sx2, sy2, , f2] = project(tx2, ty2, tz2, cx, cy, baseScale);
-    const alpha = Math.max(0.1, Math.min(0.6, (tz1+FOV)/(FOV*2)));
+    const alpha = Math.max(0.15, Math.min(0.7, (tz1+FOV)/(FOV*2)));
     ctx.beginPath();
     ctx.moveTo(sx1, sy1);
     ctx.lineTo(sx2, sy2);
-    ctx.strokeStyle = `rgba(200,220,255,${alpha*0.35})`;
-    ctx.lineWidth = (0.05 - t1*0.025) * baseScale * (f1+f2)/2;
+    ctx.strokeStyle = `rgba(200,220,255,${alpha*0.55})`;
+    ctx.lineWidth = Math.max(0.5, (0.06 - t1*0.03) * baseScale * (f1+f2)/2);
     ctx.stroke();
   }
+}
+
+// 画叶子
+function drawLeaf(ctx, cx, cy, baseScale, leafY, leafAngle, leafSize) {
+  const [lx, ly, lz] = transform(Math.cos(leafAngle)*0.08, leafY, Math.sin(leafAngle)*0.08);
+  if (lz < -FOV*0.3) return;
+  const [sx, sy, , f] = project(lx, ly, lz, cx, cy, baseScale);
+  const alpha = Math.max(0.2, Math.min(0.8, f * 1.2));
+  const s = baseScale * f * leafSize;
+
+  ctx.save();
+  ctx.translate(sx, sy);
+  ctx.rotate(leafAngle);
+
+  // 叶子形状
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.bezierCurveTo(s*0.5, s*0.2, s*0.8, s*0.8, s*0.3, s*1.5);
+  ctx.bezierCurveTo(0, s*1.8, -s*0.3, s*1.5, -s*0.8, s*0.8);
+  ctx.bezierCurveTo(-s*0.5, s*0.2, 0, 0, 0, 0);
+
+  const grd = ctx.createLinearGradient(0, 0, 0, s*1.5);
+  grd.addColorStop(0, `rgba(180,210,255,${alpha})`);
+  grd.addColorStop(0.5, `rgba(150,195,240,${alpha*0.8})`);
+  grd.addColorStop(1, `rgba(100,160,220,${alpha*0.5})`);
+  ctx.fillStyle = grd;
+  ctx.fill();
+
+  // 叶脉
+  ctx.beginPath();
+  ctx.moveTo(0, s*0.1);
+  ctx.lineTo(0, s*1.4);
+  ctx.strokeStyle = `rgba(255,255,255,${alpha*0.4})`;
+  ctx.lineWidth = s*0.08;
+  ctx.stroke();
+
+  ctx.restore();
 }
 
 // 生成玫瑰花瓣数据（层层螺旋）
@@ -378,6 +415,12 @@ function drawRose() {
 
   // 茎
   drawStem(roseCtx, cx, cy, baseScale);
+
+  // 叶子
+  drawLeaf(roseCtx, cx, cy, baseScale, -0.3, 0.4, 1.2);
+  drawLeaf(roseCtx, cx, cy, baseScale, -0.6, -0.5, 1.0);
+  drawLeaf(roseCtx, cx, cy, baseScale, -0.9, 0.6, 0.9);
+  drawLeaf(roseCtx, cx, cy, baseScale, -1.2, -0.3, 0.8);
 
   // 花瓣排序（按深度，远到近）
   const sorted = allPetals.map(p => {

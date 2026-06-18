@@ -99,7 +99,7 @@ function drawStars() {
   const W = starCanvas.width, H = starCanvas.height;
   for (const n of nebula) {
     const g = starCtx.createRadialGradient(n.x*W, n.y*H, 0, n.x*W, n.y*H, n.size);
-    g.addColorStop(0, `hsla(${n.hue},50%,25%,${n.opacity})`);
+    g.addColorStop(0, `hsla(${n.hue},40%,10%,${n.opacity})`);
     g.addColorStop(1, 'transparent');
     starCtx.fillStyle = g;
     starCtx.fillRect(0, 0, W, H);
@@ -108,7 +108,7 @@ function drawStars() {
     const tw = Math.sin(st * s.speed * 60 + s.phase);
     starCtx.beginPath();
     starCtx.arc(s.x*W, s.y*H, s.size, 0, Math.PI*2);
-    starCtx.fillStyle = `rgba(220,225,255,${s.opacity*(0.5+0.5*tw)})`;
+    starCtx.fillStyle = `rgba(180,185,210,${s.opacity*(0.3+0.2*tw)})`;
     starCtx.fill();
   }
 }

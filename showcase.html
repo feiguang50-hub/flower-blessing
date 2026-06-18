@@ -109,21 +109,23 @@ function buildRose(){
     }
   }
 
-  // 花苞（竖立，几乎不张开）
-  ring(5,  0.000, 0.14, 0.14, 0.040, 0.05, 0, 0.28, 0);
-  ring(6,  0.038, 0.12, 0.18, 0.052, 0.12, 1, 0.26, 0.52);
-  ring(7,  0.072, 0.09, 0.22, 0.064, 0.20, 2, 0.24, 0.18);
-  // 内层（开始张开）
-  ring(8,  0.110, 0.06, 0.27, 0.076, 0.32, 3, 0.22, 0.36);
-  ring(10, 0.155, 0.02, 0.33, 0.090, 0.46, 4, 0.20, 0.08);
-  // 中层（接近水平）
-  ring(11, 0.208,-0.03, 0.40, 0.104, 0.62, 5, 0.18, 0.24);
-  ring(12, 0.268,-0.09, 0.46, 0.116, 0.78, 6, 0.16, 0.06);
-  // 外层（下垂）
-  ring(13, 0.335,-0.17, 0.52, 0.126, 0.97, 7, 0.15, 0.14);
-  ring(12, 0.405,-0.27, 0.56, 0.134, 1.20, 8, 0.13, -0.22);
-  // 萼片
-  ring(5,  0.460,-0.36, 0.50, 0.108, 1.50, 9, 0.12, 0.38);
+  // 玫瑰花瓣结构：内层包拢，外层微张，螺旋错开
+  // 思路：层少、片少、宽短、内收
+  // 花苞（基本竖立，只有微小缝隙）
+  ring(5,  0.000, 0.14, 0.10, 0.065, 0.04, 0, 0.30, 0.0);
+  ring(6,  0.032, 0.13, 0.13, 0.078, 0.09, 1, 0.28, 0.52);
+  ring(7,  0.060, 0.11, 0.16, 0.092, 0.16, 2, 0.26, 0.18);
+  // 内层（微微张开，像半开玫瑰）
+  ring(7,  0.095, 0.08, 0.20, 0.108, 0.28, 3, 0.24, 0.36);
+  ring(8,  0.135, 0.04, 0.24, 0.120, 0.40, 4, 0.22, 0.08);
+  // 中层（正常张开，不要垂）
+  ring(8,  0.180, 0.00, 0.28, 0.130, 0.55, 5, 0.20, 0.24);
+  ring(9,  0.230,-0.05, 0.32, 0.138, 0.68, 6, 0.18, 0.06);
+  // 外层（略垂但不过分）
+  ring(9,  0.288,-0.12, 0.36, 0.142, 0.80, 7, 0.16, 0.14);
+  ring(8,  0.348,-0.20, 0.38, 0.140, 0.90, 8, 0.14, -0.22);
+  // 萼片（外翻但不过度）
+  ring(5,  0.400,-0.28, 0.32, 0.110, 1.20, 9, 0.12, 0.38);
 
   return P;
 }
@@ -184,64 +186,54 @@ function petalRGB(layer){
   return [155,188,248];
 }
 
+// 花瓣形状：菱形宽瓣 + bezier弧边
+// left/right是花瓣最宽处的中点（非尖端）
 function drawPetal(p, cx, cy, sc){
   var pts = getPetalPoints(p);
 
-  // 基部投影
   var pb  = pj(pts.base,  cx,cy,sc);
   var pt  = pj(pts.tip,   cx,cy,sc);
   var pl  = pj(pts.left,  cx,cy,sc);
   var pr2 = pj(pts.right, cx,cy,sc);
-  var plc1= pj(pts.lc1,   cx,cy,sc);
-  var plc2= pj(pts.lc2,   cx,cy,sc);
-  var prc1= pj(pts.rc1,   cx,cy,sc);
-  var prc2= pj(pts.rc2,   cx,cy,sc);
-  var plt = pj(pts.ltip,  cx,cy,sc);
-  var prt = pj(pts.rtip,  cx,cy,sc);
 
-  // 深度：用基部f值
-  var f = pb[2];
-  if(f <= 0) return;
-  var depth = Math.max(0, Math.min(1,(f-0.5)/1.0));
+  if(pb[2]<=0 || pt[2]<=0) return;
 
-  // alpha — 彻底保守，不超过0.30
-  var baseA = p.baseAlpha * (0.7 + depth*0.3);
-  baseA = Math.min(0.30, baseA);
+  var f = Math.max(0, Math.min(1,(pb[2]-0.5)/1.0));
+  var baseA = Math.min(0.30, p.baseAlpha * (0.7 + f*0.3));
 
-  // 颜色
   var rgb = petalRGB(p.layer);
   var R=rgb[0],G=rgb[1],B=rgb[2];
 
-  // 渐变：基部→顶端（用真实屏幕坐标）
+  // 沿花瓣长度方向做渐变（基部→尖端）
   var grd = rCtx.createLinearGradient(pb[0],pb[1], pt[0],pt[1]);
   grd.addColorStop(0,   'rgba('+R+','+G+','+B+','+baseA.toFixed(3)+')');
-  grd.addColorStop(0.4, 'rgba('+R+','+G+','+B+','+(baseA*0.72).toFixed(3)+')');
-  grd.addColorStop(0.75,'rgba('+R+','+G+','+B+','+(baseA*0.40).toFixed(3)+')');
-  grd.addColorStop(1,   'rgba('+R+','+G+','+B+','+(baseA*0.12).toFixed(3)+')');
+  grd.addColorStop(0.45,'rgba('+R+','+G+','+B+','+(baseA*0.78).toFixed(3)+')');
+  grd.addColorStop(0.80,'rgba('+R+','+G+','+B+','+(baseA*0.45).toFixed(3)+')');
+  grd.addColorStop(1,   'rgba('+R+','+G+','+B+','+(baseA*0.10).toFixed(3)+')');
 
-  // 花瓣路径：base → 左弧 → 左翼顶 → tip → 右翼顶 → 右弧 → base
+  // 花瓣路径：左半翼→尖端→右半翼→回基部
+  // 左半翼：base → 左翼顶(最宽) → 尖端
   rCtx.beginPath();
-  rCtx.moveTo(pb[0],pb[1]);
-  rCtx.bezierCurveTo(plc1[0],plc1[1], plc2[0],plc2[1], pl[0],pl[1]);
-  rCtx.bezierCurveTo(plt[0],plt[1], pt[0],pt[1], pt[0],pt[1]);
-  rCtx.bezierCurveTo(prt[0],prt[1], pr2[0],pr2[1], pr2[0],pr2[1]);  // 修正：右翼到基部
-  rCtx.bezierCurveTo(prc2[0],prc2[1], prc1[0],prc1[1], pb[0],pb[1]);
+  rCtx.moveTo(pb[0], pb[1]);
+  rCtx.quadraticCurveTo(pl[0]*0.80 + pb[0]*0.20, pl[1]*0.80 + pb[1]*0.20, pl[0], pl[1]);
+  rCtx.quadraticCurveTo(pt[0]*0.55 + pl[0]*0.45, pt[1]*0.55 + pl[1]*0.45, pt[0], pt[1]);
+  // 右半翼：尖端 → 右翼顶 → 回基部
+  rCtx.quadraticCurveTo(pt[0]*0.55 + pr2[0]*0.45, pt[1]*0.55 + pr2[1]*0.45, pr2[0], pr2[1]);
+  rCtx.quadraticCurveTo(pr2[0]*0.80 + pb[0]*0.20, pr2[1]*0.80 + pb[1]*0.20, pb[0], pb[1]);
+  rCtx.closePath();
   rCtx.fillStyle = grd;
   rCtx.fill();
 
-  // 中脉（仅近处）
-  if(depth > 0.25){
-    var midV = pj(tr(
-      pts.base[0]*0.5+pts.tip[0]*0.5,
-      pts.base[1]*0.5+pts.tip[1]*0.5,
-      pts.base[2]*0.5+pts.tip[2]*0.5
-    ), cx,cy,sc);
+  // 中脉（近处可见）
+  if(f > 0.28){
+    var mx=(pb[0]+pt[0])/2, my=(pb[1]+pt[1])/2;
     rCtx.beginPath();
     rCtx.moveTo(pb[0],pb[1]);
-    rCtx.lineTo(midV[0],midV[1]);
-    rCtx.strokeStyle='rgba(255,255,255,'+(depth*0.15).toFixed(3)+')';
-    rCtx.lineWidth=Math.max(0.3,f*sc*0.004);
-    rCtx.lineCap='round'; rCtx.stroke();
+    rCtx.lineTo(pt[0],pt[1]);
+    rCtx.strokeStyle='rgba(255,255,255,'+(f*0.12).toFixed(3)+')';
+    rCtx.lineWidth=Math.max(0.3, f*sc*0.004);
+    rCtx.lineCap='round';
+    rCtx.stroke();
   }
 }
 

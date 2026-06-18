@@ -7,15 +7,17 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* === 通用样式 === */
+/* === 通用 === */
 :root {
-  --bg: #0a0a14;
-  --card-bg: rgba(255,255,255,0.03);
+  --bg: #080810;
+  --card-bg: rgba(255,255,255,0.035);
+  --card-bg-hover: rgba(255,255,255,0.055);
   --border: rgba(255,255,255,0.07);
+  --border-active: rgba(167,139,250,0.45);
   --text: #e8e4f0;
-  --text-dim: #666;
+  --text-dim: #555;
   --accent: #a78bfa;
-  --accent-bg: rgba(167,139,250,0.12);
+  --accent-bg: rgba(167,139,250,0.10);
 }
 
 body {
@@ -26,179 +28,207 @@ body {
   overflow-x: hidden;
 }
 
-/* === 背景光效 === */
-.ambient { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; overflow: hidden; }
+/* === 背景 === */
+.ambient { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
 .orb {
-  position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.12;
-  animation: float 12s ease-in-out infinite alternate;
+  position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.10;
+  animation: orb-float 14s ease-in-out infinite alternate;
 }
-.orb:nth-child(1) { width: 500px; height: 500px; background: #7c3aed; top: -150px; left: -150px; }
-.orb:nth-child(2) { width: 400px; height: 400px; background: #0ea5e9; top: 50%; right: -150px; animation-delay: -4s; }
-.orb:nth-child(3) { width: 450px; height: 450px; background: #f59e0b; bottom: -150px; left: 30%; animation-delay: -8s; }
-@keyframes float {
-  0% { transform: translate(0,0) scale(1); }
-  100% { transform: translate(40px,30px) scale(1.08); }
+.orb:nth-child(1) { width: 600px; height: 600px; background: radial-gradient(circle,#7c3aed,#4c1d95); top: -200px; left: -200px; }
+.orb:nth-child(2) { width: 500px; height: 500px; background: radial-gradient(circle,#0369a1,#0c4a6e); top: 20%; right: -200px; animation-delay: -5s; }
+.orb:nth-child(3) { width: 550px; height: 550px; background: radial-gradient(circle,#b45309,#78350f); bottom: -200px; left: 25%; animation-delay: -10s; }
+@keyframes orb-float {
+  0% { transform: translate(0,0) scale(1) rotate(0deg); }
+  100% { transform: translate(50px,30px) scale(1.1) rotate(5deg); }
+}
+
+/* === 花瓣飘落 === */
+.petal-container {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 1; overflow: hidden;
+}
+.petal {
+  position: absolute; opacity: 0;
+  animation: petal-fall linear infinite;
+}
+@keyframes petal-fall {
+  0% { opacity: 0; transform: translateY(-20px) rotate(0deg) translateX(0); }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.6; }
+  100% { opacity: 0; transform: translateY(105vh) rotate(360deg) translateX(60px); }
 }
 
 /* === 顶部 === */
 header {
-  padding: 28px 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  position: relative; z-index: 10;
+  padding: 24px 40px;
+  display: flex; justify-content: space-between; align-items: center;
   border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(12px);
-  position: sticky; top: 0; z-index: 50;
-  background: rgba(10,10,20,0.85);
+  backdrop-filter: blur(16px);
+  background: rgba(8,8,16,0.80);
 }
-.logo { font-size: 17px; letter-spacing: 3px; font-weight: 600; }
+.logo { font-size: 16px; letter-spacing: 4px; font-weight: 600; }
 .header-tag {
-  font-size: 11px; color: var(--accent); background: var(--accent-bg);
-  padding: 5px 14px; border-radius: 20px;
-  border: 1px solid rgba(167,139,250,0.25);
+  font-size: 10px; color: var(--accent); background: var(--accent-bg);
+  padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(167,139,250,0.2);
+  letter-spacing: 1px;
 }
 
-/* === 步骤导航 === */
+/* === 步骤 === */
 .steps {
-  display: flex; justify-content: center; gap: 0; padding: 40px 20px 30px;
+  position: relative; z-index: 10;
+  display: flex; justify-content: center; align-items: center;
+  padding: 36px 20px 28px; gap: 0;
 }
-.step {
-  display: flex; align-items: center; gap: 8px;
-  font-size: 13px; color: #444; padding: 0 20px;
-}
+.step { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #3a3a4a; padding: 0 18px; }
 .step-num {
-  width: 26px; height: 26px; border-radius: 50%;
-  border: 1px solid #333; display: flex; align-items: center; justify-content: center;
-  font-size: 12px;
+  width: 24px; height: 24px; border-radius: 50%;
+  border: 1px solid #2a2a3a; display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
 }
 .step.active { color: var(--accent); }
 .step.active .step-num { border-color: var(--accent); background: var(--accent-bg); color: var(--accent); }
-.step.done { color: #888; }
-.step.done .step-num { border-color: #444; background: rgba(255,255,255,0.05); color: #666; }
-.step-arrow { color: #333; font-size: 18px; }
+.step.done { color: #555; }
+.step.done .step-num { border-color: #333; background: rgba(255,255,255,0.03); color: #555; }
+.step-arrow { color: #2a2a3a; font-size: 16px; }
 
-/* === 表单容器 === */
+/* === 主容器 === */
 .container {
-  max-width: 680px; margin: 0 auto; padding: 10px 20px 80px;
+  position: relative; z-index: 10;
+  max-width: 680px; margin: 0 auto; padding: 0 20px 80px;
 }
 .section-label {
-  font-size: 11px; color: var(--text-dim); letter-spacing: 4px; text-transform: uppercase;
-  margin-bottom: 20px; padding-left: 4px;
+  font-size: 10px; color: var(--text-dim); letter-spacing: 4px; text-transform: uppercase;
+  margin-bottom: 16px; padding-left: 4px;
 }
 
 /* === 输入框 === */
-.field { margin-bottom: 28px; }
-.field-title { font-size: 14px; margin-bottom: 12px; color: #ccc; }
+.field { margin-bottom: 24px; }
+.field-title { font-size: 13px; margin-bottom: 10px; color: #aaa; }
 .text-input {
   width: 100%; background: var(--card-bg); border: 1px solid var(--border);
-  border-radius: 12px; padding: 16px 20px; font-size: 16px; color: #fff;
+  border-radius: 12px; padding: 14px 18px; font-size: 15px; color: #fff;
   outline: none; transition: border-color 0.3s;
 }
 .text-input:focus { border-color: rgba(167,139,250,0.4); }
-.text-input::placeholder { color: #444; }
-.textarea-input { resize: none; height: 100px; line-height: 1.6; }
+.text-input::placeholder { color: #3a3a4a; }
+.textarea-input { resize: none; height: 90px; line-height: 1.7; }
 
-/* === 选项卡片网格 === */
+/* === 选项网格 === */
 .options-grid {
-  display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px;
+  margin-bottom: 8px;
 }
 .opt-card {
   background: var(--card-bg); border: 1px solid var(--border);
-  border-radius: 14px; padding: 18px 16px; cursor: pointer;
-  transition: border-color 0.25s, transform 0.2s;
-  display: flex; flex-direction: column; gap: 6px;
+  border-radius: 14px; padding: 16px 14px; cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+  display: flex; flex-direction: column; gap: 5px;
 }
-.opt-card:hover { border-color: rgba(167,139,250,0.25); transform: translateY(-2px); }
-.opt-card.selected { border-color: var(--accent); background: var(--accent-bg); }
-.opt-card:active { transform: scale(0.98); }
+.opt-card:hover { background: var(--card-bg-hover); transform: translateY(-2px); }
+.opt-card.selected { border-color: var(--border-active); background: var(--accent-bg); }
+.opt-card:active { transform: scale(0.97); }
 
-.opt-name { font-size: 15px; font-weight: 600; color: #ddd; }
-.opt-desc { font-size: 12px; color: #666; }
+.opt-name { font-size: 14px; font-weight: 600; color: #ddd; }
+.opt-desc { font-size: 11px; color: #666; }
 .opt-check {
-  width: 18px; height: 18px; border-radius: 50%; border: 2px solid #444;
+  width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid #444;
   margin-top: 4px; align-self: flex-end;
   display: flex; align-items: center; justify-content: center;
   transition: border-color 0.2s, background 0.2s;
 }
 .opt-card.selected .opt-check { border-color: var(--accent); background: var(--accent); }
-.opt-card.selected .opt-check::after {
-  content: '✓'; font-size: 10px; color: #fff;
+.opt-card.selected .opt-check::after { content: '✓'; font-size: 9px; color: #fff; }
+
+/* 花材预览 */
+.material-preview {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 4px;
+}
+.material-dot {
+  width: 22px; height: 22px; border-radius: 50%;
+  box-shadow: 0 0 8px currentColor;
+  flex-shrink: 0;
 }
 
-/* 花材预览圆点 */
-.material-dot {
-  width: 24px; height: 24px; border-radius: 50%;
-  box-shadow: 0 0 8px currentColor;
+/* 花材形状预览 */
+.shape-preview { margin-bottom: 6px; display: flex; justify-content: center; }
+.shape-icon {
+  width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
 }
+.shape-icon svg { width: 100%; height: 100%; }
 
 /* === 按钮 === */
 .btn-primary {
-  width: 100%; padding: 18px; border: none; border-radius: 14px;
+  width: 100%; padding: 16px; border: none; border-radius: 14px;
   background: linear-gradient(135deg, #7c3aed, #5b21b6);
-  color: #fff; font-size: 16px; font-weight: 600; cursor: pointer;
-  letter-spacing: 2px; margin-top: 10px;
+  color: #fff; font-size: 15px; font-weight: 600; cursor: pointer;
+  letter-spacing: 2px; margin-top: 8px;
   transition: transform 0.15s, box-shadow 0.15s;
-  box-shadow: 0 4px 20px rgba(124,58,237,0.3);
+  box-shadow: 0 4px 24px rgba(124,58,237,0.25);
 }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(124,58,237,0.4); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(124,58,237,0.35); }
 .btn-primary:active { transform: scale(0.98); }
 .btn-secondary {
-  width: 100%; padding: 14px; border: 1px solid var(--border);
-  border-radius: 14px; background: transparent; color: #888;
-  font-size: 14px; cursor: pointer; margin-top: 12px;
+  width: 100%; padding: 13px; border: 1px solid var(--border);
+  border-radius: 14px; background: transparent; color: #666;
+  font-size: 13px; cursor: pointer; margin-top: 10px;
   transition: border-color 0.2s, color 0.2s;
 }
-.btn-secondary:hover { border-color: #555; color: #aaa; }
+.btn-secondary:hover { border-color: #444; color: #999; }
 
 /* === 预览区 === */
 .preview-box {
   background: var(--card-bg); border: 1px solid var(--border);
-  border-radius: 20px; padding: 30px 24px; margin-top: 30px;
+  border-radius: 20px; padding: 28px 20px; margin-top: 28px;
   text-align: center; position: relative; overflow: hidden;
 }
 .preview-box::before {
-  content: ''; position: absolute; top: -60%; left: -60%;
-  width: 220%; height: 220%;
-  background: radial-gradient(circle, rgba(167,139,250,0.04) 0%, transparent 55%);
-  animation: pulse-bg 8s ease-in-out infinite alternate;
+  content: ''; position: absolute; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(167,139,250,0.04) 0%, transparent 50%);
+  animation: preview-pulse 8s ease-in-out infinite alternate;
+  pointer-events: none;
 }
-@keyframes pulse-bg {
-  0% { opacity: 0.4; transform: scale(1); }
-  100% { opacity: 1; transform: scale(1.05); }
+@keyframes preview-pulse {
+  0% { opacity: 0.3; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.06); }
 }
-.preview-label { font-size: 11px; color: var(--text-dim); letter-spacing: 3px; margin-bottom: 20px; }
+.preview-label { font-size: 10px; color: var(--text-dim); letter-spacing: 3px; margin-bottom: 16px; position: relative; }
 .preview-blessing {
-  font-size: 24px; color: #fff; margin-bottom: 28px;
-  text-shadow: 0 0 25px rgba(167,139,250,0.25);
-  position: relative;
+  font-size: 22px; color: #fff; margin-bottom: 24px;
+  text-shadow: 0 0 30px rgba(167,139,250,0.20);
+  position: relative; line-height: 1.4;
 }
-.preview-flowers { display: flex; justify-content: center; gap: 20px; margin-bottom: 24px; flex-wrap: wrap; position: relative; }
-.mini-flower { width: 50px; height: 70px; position: relative; }
+.preview-flowers {
+  display: flex; justify-content: center; gap: 16px;
+  margin-bottom: 20px; flex-wrap: wrap; position: relative;
+}
+.mini-flower { position: relative; }
+
 .mini-petal {
   position: absolute; left: 50%; transform: translateX(-50%);
-  width: 26px; height: 40px;
-  clip-path: polygon(50% 0%, 100% 30%, 85% 100%, 15% 100%, 0% 30%);
-  box-shadow: 0 0 12px currentColor;
-}
-.mini-center {
-  position: absolute; width: 12px; height: 12px;
-  border-radius: 50%; top: 22px; left: 50%; transform: translateX(-50%);
   box-shadow: 0 0 10px currentColor;
 }
+
+.mini-center {
+  position: absolute; border-radius: 50%;
+  box-shadow: 0 0 8px currentColor;
+}
+
 .preview-vase {
-  width: 48px; height: 42px; margin: 0 auto;
-  background: linear-gradient(180deg, rgba(200,180,150,0.55), rgba(140,110,70,0.35));
-  border-radius: 4px 4px 14px 14px; position: relative;
+  width: 52px; height: 44px; margin: 0 auto;
+  background: linear-gradient(180deg, rgba(210,190,160,0.55), rgba(150,120,80,0.35));
+  border-radius: 4px 4px 16px 16px; position: relative;
 }
 .preview-vase-text {
   font-size: 6px; color: rgba(80,60,40,0.65); text-align: center;
   padding-top: 10px; font-family: Georgia, serif; line-height: 1.3;
 }
-.preview-meta { font-size: 11px; color: rgba(255,255,255,0.25); margin-top: 16px; position: relative; }
-.preview-material-tag {
-  display: inline-block; font-size: 10px; padding: 3px 10px;
-  border-radius: 10px; background: rgba(255,255,255,0.05);
-  color: #888; margin-top: 12px; position: relative;
+.preview-meta { font-size: 11px; color: rgba(255,255,255,0.20); margin-top: 14px; position: relative; }
+.preview-tags { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 10px; position: relative; }
+.preview-tag {
+  font-size: 10px; padding: 3px 10px; border-radius: 10px;
+  background: rgba(255,255,255,0.04); color: #777;
 }
 
 /* === 步骤面板 === */
@@ -206,57 +236,64 @@ header {
 .panel.active { display: block; }
 
 /* === 结果页 === */
-.result-page {
-  text-align: center; padding: 40px 20px;
-}
-.result-icon {
-  font-size: 48px; margin-bottom: 20px;
-}
-.result-title { font-size: 22px; margin-bottom: 10px; }
-.result-desc { font-size: 14px; color: #888; margin-bottom: 30px; line-height: 1.7; }
+.result-page { text-align: center; padding: 40px 20px; position: relative; }
+.result-icon { font-size: 44px; margin-bottom: 18px; }
+.result-title { font-size: 20px; margin-bottom: 8px; }
+.result-desc { font-size: 13px; color: #777; margin-bottom: 28px; line-height: 1.7; }
 .result-url-box {
   background: var(--card-bg); border: 1px solid var(--border);
-  border-radius: 12px; padding: 16px 20px; margin-bottom: 20px;
+  border-radius: 12px; padding: 14px 16px; margin-bottom: 18px;
   display: flex; gap: 10px; align-items: center;
 }
-.result-url {
-  flex: 1; font-size: 13px; color: var(--accent); word-break: break-all;
-  text-align: left;
-}
+.result-url { flex: 1; font-size: 12px; color: var(--accent); word-break: break-all; text-align: left; }
 .copy-btn {
-  padding: 8px 16px; border: 1px solid var(--border);
-  border-radius: 8px; background: transparent; color: #aaa;
-  font-size: 13px; cursor: pointer; white-space: nowrap;
+  padding: 7px 14px; border: 1px solid var(--border); border-radius: 8px;
+  background: transparent; color: #888; font-size: 12px; cursor: pointer; white-space: nowrap;
   transition: border-color 0.2s, color 0.2s;
 }
 .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
 .copy-btn.copied { border-color: #86efac; color: #86efac; }
-.result-tip { font-size: 12px; color: #555; line-height: 1.8; }
-.result-tip span { color: #777; }
+.result-tip { font-size: 11px; color: #444; line-height: 1.8; }
+.result-tip span { color: #666; }
 
 /* === 分割线 === */
-.divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 30px 0; }
+.divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 28px 0; }
+
+/* === 音乐控制 === */
+.bgm-hint {
+  text-align: center; font-size: 11px; color: #444; margin-top: 16px;
+  position: relative;
+}
+
+/* === 视图页增强 === */
+.view-page {
+  position: relative; z-index: 10; text-align: center;
+  padding: 60px 20px 40px;
+}
+.view-page .preview-box { margin-top: 0; }
 
 /* === 响应式 === */
 @media (max-width: 600px) {
-  header { padding: 20px; }
-  .steps { padding: 28px 16px 24px; gap: 0; }
-  .step { padding: 0 10px; font-size: 12px; }
-  .container { padding: 10px 16px 60px; }
-  .options-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .opt-card { padding: 14px 12px; }
-  .preview-blessing { font-size: 20px; }
-  .preview-flowers { gap: 14px; }
+  header { padding: 18px 20px; }
+  .steps { padding: 28px 12px 22px; gap: 0; }
+  .step { padding: 0 8px; }
+  .options-grid { grid-template-columns: repeat(2, 1fr); }
+  .preview-blessing { font-size: 19px; }
+  .preview-flowers { gap: 12px; }
 }
 </style>
 </head>
 <body>
 
+<!-- 背景 -->
 <div class="ambient">
   <div class="orb"></div>
   <div class="orb"></div>
   <div class="orb"></div>
 </div>
+
+<!-- 花瓣飘落 -->
+<div class="petal-container" id="petalContainer"></div>
 
 <header>
   <div class="logo">FLOWER</div>
@@ -264,77 +301,69 @@ header {
 </header>
 
 <!-- 步骤导航 -->
-<div class="steps" id="stepNav">
-  <div class="step active" id="s1">
-    <div class="step-num">1</div>
-    <span>填写信息</span>
-  </div>
+<div class="steps">
+  <div class="step active" id="step1"><div class="step-num">1</div><span>填写信息</span></div>
   <div class="step-arrow">›</div>
-  <div class="step" id="s2">
-    <div class="step-num">2</div>
-    <span>选择样式</span>
-  </div>
+  <div class="step" id="step2"><div class="step-num">2</div><span>选择样式</span></div>
   <div class="step-arrow">›</div>
-  <div class="step" id="s3">
-    <div class="step-num">3</div>
-    <span>生成链接</span>
-  </div>
+  <div class="step" id="step3"><div class="step-num">3</div><span>生成链接</span></div>
 </div>
 
 <div class="container">
 
-  <!-- ========== 步骤1：填写信息 ========== -->
+  <!-- ========== 步骤1 ========== -->
   <div class="panel active" id="panel1">
     <div class="section-label">Step 1 · 收礼人信息</div>
-
     <div class="field">
-      <div class="field-title">祝福语（可选）</div>
+      <div class="field-title">祝福语</div>
       <input class="text-input" id="blessingInput" placeholder="如：愿你如星般璀璨" maxlength="50">
     </div>
-
     <div class="field">
       <div class="field-title">收礼人姓名</div>
       <input class="text-input" id="nameInput" placeholder="如：小琳">
     </div>
-
     <div class="field">
       <div class="field-title">日期</div>
-      <input class="text-input" id="dateInput" type="date" style="color:#fff;">
+      <input class="text-input" id="dateInput" type="date">
     </div>
-
     <div class="field">
       <div class="field-title">送礼人（可选）</div>
       <input class="text-input" id="fromInput" placeholder="如：爱你的家人">
     </div>
-
     <button class="btn-primary" onclick="goStep(2)">下一步 ›</button>
   </div>
 
-  <!-- ========== 步骤2：选择样式 ========== -->
+  <!-- ========== 步骤2 ========== -->
   <div class="panel" id="panel2">
     <div class="section-label">Step 2 · 选择花材</div>
     <div class="options-grid" id="materialGrid"></div>
 
     <div class="divider"></div>
+    <div class="section-label">选择形态</div>
+    <div class="options-grid" id="shapeGrid"></div>
+
+    <div class="divider"></div>
     <div class="section-label">选择排布</div>
     <div class="options-grid" id="arrangeGrid"></div>
 
-    <div class="preview-box" id="previewBox">
+    <div class="preview-box">
       <div class="preview-label">PREVIEW</div>
       <div class="preview-blessing" id="previewBlessing">愿你如星般璀璨</div>
       <div class="preview-flowers" id="previewFlowers"></div>
       <div class="preview-vase">
         <div class="preview-vase-text" id="previewVaseText">收礼人姓名</div>
       </div>
-      <div class="preview-meta" id="previewMeta">YYYY.MM.DD</div>
-      <div class="preview-material-tag" id="previewTag">紫水晶 · Amethyst</div>
+      <div class="preview-meta" id="previewMeta"></div>
+      <div class="preview-tags" id="previewTags"></div>
     </div>
+
+    <div class="bgm-hint" id="bgmHint">背景音乐功能开发中</div>
 
     <button class="btn-primary" onclick="generateLink()">生成专属链接</button>
     <button class="btn-secondary" onclick="goStep(1)">‹ 上一步</button>
   </div>
 
-  <!-- ========== 步骤3：生成链接 ========== -->
+  <!-- ========== 步骤3 ========== -->
   <div class="panel" id="panel3">
     <div class="result-page">
       <div class="result-icon">🌸</div>
@@ -363,39 +392,59 @@ let state = {
   date: '',
   from: '',
   material: 'amethyst',
+  shape: 'round',
   arrangement: 'hemisphere',
 };
 
+// ========== 花瓣飘落 ==========
+function startPetals() {
+  const container = document.getElementById('petalContainer');
+  if (!container || container.children.length > 0) return;
+  const colors = ['#c084fc','#7dd3fc','#fde68a','#f9a8d4','#86efac','#fda4af','#e0f2fe'];
+  for (let i = 0; i < 12; i++) {
+    const petal = document.createElement('div');
+    petal.className = 'petal';
+    const size = 8 + Math.random() * 8;
+    petal.innerHTML = `<svg width="${size}" height="${size}" viewBox="0 0 10 10">
+      <ellipse cx="5" cy="5" rx="4" ry="5" fill="${colors[i % colors.length]}" opacity="0.7"/>
+    </svg>`;
+    petal.style.left = Math.random() * 100 + '%';
+    petal.style.animationDuration = (6 + Math.random() * 6) + 's';
+    petal.style.animationDelay = (Math.random() * 8) + 's';
+    container.appendChild(petal);
+  }
+}
+
 // ========== 初始化 ==========
 function init() {
-  // 读取 URL 参数（如果有）
   const params = new URLSearchParams(window.location.search);
   if (params.has('n')) { renderViewPage(params); return; }
 
-  // 渲染选项
   renderMaterialOptions();
+  renderShapeOptions();
   renderArrangeOptions();
 
-  // 日期默认今天
   const today = new Date().toISOString().split('T')[0];
   document.getElementById('dateInput').value = today;
 
-  // 实时预览
   document.getElementById('blessingInput').addEventListener('input', updatePreview);
   document.getElementById('nameInput').addEventListener('input', updatePreview);
   document.getElementById('dateInput').addEventListener('change', updatePreview);
   document.getElementById('fromInput').addEventListener('input', updatePreview);
 
   updatePreview();
+  startPetals();
 }
 
-// ========== 渲染花材选项 ==========
+// ========== 花材选项 ==========
 function renderMaterialOptions() {
   const grid = document.getElementById('materialGrid');
   grid.innerHTML = CONFIG.materials.map(m => `
     <div class="opt-card${m.value === state.material ? ' selected' : ''}" onclick="selectMaterial('${m.value}')">
-      <div class="material-dot" style="background: linear-gradient(135deg, ${m.color1}, ${m.color2}); color: ${m.color1}"></div>
-      <div class="opt-name">${m.label}</div>
+      <div class="material-preview">
+        <div class="material-dot" style="background: linear-gradient(135deg, ${m.color1}, ${m.color2}); color: ${m.glow}"></div>
+        <div class="opt-name">${m.label}</div>
+      </div>
       <div class="opt-desc">${m.labelEn}</div>
       <div class="opt-check"></div>
     </div>
@@ -408,7 +457,40 @@ function selectMaterial(val) {
   updatePreview();
 }
 
-// ========== 渲染排布选项 ==========
+// ========== 形态选项 ==========
+const SHAPE_ICONS = {
+  round: `<svg viewBox="0 0 40 40"><ellipse cx="20" cy="12" rx="7" ry="10" fill="currentColor" opacity="0.8"/><ellipse cx="30" cy="18" rx="7" ry="10" fill="currentColor" opacity="0.7" transform="rotate(60 20 20)"/><ellipse cx="26" cy="30" rx="7" ry="10" fill="currentColor" opacity="0.6" transform="rotate(120 20 20)"/><ellipse cx="14" cy="30" rx="7" ry="10" fill="currentColor" opacity="0.6" transform="rotate(-120 20 20)"/><ellipse cx="10" cy="18" rx="7" ry="10" fill="currentColor" opacity="0.7" transform="rotate(-60 20 20)"/><ellipse cx="20" cy="20" rx="5" ry="5" fill="currentColor"/></svg>`,
+  tulip: `<svg viewBox="0 0 40 50"><path d="M20 5 Q30 20 25 35 Q20 40 15 35 Q10 20 20 5Z" fill="currentColor" opacity="0.8"/><path d="M12 15 Q5 28 10 42 Q15 48 20 42 Q18 30 18 20Z" fill="currentColor" opacity="0.6"/><path d="M28 15 Q35 28 30 42 Q25 48 20 42 Q22 30 22 20Z" fill="currentColor" opacity="0.6"/></svg>`,
+  rose: `<svg viewBox="0 0 40 50"><ellipse cx="20" cy="18" rx="14" ry="12" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.5"/><ellipse cx="20" cy="16" rx="10" ry="9" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.6"/><ellipse cx="20" cy="15" rx="6" ry="6" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.7"/><ellipse cx="20" cy="14" rx="3" ry="3" fill="currentColor" opacity="0.8"/></svg>`,
+  carnation: `<svg viewBox="0 0 40 50"><circle cx="20" cy="20" r="14" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2,3" opacity="0.5"/><circle cx="20" cy="18" r="10" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2,3" opacity="0.6"/><circle cx="20" cy="17" r="6" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2,3" opacity="0.7"/><circle cx="20" cy="16" r="3" fill="currentColor" opacity="0.8"/></svg>`,
+};
+
+function renderShapeOptions() {
+  const grid = document.getElementById('shapeGrid');
+  grid.innerHTML = CONFIG.shapes.map(s => `
+    <div class="opt-card${s.value === state.shape ? ' selected' : ''}" onclick="selectShape('${s.value}')">
+      <div class="shape-preview" style="color: ${getMaterialColor()}">
+        ${SHAPE_ICONS[s.value]}
+      </div>
+      <div class="opt-name">${s.label}</div>
+      <div class="opt-desc">${s.desc}</div>
+      <div class="opt-check"></div>
+    </div>
+  `).join('');
+}
+
+function selectShape(val) {
+  state.shape = val;
+  renderShapeOptions();
+  updatePreview();
+}
+
+function getMaterialColor() {
+  const m = CONFIG.materials.find(x => x.value === state.material);
+  return m ? m.glow : '#c084fc';
+}
+
+// ========== 排布选项 ==========
 function renderArrangeOptions() {
   const grid = document.getElementById('arrangeGrid');
   grid.innerHTML = CONFIG.arrangements.map(a => `
@@ -433,48 +515,72 @@ function updatePreview() {
   state.date = document.getElementById('dateInput').value;
   state.from = document.getElementById('fromInput').value;
 
-  const mat = CONFIG.materials.find(m => m.value === state.material);
-  const arr = CONFIG.arrangements.find(a => a.value === state.arrangement);
+  const mat = CONFIG.materials.find(m => m.value === state.material) || CONFIG.materials[0];
+  const shape = CONFIG.shapes.find(s => s.value === state.shape) || CONFIG.shapes[0];
+  const arr = CONFIG.arrangements.find(a => a.value === state.arrangement) || CONFIG.arrangements[0];
 
   document.getElementById('previewBlessing').textContent = state.blessing;
   document.getElementById('previewVaseText').textContent = state.from ? state.name + ' · ' + state.from : state.name;
   document.getElementById('previewMeta').textContent = state.date ? state.date.replace(/-/g, '.') : '';
-  document.getElementById('previewTag').textContent = mat ? `${mat.label} · ${mat.labelEn}` : '';
+  document.getElementById('previewTags').innerHTML = `
+    <span class="preview-tag">${mat.label} · ${mat.labelEn}</span>
+    <span class="preview-tag">${shape.label}</span>
+    <span class="preview-tag">${arr.label}</span>
+  `;
 
-  // 渲染花朵
-  renderPreviewFlowers(mat, arr);
+  renderPreviewFlowers(mat, shape, arr);
+  renderShapeOptions(); // refresh shape colors
 }
 
-function renderPreviewFlowers(mat, arr) {
+function renderPreviewFlowers(mat, shape, arr) {
   const container = document.getElementById('previewFlowers');
-  const count = arr && arr.value === 'horizontal' ? 6 : arr && arr.value === 'lshape' ? 5 : 4;
-  const colors = ['#c084fc','#7dd3fc','#fde68a','#f9a8d4','#86efac','#fda4af'];
+  const count = arr.value === 'horizontal' ? 6 : arr.value === 'lshape' ? 5 : 4;
   let html = '';
   for (let i = 0; i < count; i++) {
-    const c = mat ? colors[i % colors.length] : colors[i % colors.length];
-    const h = [45,38,42,35,28][i % 5];
-    html += `
-      <div class="mini-flower">
-        <div class="mini-petal" style="background: linear-gradient(135deg, ${mat ? mat.color1 : c}, ${mat ? mat.color2 : c}); color: ${mat ? mat.color1 : c}; height: ${h}px; top: ${70-h}px"></div>
-        <div class="mini-center" style="background: radial-gradient(circle, ${mat ? mat.color1 : c}, ${mat ? mat.color2 : c}); color: ${mat ? mat.color1 : c}; top: ${22 + (i%2)*3}px"></div>
-      </div>
-    `;
+    const h = [48,40,44,36,30][i % 5];
+    html += buildMiniFlower(mat, shape, h, i);
   }
   container.innerHTML = html;
+}
+
+function buildMiniFlower(mat, shape, h, index) {
+  const centerTop = (70 - h) + Math.floor(h * 0.6);
+  let petalStyle = '';
+  let centerStyle = '';
+  let clipPath = '';
+
+  if (shape.value === 'round') {
+    clipPath = 'polygon(50% 0%, 100% 35%, 80% 100%, 20% 100%, 0% 35%)';
+  } else if (shape.value === 'tulip') {
+    clipPath = 'polygon(50% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)';
+  } else if (shape.value === 'rose') {
+    clipPath = 'polygon(50% 0%, 85% 15%, 100% 50%, 85% 85%, 50% 100%, 15% 85%, 0% 50%, 15% 15%)';
+  } else if (shape.value === 'carnation') {
+    clipPath = 'polygon(50% 0%, 100% 40%, 80% 100%, 20% 100%, 0% 40%)';
+  }
+
+  petalStyle = `background: linear-gradient(135deg, ${mat.color1}, ${mat.color2}); color: ${mat.glow}; height: ${h}px; top: ${70-h}px; clip-path: ${clipPath};`;
+
+  const cTop = centerTop + 2 + (index % 2) * 2;
+  centerStyle = `background: radial-gradient(circle, ${mat.color1}, ${mat.color2}); color: ${mat.glow}; width: ${8+index%3*2}px; height: ${8+index%3*2}px; top: ${cTop}px;`;
+
+  return `<div class="mini-flower" style="width: 50px; height: 70px;">
+    <div class="mini-petal" style="${petalStyle}"></div>
+    <div class="mini-center" style="${centerStyle}"></div>
+  </div>`;
 }
 
 // ========== 步骤切换 ==========
 function goStep(n) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.getElementById('panel' + n).classList.add('active');
-
   document.querySelectorAll('.step').forEach((s, i) => {
     s.classList.remove('active', 'done');
     if (i+1 < n) s.classList.add('done');
     if (i+1 === n) s.classList.add('active');
   });
-
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (n === 2) startPetals();
 }
 
 // ========== 生成链接 ==========
@@ -483,31 +589,19 @@ function generateLink() {
     alert('请填写收礼人姓名');
     return;
   }
-
-  // 用名字做简短ID（去掉空格，全拼+日期混排）
-  const id = state.name.trim()
-    .toLowerCase()
-    .replace(/\s+/g, '')
-    .substring(0, 8)
-    + '_' + (state.date || '').replace(/-/g, '').substring(2);
-
   const params = new URLSearchParams({
     b: state.blessing,
     n: state.name,
     d: state.date,
     f: state.from,
     m: state.material,
+    s: state.shape,
     a: state.arrangement,
   });
-
-  // 部署后这里的 baseURL 要替换成实际的 GitHub Pages 地址
-  const baseURL = window.location.origin + window.location.pathname.replace('index.html', '');
-  const url = baseURL + '?' + params.toString();
-
+  const base = window.location.origin + window.location.pathname.replace('index.html', '');
+  const url = base + '?' + params.toString();
   document.getElementById('resultUrl').textContent = url;
-  document.getElementById('resultDesc').innerHTML =
-    `<strong>${state.name}</strong> 的专属祝福页<br>复制链接发给收礼人，永久有效`;
-
+  document.getElementById('resultDesc').innerHTML = `<strong>${state.name}</strong> 的专属祝福页<br>复制链接发给收礼人，永久有效`;
   goStep(3);
 }
 
@@ -522,7 +616,7 @@ function copyLink() {
 }
 
 function resetForm() {
-  state = { blessing: CONFIG.defaultBlessing, name: '', date: '', from: '', material: 'amethyst', arrangement: 'hemisphere' };
+  state = { blessing: CONFIG.defaultBlessing, name: '', date: '', from: '', material: 'amethyst', shape: 'round', arrangement: 'hemisphere' };
   document.getElementById('blessingInput').value = '';
   document.getElementById('nameInput').value = '';
   document.getElementById('fromInput').value = '';
@@ -532,54 +626,62 @@ function resetForm() {
   updatePreview();
 }
 
-// ========== 查看模式（URL带参数时） ==========
+// ========== 视图模式 ==========
 function renderViewPage(params) {
   const b = params.get('b') || CONFIG.defaultBlessing;
   const n = params.get('n') || '收礼人';
   const d = params.get('d') || '';
   const f = params.get('f') || '';
   const m = params.get('m') || 'amethyst';
+  const s = params.get('s') || 'round';
   const a = params.get('a') || 'hemisphere';
 
   const mat = CONFIG.materials.find(x => x.value === m) || CONFIG.materials[0];
+  const shape = CONFIG.shapes.find(x => x.value === s) || CONFIG.shapes[0];
   const arr = CONFIG.arrangements.find(x => x.value === a) || CONFIG.arrangements[0];
 
-  document.getElementById('panel1')?.remove();
-  document.getElementById('panel2')?.remove();
-  document.getElementById('panel3')?.remove();
-  document.getElementById('stepNav').remove();
-
+  // 只保留视图页必要元素
+  document.querySelector('.steps')?.remove();
   const container = document.querySelector('.container');
   container.innerHTML = `
-    <div class="preview-box" style="margin-top: 40px;">
-      <div class="preview-label">CUSTOM BLESSING</div>
-      <div class="preview-blessing">${b}</div>
-      <div class="preview-flowers" id="pvFlowers"></div>
-      <div class="preview-vase">
-        <div class="preview-vase-text">${f ? n + ' · ' + f : n}</div>
+    <div class="view-page">
+      <div class="preview-box">
+        <div class="preview-label">CUSTOM BLESSING</div>
+        <div class="preview-blessing">${b}</div>
+        <div class="preview-flowers" id="pvFlowers"></div>
+        <div class="preview-vase">
+          <div class="preview-vase-text">${f ? n + ' · ' + f : n}</div>
+        </div>
+        <div class="preview-meta">${d ? d.replace(/-/g, '.') : ''}</div>
+        <div class="preview-tags">
+          <span class="preview-tag">${mat.label} · ${mat.labelEn}</span>
+          <span class="preview-tag">${shape.label}</span>
+          <span class="preview-tag">${arr.label}</span>
+        </div>
       </div>
-      <div class="preview-meta">${d ? d.replace(/-/g, '.') : ''}</div>
-      <div class="preview-material-tag">${mat.label} · ${mat.labelEn}</div>
-    </div>
-    <div class="result-tip" style="text-align:center; margin-top: 30px;">
-      ${CONFIG.copyright}
+      <div class="result-tip" style="text-align:center; margin-top: 28px;">
+        ${CONFIG.copyright}
+      </div>
     </div>
   `;
 
   const count = a === 'horizontal' ? 6 : a === 'lshape' ? 5 : 4;
-  const colors = ['#c084fc','#7dd3fc','#fde68a','#f9a8d4','#86efac','#fda4af'];
   let html = '';
+  const heights = [48,40,44,36,30,38];
   for (let i = 0; i < count; i++) {
-    const c = colors[i % colors.length];
-    const h = [45,38,42,35,28][i % 5];
-    html += `
-      <div class="mini-flower">
-        <div class="mini-petal" style="background: linear-gradient(135deg, ${mat.color1}, ${mat.color2}); color: ${mat.color1}; height: ${h}px; top: ${70-h}px"></div>
-        <div class="mini-center" style="background: radial-gradient(circle, ${mat.color1}, ${mat.color2}); color: ${mat.color1}; top: ${22 + (i%2)*3}px"></div>
-      </div>
-    `;
+    html += buildMiniFlower(mat, shape, heights[i % heights.length], i);
   }
   document.getElementById('pvFlowers').innerHTML = html;
+  startPetals();
+
+  // BGM
+  if (CONFIG.bgmUrl) {
+    const audio = document.createElement('audio');
+    audio.src = CONFIG.bgmUrl;
+    audio.loop = true;
+    audio.autoplay = true;
+    document.body.appendChild(audio);
+  }
 }
 
 init();

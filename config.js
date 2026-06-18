@@ -1,12 +1,23 @@
-// 配置文件 - 姐姐以后改这里就行，不用动代码
+// 配置文件 - 姐姐以后改这里就行
 
 const CONFIG = {
-  // 花材选项（显示名称+对应的CSS变量）
+  // 花材选项
   materials: [
-    { value: 'amethyst',   label: '紫水晶',   labelEn: 'Amethyst',   color1: '#c084fc', color2: '#7c3aed' },
-    { value: 'stream',     label: '流水',     labelEn: 'Stream',     color1: '#7dd3fc', color2: '#0ea5e9' },
-    { value: 'stardust',   label: '星尘',     labelEn: 'Stardust',   color1: '#fde68a', color2: '#f59e0b' },
-    { value: 'frost',      label: '霜晶',     labelEn: 'Frost',      color1: '#e0f2fe', color2: '#bae6fd' },
+    { value: 'amethyst',  label: '紫水晶',  labelEn: 'Amethyst',  color1: '#c084fc', color2: '#7c3aed', glow: '#c084fc' },
+    { value: 'stream',     label: '流水',    labelEn: 'Stream',     color1: '#7dd3fc', color2: '#0ea5e9', glow: '#7dd3fc' },
+    { value: 'stardust',   label: '星尘',    labelEn: 'Stardust',   color1: '#fde68a', color2: '#f59e0b', glow: '#fde68a' },
+    { value: 'frost',      label: '霜晶',    labelEn: 'Frost',      color1: '#e0f2fe', color2: '#bae6fd', glow: '#e0f2fe' },
+    { value: 'gold',       label: '熔金',    labelEn: 'Molten Gold', color1: '#fde68a', color2: '#d97706', glow: '#fbbf24' },
+    { value: 'ruby',       label: '红宝石',  labelEn: 'Ruby',       color1: '#fda4af', color2: '#e11d48', glow: '#fb7185' },
+    { value: 'jade',       label: '翡翠',    labelEn: 'Jade',       color1: '#86efac', color2: '#059669', glow: '#34d399' },
+  ],
+
+  // 花材形态选项
+  shapes: [
+    { value: 'round',    label: '圆形',    labelEn: 'Classic',  desc: '经典六瓣花' },
+    { value: 'tulip',    label: '郁金香',  labelEn: 'Tulip',    desc: '优雅长瓣' },
+    { value: 'rose',     label: '玫瑰',    labelEn: 'Rose',     desc: '层叠花瓣' },
+    { value: 'carnation',label: '康乃馨',  labelEn: 'Carnation',desc: '轻盈羽毛' },
   ],
 
   // 排布选项
@@ -23,4 +34,7 @@ const CONFIG = {
 
   // 版权信息
   copyright: '私人定制 · 仅供授权使用',
+
+  // 背景音乐URL（留空则不播放，需要音乐可填入URL）
+  bgmUrl: '',
 };

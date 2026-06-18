@@ -2,459 +2,363 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Celestial Crystal Rose</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>深空水晶玫瑰 · Crystal Rose</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@200;300&family=Cormorant:ital,wght@1,200&display=swap" rel="stylesheet">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  background: #000005;
-  overflow: hidden;
-  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
-  color: #e8e4f0;
-  width: 100vw;
-  height: 100vh;
-}
-canvas { display: block; position: fixed; top: 0; left: 0; background: #000005; }
-#roseCanvas { z-index: 2; background: transparent; }
-#starCanvas { z-index: 1; }
-
-.content {
-  position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 10; pointer-events: none;
-  display: flex; flex-direction: column; justify-content: space-between;
-  padding: 50px 60px;
-}
-.brand { animation: fadeIn 2s ease 1s both; }
-.brand-sub { font-size: 10px; letter-spacing: 6px; color: rgba(200,200,230,0.35); text-transform: uppercase; margin-bottom: 8px; }
-.brand-title { font-size: 28px; font-weight: 300; letter-spacing: 12px; color: rgba(240,240,255,0.7); }
-.footer { animation: fadeIn 2s ease 2s both; }
-.footer-line { font-size: 11px; letter-spacing: 3px; color: rgba(200,200,230,0.25); text-align: center; margin-bottom: 6px; }
-.footer-line span { color: rgba(200,200,230,0.45); }
-.footer-hint { font-size: 10px; letter-spacing: 2px; color: rgba(200,200,230,0.18); text-align: center; animation: hint-pulse 2.5s ease-in-out infinite; }
-
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes hint-pulse { 0%,100%{opacity:0.3} 50%{opacity:0.8} }
-.corner { position: fixed; width: 40px; height: 40px; z-index: 10; opacity: 0.2; }
-.corner-tl { top: 30px; left: 30px; border-top: 1px solid rgba(200,200,255,0.4); border-left: 1px solid rgba(200,200,255,0.4); }
-.corner-tr { top: 30px; right: 30px; border-top: 1px solid rgba(200,200,255,0.4); border-right: 1px solid rgba(200,200,255,0.4); }
-.corner-bl { bottom: 30px; left: 30px; border-bottom: 1px solid rgba(200,200,255,0.4); border-left: 1px solid rgba(200,200,255,0.4); }
-.corner-br { bottom: 30px; right: 30px; border-bottom: 1px solid rgba(200,200,255,0.4); border-right: 1px solid rgba(200,200,255,0.4); }
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;height:100%;background:#000005;overflow:hidden;touch-action:none;}
+canvas{display:block;position:fixed;top:0;left:0;}
+#starCanvas{z-index:1;background:#000005;}
+#roseCanvas{z-index:2;background:transparent;}
+#curtain{position:fixed;inset:0;z-index:100;background:#000005;pointer-events:none;animation:cf 2s ease 0.4s both;}
+@keyframes cf{0%{opacity:1}100%{opacity:0}}
+.content{position:fixed;inset:0;z-index:10;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;padding:44px 48px;}
+.brand{animation:fu 1.6s ease 1.8s both;}
+.brand-sub{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:9px;letter-spacing:5px;color:rgba(200,210,240,0.28);text-transform:uppercase;margin-bottom:10px;}
+.brand-title{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:30px;letter-spacing:13px;color:rgba(235,238,255,0.68);}
+.brand-italic{font-family:'Cormorant',serif;font-style:italic;font-weight:200;font-size:13px;letter-spacing:4px;color:rgba(190,205,240,0.32);margin-top:8px;}
+.footer{animation:fu 1.6s ease 2.2s both;text-align:center;}
+.footer-line{font-family:'Cormorant Garamond',serif;font-size:10px;letter-spacing:3px;color:rgba(200,210,240,0.20);margin-bottom:5px;}
+.footer-line span{color:rgba(210,220,250,0.40);}
+.footer-hint{font-family:'Cormorant Garamond',serif;font-size:9px;letter-spacing:3px;color:rgba(200,210,240,0.14);animation:pulse 3s ease-in-out infinite;}
+@keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:0.2}50%{opacity:0.6}}
+.corner{position:fixed;width:30px;height:30px;z-index:10;animation:fu 2s ease 2.4s both;}
+.corner-tl{top:32px;left:32px;border-top:1px solid rgba(200,210,255,0.10);border-left:1px solid rgba(200,210,255,0.10);}
+.corner-tr{top:32px;right:32px;border-top:1px solid rgba(200,210,255,0.10);border-right:1px solid rgba(200,210,255,0.10);}
+.corner-bl{bottom:32px;left:32px;border-bottom:1px solid rgba(200,210,255,0.10);border-left:1px solid rgba(200,210,255,0.10);}
+.corner-br{bottom:32px;right:32px;border-bottom:1px solid rgba(200,210,255,0.10);border-right:1px solid rgba(200,210,255,0.10);}
 </style>
 </head>
 <body>
+<div id="curtain"></div>
 <canvas id="starCanvas"></canvas>
 <canvas id="roseCanvas"></canvas>
-<div class="corner corner-tl"></div>
-<div class="corner corner-tr"></div>
-<div class="corner corner-bl"></div>
-<div class="corner corner-br"></div>
-
+<div class="corner corner-tl"></div><div class="corner corner-tr"></div>
+<div class="corner corner-bl"></div><div class="corner corner-br"></div>
 <div class="content">
   <div class="brand">
     <div class="brand-sub">Bespoke Collection · Celestial Series</div>
     <div class="brand-title">CRYSTAL ROSE</div>
+    <div class="brand-italic">深空水晶</div>
   </div>
   <div class="footer">
     <div class="footer-line">私人定制 · 仅供授权使用</div>
     <div class="footer-line">定制服务请私信 <span>@谢荧</span></div>
-    <div class="footer-hint">TOUCH TO ROTATE</div>
+    <div class="footer-hint">· TOUCH TO ROTATE ·</div>
   </div>
 </div>
-
 <script>
-// ================================================================
-// 深空星场
-// ================================================================
-const starCanvas = document.getElementById('starCanvas');
-const starCtx = starCanvas.getContext('2d');
-const roseCanvas = document.getElementById('roseCanvas');
-const roseCtx = roseCanvas.getContext('2d');
-
-function resize() {
-  const w = window.innerWidth, h = window.innerHeight;
-  starCanvas.width = roseCanvas.width = w;
-  starCanvas.height = roseCanvas.height = h;
-  // 立即画背景色，防止手机白屏
-  starCtx.fillStyle = '#000005';
-  starCtx.fillRect(0, 0, w, h);
-  roseCtx.fillStyle = '#000005';
-  roseCtx.fillRect(0, 0, w, h);
+var SC=document.getElementById('starCanvas'), RC=document.getElementById('roseCanvas');
+var sCtx=SC.getContext('2d'), rCtx=RC.getContext('2d');
+var W=0,H=0;
+function resize(){
+  W=window.innerWidth;H=window.innerHeight;
+  SC.width=RC.width=W;SC.height=RC.height=H;
+  sCtx.fillStyle='#000005';sCtx.fillRect(0,0,W,H);
 }
-resize();
-window.addEventListener('resize', resize);
+resize();window.addEventListener('resize',resize);
 
-const STAR_COUNT = 500;
-const stars = [];
-for (let i = 0; i < STAR_COUNT; i++) {
-  stars.push({ x: Math.random(), y: Math.random(), size: 0.3+Math.random()*1.5, opacity: 0.2+Math.random()*0.8, speed: 0.003+Math.random()*0.008, phase: Math.random()*Math.PI*2 });
-}
-const nebula = [];
-for (let i = 0; i < 80; i++) nebula.push({ x: Math.random(), y: Math.random(), size: 40+Math.random()*100, opacity: 0.006+Math.random()*0.015, hue: 220+Math.random()*70 });
-
-let st = 0;
-function drawStars() {
-  starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
-  starCtx.fillStyle = '#000005';
-  starCtx.fillRect(0, 0, starCanvas.width, starCanvas.height);
-  st += 0.016;
-  const W = starCanvas.width, H = starCanvas.height;
-  for (const n of nebula) {
-    const g = starCtx.createRadialGradient(n.x*W, n.y*H, 0, n.x*W, n.y*H, n.size);
-    g.addColorStop(0, `hsla(${n.hue},40%,10%,${n.opacity})`);
-    g.addColorStop(1, 'transparent');
-    starCtx.fillStyle = g;
-    starCtx.fillRect(0, 0, W, H);
-  }
-  for (const s of stars) {
-    const tw = Math.sin(st * s.speed * 60 + s.phase);
-    starCtx.beginPath();
-    starCtx.arc(s.x*W, s.y*H, s.size, 0, Math.PI*2);
-    starCtx.fillStyle = `rgba(180,185,210,${s.opacity*(0.3+0.2*tw)})`;
-    starCtx.fill();
-  }
+// 星场
+var stars=[];
+for(var i=0;i<230;i++)stars.push({x:Math.random(),y:Math.random(),r:0.3+Math.random()*0.85,a:0.05+Math.random()*0.16,ph:Math.random()*Math.PI*2,sp:0.3+Math.random()*0.6});
+var sT=0;
+function drawStars(){
+  sCtx.fillStyle='#000005';sCtx.fillRect(0,0,W,H);sT+=0.016;
+  for(var i=0;i<stars.length;i++){var s=stars[i];var a=s.a*(0.6+0.4*Math.sin(sT*s.sp+s.ph));sCtx.beginPath();sCtx.arc(s.x*W,s.y*H,s.r,0,Math.PI*2);sCtx.fillStyle='rgba(115,128,160,'+a.toFixed(3)+')';sCtx.fill();}
 }
 
-// ================================================================
-// 3D 水晶玫瑰 — 透视投影 + 正确遮挡
-// ================================================================
-
-// 旋转
-let rx = 0.15, ry = Math.PI * 0.4;
-let dragging = false, lastX = 0, lastY = 0;
-let autoRotate = true;
-
-function rotX(x, y, z) { return [x, y * Math.cos(rx) - z * Math.sin(rx), y * Math.sin(rx) + z * Math.cos(rx)]; }
-function rotY(x, y, z) { const [x2,,z2] = [x * Math.cos(ry) + z * Math.sin(ry), y, -x * Math.sin(ry) + z * Math.cos(ry)]; return [x2, y, z2]; }
-function transform(x, y, z) { const [x1,y1,z1] = rotX(x,y,z); const [x2,y2,z2] = rotY(x1,y1,z1); return [x2,y2,z2]; }
-
-// 透视投影到屏幕
-const FOV = 500;
-function project(x, y, z, cx, cy, scale) {
-  const f = FOV / (z + FOV * 0.01);
-  return [cx + x * scale * f, cy + y * scale * f, z, f];
+// 3D
+var RX=0.30, RY=0.85; // RX偏大→明显侧视角
+var drag=false,lx=0,ly=0,auto=true;
+function tr(x,y,z){
+  var c1=Math.cos(RX),s1=Math.sin(RX),y1=y*c1-z*s1,z1=y*s1+z*c1;
+  var c2=Math.cos(RY),s2=Math.sin(RY);
+  return [x*c2+z1*s2, y1, -x*s2+z1*c2];
+}
+var FOV=460;
+function pj(v,cx,cy,sc){
+  var dz=v[2]+FOV*0.5;if(dz<1)dz=1;var f=FOV/dz;
+  return [cx+v[0]*sc*f, cy+v[1]*sc*f, f];
 }
 
-// 画单个花瓣（3D贝塞尔曲面）
-function drawPetal(ctx, cx, cy, petal, baseScale) {
-  const [px, py, pz, length, width, tiltAngle, rotY2, layer] = petal;
-  const [tx, ty, tz] = transform(px, py, pz);
-  if (tz < -FOV * 0.3) return null;
+// ============================================================
+// 核心新思路：用花瓣在3D空间的两个端点来确定投影后方向
+//   · base: 花瓣基部3D坐标
+//   · tip:  花瓣顶端3D坐标（base + 沿径向伸出 + 倾斜角）
+//   · 两点投影到屏幕后，连线方向就是花瓣在屏幕上的正确朝向
+// ============================================================
+function buildRose(){
+  var P=[];
+  // 每片花瓣定义：
+  //   ang: 方位角（花瓣在圆周上的位置）
+  //   rad: 基部离轴半径
+  //   baseY: 基部高度（正=花心上方，负=下垂）
+  //   len: 花瓣长度（3D单位）
+  //   wid: 花瓣宽度
+  //   openAng: 张开角（0=竖直，PI/2=水平，>PI/2=下垂）
+  //   layer: 层编号（影响颜色）
+  //   baseAlpha: 单片最大alpha
 
-  const [sx, sy, sz, f] = project(tx, ty, tz, cx, cy, baseScale);
-  const s = baseScale * f;
-
-  const len = length * s;
-  const wid = width * s;
-  const alpha = Math.max(0.18, Math.min(0.95, f * 1.2));
-  const tilt = tiltAngle + (layer - 2) * 0.08;
-
-  ctx.save();
-  ctx.translate(sx, sy);
-
-  // 花瓣自然倾斜
-  const angle = Math.atan2(ty, tx) + tilt;
-  ctx.rotate(angle);
-
-  // 花瓣本体 — 更卷曲的形状
-  ctx.beginPath();
-  ctx.moveTo(0, 0);
-  // 右半边弧线
-  ctx.bezierCurveTo(wid*0.3, len*0.08, wid*0.8, len*0.35, wid*0.6, len*0.72);
-  ctx.bezierCurveTo(wid*0.3, len*0.92, 0, len*0.95, -wid*0.6, len*0.72);
-  // 左半边弧线
-  ctx.bezierCurveTo(-wid*0.8, len*0.35, -wid*0.3, len*0.08, 0, 0);
-
-  const grd = ctx.createLinearGradient(0, 0, 0, len);
-  grd.addColorStop(0, `rgba(255,255,255,${alpha})`);
-  grd.addColorStop(0.15, `rgba(240,248,255,${alpha*0.92})`);
-  grd.addColorStop(0.45, `rgba(210,228,255,${alpha*0.8})`);
-  grd.addColorStop(0.75, `rgba(180,210,255,${alpha*0.65})`);
-  grd.addColorStop(1, `rgba(140,175,240,${alpha*0.4})`);
-
-  ctx.fillStyle = grd;
-  ctx.fill();
-
-  // 花瓣边缘高光线
-  ctx.beginPath();
-  ctx.moveTo(-wid*0.15, len*0.08);
-  ctx.bezierCurveTo(-wid*0.4, len*0.3, -wid*0.35, len*0.6, -wid*0.1, len*0.75);
-  ctx.strokeStyle = `rgba(255,255,255,${alpha*0.55})`;
-  ctx.lineWidth = s * 0.8;
-  ctx.lineCap = 'round';
-  ctx.stroke();
-
-  // 花瓣顶部反光
-  ctx.beginPath();
-  ctx.ellipse(-wid*0.1, len*0.2, wid*0.25, len*0.12, -0.3, 0, Math.PI*2);
-  ctx.fillStyle = `rgba(255,255,255,${alpha*0.3})`;
-  ctx.fill();
-
-  ctx.restore();
-  return { z: tz, s };
-}
-
-// 画花心（密集小瓣螺旋）
-function drawCenter(ctx, cx, cy, baseScale) {
-  const spirals = 5;
-  for (let i = 0; i < 12; i++) {
-    const a = (i / 12) * Math.PI * 2;
-    const r = 0.04 * (1 - i * 0.06);
-    const [tx, ty, tz] = transform(Math.cos(a)*r, 0.08, Math.sin(a)*r);
-    if (tz < -FOV*0.3) continue;
-    const [sx, sy, , f] = project(tx, ty, tz, cx, cy, baseScale);
-    const alpha = Math.max(0.2, Math.min(1, f * 1.5));
-    const s = baseScale * f;
-    ctx.beginPath();
-    ctx.ellipse(sx, sy, s*0.06, s*0.12, a, 0, Math.PI*2);
-    ctx.fillStyle = `rgba(255,255,255,${alpha})`;
-    ctx.fill();
-  }
-}
-
-// 画茎
-function drawStem(ctx, cx, cy, baseScale) {
-  const segs = 25;
-  for (let i = 0; i < segs; i++) {
-    const t1 = i / segs, t2 = (i+1) / segs;
-    const y1 = cy + t1 * baseScale * 4;
-    const y2 = cy + t2 * baseScale * 4;
-    const wob = Math.sin(t1 * Math.PI * 3) * baseScale * 0.06;
-    const [tx1, ty1, tz1] = transform(wob, (t1-0.5)*4, 0);
-    const [tx2, ty2, tz2] = transform(wob, (t2-0.5)*4, 0);
-    const [sx1, sy1, , f1] = project(tx1, ty1, tz1, cx, cy, baseScale);
-    const [sx2, sy2, , f2] = project(tx2, ty2, tz2, cx, cy, baseScale);
-    const alpha = Math.max(0.15, Math.min(0.7, (tz1+FOV)/(FOV*2)));
-    ctx.beginPath();
-    ctx.moveTo(sx1, sy1);
-    ctx.lineTo(sx2, sy2);
-    ctx.strokeStyle = `rgba(200,220,255,${alpha*0.55})`;
-    ctx.lineWidth = Math.max(0.5, (0.06 - t1*0.03) * baseScale * (f1+f2)/2);
-    ctx.stroke();
-  }
-}
-
-// 画叶子
-function drawLeaf(ctx, cx, cy, baseScale, leafY, leafAngle, leafSize) {
-  const [lx, ly, lz] = transform(Math.cos(leafAngle)*0.08, leafY, Math.sin(leafAngle)*0.08);
-  if (lz < -FOV*0.3) return;
-  const [sx, sy, , f] = project(lx, ly, lz, cx, cy, baseScale);
-  const alpha = Math.max(0.2, Math.min(0.8, f * 1.2));
-  const s = baseScale * f * leafSize;
-
-  ctx.save();
-  ctx.translate(sx, sy);
-  ctx.rotate(leafAngle);
-
-  // 叶子形状
-  ctx.beginPath();
-  ctx.moveTo(0, 0);
-  ctx.bezierCurveTo(s*0.5, s*0.2, s*0.8, s*0.8, s*0.3, s*1.5);
-  ctx.bezierCurveTo(0, s*1.8, -s*0.3, s*1.5, -s*0.8, s*0.8);
-  ctx.bezierCurveTo(-s*0.5, s*0.2, 0, 0, 0, 0);
-
-  const grd = ctx.createLinearGradient(0, 0, 0, s*1.5);
-  grd.addColorStop(0, `rgba(180,210,255,${alpha})`);
-  grd.addColorStop(0.5, `rgba(150,195,240,${alpha*0.8})`);
-  grd.addColorStop(1, `rgba(100,160,220,${alpha*0.5})`);
-  ctx.fillStyle = grd;
-  ctx.fill();
-
-  // 叶脉
-  ctx.beginPath();
-  ctx.moveTo(0, s*0.1);
-  ctx.lineTo(0, s*1.4);
-  ctx.strokeStyle = `rgba(255,255,255,${alpha*0.4})`;
-  ctx.lineWidth = s*0.08;
-  ctx.stroke();
-
-  ctx.restore();
-}
-
-// 生成玫瑰花瓣数据（层层螺旋）
-function buildRose() {
-  const petals = [];
-  // 中心花苞 — 密集小瓣，多层螺旋
-  for (let ring = 0; ring < 3; ring++) {
-    const count = 6 + ring * 2;
-    const rOffset = ring * 0.06;
-    for (let i = 0; i < count; i++) {
-      const angle = (i / count) * Math.PI * 2 + ring * 0.3;
-      petals.push({
-        px: Math.cos(angle) * rOffset,
-        py: 0.1 - ring * 0.04,
-        pz: Math.sin(angle) * rOffset,
-        length: 0.22 - ring * 0.04,
-        width: 0.09 - ring * 0.015,
-        tiltAngle: 0.1,
-        rotY2: 0,
-        layer: ring
-      });
+  function ring(count, rad, baseY, len, wid, openAng, layer, baseAlpha, offset){
+    offset = offset||0;
+    for(var i=0;i<count;i++){
+      var ang = (i/count)*Math.PI*2 + offset;
+      P.push({ang:ang, rad:rad, baseY:baseY, len:len, wid:wid, openAng:openAng, layer:layer, baseAlpha:baseAlpha});
     }
   }
-  // 内层 — 10瓣，微微张开
-  for (let i = 0; i < 10; i++) {
-    const angle = (i / 10) * Math.PI * 2;
-    petals.push({
-      px: Math.cos(angle) * 0.1,
-      py: 0.08,
-      pz: Math.sin(angle) * 0.1,
-      length: 0.32,
-      width: 0.14,
-      tiltAngle: 0.28,
-      rotY2: angle,
-      layer: 3
-    });
-  }
-  // 第二层 — 12瓣，张开角度更大
-  for (let i = 0; i < 12; i++) {
-    const angle = (i / 12) * Math.PI * 2 + 0.15;
-    petals.push({
-      px: Math.cos(angle) * 0.18,
-      py: 0.02,
-      pz: Math.sin(angle) * 0.18,
-      length: 0.45,
-      width: 0.2,
-      tiltAngle: 0.5,
-      rotY2: angle,
-      layer: 4
-    });
-  }
-  // 第三层 — 14瓣，几乎水平
-  for (let i = 0; i < 14; i++) {
-    const angle = (i / 14) * Math.PI * 2 - 0.1;
-    petals.push({
-      px: Math.cos(angle) * 0.3,
-      py: -0.08,
-      pz: Math.sin(angle) * 0.3,
-      length: 0.55,
-      width: 0.26,
-      tiltAngle: 0.78,
-      rotY2: angle,
-      layer: 5
-    });
-  }
-  // 外层 — 16瓣，微微下垂
-  for (let i = 0; i < 16; i++) {
-    const angle = (i / 16) * Math.PI * 2 + 0.2;
-    petals.push({
-      px: Math.cos(angle) * 0.42,
-      py: -0.18,
-      pz: Math.sin(angle) * 0.42,
-      length: 0.62,
-      width: 0.3,
-      tiltAngle: 1.1,
-      rotY2: angle,
-      layer: 6
-    });
-  }
-  // 最外层 — 12瓣，明显下垂
-  for (let i = 0; i < 12; i++) {
-    const angle = (i / 12) * Math.PI * 2 - 0.25;
-    petals.push({
-      px: Math.cos(angle) * 0.52,
-      py: -0.28,
-      pz: Math.sin(angle) * 0.52,
-      length: 0.65,
-      width: 0.32,
-      tiltAngle: 1.45,
-      rotY2: angle,
-      layer: 7
-    });
-  }
-  return petals;
+
+  // 花苞（竖立，几乎不张开）
+  ring(5,  0.000, 0.14, 0.14, 0.040, 0.05, 0, 0.28, 0);
+  ring(6,  0.038, 0.12, 0.18, 0.052, 0.12, 1, 0.26, 0.52);
+  ring(7,  0.072, 0.09, 0.22, 0.064, 0.20, 2, 0.24, 0.18);
+  // 内层（开始张开）
+  ring(8,  0.110, 0.06, 0.27, 0.076, 0.32, 3, 0.22, 0.36);
+  ring(10, 0.155, 0.02, 0.33, 0.090, 0.46, 4, 0.20, 0.08);
+  // 中层（接近水平）
+  ring(11, 0.208,-0.03, 0.40, 0.104, 0.62, 5, 0.18, 0.24);
+  ring(12, 0.268,-0.09, 0.46, 0.116, 0.78, 6, 0.16, 0.06);
+  // 外层（下垂）
+  ring(13, 0.335,-0.17, 0.52, 0.126, 0.97, 7, 0.15, 0.14);
+  ring(12, 0.405,-0.27, 0.56, 0.134, 1.20, 8, 0.13, -0.22);
+  // 萼片
+  ring(5,  0.460,-0.36, 0.50, 0.108, 1.50, 9, 0.12, 0.38);
+
+  return P;
+}
+var allPetals = buildRose();
+
+// 获取花瓣在3D空间的基部、顶端、左右翼坐标，然后投影
+function getPetalPoints(p){
+  var ang = p.ang;
+  // 基部（在茎上）
+  var bx = Math.cos(ang)*p.rad;
+  var by = p.baseY;
+  var bz = Math.sin(ang)*p.rad;
+
+  // 花瓣伸出方向：径向 + 竖向 混合，由 openAng 控制
+  // openAng=0: 沿Y轴向上; openAng=PI/2: 沿径向水平; openAng>PI/2: 向下
+  var radDirX = Math.cos(ang);  // 径向方向
+  var radDirZ = Math.sin(ang);
+
+  // 花瓣尖端 = 基部 + len*(sin(openAng)*径向 - cos(openAng)*Y轴)
+  var tx = bx + p.len * Math.sin(p.openAng) * radDirX;
+  var ty = by - p.len * Math.cos(p.openAng);
+  var tz = bz + p.len * Math.sin(p.openAng) * radDirZ;
+
+  // 花瓣宽度方向：垂直于(径向,Y轴)平面的切线方向
+  var wx = -Math.sin(ang);  // 切线方向
+  var wz =  Math.cos(ang);
+
+  // 左右翼中点（花瓣最宽处，约在60%长度位置）
+  var midFrac = 0.62;
+  var mx = bx + p.len*midFrac * Math.sin(p.openAng) * radDirX;
+  var my = by - p.len*midFrac * Math.cos(p.openAng);
+  var mz = bz + p.len*midFrac * Math.sin(p.openAng) * radDirZ;
+  var halfW = p.wid * 0.5;
+
+  return {
+    base:  tr(bx, by, bz),
+    tip:   tr(tx, ty, tz),
+    left:  tr(mx + wx*halfW, my, mz + wz*halfW),
+    right: tr(mx - wx*halfW, my, mz - wz*halfW),
+    // 控制点：花瓣左右两侧弧度
+    lc1:   tr(bx + wx*halfW*0.4,  by,                     bz + wz*halfW*0.4),
+    lc2:   tr(mx + wx*halfW*1.1,  my + p.len*0.05,        mz + wz*halfW*1.1),
+    rc1:   tr(bx - wx*halfW*0.4,  by,                     bz - wz*halfW*0.4),
+    rc2:   tr(mx - wx*halfW*1.1,  my + p.len*0.05,        mz - wz*halfW*1.1),
+    // 顶端收口控制点
+    ltip:  tr(tx + wx*halfW*0.15, ty + p.len*0.04,        tz + wz*halfW*0.15),
+    rtip:  tr(tx - wx*halfW*0.15, ty + p.len*0.04,        tz - wz*halfW*0.15),
+    depthZ: tr(bx,by,bz)[2]  // 用基部z排序
+  };
 }
 
-const allPetals = buildRose();
-
-// 触摸控制
-roseCanvas.style.cursor = 'grab';
-roseCanvas.addEventListener('mousedown', e => { dragging=true; lastX=e.clientX; lastY=e.clientY; autoRotate=false; });
-roseCanvas.addEventListener('mousemove', e => {
-  if (!dragging) return;
-  ry += (e.clientX - lastX) * 0.01;
-  rx += (e.clientY - lastY) * 0.008;
-  rx = Math.max(-0.6, Math.min(0.8, rx));
-  lastX = e.clientX; lastY = e.clientY;
-});
-roseCanvas.addEventListener('mouseup', () => dragging=false);
-roseCanvas.addEventListener('mouseleave', () => dragging=false);
-
-roseCanvas.addEventListener('touchstart', e => { dragging=true; lastX=e.touches[0].clientX; lastY=e.touches[0].clientY; autoRotate=false; e.preventDefault(); }, {passive:false});
-roseCanvas.addEventListener('touchmove', e => {
-  if (!dragging) return;
-  ry += (e.touches[0].clientX - lastX) * 0.01;
-  rx += (e.touches[0].clientY - lastY) * 0.008;
-  rx = Math.max(-0.6, Math.min(0.8, rx));
-  lastX = e.touches[0].clientX; lastY = e.touches[0].clientY;
-  e.preventDefault();
-}, {passive:false});
-roseCanvas.addEventListener('touchend', () => dragging=false);
-
-// 漂浮粒子
-const FP = [];
-for (let i = 0; i < 60; i++) FP.push({ x:(Math.random()-0.5)*4, y:(Math.random()-0.5)*5, z:(Math.random()-0.5)*4, speed:0.002+Math.random()*0.004, size:0.5+Math.random()*1.5, alpha:0.1+Math.random()*0.4 });
-
-let time = 0;
-function drawRose() {
-  roseCtx.clearRect(0, 0, roseCanvas.width, roseCanvas.height);
-  const W = roseCanvas.width, H = roseCanvas.height;
-  const cx = W * 0.5, cy = H * 0.5;
-  const baseScale = Math.min(W, H) * 0.2;
-  time += 0.004;
-  if (autoRotate) ry += 0.0025;
-
-  // 玫瑰整体发光
-  const glowGrd = roseCtx.createRadialGradient(cx, cy - baseScale*0.1, 0, cx, cy, baseScale * 1.8);
-  glowGrd.addColorStop(0, 'rgba(200,220,255,0.12)');
-  glowGrd.addColorStop(0.4, 'rgba(180,200,255,0.05)');
-  glowGrd.addColorStop(1, 'transparent');
-  roseCtx.beginPath();
-  roseCtx.arc(cx, cy, baseScale * 1.8, 0, Math.PI*2);
-  roseCtx.fillStyle = glowGrd;
-  roseCtx.fill();
-
-  // 漂浮粒子
-  for (const p of FP) {
-    const [tx,ty,tz] = transform(p.x, p.y + Math.sin(time*30+p.speed*1000)*0.002, p.z);
-    if (tz < -FOV*0.5) continue;
-    const [sx,sy,,f] = project(tx, ty, tz, cx, cy, baseScale);
-    if (f <= 0) continue;
-    const alpha = Math.max(0.02, Math.min(0.8, f * 0.8)) * p.alpha;
-    roseCtx.beginPath();
-    roseCtx.arc(sx, sy, p.size * f * baseScale * 0.015, 0, Math.PI*2);
-    roseCtx.fillStyle = `rgba(220,230,255,${alpha})`;
-    roseCtx.fill();
-  }
-
-  // 茎
-  drawStem(roseCtx, cx, cy, baseScale);
-
-  // 花瓣排序（按深度，远到近）
-  const sorted = allPetals.map(p => {
-    const [tx,ty,tz] = transform(p.px, p.py, p.pz);
-    return { ...p, tz };
-  }).sort((a, b) => b.tz - a.tz);
-
-  // 画花瓣
-  for (const p of sorted) {
-    drawPetal(roseCtx, cx, cy, [p.px, p.py, p.pz, p.length, p.width, p.tiltAngle, p.rotY2, p.layer], baseScale);
-  }
-
-  // 花心
-  drawCenter(roseCtx, cx, cy, baseScale);
-
-  // 整体环境光
-  const envGrd = roseCtx.createRadialGradient(cx, cy - baseScale*0.5, 0, cx, cy, baseScale*2);
-  envGrd.addColorStop(0, 'rgba(255,255,255,0.04)');
-  envGrd.addColorStop(1, 'transparent');
-  roseCtx.fillStyle = envGrd;
-  roseCtx.fillRect(0, 0, W, H);
+// 花瓣颜色
+function petalRGB(layer){
+  if(layer<=1) return [252,254,255];
+  if(layer<=3) return [230,242,255];
+  if(layer<=5) return [205,225,255];
+  if(layer<=7) return [180,208,255];
+  return [155,188,248];
 }
 
-function loop() {
-  drawStars();
-  drawRose();
-  requestAnimationFrame(loop);
+function drawPetal(p, cx, cy, sc){
+  var pts = getPetalPoints(p);
+
+  // 基部投影
+  var pb  = pj(pts.base,  cx,cy,sc);
+  var pt  = pj(pts.tip,   cx,cy,sc);
+  var pl  = pj(pts.left,  cx,cy,sc);
+  var pr2 = pj(pts.right, cx,cy,sc);
+  var plc1= pj(pts.lc1,   cx,cy,sc);
+  var plc2= pj(pts.lc2,   cx,cy,sc);
+  var prc1= pj(pts.rc1,   cx,cy,sc);
+  var prc2= pj(pts.rc2,   cx,cy,sc);
+  var plt = pj(pts.ltip,  cx,cy,sc);
+  var prt = pj(pts.rtip,  cx,cy,sc);
+
+  // 深度：用基部f值
+  var f = pb[2];
+  if(f <= 0) return;
+  var depth = Math.max(0, Math.min(1,(f-0.5)/1.0));
+
+  // alpha — 彻底保守，不超过0.30
+  var baseA = p.baseAlpha * (0.7 + depth*0.3);
+  baseA = Math.min(0.30, baseA);
+
+  // 颜色
+  var rgb = petalRGB(p.layer);
+  var R=rgb[0],G=rgb[1],B=rgb[2];
+
+  // 渐变：基部→顶端（用真实屏幕坐标）
+  var grd = rCtx.createLinearGradient(pb[0],pb[1], pt[0],pt[1]);
+  grd.addColorStop(0,   'rgba('+R+','+G+','+B+','+baseA.toFixed(3)+')');
+  grd.addColorStop(0.4, 'rgba('+R+','+G+','+B+','+(baseA*0.72).toFixed(3)+')');
+  grd.addColorStop(0.75,'rgba('+R+','+G+','+B+','+(baseA*0.40).toFixed(3)+')');
+  grd.addColorStop(1,   'rgba('+R+','+G+','+B+','+(baseA*0.12).toFixed(3)+')');
+
+  // 花瓣路径：base → 左弧 → 左翼顶 → tip → 右翼顶 → 右弧 → base
+  rCtx.beginPath();
+  rCtx.moveTo(pb[0],pb[1]);
+  rCtx.bezierCurveTo(plc1[0],plc1[1], plc2[0],plc2[1], pl[0],pl[1]);
+  rCtx.bezierCurveTo(plt[0],plt[1], pt[0],pt[1], pt[0],pt[1]);
+  rCtx.bezierCurveTo(prt[0],prt[1], pr2[0],pr2[1], pr2[0],pr2[1]);  // 修正：右翼到基部
+  rCtx.bezierCurveTo(prc2[0],prc2[1], prc1[0],prc1[1], pb[0],pb[1]);
+  rCtx.fillStyle = grd;
+  rCtx.fill();
+
+  // 中脉（仅近处）
+  if(depth > 0.25){
+    var midV = pj(tr(
+      pts.base[0]*0.5+pts.tip[0]*0.5,
+      pts.base[1]*0.5+pts.tip[1]*0.5,
+      pts.base[2]*0.5+pts.tip[2]*0.5
+    ), cx,cy,sc);
+    rCtx.beginPath();
+    rCtx.moveTo(pb[0],pb[1]);
+    rCtx.lineTo(midV[0],midV[1]);
+    rCtx.strokeStyle='rgba(255,255,255,'+(depth*0.15).toFixed(3)+')';
+    rCtx.lineWidth=Math.max(0.3,f*sc*0.004);
+    rCtx.lineCap='round'; rCtx.stroke();
+  }
 }
+
+// 花心
+function drawCenter(cx,cy,sc){
+  for(var i=0;i<12;i++){
+    var a=(i/12)*Math.PI*2, r=0.020+(i%3)*0.005;
+    var v=tr(Math.cos(a)*r, 0.148, Math.sin(a)*r);
+    var p=pj(v,cx,cy,sc); if(p[2]<=0) continue;
+    var ss=sc*p[2]; var al=Math.max(0.35,Math.min(0.88,p[2]*1.2));
+    rCtx.beginPath();rCtx.arc(p[0],p[1],ss*0.038,0,Math.PI*2);
+    rCtx.fillStyle='rgba(255,255,255,'+al.toFixed(3)+')';rCtx.fill();
+  }
+  // 花心亮点（极小）
+  var cv=tr(0,0.152,0),cp=pj(cv,cx,cy,sc);
+  if(cp[2]>0){
+    var g=rCtx.createRadialGradient(cp[0],cp[1],0,cp[0],cp[1],sc*cp[2]*0.08);
+    g.addColorStop(0,'rgba(255,255,255,0.90)');g.addColorStop(1,'rgba(255,255,255,0)');
+    rCtx.beginPath();rCtx.arc(cp[0],cp[1],sc*cp[2]*0.08,0,Math.PI*2);
+    rCtx.fillStyle=g;rCtx.fill();
+  }
+}
+
+// 茎
+function drawStem(cx,cy,sc){
+  for(var i=0;i<22;i++){
+    var t1=i/22,t2=(i+1)/22;
+    var y1=0.10+t1*2.10,y2=0.10+t2*2.10;
+    var x1=Math.sin(t1)*0.016,x2=Math.sin(t2)*0.016;
+    var v1=tr(x1,y1,0),v2=tr(x2,y2,0);
+    var p1=pj(v1,cx,cy,sc),p2=pj(v2,cx,cy,sc);
+    if(p1[2]<=0||p2[2]<=0)continue;
+    var al=0.32+(1-t1)*0.20, th=Math.max(0.5,(0.055-t1*0.028)*sc*(p1[2]+p2[2])/2);
+    rCtx.beginPath();rCtx.moveTo(p1[0],p1[1]);rCtx.lineTo(p2[0],p2[1]);
+    rCtx.strokeStyle='rgba(192,215,255,'+al.toFixed(3)+')';rCtx.lineWidth=th;rCtx.lineCap='round';rCtx.stroke();
+  }
+}
+
+// 叶子
+function drawLeaf(cx,cy,sc,stemY,leafAng,sz){
+  var rx0=Math.cos(leafAng)*0.04,rz0=Math.sin(leafAng)*0.04;
+  var rtp=tr(rx0,stemY,rz0);
+  var rpr=pj(rtp,cx,cy,sc); if(rpr[2]<=0)return;
+  var spx=rpr[0],spy=rpr[1],f=rpr[2];
+  var s=sc*f*sz, al=Math.max(0.35,Math.min(0.62,f*0.95));
+  var sa=leafAng+RY+0.45, cA=Math.cos(sa),sA=Math.sin(sa);
+  function lp(lx,ly){return[spx+lx*cA-ly*sA,spy+lx*sA+ly*cA];}
+  var q0=lp(0,0),q1=lp(s*0.38,s*0.16),q2=lp(s*0.60,s*0.65),q3=lp(s*0.20,s*1.30);
+  var q4=lp(0,s*1.48),q5=lp(-s*0.20,s*1.30),q6=lp(-s*0.60,s*0.65),q7=lp(-s*0.38,s*0.16);
+  var gs=lp(0,0),ge=lp(0,s*1.3);
+  var grd=rCtx.createLinearGradient(gs[0],gs[1],ge[0],ge[1]);
+  grd.addColorStop(0,'rgba(185,210,250,'+al.toFixed(3)+')');
+  grd.addColorStop(1,'rgba(115,165,228,'+(al*0.40).toFixed(3)+')');
+  rCtx.beginPath();rCtx.moveTo(q0[0],q0[1]);
+  rCtx.bezierCurveTo(q1[0],q1[1],q2[0],q2[1],q3[0],q3[1]);
+  rCtx.bezierCurveTo(q4[0],q4[1],q5[0],q5[1],q5[0],q5[1]);
+  rCtx.bezierCurveTo(q6[0],q6[1],q7[0],q7[1],q0[0],q0[1]);
+  rCtx.fillStyle=grd;rCtx.fill();
+  var v0=lp(0,s*0.05),v1=lp(0,s*1.35);
+  rCtx.beginPath();rCtx.moveTo(v0[0],v0[1]);rCtx.lineTo(v1[0],v1[1]);
+  rCtx.strokeStyle='rgba(225,240,255,'+(al*0.35).toFixed(3)+')';
+  rCtx.lineWidth=Math.max(0.3,s*0.055);rCtx.lineCap='round';rCtx.stroke();
+}
+
+// 粒子
+var FP=[];
+for(var i=0;i<50;i++)FP.push({x:(Math.random()-0.5)*2.2,y:(Math.random()-0.5)*2.8,z:(Math.random()-0.5)*2.2,vy:0.0006+Math.random()*0.0012,ph:Math.random()*Math.PI*2,r:0.5+Math.random()*1.1,al:0.08+Math.random()*0.22});
+var pT=0;
+function drawParticles(cx,cy,sc){
+  pT+=0.012;
+  for(var i=0;i<FP.length;i++){
+    var p=FP[i];p.y-=p.vy;if(p.y<-1.8)p.y=1.8;
+    var v=tr(p.x+Math.sin(pT*0.5+p.ph)*0.035,p.y,p.z);
+    var pp=pj(v,cx,cy,sc);if(pp[2]<=0)continue;
+    var a=Math.max(0.01,Math.min(0.5,pp[2]*0.65))*p.al;
+    var r=p.r*pp[2]*sc*0.012;if(r<0.2)continue;
+    rCtx.beginPath();rCtx.arc(pp[0],pp[1],r,0,Math.PI*2);
+    rCtx.fillStyle='rgba(208,224,255,'+a.toFixed(3)+')';rCtx.fill();
+  }
+}
+
+// 极淡外晕
+function drawGlow(cx,cy,sc){
+  var g=rCtx.createRadialGradient(cx,cy-sc*0.05,sc*0.05,cx,cy,sc*1.45);
+  g.addColorStop(0,'rgba(175,200,255,0.06)');g.addColorStop(0.45,'rgba(155,188,255,0.025)');g.addColorStop(1,'rgba(0,0,0,0)');
+  rCtx.beginPath();rCtx.arc(cx,cy,sc*1.45,0,Math.PI*2);rCtx.fillStyle=g;rCtx.fill();
+}
+
+// 交互
+RC.addEventListener('mousedown',function(e){drag=true;auto=false;lx=e.clientX;ly=e.clientY;});
+window.addEventListener('mousemove',function(e){if(!drag)return;RY+=(e.clientX-lx)*0.012;RX+=(e.clientY-ly)*0.009;RX=Math.max(-0.45,Math.min(0.85,RX));lx=e.clientX;ly=e.clientY;});
+window.addEventListener('mouseup',function(){drag=false;});
+RC.addEventListener('touchstart',function(e){drag=true;auto=false;lx=e.touches[0].clientX;ly=e.touches[0].clientY;e.preventDefault();},{passive:false});
+window.addEventListener('touchmove',function(e){if(!drag)return;RY+=(e.touches[0].clientX-lx)*0.012;RX+=(e.touches[0].clientY-ly)*0.009;RX=Math.max(-0.45,Math.min(0.85,RX));lx=e.touches[0].clientX;ly=e.touches[0].clientY;e.preventDefault();},{passive:false});
+window.addEventListener('touchend',function(){drag=false;});
+
+// 主循环
+function drawRose(){
+  rCtx.clearRect(0,0,W,H);
+  var cx=W*0.5,cy=H*0.46,sc=Math.min(W,H)*0.195;
+  if(auto)RY+=0.0018;
+
+  drawGlow(cx,cy,sc);
+  drawParticles(cx,cy,sc);
+  drawStem(cx,cy,sc);
+  drawLeaf(cx,cy,sc,0.78, Math.PI*0.30,0.145);
+  drawLeaf(cx,cy,sc,1.12,-Math.PI*0.22,0.122);
+
+  // 排序：基部z小（远）的先画
+  var sorted=allPetals.slice().sort(function(a,b){
+    return getPetalPoints(a).depthZ - getPetalPoints(b).depthZ;
+  });
+  for(var i=0;i<sorted.length;i++)drawPetal(sorted[i],cx,cy,sc);
+  drawCenter(cx,cy,sc);
+}
+
+function loop(){drawStars();drawRose();requestAnimationFrame(loop);}
 loop();
 </script>
 </body>

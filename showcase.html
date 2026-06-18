@@ -215,7 +215,11 @@ const camera = new THREE.PerspectiveCamera(40, innerWidth / innerHeight, 0.1, 10
 camera.position.set(0, 1.2, 7);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-renderer.setSize(innerWidth, innerHeight);
+const W = innerWidth || document.body.clientWidth || 1280;
+const H = innerHeight || document.body.clientHeight || 720;
+renderer.setSize(W, H);
+renderer.domElement.style.width = W + 'px';
+renderer.domElement.style.height = H + 'px';
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;

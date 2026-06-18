@@ -201,7 +201,7 @@ function drawPetal(ctx, cx, cy, petal, rx, ry, scale, globalAlpha) {
   if (rz2 < -perspective * 0.8) return null;
 
   // 花瓣透明度（远处更透明）
-  const depthAlpha = Math.max(0.05, Math.min(1, (rz2 + perspective) / (perspective * 2)));
+  const depthAlpha = Math.max(0.15, Math.min(1, (rz2 + perspective) / (perspective * 2)));
   const alpha = globalAlpha * depthAlpha;
   if (alpha < 0.05) return null;
 
@@ -224,9 +224,9 @@ function drawPetal(ctx, cx, cy, petal, rx, ry, scale, globalAlpha) {
 
   const grd = ctx.createRadialGradient(-wid*0.2, -len*0.1, 0, 0, len*0.3, len);
   grd.addColorStop(0, `rgba(255,255,255,${alpha})`);
-  grd.addColorStop(0.25, `rgba(230,240,255,${alpha * 0.85})`);
-  grd.addColorStop(0.6, `rgba(200,215,255,${alpha * 0.6})`);
-  grd.addColorStop(1, `rgba(160,185,240,${alpha * 0.2})`);
+  grd.addColorStop(0.25, `rgba(230,240,255,${alpha * 0.9})`);
+  grd.addColorStop(0.55, `rgba(180,210,255,${alpha * 0.75})`);
+  grd.addColorStop(1, `rgba(120,160,240,${alpha * 0.5})`);
 
   ctx.fillStyle = grd;
   ctx.fill();
@@ -378,21 +378,31 @@ function drawRose() {
   roseCtx.fillStyle = fg;
   roseCtx.fill();
 
-  // TEST — 亮黄色测试圆
-  const testX = cx;
-  const testY = cy - scale * 0.3;
+  // 玫瑰外发光
+  const glowR = scale * 1.2;
+  const outerGlow = roseCtx.createRadialGradient(cx, cy, scale * 0.1, cx, cy, glowR);
+  outerGlow.addColorStop(0, 'rgba(200,220,255,0.15)');
+  outerGlow.addColorStop(0.5, 'rgba(180,200,255,0.08)');
+  outerGlow.addColorStop(1, 'transparent');
   roseCtx.beginPath();
-  roseCtx.arc(testX, testY, scale * 0.15, 0, Math.PI * 2);
-  roseCtx.fillStyle = 'rgba(255,255,0,0.9)';
+  roseCtx.arc(cx, cy, glowR, 0, Math.PI * 2);
+  roseCtx.fillStyle = outerGlow;
   roseCtx.fill();
 
   // 整体高光
   const hg = roseCtx.createRadialGradient(cx, cy - scale * 0.4, 0, cx, cy, scale * 1.5);
-  hg.addColorStop(0, 'rgba(255,255,255,0.06)');
-  hg.addColorStop(0.5, 'rgba(200,215,255,0.02)');
+  hg.addColorStop(0, 'rgba(255,255,255,0.08)');
+  hg.addColorStop(0.5, 'rgba(200,215,255,0.03)');
   hg.addColorStop(1, 'transparent');
   roseCtx.fillStyle = hg;
   roseCtx.fillRect(0, 0, W, H);
+
+  // 底部环境反射
+  const reflG = roseCtx.createLinearGradient(cx, cy + scale * 1.5, cx, cy + scale * 3);
+  reflG.addColorStop(0, 'rgba(180,200,255,0.06)');
+  reflG.addColorStop(1, 'transparent');
+  roseCtx.fillStyle = reflG;
+  roseCtx.fillRect(cx - scale * 2, cy + scale * 1.5, scale * 4, scale * 1.5);
 }
 
 function loop() {

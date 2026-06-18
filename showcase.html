@@ -14,8 +14,8 @@ body {
   width: 100vw;
   height: 100vh;
 }
-canvas { display: block; position: fixed; top: 0; left: 0; }
-#roseCanvas { z-index: 2; }
+canvas { display: block; position: fixed; top: 0; left: 0; background: #000005; }
+#roseCanvas { z-index: 2; background: transparent; }
 #starCanvas { z-index: 1; }
 
 .content {
@@ -73,9 +73,11 @@ function resize() {
   const w = window.innerWidth, h = window.innerHeight;
   starCanvas.width = roseCanvas.width = w;
   starCanvas.height = roseCanvas.height = h;
-  // 立即画背景，防止白屏闪烁
+  // 立即画背景色，防止手机白屏
   starCtx.fillStyle = '#000005';
   starCtx.fillRect(0, 0, w, h);
+  roseCtx.fillStyle = '#000005';
+  roseCtx.fillRect(0, 0, w, h);
 }
 resize();
 window.addEventListener('resize', resize);

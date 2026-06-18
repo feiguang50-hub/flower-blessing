@@ -370,7 +370,7 @@ let state = {
 function init() {
   // 读取 URL 参数（如果有）
   const params = new URLSearchParams(window.location.search);
-  if (params.has('name')) { renderViewPage(params); return; }
+  if (params.has('n')) { renderViewPage(params); return; }
 
   // 渲染选项
   renderMaterialOptions();

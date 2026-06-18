@@ -428,12 +428,6 @@ function drawRose() {
   // 茎
   drawStem(roseCtx, cx, cy, baseScale);
 
-  // 叶子
-  drawLeaf(roseCtx, cx, cy, baseScale, -0.3, 0.4, 1.2);
-  drawLeaf(roseCtx, cx, cy, baseScale, -0.6, -0.5, 1.0);
-  drawLeaf(roseCtx, cx, cy, baseScale, -0.9, 0.6, 0.9);
-  drawLeaf(roseCtx, cx, cy, baseScale, -1.2, -0.3, 0.8);
-
   // 花瓣排序（按深度，远到近）
   const sorted = allPetals.map(p => {
     const [tx,ty,tz] = transform(p.px, p.py, p.pz);

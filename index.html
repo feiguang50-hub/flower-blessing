@@ -615,14 +615,16 @@ function loop() {
 
 // ========== 3D 水晶玫瑰渲染系统 ==========
 (function(){
-  var rCanvas = document.getElementById('roseCanvas');
-  if(!rCanvas) return;
-  var rc = rCanvas.getContext('2d');
-
+  var rCanvas = null;
+  var rc = null;
+  var raf = null;
   var RX = 0.30, RY = 0.85;
   var FOV = 460;
   var auto = true;
-  var raf = null;
+  var pT = 0;
+  var FP = [];
+  var currentMat = 'amethyst';
+  var currentShape = 'round';
 
   // 材质→颜色
   var MAT_COLORS = {
@@ -814,9 +816,9 @@ function loop() {
     drawLeaf(cx,cy,sc,1.12,-Math.PI*0.22,0.122);
 
     // 光粒子上浮
-    var pT=(pT||0)+0.012;
     for(var i=0;i<FP.length;i++){
       var p=FP[i];p.y-=p.vy;if(p.y<-1.8)p.y=1.8;
+      pT += 0.012;
       var v=tr(p.x+Math.sin(pT*0.5+p.ph)*0.035,p.y,p.z);
       var pp=pj(v,cx,cy,sc);if(pp[2]<=0)continue;
       var a=Math.max(0.01,Math.min(0.5,pp[2]*0.65))*p.al;
@@ -829,12 +831,17 @@ function loop() {
   }
 
   // 暴露给外部调用
-  window._roseRender = function(material,shape,w,h){
+  window._roseRender = function(material, shape, w, h){
+    rCanvas = document.getElementById('roseCanvas');
+    if(!rCanvas) return;
+    rc = rCanvas.getContext('2d');
+    if(!rc) return;
     if(raf) cancelAnimationFrame(raf);
     rCanvas.width=w||320; rCanvas.height=h||300;
     var mc=MAT_COLORS[material]||MAT_COLORS.amethyst;
+    currentMat = material; currentShape = shape;
     initParticles(mc);
-    RX=0.30; RY=0.85; auto=true;
+    RX=0.30; RY=0.85; auto=true; pT=0;
     function frame(){
       var cx=rCanvas.width*0.5, cy=rCanvas.height*0.46;
       var sc=Math.min(rCanvas.width,rCanvas.height)*0.195;
@@ -846,7 +853,7 @@ function loop() {
 
   window._roseStop = function(){
     if(raf){cancelAnimationFrame(raf);raf=null;}
-    rc.clearRect(0,0,rCanvas.width,rCanvas.height);
+    if(rc) {rc.clearRect(0,0,rCanvas.width,rCanvas.height);}
   };
 })();
 

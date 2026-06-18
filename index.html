@@ -815,6 +815,24 @@ function loop() {
     drawLeaf(cx,cy,sc,0.78,Math.PI*0.30,0.145);
     drawLeaf(cx,cy,sc,1.12,-Math.PI*0.22,0.122);
 
+    // 花瓣飘落
+    if(!window._fallingPetals) window._fallingPetals=[];
+    var fp=window._fallingPetals;
+    while(fp.length<18){
+      var fa=Math.random()*rCanvas.width, ff=0.012+Math.random()*0.018;
+      fp.push({x:fa,y:-20-Math.random()*60,vy:ff,r:2+Math.random()*3,rot:Math.random()*Math.PI*2,dr:0.008+Math.random()*0.012,mc:mc,al:0.12+Math.random()*0.18});
+    }
+    for(var fi=0;fi<fp.length;fi++){
+      var fpe=fp[fi];fpe.y+=fpe.vy;fpe.rot+=fpe.dr;
+      if(fpe.y>rCanvas.height+30)fpe.y=-20;
+      var fr=fpe.r;
+      rc.save();rc.translate(fpe.x,fpe.y);rc.rotate(fpe.rot);
+      var frgb=fpe.mc.outer, frgba='rgba('+frgb[0]+','+frgb[1]+','+frgb[2]+','+fpe.al+')';
+      rc.beginPath();rc.ellipse(0,0,fr,fr*0.5,0,0,Math.PI*2);
+      rc.fillStyle=frgba;rc.fill();
+      rc.restore();
+    }
+
     // 光粒子上浮
     pT += 0.012;
     for(var i=0;i<FP.length;i++){
@@ -841,6 +859,7 @@ function loop() {
     var mc=MAT_COLORS[material]||MAT_COLORS.amethyst;
     currentMat = material; currentShape = shape;
     initParticles(mc);
+    window._fallingPetals = []; // 重置飘落花瓣
     RX=0.30; RY=0.85; auto=true; pT=0;
     function frame(){
       var cx=rCanvas.width*0.5, cy=rCanvas.height*0.46;

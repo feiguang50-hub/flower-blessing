@@ -378,6 +378,14 @@ function drawRose() {
   roseCtx.fillStyle = fg;
   roseCtx.fill();
 
+  // TEST — 亮黄色测试圆
+  const testX = cx;
+  const testY = cy - scale * 0.3;
+  roseCtx.beginPath();
+  roseCtx.arc(testX, testY, scale * 0.15, 0, Math.PI * 2);
+  roseCtx.fillStyle = 'rgba(255,255,0,0.9)';
+  roseCtx.fill();
+
   // 整体高光
   const hg = roseCtx.createRadialGradient(cx, cy - scale * 0.4, 0, cx, cy, scale * 1.5);
   hg.addColorStop(0, 'rgba(255,255,255,0.06)');

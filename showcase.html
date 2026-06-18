@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Celestial Crystal Rose</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: #000005;
+  overflow: hidden;
+  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: #e8e4f0;
+}
+canvas { display: block; width: 100vw; height: 100vh; }
+
+/* 深空星场背景 */
+#starCanvas { position: fixed; top: 0; left: 0; z-index: 0; }
+
+/* 内容层 */
+.content {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 10; pointer-events: none;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  padding: 50px 60px;
+}
+
+/* 顶部 */
+.brand {
+  opacity: 0;
+  animation: fadeIn 2s ease 1s forwards;
+}
+.brand-sub {
+  font-size: 10px;
+  letter-spacing: 6px;
+  color: rgba(200,200,230,0.35);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.brand-title {
+  font-size: 28px;
+  font-weight: 300;
+  letter-spacing: 12px;
+  color: rgba(240,240,255,0.7);
+}
+
+/* 底部 */
+.footer {
+  opacity: 0;
+  animation: fadeIn 2s ease 2s forwards;
+}
+.footer-line {
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: rgba(200,200,230,0.25);
+  text-align: center;
+  margin-bottom: 6px;
+}
+.footer-line span {
+  color: rgba(200,200,230,0.45);
+}
+.footer-hint {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: rgba(200,200,230,0.18);
+  text-align: center;
+  animation: hint-pulse 2.5s ease-in-out infinite;
+}
+@keyframes hint-pulse { 0%,100%{opacity:0.3} 50%{opacity:0.8} }
+
+/* 装饰线 */
+.decor-line {
+  position: fixed;
+  background: linear-gradient(90deg, transparent, rgba(200,200,255,0.08), transparent);
+  height: 1px;
+  left: 10%; right: 10%;
+  z-index: 10;
+}
+.decor-line.top { top: 100px; }
+.decor-line.bottom { bottom: 120px; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 角落装饰 */
+.corner {
+  position: fixed; width: 40px; height: 40px; z-index: 10; opacity: 0.2;
+}
+.corner-tl { top: 30px; left: 30px; border-top: 1px solid rgba(200,200,255,0.4); border-left: 1px solid rgba(200,200,255,0.4); }
+.corner-tr { top: 30px; right: 30px; border-top: 1px solid rgba(200,200,255,0.4); border-right: 1px solid rgba(200,200,255,0.4); }
+.corner-bl { bottom: 30px; left: 30px; border-bottom: 1px solid rgba(200,200,255,0.4); border-left: 1px solid rgba(200,200,255,0.4); }
+.corner-br { bottom: 30px; right: 30px; border-bottom: 1px solid rgba(200,200,255,0.4); border-right: 1px solid rgba(200,200,255,0.4); }
+
+/* 加载提示 */
+.loader {
+  position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  font-size: 10px; letter-spacing: 4px; color: rgba(200,200,255,0.3);
+  z-index: 100; transition: opacity 0.5s;
+}
+.loader.hidden { opacity: 0; pointer-events: none; }
+</style>
+</head>
+<body>
+
+<canvas id="starCanvas"></canvas>
+<canvas id="mainCanvas"></canvas>
+
+<div class="decor-line top"></div>
+<div class="decor-line bottom"></div>
+<div class="corner corner-tl"></div>
+<div class="corner corner-tr"></div>
+<div class="corner corner-bl"></div>
+<div class="corner corner-br"></div>
+
+<div class="loader" id="loader">LOADING</div>
+
+<div class="content">
+  <div class="brand">
+    <div class="brand-sub">Bespoke Collection · Celestial Series</div>
+    <div class="brand-title">CRYSTAL ROSE</div>
+  </div>
+  <div class="footer">
+    <div class="footer-line">私人定制 · 仅供授权使用</div>
+    <div class="footer-line">定制服务请私信 <span>@谢荧</span></div>
+    <div class="footer-hint">DRAG TO ROTATE · SCROLL TO ZOOM</div>
+  </div>
+</div>
+
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+
+<script type="module">
+// ================================================================
+// 深空星场背景
+// ================================================================
+const starCanvas = document.getElementById('starCanvas');
+const starCtx = starCanvas.getContext('2d');
+
+function resizeStar() {
+  starCanvas.width = window.innerWidth;
+  starCanvas.height = window.innerHeight;
+}
+resizeStar();
+window.addEventListener('resize', resizeStar);
+
+// 生成密集星场
+const STAR_COUNT = 600;
+const stars = [];
+for (let i = 0; i < STAR_COUNT; i++) {
+  stars.push({
+    x: Math.random(),
+    y: Math.random(),
+    size: 0.3 + Math.random() * 1.8,
+    opacity: 0.2 + Math.random() * 0.8,
+    twinkleSpeed: 0.005 + Math.random() * 0.015,
+    twinklePhase: Math.random() * Math.PI * 2,
+  });
+}
+
+// 星云粒子
+const NEBULA_COUNT = 120;
+const nebula = [];
+for (let i = 0; i < NEBULA_COUNT; i++) {
+  nebula.push({
+    x: Math.random(),
+    y: Math.random(),
+    size: 30 + Math.random() * 80,
+    opacity: 0.008 + Math.random() * 0.02,
+    hue: 220 + Math.random() * 60, // 蓝紫范围
+  });
+}
+
+let starTime = 0;
+function drawStars() {
+  starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
+  starCtx.fillStyle = '#000005';
+  starCtx.fillRect(0, 0, starCanvas.width, starCanvas.height);
+  starTime += 0.01;
+  const W = starCanvas.width, H = starCanvas.height;
+
+  // 星云
+  for (const n of nebula) {
+    const g = starCtx.createRadialGradient(n.x*W, n.y*H, 0, n.x*W, n.y*H, n.size);
+    g.addColorStop(0, `hsla(${n.hue},60%,30%,${n.opacity})`);
+    g.addColorStop(1, 'transparent');
+    starCtx.fillStyle = g;
+    starCtx.fillRect(0, 0, W, H);
+  }
+
+  // 星星
+  for (const s of stars) {
+    const twinkle = Math.sin(starTime * s.twinkleSpeed * 60 + s.twinklePhase);
+    const op = s.opacity * (0.5 + 0.5 * twinkle);
+    starCtx.beginPath();
+    starCtx.arc(s.x * W, s.y * H, s.size, 0, Math.PI * 2);
+    starCtx.fillStyle = `rgba(220,225,255,${op})`;
+    starCtx.fill();
+  }
+
+  requestAnimationFrame(drawStars);
+}
+drawStars();
+
+// ================================================================
+// Three.js 水晶玫瑰
+// ================================================================
+const scene = new THREE.Scene();
+scene.background = null;
+
+const camera = new THREE.PerspectiveCamera(40, innerWidth / innerHeight, 0.1, 1000);
+camera.position.set(0, 1.2, 7);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setSize(innerWidth, innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.4;
+document.body.appendChild(renderer.domElement);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.04;
+controls.enablePan = false;
+controls.minDistance = 3;
+controls.maxDistance = 14;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 0.3;
+controls.maxPolarAngle = Math.PI * 0.92;
+
+// 灯光系统 - 棚拍产品灯光
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+scene.add(ambientLight);
+
+// 主光 - 柔和正面光
+const keyLight = new THREE.DirectionalLight(0xffffff, 2.5);
+keyLight.position.set(3, 8, 5);
+keyLight.castShadow = true;
+scene.add(keyLight);
+
+// 补光
+const fillLight = new THREE.DirectionalLight(0xe8e0ff, 0.8);
+fillLight.position.set(-4, 4, 2);
+scene.add(fillLight);
+
+// 边缘光 - 分离轮廓
+const rimLight = new THREE.DirectionalLight(0xffffff, 1.8);
+rimLight.position.set(0, -2, -8);
+scene.add(rimLight);
+
+// 顶部高光
+const topLight = new THREE.PointLight(0xffffff, 1.2, 20);
+topLight.position.set(0, 10, 0);
+scene.add(topLight);
+
+// 水晶玫瑰材质
+const crystalMat = new THREE.MeshPhysicalMaterial({
+  color: new THREE.Color(0xfafafa),
+  emissive: new THREE.Color(0xe8e8f0),
+  emissiveIntensity: 0.15,
+  transparent: true,
+  opacity: 0.88,
+  metalness: 0.0,
+  roughness: 0.05,
+  transmission: 0.55,
+  thickness: 1.2,
+  ior: 1.55,
+  reflectivity: 0.5,
+  side: THREE.DoubleSide,
+  envMapIntensity: 1.2,
+});
+
+// 花瓣生成函数
+function createCrystalPetal(angle, tilt, radius, length, width, rotZ, layer) {
+  const shape = new THREE.Shape();
+  // 水晶花瓣形状 - 细长优雅
+  shape.moveTo(0, 0);
+  shape.bezierCurveTo(width * 0.6, length * 0.12, width * 1.2, length * 0.55, width * 0.5, length * 0.92);
+  shape.bezierCurveTo(width * 0.2, length, -width * 0.2, length, -width * 0.5, length * 0.92);
+  shape.bezierCurveTo(-width * 1.2, length * 0.55, -width * 0.6, length * 0.12, 0, 0);
+
+  const geo = new THREE.ShapeGeometry(shape, 24);
+  const mat = crystalMat.clone();
+
+  // 不同层透明度略有不同
+  mat.opacity = 0.82 + layer * 0.03;
+  mat.emissiveIntensity = 0.1 + layer * 0.02;
+
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.rotation.x = tilt;
+  mesh.rotation.y = angle;
+  mesh.rotation.z = rotZ + (Math.random() - 0.5) * 0.08;
+  mesh.position.set(
+    Math.cos(angle) * radius,
+    0,
+    Math.sin(angle) * radius
+  );
+  mesh.castShadow = true;
+  return mesh;
+}
+
+// 玫瑰组
+const roseGroup = new THREE.Group();
+
+// 花心 - 密集卷曲
+for (let i = 0; i < 8; i++) {
+  const a = (i / 8) * Math.PI * 2;
+  const petal = createCrystalPetal(a, Math.PI * 0.85, 0.05, 0.28, 0.12, 0, 0);
+  petal.rotation.z = (Math.random() - 0.5) * 0.3;
+  roseGroup.add(petal);
+}
+
+// 内层
+for (let i = 0; i < 10; i++) {
+  const a = (i / 10) * Math.PI * 2 + 0.1;
+  const petal = createCrystalPetal(a, Math.PI * 0.72, 0.12, 0.42, 0.18, 0, 1);
+  petal.rotation.z = (Math.random() - 0.5) * 0.25;
+  roseGroup.add(petal);
+}
+
+// 中层
+for (let i = 0; i < 14; i++) {
+  const a = (i / 14) * Math.PI * 2 - 0.12;
+  const petal = createCrystalPetal(a, Math.PI * 0.52, 0.25, 0.6, 0.25, (Math.random() - 0.5) * 0.2, 2);
+  roseGroup.add(petal);
+}
+
+// 外层
+for (let i = 0; i < 18; i++) {
+  const a = (i / 18) * Math.PI * 2 + 0.08;
+  const petal = createCrystalPetal(a, Math.PI * 0.32, 0.4, 0.75, 0.3, (Math.random() - 0.5) * 0.25, 3);
+  roseGroup.add(petal);
+}
+
+// 最外层
+for (let i = 0; i < 14; i++) {
+  const a = (i / 14) * Math.PI * 2 - 0.15;
+  const petal = createCrystalPetal(a, Math.PI * 0.18, 0.55, 0.82, 0.32, (Math.random() - 0.5) * 0.3, 4);
+  roseGroup.add(petal);
+}
+
+// 花心球
+const centerGeo = new THREE.SphereGeometry(0.12, 16, 16);
+const centerMat = new THREE.MeshPhysicalMaterial({
+  color: new THREE.Color(0xfafafa),
+  emissive: new THREE.Color(0xe0e0f0),
+  emissiveIntensity: 0.3,
+  transparent: true,
+  opacity: 0.92,
+  roughness: 0.02,
+  metalness: 0.0,
+  transmission: 0.5,
+  thickness: 0.5,
+});
+const center = new THREE.Mesh(centerGeo, centerMat);
+center.position.y = 0.05;
+center.castShadow = true;
+roseGroup.add(center);
+
+// 茎
+const stemGeo = new THREE.CylinderGeometry(0.025, 0.035, 3.0, 12);
+const stemMat = new THREE.MeshPhysicalMaterial({
+  color: new THREE.Color(0xfafafa),
+  transparent: true,
+  opacity: 0.65,
+  roughness: 0.05,
+  metalness: 0.0,
+  transmission: 0.4,
+  thickness: 0.8,
+});
+const stem = new THREE.Mesh(stemGeo, stemMat);
+stem.position.y = -1.8;
+roseGroup.add(stem);
+
+// 小叶子
+function createCrystalLeaf(x, y, rot, scale) {
+  const leafShape = new THREE.Shape();
+  leafShape.moveTo(0, 0);
+  leafShape.bezierCurveTo(0.3 * scale, 0.2 * scale, 0.5 * scale, 0.8 * scale, 0.2 * scale, 1.5 * scale);
+  leafShape.bezierCurveTo(0, 1.8 * scale, -0.2 * scale, 1.5 * scale, -0.5 * scale, 0.8 * scale);
+  leafShape.bezierCurveTo(-0.3 * scale, 0.2 * scale, 0, 0, 0, 0);
+  const leafGeo = new THREE.ShapeGeometry(leafShape, 16);
+  const leafMat = crystalMat.clone();
+  leafMat.opacity = 0.7;
+  const leaf = new THREE.Mesh(leafGeo, leafMat);
+  leaf.position.set(x, y, 0);
+  leaf.rotation.y = rot;
+  leaf.rotation.z = Math.PI * 0.1;
+  leaf.castShadow = true;
+  return leaf;
+}
+
+roseGroup.add(createCrystalLeaf(0.08, -0.8, 0.3, 0.5));
+roseGroup.add(createCrystalLeaf(-0.08, -1.2, -0.4, 0.45));
+roseGroup.add(createCrystalLeaf(0.06, -1.6, 0.5, 0.4));
+
+roseGroup.position.y = 0.5;
+roseGroup.rotation.x = 0.1; // 稍微低角度
+scene.add(roseGroup);
+
+// 地面（不可见，用于阴影）
+const ground = new THREE.Mesh(
+  new THREE.PlaneGeometry(50, 50),
+  new THREE.ShadowMaterial({ opacity: 0 })
+);
+ground.rotation.x = -Math.PI / 2;
+ground.position.y = -2.3;
+ground.receiveShadow = true;
+scene.add(ground);
+
+// 漂浮微粒
+const FLOAT_COUNT = 60;
+const floatGeo = new THREE.BufferGeometry();
+const floatPos = new Float32Array(FLOAT_COUNT * 3);
+for (let i = 0; i < FLOAT_COUNT; i++) {
+  floatPos[i * 3] = (Math.random() - 0.5) * 8;
+  floatPos[i * 3 + 1] = (Math.random() - 0.5) * 8;
+  floatPos[i * 3 + 2] = (Math.random() - 0.5) * 8;
+}
+floatGeo.setAttribute('position', new THREE.BufferAttribute(floatPos, 3));
+const floatMat = new THREE.PointsMaterial({
+  color: 0xffffff,
+  size: 0.04,
+  transparent: true,
+  opacity: 0.5,
+  blending: THREE.AdditiveBlending,
+  sizeAttenuation: true,
+});
+const floatParticles = new THREE.Points(floatGeo, floatMat);
+scene.add(floatParticles);
+
+// ================================================================
+// 动画
+// ================================================================
+let time = 0;
+function animate() {
+  requestAnimationFrame(animate);
+  time += 0.005;
+
+  // 玫瑰轻微浮动
+  roseGroup.position.y = 0.5 + Math.sin(time * 0.8) * 0.08;
+  roseGroup.rotation.z = Math.sin(time * 0.5) * 0.01;
+
+  // 微粒漂浮
+  const fpos = floatGeo.attributes.position.array;
+  for (let i = 0; i < FLOAT_COUNT; i++) {
+    fpos[i * 3 + 1] += 0.003;
+    fpos[i * 3] += Math.sin(time + i) * 0.001;
+    if (fpos[i * 3 + 1] > 4) fpos[i * 3 + 1] = -4;
+  }
+  floatGeo.attributes.position.needsUpdate = true;
+
+  controls.update();
+  renderer.render(scene, camera);
+}
+
+// 隐藏加载提示
+setTimeout(() => {
+  document.getElementById('loader').classList.add('hidden');
+  animate();
+}, 800);
+
+window.addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+  resizeStar();
+});
+</script>
+</body>
+</html>

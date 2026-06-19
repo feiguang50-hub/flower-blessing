@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>专属祝福贺卡</title>
+<style>
+:root {
+  --bg-from: #1a1a2e;
+  --bg-to: #0f3460;
+  --border-from: #ffd700;
+  --border-to: #daa520;
+  --glow-color: rgba(255,215,0,0.4);
+  --glow-strong: rgba(255,215,0,0.65);
+  --text-primary: #ffd700;
+  --text-secondary:#e8c87a;
+  --text-accent: #fff4cc;
+  --card-bg: rgba(10,10,30,0.88);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  min-height: 100vh;
+  background: linear-gradient(160deg, var(--bg-from) 0%, var(--bg-to) 100%);
+  font-family: 'Georgia', 'Noto Serif SC', serif;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; position: relative;
+}
+#bgCanvas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+
+/* ═══ 页面容器 ═══ */
+.pages {
+  position: relative;
+  width: min(480px, 92vw);
+  min-height: min(680px, 85vh);
+  z-index: 10;
+}
+.page {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.page.hidden { opacity: 0; pointer-events: none; transform: scale(0.95); }
+
+/* ═══ 封面 ═══ */
+.cover-hint {
+  font-size: 11px; color: var(--text-secondary); letter-spacing: 3px;
+  text-transform: uppercase; margin-bottom: 12px; opacity: 0.6;
+  animation: hintPulse 2.5s ease-in-out infinite;
+}
+@keyframes hintPulse { 0%,100% { opacity: 0.4; } 50% { opacity: 0.9; } }
+.cover-icon { font-size: 64px; margin-bottom: 20px; animation: floatIcon 3s ease-in-out infinite; }
+@keyframes floatIcon { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.cover-title {
+  font-size: clamp(22px, 6vw, 32px); color: var(--text-primary);
+  letter-spacing: 6px; margin-bottom: 8px; text-align: center;
+}
+.cover-subtitle { font-size: 13px; color: var(--text-secondary); letter-spacing: 2px; margin-bottom: 40px; opacity: 0.7; }
+.cover-btn {
+  background: none; border: 1.5px solid var(--border-from); color: var(--text-primary);
+  padding: 14px 36px; border-radius: 40px; font-size: 13px; letter-spacing: 3px;
+  cursor: pointer; transition: all 0.3s ease; font-family: inherit;
+  position: relative; overflow: hidden;
+}
+.cover-btn::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--border-from), var(--border-to));
+  opacity: 0; transition: opacity 0.3s ease;
+}
+.cover-btn:hover { box-shadow: 0 0 25px var(--glow-color); transform: scale(1.05); }
+.cover-btn:hover::before { opacity: 0.15; }
+.cover-btn span { position: relative; z-index: 1; }
+
+/* ═══ 边框包裹 ═══ */
+.card-wrap {
+  position: relative; padding: 2px; border-radius: 30px;
+  background: linear-gradient(135deg, var(--border-from), var(--border-to), var(--border-from));
+  background-size: 300% 300%; animation: borderFlow 4s ease infinite;
+  box-shadow: 0 0 25px var(--glow-color); width: 100%;
+}
+@keyframes borderFlow {
+  0% { background-position: 0% 50%; box-shadow: 0 0 25px var(--glow-color); }
+  50% { background-position: 100% 50%; box-shadow: 0 0 45px var(--glow-strong); }
+  100% { background-position: 0% 50%; box-shadow: 0 0 25px var(--glow-color); }
+}
+.card {
+  background: var(--card-bg); border-radius: 28px; padding: clamp(32px, 6vw, 52px) clamp(24px, 6vw, 48px);
+  text-align: center; backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+}
+.card::before {
+  content: ''; position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
+  width: 70%; height: 120px;
+  background: radial-gradient(ellipse, var(--glow-color) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ═══ 第二页内容 ═══ */
+.page2-icon { font-size: 48px; margin-bottom: 16px; animation: iconDrop 0.8s cubic-bezier(0.34,1.56,0.64,1) 0.2s both; }
+.page2-name {
+  font-size: clamp(24px, 6vw, 40px); color: var(--text-primary);
+  letter-spacing: 6px; margin-bottom: 10px;
+  animation: slideUp 1s cubic-bezier(0.34,1.56,0.64,1) 0.4s both;
+}
+.page2-date {
+  font-size: 12px; color: var(--text-secondary); letter-spacing: 3px; margin-bottom: 24px; opacity: 0.7;
+  animation: slideUp 1s ease 0.6s both;
+}
+.page2-divider {
+  width: 40px; height: 1.5px; background: linear-gradient(90deg, transparent, var(--border-from), transparent);
+  margin: 0 auto 20px; border-radius: 2px; animation: slideUp 0.8s ease 0.75s both;
+}
+.page2-blessing {
+  font-size: clamp(13px, 3.5vw, 15px); color: var(--text-accent);
+  line-height: 2; letter-spacing: 1.5px; max-width: 300px; margin: 0 auto 28px;
+  animation: slideUp 1s ease 0.9s both;
+}
+.page2-from {
+  font-size: 11px; color: var(--text-secondary); letter-spacing: 2px; opacity: 0.6;
+  animation: slideUp 0.8s ease 1.05s both;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes iconDrop {
+  from { opacity: 0; transform: scale(0.5) translateY(-15px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ═══ 彩蛋按钮 ═══ */
+.egg-btn {
+  display: inline-block; margin-top: 28px; padding: 10px 24px;
+  border: 1px dashed var(--border-from); border-radius: 20px;
+  font-size: 11px; color: var(--text-secondary); letter-spacing: 2px;
+  cursor: pointer; transition: all 0.3s ease; opacity: 0.6;
+  animation: slideUp 0.8s ease 1.3s both;
+}
+.egg-btn:hover { opacity: 1; border-color: var(--text-primary); color: var(--text-primary); box-shadow: 0 0 15px var(--glow-color); }
+
+/* ═══ 第三页：彩蛋内容 ═══ */
+.egg-wrap {
+  position: relative; padding: 2px; border-radius: 30px;
+  background: linear-gradient(135deg, #ff96b4, #b43c6e, #ff96b4);
+  background-size: 300% 300%; animation: eggBorderFlow 4s ease infinite;
+  box-shadow: 0 0 30px rgba(255,100,150,0.4); width: 100%;
+}
+@keyframes eggBorderFlow {
+  0% { background-position: 0% 50%; box-shadow: 0 0 30px rgba(255,100,150,0.4); }
+  50% { background-position: 100% 50%; box-shadow: 0 0 50px rgba(255,100,150,0.6); }
+  100% { background-position: 0% 50%; box-shadow: 0 0 30px rgba(255,100,150,0.4); }
+}
+.egg-card {
+  background: rgba(30,5,20,0.92); border-radius: 28px;
+  padding: clamp(32px, 6vw, 52px) clamp(24px, 6vw, 48px);
+  text-align: center; backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+}
+.egg-label {
+  font-size: 10px; color: #ffb3cb; letter-spacing: 4px; text-transform: uppercase;
+  margin-bottom: 10px; opacity: 0.7; animation: slideUp 0.8s ease 0.2s both;
+}
+.egg-title {
+  font-size: clamp(16px, 4vw, 22px); color: #ffb3cb;
+  letter-spacing: 3px; margin-bottom: 20px; line-height: 1.8;
+  animation: slideUp 1s ease 0.4s both;
+}
+.egg-moment {
+  font-size: clamp(12px, 3vw, 14px); color: #e880a0;
+  line-height: 2; letter-spacing: 1px; max-width: 280px; margin: 0 auto 24px;
+  font-style: italic; animation: slideUp 1s ease 0.6s both;
+}
+.egg-sign {
+  font-size: 11px; color: #b090e0; letter-spacing: 3px;
+  animation: slideUp 0.8s ease 0.8s both;
+}
+.egg-hearts {
+  font-size: 20px; margin-top: 16px; letter-spacing: 8px; animation: heartBeat 1.5s ease-in-out infinite 1.2s both;
+  opacity: 0.7;
+}
+@keyframes heartBeat { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+
+/* ═══ 星星装饰 ═══ */
+.stars {
+  position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+}
+.star {
+  position: absolute; width: 3px; height: 3px; background: white;
+  border-radius: 50%; animation: twinkle var(--d, 2s) ease-in-out infinite var(--delay, 0s);
+}
+@keyframes twinkle { 0%,100% { opacity: 0.2; } 50% { opacity: 1; } }
+
+/* ═══ 减少动效 ═══ */
+@media (prefers-reduced-motion: reduce) {
+  .page, .cover-btn, .egg-btn { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<canvas id="bgCanvas"></canvas>
+<div class="pages">
+
+  <!-- 第一页：封面 -->
+  <div class="page" id="page1">
+    <p class="cover-hint">一份专属于你的礼物</p>
+    <div class="cover-icon">💌</div>
+    <h1 class="cover-title">生日快乐</h1>
+    <p class="cover-subtitle">戳下方，看看还有什么</p>
+    <button class="cover-btn" onclick="go(1)"><span>打开贺卡</span></button>
+  </div>
+
+  <!-- 第二页：主祝福 -->
+  <div class="page hidden" id="page2">
+    <div class="card-wrap">
+      <div class="card">
+        <div class="page2-icon">🎂</div>
+        <div class="page2-name" id="nameEl2">小琳</div>
+        <div class="page2-date" id="dateEl2">2026年6月20日</div>
+        <div class="page2-divider"></div>
+        <div class="page2-blessing" id="blessingEl2">愿你的世界里永远有光<br>愿每一天都值得期待</div>
+        <div class="page2-from" id="fromEl2">— 爱你的姐姐</div>
+        <div class="egg-btn" onclick="go(2)">♡ 发现专属彩蛋</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 第三页：彩蛋 -->
+  <div class="page hidden" id="page3">
+    <div class="egg-wrap">
+      <div class="egg-card">
+        <div class="egg-label">✨ 专属彩蛋 ✨</div>
+        <div class="egg-title" id="eggName">给小琳的悄悄话</div>
+        <div class="egg-moment" id="eggContent">
+          "还记得我们第一次见面吗？<br>
+          那天下着小雨，你递给我一把伞。<br>
+          从那一刻起，我的世界就多了一个你。<br><br>
+          今天是属于你的日子，<br>
+          只想告诉你——<br>
+          遇见你，真好。"
+        </div>
+        <div class="egg-sign" id="eggSign">— 写于深夜</div>
+        <div class="egg-hearts">💕 💗 💖</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 装饰星星 -->
+<div class="stars" id="stars"></div>
+
+<script>
+/* ═══ URL参数解析 ═══ */
+const p = new URLSearchParams(location.search);
+const name = p.get('n') || '亲爱的你';
+const date = p.get('d') || (new Date().toLocaleDateString('zh-CN', {year:'numeric',month:'long',day:'numeric'}));
+const blessing = p.get('b') || '愿你的世界里永远有光，愿每一天都值得期待';
+const from = p.get('f') || '爱你的人';
+const eggName = p.get('en') || '给小琳的悄悄话';
+const eggContent = p.get('ec') || `"还记得我们第一次见面吗？\n那天下着小雨，你递给我一把伞。\n从那一刻起，我的世界就多了一个你。\n\n今天是属于你的日子，\n只想告诉你——\n遇见你，真好。"`;
+const eggSign = p.get('es') || '写于深夜';
+
+document.getElementById('nameEl2').textContent = name;
+document.getElementById('dateEl2').textContent = date;
+document.getElementById('blessingEl2').innerHTML = blessing.replace(/\n/g, '<br>');
+document.getElementById('fromEl2').textContent = '— ' + from;
+document.getElementById('eggName').textContent = eggName;
+document.getElementById('eggContent').innerHTML = eggContent.replace(/\n/g, '<br>');
+document.getElementById('eggSign').textContent = '— ' + eggSign;
+
+/* ═══ 翻页 ═══ */
+function go(n) {
+  document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+  document.getElementById('page' + (n + 1)).classList.remove('hidden');
+}
+
+/* ═══ 背景粒子 ═══ */
+const canvas = document.getElementById('bgCanvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.size = Math.random() * 2 + 0.5;
+    this.speedY = -Math.random() * 0.5 - 0.2;
+    this.speedX = (Math.random() - 0.5) * 0.3;
+    this.opacity = Math.random() * 0.5 + 0.2;
+    this.hue = 48 + (Math.random() - 0.5) * 20;
+  }
+  update() {
+    this.y += this.speedY;
+    this.x += this.speedX;
+    if (this.y < -10) this.reset(), this.y = canvas.height + 10;
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = `hsla(${this.hue},80%,70%,${this.opacity})`;
+    ctx.fill();
+  }
+}
+
+if (!reduced) {
+  for (let i = 0; i < 40; i++) particles.push(new Particle());
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => p.update(), p.draw());
+    requestAnimationFrame(animate);
+  }
+  animate();
+}
+
+/* ═══ 星星装饰 ═══ */
+const starsEl = document.getElementById('stars');
+for (let i = 0; i < 30; i++) {
+  const star = document.createElement('div');
+  star.className = 'star';
+  star.style.left = Math.random() * 100 + '%';
+  star.style.top = Math.random() * 100 + '%';
+  star.style.setProperty('--d', (1.5 + Math.random() * 2) + 's');
+  star.style.setProperty('--delay', Math.random() * 3 + 's');
+  starsEl.appendChild(star);
+}
+</script>
+</body>
+</html>

@@ -17,7 +17,7 @@ body {
   position: relative;
 }
 
-/* 樱花飘落 - CSS动画版 */
+/* 樱花飘落 */
 .petal {
   position: fixed;
   width: 14px;
@@ -35,14 +35,14 @@ body {
 
 /* 卡片 */
 .card {
-  background: rgba(255,255,255,0.6);
-  border: 2px solid rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.7);
+  border: 2px solid rgba(255,255,255,0.9);
   border-radius: 28px;
   padding: 48px 56px;
   text-align: center;
   max-width: 520px;
   width: 90vw;
-  box-shadow: 0 16px 48px rgba(200,100,130,0.2);
+  box-shadow: 0 16px 48px rgba(200,100,130,0.25);
   animation: float 4s ease-in-out infinite;
   position: relative;
   z-index: 10;
@@ -52,41 +52,46 @@ body {
   50% { transform: translateY(-8px); }
 }
 
-/* 文字动画 */
+/* 文字 - 直接显示，不用动画控制显隐 */
 .name {
   font-size: clamp(28px, 7vw, 52px);
   color: #8b4557;
   letter-spacing: 8px;
   margin-bottom: 16px;
-  animation: fadeIn 1.5s ease-out both;
+  opacity: 1;
+  /* 入场动画：轻微上浮效果 */
+  animation: slideUp 1.2s ease-out both;
 }
 .date {
   font-size: clamp(12px, 2.5vw, 16px);
   color: #b87085;
   letter-spacing: 4px;
   margin-bottom: 32px;
-  animation: fadeIn 1.5s ease-out 0.3s both;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.25s both;
 }
 .blessing {
   font-size: clamp(16px, 3.5vw, 22px);
   color: #c0607a;
   line-height: 1.9;
   letter-spacing: 2px;
-  animation: fadeIn 1.5s ease-out 0.6s both;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.5s both;
 }
 .from {
   font-size: clamp(12px, 2vw, 15px);
   color: #d4a0b0;
   margin-top: 24px;
   letter-spacing: 3px;
-  animation: fadeIn 1.5s ease-out 0.9s both;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.75s both;
 }
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* 底部装饰 */
+/* 顶部装饰 */
 .card::before {
   content: '🌸';
   font-size: 32px;

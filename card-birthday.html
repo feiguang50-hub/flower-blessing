@@ -17,202 +17,300 @@ body {
   position: relative;
 }
 
-/* 气球 */
+/* === 星空背景流动 === */
+.stars-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(100,80,200,0.15) 0%, transparent 60%),
+              radial-gradient(ellipse at 0% 100%, rgba(200,100,150,0.1) 0%, transparent 50%);
+  animation: bgShift 8s ease-in-out infinite;
+}
+@keyframes bgShift {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+/* === 星星粒子 === */
+.star {
+  position: fixed;
+  background: #fff;
+  border-radius: 50%;
+  animation: starTwinkle ease-in-out infinite;
+  z-index: 1;
+}
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.5); }
+}
+
+/* === 气球 === */
 .balloon {
   position: fixed;
-  width: 40px;
-  height: 52px;
+  width: 38px;
+  height: 50px;
   border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-  animation: rise linear infinite;
-  z-index: 1;
+  animation: balloonRise linear infinite;
+  z-index: 2;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
 }
 .balloon::before {
   content: '';
   position: absolute;
-  bottom: -6px;
+  bottom: -8px;
   left: 50%;
   transform: translateX(-50%);
   width: 0;
   height: 0;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
-  border-top: 8px solid inherit;
+  border-top: 10px solid inherit;
 }
 .balloon::after {
   content: '';
   position: absolute;
-  bottom: -80px;
+  bottom: -90px;
   left: 50%;
   width: 1px;
-  height: 70px;
-  background: rgba(255,255,255,0.3);
+  height: 80px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
 }
-@keyframes rise {
-  0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+@keyframes balloonRise {
+  0%   { transform: translateY(100vh) rotate(-5deg); opacity: 0; }
   5%   { opacity: 0.9; }
   95%  { opacity: 0.9; }
-  100% { transform: translateY(-120vh) rotate(20deg); opacity: 0; }
+  100% { transform: translateY(-100px) rotate(5deg); opacity: 0; }
 }
 
-/* 蛋糕 */
-.cake {
+/* === 蛋糕 === */
+.cake-wrap {
   position: fixed;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   font-size: 80px;
   z-index: 2;
-  animation: cakeFloat 3s ease-in-out infinite;
+  animation: cakeBob 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(255,200,100,0.4));
 }
-@keyframes cakeFloat {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(-6px); }
+@keyframes cakeBob {
+  0%, 100% { transform: translateX(-50%) translateY(0) rotate(-1deg); }
+  50% { transform: translateX(-50%) translateY(-8px) rotate(1deg); }
 }
-
-/* 蜡烛火焰 */
 .flame {
   position: absolute;
-  top: -18px;
+  top: -22px;
   left: 50%;
   transform: translateX(-50%);
-  width: 10px;
-  height: 16px;
-  background: radial-gradient(ellipse at bottom, #fff 0%, #ffd700 30%, #ff6600 60%, transparent 100%);
+  width: 12px;
+  height: 18px;
+  background: radial-gradient(ellipse at bottom, #fff 0%, #ffd700 30%, #ff6600 70%, transparent 100%);
   border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%;
-  animation: flicker 0.3s ease-in-out infinite alternate;
+  animation: flameFlicker 0.25s ease-in-out infinite alternate;
 }
-@keyframes flicker {
+@keyframes flameFlicker {
   0%   { transform: translateX(-50%) scaleY(1) scaleX(1); }
-  100% { transform: translateX(-50%) scaleY(1.2) scaleX(0.8); }
+  100% { transform: translateX(-50%) scaleY(1.3) scaleX(0.7); }
 }
 
-/* 卡片 */
+/* === 卡片 === */
 .card {
-  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.08) 100%);
-  border: 1px solid rgba(255,255,255,0.2);
+  background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.05) 100%);
+  border: 1px solid rgba(255,215,0,0.25);
   border-radius: 32px;
   padding: 52px 60px;
   text-align: center;
   max-width: 540px;
   width: 90vw;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-  animation: cardIn 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4),
+              0 0 40px rgba(255,215,0,0.1),
+              inset 0 0 40px rgba(255,215,0,0.05);
+  animation: cardPop cubic-bezier(0.34,1.56,0.64,1) both;
   position: relative;
   z-index: 10;
+  overflow: hidden;
 }
-@keyframes cardIn {
-  from { opacity: 0; transform: scale(0.7) translateY(60px); }
+@keyframes cardPop {
+  from { opacity: 0; transform: scale(0.6) translateY(60px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
+/* 卡片光效 */
+.card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg at 50% 50%,
+    transparent 0deg,
+    rgba(255,215,0,0.08) 60deg,
+    transparent 120deg,
+    rgba(255,215,0,0.05) 180deg,
+    transparent 240deg,
+    rgba(255,215,0,0.08) 300deg,
+    transparent 360deg);
+  animation: cardGlow 6s linear infinite;
+  pointer-events: none;
+}
+@keyframes cardGlow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* 文字 */
 .happy {
-  font-size: clamp(18px, 4vw, 28px);
+  font-size: clamp(16px, 3.5vw, 24px);
   color: #ffd700;
-  letter-spacing: 12px;
+  letter-spacing: 14px;
   margin-bottom: 20px;
-  animation: slideIn 1s ease-out 0.5s both;
+  opacity: 1;
+  animation: happyIn 1s cubic-bezier(0.34,1.56,0.64,1) 0.4s both;
+  text-shadow: 0 0 20px rgba(255,215,0,0.6);
+}
+@keyframes happyIn {
+  from { opacity: 0; transform: scale(0.5) rotate(-10deg); }
+  to   { opacity: 1; transform: scale(1) rotate(0deg); }
 }
 .name {
   font-size: clamp(32px, 8vw, 60px);
-  color: #ffffff;
+  color: #fff;
   letter-spacing: 10px;
   margin-bottom: 16px;
-  text-shadow: 0 0 30px rgba(255,215,0,0.5);
-  animation: slideIn 1s ease-out 0.8s both;
+  opacity: 1;
+  animation: nameIn 1s cubic-bezier(0.34,1.56,0.64,1) 0.7s both;
+  text-shadow: 0 0 30px rgba(255,255,255,0.4), 0 0 60px rgba(255,215,0,0.3);
+}
+@keyframes nameIn {
+  from { opacity: 0; transform: translateY(30px) scale(0.9); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 .age {
-  font-size: clamp(48px, 12vw, 88px);
+  font-size: clamp(52px, 14vw, 96px);
   color: #ffd700;
   font-weight: bold;
   line-height: 1;
   margin-bottom: 8px;
-  text-shadow: 0 0 40px rgba(255,215,0,0.6);
-  animation: popIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 1.1s both;
+  opacity: 1;
+  animation: agePop 0.8s cubic-bezier(0.34,1.56,0.64,1) 1s both;
+  text-shadow: 0 0 40px rgba(255,215,0,0.7), 0 0 80px rgba(255,215,0,0.3);
+}
+@keyframes agePop {
+  0%   { opacity: 0; transform: scale(0.3); }
+  60%  { transform: scale(1.2); }
+  100% { opacity: 1; transform: scale(1); }
 }
 .age-label {
   font-size: clamp(14px, 3vw, 20px);
   color: rgba(255,215,0,0.7);
-  letter-spacing: 8px;
+  letter-spacing: 10px;
   margin-bottom: 28px;
-  animation: slideIn 1s ease-out 1.2s both;
+  opacity: 1;
+  animation: labelIn 0.8s ease-out 1.2s both;
+}
+@keyframes labelIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .blessing {
   font-size: clamp(14px, 3vw, 18px);
   color: rgba(255,255,255,0.9);
   line-height: 2;
   letter-spacing: 3px;
-  animation: slideIn 1s ease-out 1.4s both;
+  opacity: 1;
+  animation: textIn 0.8s ease-out 1.4s both;
 }
 .from {
   font-size: clamp(12px, 2.5vw, 16px);
   color: rgba(255,255,255,0.5);
   margin-top: 24px;
   letter-spacing: 4px;
-  animation: slideIn 1s ease-out 1.6s both;
+  opacity: 1;
+  animation: textIn 0.8s ease-out 1.6s both;
 }
-
-@keyframes slideIn {
-  from { opacity: 0; transform: translateY(30px); }
+@keyframes textIn {
+  from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-@keyframes popIn {
-  from { opacity: 0; transform: scale(0.3); }
-  to   { opacity: 1; transform: scale(1); }
+
+/* 蛋糕emoji */
+.cake-icon {
+  font-size: 28px;
+  margin-top: 20px;
+  animation: iconPulse 2s ease-in-out infinite;
+  display: block;
+}
+@keyframes iconPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
 }
 </style>
 </head>
 <body>
 
-<!-- 气球 -->
-<script>
-const colors = ['#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#ff922b','#cc5de8'];
-for (let i = 0; i < 14; i++) {
-  const b = document.createElement('div');
-  b.className = 'balloon';
-  b.style.left = Math.random() * 100 + 'vw';
-  b.style.animationDuration = (6 + Math.random() * 6) + 's';
-  b.style.animationDelay = Math.random() * 8 + 's';
-  b.style.background = colors[i % colors.length];
-  document.body.appendChild(b);
-}
-</script>
-
-<!-- 蛋糕 -->
-<div class="cake">🎂</div>
-
-<!-- 卡片 -->
 <div class="card">
-  <div class="happy">HAPPY BIRTHDAY</div>
+  <div class="happy">✦ HAPPY BIRTHDAY ✦</div>
   <div class="name" id="nameEl"></div>
   <div class="age" id="ageEl"></div>
   <div class="age-label">周岁了</div>
   <div class="blessing" id="blessingEl"></div>
   <div class="from" id="fromEl"></div>
+  <span class="cake-icon">🎂</span>
 </div>
 
 <script>
 const p = new URLSearchParams(location.search);
-// n=收礼人 d=日期(用于算年龄或显示) b=祝福语 f=送礼人
 document.getElementById('nameEl').textContent = p.get('n') || '';
 document.getElementById('blessingEl').textContent = p.get('b') || '';
 document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
 
-// 用日期算年龄：今年 - 出生年，或直接显示日期
 const d = p.get('d');
 if (d) {
   const birthYear = parseInt(d.split(/[年月日.\-]/)[0]);
   if (birthYear > 1900) {
     const age = new Date().getFullYear() - birthYear;
-    if (age > 0 && age < 150) {
-      document.getElementById('ageEl').textContent = age;
-    } else {
-      document.getElementById('ageEl').textContent = d;
-    }
+    if (age > 0 && age < 150) document.getElementById('ageEl').textContent = age;
+    else document.getElementById('ageEl').textContent = d;
   } else {
     document.getElementById('ageEl').textContent = d;
   }
 }
+
+// 背景星星
+for (let i = 0; i < 80; i++) {
+  const star = document.createElement('div');
+  star.className = 'star';
+  star.style.left = Math.random() * 100 + 'vw';
+  star.style.top = Math.random() * 100 + 'vh';
+  const size = 1 + Math.random() * 2.5;
+  star.style.width = star.style.height = size + 'px';
+  star.style.animationDuration = (1 + Math.random() * 2) + 's';
+  star.style.animationDelay = Math.random() * 3 + 's';
+  document.body.appendChild(star);
+}
+
+// 气球
+const colors = ['#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#ff922b','#cc5de8','#ff85c0'];
+for (let i = 0; i < 16; i++) {
+  const b = document.createElement('div');
+  b.className = 'balloon';
+  b.style.left = (5 + Math.random() * 90) + 'vw';
+  b.style.animationDuration = (8 + Math.random() * 6) + 's';
+  b.style.animationDelay = Math.random() * 8 + 's';
+  b.style.background = colors[i % colors.length];
+  document.body.appendChild(b);
+}
+
+// 蛋糕（放在最后，这样在上面层级）
+const cake = document.createElement('div');
+cake.className = 'cake-wrap';
+cake.innerHTML = '🎂<div class="flame"></div><div class="flame" style="left:30%;top:-18px;animation-delay:0.15s"></div>';
+document.body.appendChild(cake);
 </script>
 </body>
 </html>

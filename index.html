@@ -1060,7 +1060,7 @@ function goStep(n) {
     if (i+1 === n) s.classList.add('active');
   });
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  if (n === 2) startParticles(state.material);
+  if (n === 2) { updatePreview(); startParticles(state.material); }
 }
 
 // ========== 生成链接 ==========

@@ -32,6 +32,14 @@ const CONFIG = {
   // 默认祝福语
   defaultBlessing: '愿你如星般璀璨',
 
+  // 主题选项
+  themes: [
+    { value: 'sakura',   label: '樱花飘落',  icon: '🌸', desc: '粉嫩花瓣·生日祝福' },
+    { value: 'star',     label: '星空许愿',  icon: '⭐', desc: '流星划过·许愿专属' },
+    { value: 'firework', label: '烟花绽放',  icon: '🎆', desc: '热闹喜庆·节日必备' },
+    { value: 'bouquet',  label: '动漫花束',  icon: '💐', desc: '温馨花束·探病祝福' },
+  ],
+
   // 版权信息
   copyright: '私人定制 · 仅供授权使用',
 

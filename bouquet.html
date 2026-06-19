@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>花束祝福</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { overflow: hidden; width: 100vw; height: 100vh; background: linear-gradient(180deg, #fff8f0 0%, #ffe8d6 50%, #ffd8c0 100%); font-family: 'Georgia', serif; }
+canvas { position: fixed; top: 0; left: 0; z-index: 0; }
+.layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10; }
+.name { font-size: clamp(22px, 5vw, 48px); color: #8b4557; letter-spacing: 6px; text-shadow: 0 2px 10px rgba(180,100,130,0.15); margin-bottom: 14px; font-weight: normal; }
+.date { font-size: clamp(11px, 2vw, 15px); color: #b87085; letter-spacing: 4px; margin-bottom: 24px; }
+.blessing { font-size: clamp(13px, 2.8vw, 18px); color: #c0607a; letter-spacing: 1px; text-align: center; max-width: 80%; line-height: 1.9; }
+.from { font-size: clamp(11px, 2vw, 13px); color: #d4a0b0; margin-top: 18px; letter-spacing: 2px; }
+.glass-card { background: rgba(255,255,255,0.3); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.6); border-radius: 24px; padding: clamp(28px, 6vw, 48px) clamp(24px, 6vw, 56px); text-align: center; max-width: 88vw; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="layer">
+  <div class="glass-card">
+    <div class="name" id="nameEl"></div>
+    <div class="date" id="dateEl"></div>
+    <div class="blessing" id="blessingEl"></div>
+    <div class="from" id="fromEl"></div>
+  </div>
+</div>
+<script>
+const params = new URLSearchParams(location.search);
+document.getElementById('nameEl').textContent = params.get('n') || '';
+document.getElementById('dateEl').textContent = params.get('d') || '';
+document.getElementById('blessingEl').textContent = params.get('b') || '';
+document.getElementById('fromEl').textContent = params.get('f') ? '— ' + params.get('f') : '';
+
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+let W, H, petals = [], bubbles = [];
+
+function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+window.addEventListener('resize', resize); resize();
+
+// 漂浮花瓣
+const PETAL_COLS = ['#ffb7c5','#ff8fa3','#ffc8d4','#ffd6e0','#ff9eb5'];
+class Petal {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * W; this.y = -20;
+    this.sz = 6 + Math.random() * 10;
+    this.vx = -0.3 + Math.random() * 0.6;
+    this.vy = 0.5 + Math.random() * 0.8;
+    this.rot = Math.random() * Math.PI * 2;
+    this.rotS = (Math.random() - 0.5) * 0.03;
+    this.col = PETAL_COLS[Math.floor(Math.random() * PETAL_COLS.length)];
+    this.op = 0.4 + Math.random() * 0.5;
+  }
+  update() {
+    this.x += this.vx + Math.sin(this.y * 0.01) * 0.5;
+    this.y += this.vy; this.rot += this.rotS;
+    if (this.y > H + 20) this.reset();
+  }
+  draw() {
+    ctx.save(); ctx.translate(this.x, this.y); ctx.rotate(this.rot);
+    ctx.globalAlpha = this.op; ctx.fillStyle = this.col;
+    ctx.beginPath(); ctx.ellipse(0, 0, this.sz * 0.5, this.sz, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  }
+}
+for (let i = 0; i < 35; i++) petals.push(new Petal());
+
+// 泡泡
+class Bubble {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * W; this.y = H + 20;
+    this.r = 3 + Math.random() * 6; this.vy = -(0.3 + Math.random() * 0.6);
+    this.op = 0.15 + Math.random() * 0.25;
+  }
+  update() { this.y += this.vy; if (this.y < -20) this.reset(); }
+  draw() {
+    ctx.globalAlpha = this.op;
+    ctx.strokeStyle = 'rgba(255,180,200,0.6)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2); ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+}
+for (let i = 0; i < 18; i++) bubbles.push(new Bubble());
+
+// 画花束（底部装饰）
+function drawBouquet() {
+  const cx = W / 2, by = H;
+  const PETALS = [
+    [cx, by, 0, '#ffb7c5', 28, 36], [cx - 22, by - 10, -0.4, '#ff8fa3', 24, 32],
+    [cx + 22, by - 10, 0.4, '#ffc8d4', 24, 32], [cx - 40, by - 25, -0.7, '#ffb7c5', 20, 26],
+    [cx + 40, by - 25, 0.7, '#ffd6e0', 20, 26], [cx, by - 45, 0, '#ff9eb5', 18, 22],
+  ];
+  PETALS.forEach(([px, py, rot, col, rw, rh]) => {
+    ctx.save(); ctx.translate(px, py); ctx.rotate(rot);
+    ctx.fillStyle = col;
+    // 花瓣
+    for (let i = 0; i < 6; i++) {
+      ctx.beginPath();
+      ctx.ellipse(0, -rh * 0.4, rw * 0.4, rh * 0.6, (i / 6) * Math.PI * 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    // 花心
+    ctx.fillStyle = '#ffe066';
+    ctx.beginPath(); ctx.arc(0, 0, rw * 0.25, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  });
+  // 花茎
+  ctx.strokeStyle = '#5a9e60'; ctx.lineWidth = 4;
+  ctx.beginPath(); ctx.moveTo(cx, by); ctx.lineTo(cx, by - 65); ctx.stroke();
+  ctx.lineWidth = 3;
+  [-22, 22, -40, 40].forEach((ox, i) => {
+    ctx.beginPath(); ctx.moveTo(cx, by - 20 + i * 5); ctx.lineTo(cx + ox, by - 30 + i * 8); ctx.stroke();
+  });
+}
+
+function loop() {
+  ctx.clearRect(0, 0, W, H);
+  petals.forEach(p => { p.update(); p.draw(); });
+  bubbles.forEach(b => { b.update(); b.draw(); });
+  drawBouquet();
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>

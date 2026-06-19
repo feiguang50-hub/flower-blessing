@@ -122,8 +122,10 @@ header {
 .material-preview { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
 .material-dot {
   width: 22px; height: 22px; border-radius: 50%;
-  box-shadow: 0 0 10px currentColor;
-  flex-shrink: 0;
+  box-shadow: 0 0 10px currentColor; flex-shrink: 0;
+}
+.theme-icon-wrap { display: flex; align-items: center; justify-content: center; margin-bottom: 4px; }
+.theme-icon { font-size: 32px; line-height: 1; }
 }
 
 .shape-preview { margin-bottom: 6px; display: flex; justify-content: center; }
@@ -227,7 +229,7 @@ header {
 }
 
 .preview-meta { font-size: 11px; color: rgba(255,255,255,0.20); margin-top: 14px; position: relative; }
-.preview-tags { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 10px; position: relative; }
+.preview-theme-icon { font-size: 56px; margin: 16px 0 10px; text-align: center; }
 .preview-tag { font-size: 10px; padding: 3px 10px; border-radius: 10px; background: rgba(255,255,255,0.04); color: #777; }
 
 /* === 步骤面板 === */
@@ -345,30 +347,15 @@ header {
   </div>
 
   <div class="panel" id="panel2">
-    <div class="section-label">Step 2 · 选择花材</div>
-    <div class="options-grid" id="materialGrid"></div>
-
-    <div class="divider"></div>
-    <div class="section-label">选择形态</div>
-    <div class="options-grid" id="shapeGrid"></div>
-
-    <div class="divider"></div>
-    <div class="section-label">选择排布</div>
-    <div class="options-grid" id="arrangeGrid"></div>
+    <div class="section-label">选择主题</div>
+    <div class="options-grid" id="themeGrid"></div>
 
     <div class="preview-box">
       <div class="preview-label">PREVIEW</div>
       <div class="preview-blessing" id="previewBlessing">愿你如星般璀璨</div>
-      <canvas id="roseCanvas" width="320" height="300"></canvas>
-      <div class="glass-vase">
-        <div class="vase-body"></div>
-        <div class="glass-vase-text" id="previewVaseText">收礼人姓名</div>
-      </div>
+      <div class="preview-theme-icon" id="previewThemeIcon">🌸</div>
       <div class="preview-meta" id="previewMeta"></div>
-      <div class="preview-tags" id="previewTags"></div>
     </div>
-
-    <div class="bgm-hint">背景音乐功能开发中</div>
 
     <button class="btn-primary" onclick="generateLink()">生成专属链接</button>
     <button class="btn-secondary" onclick="goStep(1)">‹ 上一步</button>
@@ -894,9 +881,7 @@ let state = {
   name: '',
   date: '',
   from: '',
-  material: 'amethyst',
-  shape: 'round',
-  arrangement: 'hemisphere',
+  theme: 'sakura',
 };
 
 // ========== 形态图标 ==========
@@ -912,9 +897,7 @@ function init() {
   const params = new URLSearchParams(window.location.search);
   if (params.has('n')) { renderViewPage(params); return; }
 
-  renderMaterialOptions();
-  renderShapeOptions();
-  renderArrangeOptions();
+  renderThemeOptions();
 
   const today = new Date().toISOString().split('T')[0];
   document.getElementById('dateInput').value = today;
@@ -925,10 +908,30 @@ function init() {
   document.getElementById('fromInput').addEventListener('input', updatePreview);
 
   updatePreview();
-  startParticles(state.material);
 }
 
-// ========== 花材选项 ==========
+// ========== 主题选项 ==========
+function renderThemeOptions() {
+  const grid = document.getElementById('themeGrid');
+  grid.innerHTML = CONFIG.themes.map(t => `
+    <div class="opt-card${t.value === state.theme ? ' selected' : ''}" onclick="selectTheme('${t.value}')">
+      <div class="theme-icon-wrap">
+        <span class="theme-icon">${t.icon}</span>
+      </div>
+      <div class="opt-name">${t.label}</div>
+      <div class="opt-desc">${t.desc}</div>
+      <div class="opt-check"></div>
+    </div>
+  `).join('');
+}
+
+function selectTheme(val) {
+  state.theme = val;
+  renderThemeOptions();
+  updatePreview();
+}
+
+// ========== 花材选项（保留，暂未使用） ==========
 function renderMaterialOptions() {
   const grid = document.getElementById('materialGrid');
   grid.innerHTML = CONFIG.materials.map(m => `
@@ -1002,22 +1005,11 @@ function updatePreview() {
   state.date = document.getElementById('dateInput').value;
   state.from = document.getElementById('fromInput').value;
 
-  const mat = CONFIG.materials.find(m => m.value === state.material) || CONFIG.materials[0];
-  const shape = CONFIG.shapes.find(s => s.value === state.shape) || CONFIG.shapes[0];
-  const arr = CONFIG.arrangements.find(a => a.value === state.arrangement) || CONFIG.arrangements[0];
+  const theme = CONFIG.themes.find(t => t.value === state.theme) || CONFIG.themes[0];
 
   document.getElementById('previewBlessing').textContent = state.blessing;
-  document.getElementById('previewVaseText').textContent = state.from ? state.name + ' · ' + state.from : state.name;
-  document.getElementById('previewMeta').textContent = state.date ? state.date.replace(/-/g, '.') : '';
-  document.getElementById('previewTags').innerHTML = `
-    <span class="preview-tag">${mat.label} · ${mat.labelEn}</span>
-    <span class="preview-tag">${shape.label}</span>
-    <span class="preview-tag">${arr.label}</span>
-  `;
-
-  // 启动3D玫瑰预览
-  if(window._roseRender) _roseRender(state.material, state.shape, 320, 300);
-  renderShapeOptions();
+  document.getElementById('previewThemeIcon').textContent = theme.icon;
+  document.getElementById('previewMeta').textContent = state.from ? state.name + ' · ' + state.from : state.name;
 }
 
 function getClipPath(shape) {
@@ -1065,12 +1057,12 @@ function goStep(n) {
 
 // ========== 生成链接 ==========
 function generateLink() {
+  updatePreview();
   if (!state.name || state.name === '收礼人姓名') { alert('请填写收礼人姓名'); return; }
   const params = new URLSearchParams({
     b: state.blessing, n: state.name, d: state.date, f: state.from,
-    m: state.material, s: state.shape, a: state.arrangement,
   });
-  const base = window.location.origin + window.location.pathname.replace('index.html', '');
+  const base = window.location.origin + window.location.pathname.replace('index.html', '') + state.theme + '.html';
   const url = base + '?' + params.toString();
   document.getElementById('resultUrl').textContent = url;
   document.getElementById('resultDesc').innerHTML = `<strong>${state.name}</strong> 的专属祝福页<br>复制链接发给收礼人，永久有效`;

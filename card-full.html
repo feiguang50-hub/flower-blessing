@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>专属贺卡</title>
+<style>
+:root {
+  --bg-from: #1a1a2e; --bg-to: #0f3460;
+  --border-from: #ffd700; --border-to: #daa520;
+  --glow: rgba(255,215,0,0.4); --glow-strong: rgba(255,215,0,0.65);
+  --text-primary: #ffd700; --text-secondary: #e8c87a; --text-accent: #fff4cc;
+  --card-bg: rgba(10,10,30,0.88);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  min-height: 100vh; background: linear-gradient(160deg, var(--bg-from) 0%, var(--bg-to) 100%);
+  font-family: 'Georgia', 'Noto Serif SC', serif;
+  display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;
+}
+#bgCanvas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+
+/* ═══ 翻页容器 ═══ */
+.pages { position: relative; width: min(500px, 94vw); min-height: min(720px, 88vh); z-index: 10; }
+.page { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; transition: opacity 0.7s ease, transform 0.7s ease; }
+.page.hidden { opacity: 0; pointer-events: none; transform: scale(0.95); }
+
+/* ═══ 通用卡片边框 ═══ */
+.wrap { position: relative; padding: 2px; border-radius: 30px; width: 100%;
+  background: linear-gradient(135deg, var(--border-from), var(--border-to), var(--border-from));
+  background-size: 300% 300%; animation: borderFlow 4s ease infinite;
+  box-shadow: 0 0 25px var(--glow); }
+@keyframes borderFlow {
+  0% { background-position: 0% 50%; box-shadow: 0 0 25px var(--glow); }
+  50% { background-position: 100% 50%; box-shadow: 0 0 45px var(--glow-strong); }
+  100% { background-position: 0% 50%; box-shadow: 0 0 25px var(--glow); }
+}
+.card { background: var(--card-bg); border-radius: 28px; padding: clamp(28px, 6vw, 48px) clamp(20px, 6vw, 44px); text-align: center; backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+
+/* ═══ 通用文字动画 ═══ */
+.fade-up { animation: fadeUp 0.9s cubic-bezier(0.34,1.56,0.64,1) both; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+.delay-1 { animation-delay: 0.2s; } .delay-2 { animation-delay: 0.4s; } .delay-3 { animation-delay: 0.6s; } .delay-4 { animation-delay: 0.8s; } .delay-5 { animation-delay: 1.0s; } .delay-6 { animation-delay: 1.2s; }
+
+/* ═══ 第一页：封面 ═══ */
+.cover-hint { font-size: 10px; color: var(--text-secondary); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 14px; opacity: 0.55; animation: pulse 2.5s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 0.85; } }
+.cover-icon { font-size: 60px; margin-bottom: 18px; animation: floatIcon 3s ease-in-out infinite; }
+@keyframes floatIcon { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.cover-title { font-size: clamp(20px, 6vw, 30px); color: var(--text-primary); letter-spacing: 6px; margin-bottom: 8px; }
+.cover-sub { font-size: 12px; color: var(--text-secondary); letter-spacing: 2px; margin-bottom: 36px; opacity: 0.65; }
+.btn-main { background: none; border: 1.5px solid var(--border-from); color: var(--text-primary); padding: 13px 34px; border-radius: 40px; font-size: 12px; letter-spacing: 3px; cursor: pointer; transition: all 0.3s; font-family: inherit; }
+.btn-main:hover { box-shadow: 0 0 25px var(--glow); transform: scale(1.04); }
+
+/* ═══ 第二页：主祝福 ═══ */
+.chapter-tag { font-size: 9px; color: var(--text-secondary); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 10px; opacity: 0.5; }
+.icon-lg { font-size: 44px; margin-bottom: 14px; }
+.name-lg { font-size: clamp(22px, 6vw, 36px); color: var(--text-primary); letter-spacing: 5px; margin-bottom: 8px; }
+.date-sm { font-size: 11px; color: var(--text-secondary); letter-spacing: 3px; margin-bottom: 20px; opacity: 0.7; }
+.divider-line { width: 36px; height: 1.5px; background: linear-gradient(90deg, transparent, var(--border-from), transparent); margin: 0 auto 18px; border-radius: 2px; }
+.blessing-text { font-size: clamp(12px, 3.5vw, 14px); color: var(--text-accent); line-height: 2; letter-spacing: 1px; max-width: 280px; margin: 0 auto 24px; }
+.from-text { font-size: 11px; color: var(--text-secondary); letter-spacing: 2px; opacity: 0.6; margin-bottom: 24px; }
+.btn-egg { display: inline-block; padding: 9px 22px; border: 1px dashed var(--border-from); border-radius: 18px; font-size: 10px; color: var(--text-secondary); letter-spacing: 2px; cursor: pointer; transition: all 0.3s; opacity: 0.55; }
+.btn-egg:hover { opacity: 1; box-shadow: 0 0 12px var(--glow); border-color: var(--text-primary); color: var(--text-primary); }
+
+/* ═══ 第三页：回忆录 ═══ */
+.chapter-icon { font-size: 40px; margin-bottom: 12px; }
+.chapter-title { font-size: clamp(15px, 4vw, 20px); color: var(--text-primary); letter-spacing: 4px; margin-bottom: 8px; }
+.chapter-sub { font-size: 11px; color: var(--text-secondary); letter-spacing: 1px; margin-bottom: 22px; opacity: 0.65; line-height: 1.8; }
+.memory-box { background: rgba(255,215,0,0.06); border: 1px solid rgba(255,215,0,0.2); border-radius: 16px; padding: 16px 20px; max-width: 280px; margin: 0 auto 20px; }
+.memory-item { font-size: clamp(11px, 3vw, 13px); color: var(--text-accent); line-height: 2; letter-spacing: 0.5px; text-align: left; }
+.memory-sign { font-size: 10px; color: var(--text-secondary); letter-spacing: 2px; margin-top: 14px; opacity: 0.6; }
+
+/* ═══ 第四页：24问 ═══ */
+.qa-list { max-width: 300px; margin: 0 auto 20px; text-align: left; }
+.qa-item { margin-bottom: 16px; border-bottom: 1px solid rgba(255,215,0,0.1); padding-bottom: 12px; }
+.qa-q { font-size: 11px; color: var(--text-secondary); letter-spacing: 1px; margin-bottom: 4px; }
+.qa-a { font-size: 12px; color: var(--text-primary); letter-spacing: 0.5px; line-height: 1.7; }
+.skip-hint { font-size: 10px; color: var(--text-secondary); opacity: 0.4; letter-spacing: 2px; margin-top: 8px; }
+
+/* ═══ 第五页：时光胶囊 ═══ */
+.capsule-icon { font-size: 44px; margin-bottom: 14px; }
+.capsule-title { font-size: clamp(16px, 4vw, 22px); color: var(--text-primary); letter-spacing: 3px; margin-bottom: 10px; }
+.capsule-desc { font-size: 11px; color: var(--text-secondary); line-height: 1.9; letter-spacing: 1px; max-width: 270px; margin: 0 auto 24px; opacity: 0.75; }
+.timer { display: inline-block; background: rgba(255,215,0,0.1); border: 1px solid rgba(255,215,0,0.3); border-radius: 12px; padding: 10px 24px; font-size: 13px; color: var(--text-primary); letter-spacing: 2px; margin-bottom: 20px; }
+.timer-label { font-size: 9px; color: var(--text-secondary); letter-spacing: 3px; margin-bottom: 4px; opacity: 0.6; }
+.capsule-note { font-size: 10px; color: var(--text-secondary); opacity: 0.5; letter-spacing: 1.5px; line-height: 1.8; margin-top: 12px; }
+
+/* ═══ 第六页：彩蛋 ═══ */
+.easter-wrap { position: relative; padding: 2px; border-radius: 30px; width: 100%;
+  background: linear-gradient(135deg, #ff96b4, #b43c6e, #ff96b4);
+  background-size: 300% 300%; animation: eggFlow 4s ease infinite;
+  box-shadow: 0 0 30px rgba(255,100,150,0.4); }
+@keyframes eggFlow {
+  0% { background-position: 0% 50%; box-shadow: 0 0 30px rgba(255,100,150,0.4); }
+  50% { background-position: 100% 50%; box-shadow: 0 0 50px rgba(255,100,150,0.65); }
+  100% { background-position: 0% 50%; box-shadow: 0 0 30px rgba(255,100,150,0.4); }
+}
+.easter-card { background: rgba(30,5,20,0.92); border-radius: 28px; padding: clamp(28px, 6vw, 48px) clamp(20px, 6vw, 44px); text-align: center; backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+.easter-label { font-size: 9px; color: #ffb3cb; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 10px; opacity: 0.7; }
+.easter-title { font-size: clamp(14px, 4vw, 18px); color: #ffb3cb; letter-spacing: 2px; margin-bottom: 18px; line-height: 1.8; }
+.easter-content { font-size: clamp(11px, 3vw, 13px); color: #e880a0; line-height: 2; letter-spacing: 0.5px; max-width: 270px; margin: 0 auto 20px; font-style: italic; }
+.easter-sign { font-size: 10px; color: #b090e0; letter-spacing: 3px; margin-bottom: 14px; }
+.easter-hearts { font-size: 18px; letter-spacing: 8px; animation: heartBeat 1.5s ease-in-out infinite; opacity: 0.65; }
+@keyframes heartBeat { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+
+/* ═══ 底部翻页提示 ═══ */
+.page-nav { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 20px; }
+.nav-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,215,0,0.25); transition: all 0.3s; }
+.nav-dot.active { background: var(--border-from); box-shadow: 0 0 8px var(--glow); width: 18px; border-radius: 3px; }
+.nav-btn { background: none; border: 1px solid rgba(255,215,0,0.3); color: var(--text-secondary); padding: 7px 16px; border-radius: 20px; font-size: 10px; letter-spacing: 2px; cursor: pointer; transition: all 0.3s; font-family: inherit; }
+.nav-btn:hover { border-color: var(--border-from); color: var(--text-primary); box-shadow: 0 0 10px var(--glow); }
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* ═══ 星星装饰 ═══ */
+.stars { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
+.star { position: absolute; width: 2.5px; height: 2.5px; background: white; border-radius: 50%; animation: twinkle var(--d) ease-in-out infinite var(--delay); }
+@keyframes twinkle { 0%,100% { opacity: 0.15; } 50% { opacity: 0.9; } }
+
+/* ═══ 减少动效 ═══ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<canvas id="bgCanvas"></canvas>
+<div class="stars" id="stars"></div>
+
+<div class="pages">
+
+  <!-- ══ 第一页：封面 ══ -->
+  <div class="page" id="p1">
+    <div class="wrap">
+      <div class="card">
+        <p class="cover-hint fade-up">一份只属于你的礼物</p>
+        <div class="cover-icon fade-up delay-1">💌</div>
+        <h1 class="cover-title fade-up delay-2" id="coverTitle">生日快乐</h1>
+        <p class="cover-sub fade-up delay-3">往下滑，一层一层揭开</p>
+        <button class="btn-main fade-up delay-4" onclick="next()">打开贺卡</button>
+      </div>
+    </div>
+    <div class="page-nav">
+      <div class="nav-dot active" id="dot1"></div>
+      <div class="nav-dot" id="dot2"></div>
+      <div class="nav-dot" id="dot3"></div>
+      <div class="nav-dot" id="dot4"></div>
+      <div class="nav-dot" id="dot5"></div>
+      <div class="nav-dot" id="dot6"></div>
+    </div>
+  </div>
+
+  <!-- ══ 第二页：主祝福 ══ -->
+  <div class="page hidden" id="p2">
+    <div class="wrap">
+      <div class="card">
+        <p class="chapter-tag fade-up">Chapter 1</p>
+        <div class="icon-lg fade-up delay-1">🎂</div>
+        <div class="name-lg fade-up delay-2" id="name1">小琳</div>
+        <div class="date-sm fade-up delay-2" id="date1">2026年6月20日</div>
+        <div class="divider-line fade-up delay-3"></div>
+        <div class="blessing-text fade-up delay-3" id="blessing1">愿你的世界里永远有光<br>愿每一天都值得期待</div>
+        <div class="from-text fade-up delay-4" id="from1">— 爱你的姐姐</div>
+        <div class="btn-egg fade-up delay-5" onclick="next()">♡ 继续探索</div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <div class="nav-dot" id="dot1b"></div>
+      <div class="nav-dot active" id="dot2b"></div>
+      <div class="nav-dot" id="dot3b"></div>
+      <div class="nav-dot" id="dot4b"></div>
+      <div class="nav-dot" id="dot5b"></div>
+      <div class="nav-dot" id="dot6b"></div>
+    </div>
+  </div>
+
+  <!-- ══ 第三页：回忆录 ══ -->
+  <div class="page hidden" id="p3">
+    <div class="wrap">
+      <div class="card">
+        <p class="chapter-tag fade-up">Chapter 2 · 回忆</p>
+        <div class="chapter-icon fade-up delay-1">📖</div>
+        <div class="chapter-title fade-up delay-2">还记得吗</div>
+        <div class="chapter-sub fade-up delay-2">那些属于我们的片段</div>
+        <div class="memory-box fade-up delay-3" id="memoryBox">
+          <p class="memory-item" id="memory1">"那天下了雨，你递给我一把伞"</p>
+          <p class="memory-item" id="memory2">"我说'谢谢'，你笑着说'不用谢'"</p>
+          <p class="memory-item" id="memory3">"从那一刻起，我的世界多了一个人"</p>
+        </div>
+        <div class="memory-sign fade-up delay-4" id="memorySign">— 写于某个平凡又珍贵的瞬间</div>
+        <div class="btn-egg fade-up delay-5" onclick="next()">♡ 继续</div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <div class="nav-dot" id="dot1c"></div>
+      <div class="nav-dot" id="dot2c"></div>
+      <div class="nav-dot active" id="dot3c"></div>
+      <div class="nav-dot" id="dot4c"></div>
+      <div class="nav-dot" id="dot5c"></div>
+      <div class="nav-dot" id="dot6c"></div>
+    </div>
+  </div>
+
+  <!-- ══ 第四页：24问 ══ -->
+  <div class="page hidden" id="p4">
+    <div class="wrap">
+      <div class="card">
+        <p class="chapter-tag fade-up">Chapter 3 · 默契</p>
+        <div class="chapter-icon fade-up delay-1">💭</div>
+        <div class="chapter-title fade-up delay-2">24问</div>
+        <div class="chapter-sub fade-up delay-2">你有多了解我？</div>
+        <div class="qa-list fade-up delay-3">
+          <div class="qa-item">
+            <div class="qa-q">Q1. 我最喜欢的歌是？</div>
+            <div class="qa-a" id="q1">《雨后晴空》</div>
+          </div>
+          <div class="qa-item">
+            <div class="qa-q">Q2. 我们第一次约会做了啥？</div>
+            <div class="qa-a" id="q2">一起吃了冰淇淋</div>
+          </div>
+          <div class="qa-item">
+            <div class="qa-q">Q3. 我最想去的城市？</div>
+            <div class="qa-a" id="q3">青岛，有海的那个</div>
+          </div>
+        </div>
+        <div class="skip-hint fade-up delay-4">（还有21问，藏起来了哦）</div>
+        <div class="btn-egg fade-up delay-5" onclick="next()">♡ 下一章</div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <div class="nav-dot" id="dot1d"></div>
+      <div class="nav-dot" id="dot2d"></div>
+      <div class="nav-dot" id="dot3d"></div>
+      <div class="nav-dot active" id="dot4d"></div>
+      <div class="nav-dot" id="dot5d"></div>
+      <div class="nav-dot" id="dot6d"></div>
+    </div>
+  </div>
+
+  <!-- ══ 第五页：时光胶囊 ══ -->
+  <div class="page hidden" id="p5">
+    <div class="wrap">
+      <div class="card">
+        <p class="chapter-tag fade-up">Chapter 4 · 时光</p>
+        <div class="capsule-icon fade-up delay-1">⏳</div>
+        <div class="capsule-title fade-up delay-2">时光胶囊</div>
+        <div class="capsule-desc fade-up delay-2">这封信已设好解锁日期<br>到期才能看到完整内容</div>
+        <div class="timer fade-up delay-3">
+          <div class="timer-label">解锁倒计时</div>
+          <div id="capsuleDays">7</div>
+        </div>
+        <div class="capsule-note fade-up delay-4" id="capsuleNote">2026年6月27日 解锁</div>
+        <div class="btn-egg fade-up delay-5" onclick="next()">♡ 提前偷看彩蛋</div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <div class="nav-dot" id="dot1e"></div>
+      <div class="nav-dot" id="dot2e"></div>
+      <div class="nav-dot" id="dot3e"></div>
+      <div class="nav-dot" id="dot4e"></div>
+      <div class="nav-dot active" id="dot5e"></div>
+      <div class="nav-dot" id="dot6e"></div>
+    </div>
+  </div>
+
+  <!-- ══ 第六页：彩蛋 ══ -->
+  <div class="page hidden" id="p6">
+    <div class="easter-wrap">
+      <div class="easter-card">
+        <div class="easter-label fade-up">✨ 专属彩蛋 ✨</div>
+        <div class="easter-title fade-up delay-1" id="eggTitle">给你的悄悄话</div>
+        <div class="easter-content fade-up delay-2" id="eggContent">
+          "今天是属于你的日子。<br><br>
+          这一年，我们一起笑过、哭过、吵过。<br>
+          但无论如何，谢谢你一直在。<br><br>
+          遇见你，是我最幸运的事。"
+        </div>
+        <div class="easter-sign fade-up delay-3" id="eggSign">— 写于深夜</div>
+        <div class="easter-hearts fade-up delay-4">💕 💗 💖</div>
+      </div>
+    </div>
+    <div class="page-nav" style="margin-top: 20px;">
+      <div class="nav-dot" id="dot1f"></div>
+      <div class="nav-dot" id="dot2f"></div>
+      <div class="nav-dot" id="dot3f"></div>
+      <div class="nav-dot" id="dot4f"></div>
+      <div class="nav-dot" id="dot5f"></div>
+      <div class="nav-dot active" id="dot6f"></div>
+    </div>
+    <button class="nav-btn" onclick="prev()" style="margin-top: 14px;">← 重新看</button>
+  </div>
+
+</div>
+
+<script>
+/* ═══ 参数解析 ═══ */
+const p = new URLSearchParams(location.search);
+
+// 主信息
+const name1 = p.get('n') || '亲爱的你';
+const date1 = p.get('d') || new Date().toLocaleDateString('zh-CN', {year:'numeric',month:'long',day:'numeric'});
+const blessing1 = p.get('b') || '愿你的世界里永远有光\n愿每一天都值得期待';
+const from1 = p.get('f') || '爱你的人';
+const coverTitle = p.get('ct') || '生日快乐';
+
+// 回忆录
+const m1 = p.get('m1');
+const m2 = p.get('m2');
+const m3 = p.get('m3');
+const mSign = p.get('ms') || '— 写于某个平凡又珍贵的瞬间';
+const hasMemory = m1 || m2 || m3;
+
+// 24问
+const q1 = p.get('q1');
+const q2 = p.get('q2');
+const q3 = p.get('q3');
+const hasQA = q1 || q2 || q3;
+
+// 时光胶囊
+const capsuleDays = parseInt(p.get('cd')) || 7;
+const unlockDate = new Date();
+unlockDate.setDate(unlockDate.getDate() + capsuleDays);
+const unlockStr = unlockDate.toLocaleDateString('zh-CN', {year:'numeric',month:'long',day:'numeric'});
+
+// 彩蛋
+const eggTitle = p.get('et') || '给你的悄悄话';
+const eggContent = p.get('ec') || '今天是属于你的日子。\n这一年我们一起笑过哭过，谢谢你一直在。\n遇见你是我最幸运的事。';
+const eggSign = p.get('es') || '写于深夜';
+
+// 填入内容
+document.getElementById('coverTitle').textContent = coverTitle;
+document.getElementById('name1').textContent = name1;
+document.getElementById('date1').textContent = date1;
+document.getElementById('blessing1').innerHTML = blessing1.replace(/\n/g, '<br>');
+document.getElementById('from1').textContent = '— ' + from1;
+
+// 回忆录
+if (m1) document.getElementById('memory1').textContent = '"' + m1 + '"';
+if (m2) document.getElementById('memory2').textContent = '"' + m2 + '"';
+if (m3) document.getElementById('memory3').textContent = '"' + m3 + '"';
+document.getElementById('memorySign').textContent = mSign;
+if (!hasMemory) {
+  document.getElementById('memoryBox').innerHTML = '<p class="memory-item" style="color:var(--text-secondary);opacity:0.5;font-style:italic;">（买家没有填写回忆片段）</p>';
+}
+
+// 24问
+if (q1) document.getElementById('q1').textContent = q1;
+if (q2) document.getElementById('q2').textContent = q2;
+if (q3) document.getElementById('q3').textContent = q3;
+if (!hasQA) {
+  document.querySelector('.qa-list').innerHTML = '<p style="font-size:12px;color:var(--text-secondary);opacity:0.5;font-style:italic;padding:10px 0;">（买家没有填写24问，跳过此章节）</p>';
+  document.querySelector('#p4 .skip-hint').textContent = ' ';
+}
+
+// 时光胶囊
+document.getElementById('capsuleDays').textContent = capsuleDays + '天';
+document.getElementById('capsuleNote').textContent = unlockStr + ' 解锁';
+
+/* ═══ 彩蛋内容 ═══ */
+document.getElementById('eggTitle').textContent = eggTitle;
+document.getElementById('eggContent').innerHTML = eggContent.replace(/\n/g, '<br>');
+document.getElementById('eggSign').textContent = '— ' + eggSign;
+
+/* ═══ 翻页 ═══ */
+let current = 0;
+const total = 6;
+function updateDots() {
+  document.querySelectorAll('.nav-dot').forEach(d => d.classList.remove('active'));
+  document.querySelectorAll(`[id^=dot${current + 1}]`).forEach(d => d.classList.add('active'));
+}
+function next() {
+  if (current < total - 1) { current++; show(current); }
+}
+function prev() {
+  if (current > 0) { current--; show(current); }
+}
+function show(n) {
+  document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+  document.getElementById('p' + (n + 1)).classList.remove('hidden');
+  updateDots();
+}
+
+/* ═══ 背景粒子 ═══ */
+const canvas = document.getElementById('bgCanvas');
+const ctx = canvas.getContext('2d');
+let pts = [];
+function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
+resize(); onresize = resize;
+class Pt {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height;
+    this.s = Math.random() * 2 + 0.5; this.sY = -Math.random() * 0.4 - 0.15;
+    this.sX = (Math.random() - 0.5) * 0.25; this.op = Math.random() * 0.4 + 0.2;
+    this.h = 48 + (Math.random() - 0.5) * 20;
+  }
+  update() { this.y += this.sY; this.x += this.sX; if (this.y < -8) this.reset(), this.y = canvas.height + 5; }
+  draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.s, 0, Math.PI * 2); ctx.fillStyle = `hsla(${this.h},80%,70%,${this.op})`; ctx.fill(); }
+}
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  for (let i = 0; i < 35; i++) pts.push(new Pt());
+  function an() { ctx.clearRect(0,0,canvas.width,canvas.height); pts.forEach(p => p.update(), p.draw()); requestAnimationFrame(an); }
+  an();
+}
+
+/* ═══ 星星 ═══ */
+const starsEl = document.getElementById('stars');
+for (let i = 0; i < 25; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${1.5+Math.random()*2}s;--delay:${Math.random()*3}s`;
+  starsEl.appendChild(s);
+}
+</script>
+</body>
+</html>

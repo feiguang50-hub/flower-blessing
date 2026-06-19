@@ -183,9 +183,13 @@ body {
         <div class="chapter-title fade-up delay-2">还记得吗</div>
         <div class="chapter-sub fade-up delay-2">那些属于我们的片段</div>
         <div class="memory-box fade-up delay-3" id="memoryBox">
-          <p class="memory-item" id="memory1">"那天下了雨，你递给我一把伞"</p>
-          <p class="memory-item" id="memory2">"我说'谢谢'，你笑着说'不用谢'"</p>
-          <p class="memory-item" id="memory3">"从那一刻起，我的世界多了一个人"</p>
+          <p class="memory-item" id="m1"></p>
+          <p class="memory-item" id="m2"></p>
+          <p class="memory-item" id="m3"></p>
+          <p class="memory-item" id="m4"></p>
+          <p class="memory-item" id="m5"></p>
+          <p class="memory-item" id="m6"></p>
+          <p class="memory-item" id="m7"></p>
         </div>
         <div class="memory-sign fade-up delay-4" id="memorySign">— 写于某个平凡又珍贵的瞬间</div>
         <div class="btn-egg fade-up delay-5" onclick="next()">♡ 继续</div>
@@ -303,12 +307,12 @@ const blessing1 = p.get('b') || '愿你的世界里永远有光\n愿每一天都
 const from1 = p.get('f') || '爱你的人';
 const coverTitle = p.get('ct') || '生日快乐';
 
-// 回忆录
-const m1 = p.get('m1');
-const m2 = p.get('m2');
-const m3 = p.get('m3');
+// 回忆录（最多7个，推荐3-5个）
+const m1 = p.get('m1'); const m2 = p.get('m2'); const m3 = p.get('m3');
+const m4 = p.get('m4'); const m5 = p.get('m5'); const m6 = p.get('m6'); const m7 = p.get('m7');
 const mSign = p.get('ms') || '— 写于某个平凡又珍贵的瞬间';
-const hasMemory = m1 || m2 || m3;
+const memories = [m1,m2,m3,m4,m5,m6,m7].filter(Boolean);
+const hasMemory = memories.length > 0;
 
 // 24问
 const q1 = p.get('q1');
@@ -335,9 +339,9 @@ document.getElementById('blessing1').innerHTML = blessing1.replace(/\n/g, '<br>'
 document.getElementById('from1').textContent = '— ' + from1;
 
 // 回忆录
-if (m1) document.getElementById('memory1').textContent = '"' + m1 + '"';
-if (m2) document.getElementById('memory2').textContent = '"' + m2 + '"';
-if (m3) document.getElementById('memory3').textContent = '"' + m3 + '"';
+for (let i = 0; i < 7; i++) {
+  if (memories[i]) document.getElementById('m' + (i+1)).textContent = '"' + memories[i] + '"';
+}
 document.getElementById('memorySign').textContent = mSign;
 if (!hasMemory) {
   document.getElementById('memoryBox').innerHTML = '<p class="memory-item" style="color:var(--text-secondary);opacity:0.5;font-style:italic;">（买家没有填写回忆片段）</p>';

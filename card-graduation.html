@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>毕业快乐</title>
+<meta property="og:title" content="💌 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="💌 收到一份专属贺卡">
+<meta name="twitter:description" content="点击打开，你们的专属回忆在里面哦">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #e8f5e9 0%, #c8e6c9 40%, #a5d6a7 100%);
+  font-family: 'Georgia', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* === 清新极光背景 === */
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background:
+    radial-gradient(ellipse at 25% 25%, rgba(100,220,150,0.25) 0%, transparent 50%),
+    radial-gradient(ellipse at 75% 75%, rgba(100,180,255,0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 0%, rgba(255,240,150,0.2) 0%, transparent 45%);
+  animation: freshAurora 8s ease-in-out infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+@keyframes freshAurora {
+  0%, 100% { transform: translate(0,0); opacity: 0.7; }
+  50% { transform: translate(1%, 1%); opacity: 1; }
+}
+
+/* === 纸飞机 === */
+.plane {
+  position: fixed;
+  font-size: 18px;
+  animation: planeFly linear infinite;
+  z-index: 2;
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.1));
+}
+@keyframes planeFly {
+  0% { transform: translateY(105vh) rotate(-15deg) translateX(0); opacity: 0; }
+  8% { opacity: 1; }
+  92% { opacity: 0.8; }
+  100% { transform: translateY(-15vh) rotate(15deg) translateX(100px); opacity: 0; }
+}
+
+/* === 毕业帽粒子 === */
+.cap-particle {
+  position: fixed;
+  animation: capFloat linear infinite;
+  z-index: 2;
+}
+@keyframes capFloat {
+  0% { transform: translateY(105vh) rotate(0deg); opacity: 0; }
+  8% { opacity: 1; }
+  92% { opacity: 0.7; }
+  100% { transform: translateY(-10vh) rotate(30deg); opacity: 0; }
+}
+
+/* === 星星 === */
+.star {
+  position: fixed;
+  background: #fff;
+  border-radius: 50%;
+  animation: starTwinkle ease-in-out infinite;
+  z-index: 1;
+}
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.5); }
+}
+
+/* === 彩色纸屑 === */
+.confetti {
+  position: fixed;
+  animation: confettiFall linear infinite;
+  z-index: 3;
+}
+@keyframes confettiFall {
+  0% { transform: translateY(-5vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(105vh) rotate(600deg); opacity: 0.4; }
+}
+
+/* === 卡片外框 === */
+.card-wrap {
+  position: relative;
+  padding: 3px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #56ab2f, #a8e063, #56ab2f);
+  background-size: 300% 300%;
+  animation: greenPulse 4s ease infinite;
+  z-index: 10;
+  box-shadow: 0 0 30px rgba(86,171,47,0.35), 0 12px 40px rgba(0,0,0,0.1);
+}
+@keyframes greenPulse {
+  0% { background-position: 0% 50%; box-shadow: 0 0 25px rgba(86,171,47,0.4), 0 12px 40px rgba(0,0,0,0.1); }
+  50% { background-position: 100% 50%; box-shadow: 0 0 40px rgba(168,224,99,0.5), 0 12px 40px rgba(0,0,0,0.1); }
+  100% { background-position: 0% 50%; box-shadow: 0 0 25px rgba(86,171,47,0.4), 0 12px 40px rgba(0,0,0,0.1); }
+}
+
+.card {
+  background: linear-gradient(145deg, #fafff5, #f0fff0);
+  border-radius: 22px;
+  padding: clamp(32px, 7vw, 52px) clamp(24px, 6vw, 44px);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  max-width: min(500px, 92vw);
+  width: 100%;
+}
+
+/* 毕业帽图标 */
+.graduation-icon {
+  font-size: clamp(48px, 10vw, 70px);
+  display: block;
+  margin: 0 auto 14px;
+  animation: iconDrop 0.9s cubic-bezier(0.34,1.56,0.64,1) 0.1s both;
+  filter: drop-shadow(0 4px 12px rgba(86,171,47,0.35));
+}
+@keyframes iconDrop {
+  from { transform: translateY(-50px) scale(0.5); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* 标题 */
+.title {
+  font-size: clamp(22px, 5.5vw, 36px);
+  font-weight: bold;
+  color: #2e7d32;
+  letter-spacing: 4px;
+  margin-bottom: 12px;
+  opacity: 1;
+  animation: fadeUp 1.2s ease-out 0.2s both;
+}
+
+/* 名字 */
+.name {
+  font-size: clamp(30px, 8vw, 52px);
+  font-weight: bold;
+  background: linear-gradient(135deg, #2e7d32, #43a047, #66bb6a, #2e7d32);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: greenShimmer 3s ease infinite, fadeUp 1.2s ease-out 0.4s both;
+  margin-bottom: 14px;
+  line-height: 1.2;
+}
+@keyframes greenShimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 日期 */
+.date {
+  font-size: clamp(13px, 3vw, 17px);
+  color: #558b2f;
+  letter-spacing: 3px;
+  margin-bottom: 18px;
+  opacity: 1;
+  animation: fadeUp 1.2s ease-out 0.6s both;
+}
+
+/* 祝福语 */
+.blessing {
+  font-size: clamp(16px, 4vw, 22px);
+  color: #33691e;
+  line-height: 1.9;
+  margin-bottom: 22px;
+  opacity: 1;
+  animation: fadeUp 1.2s ease-out 0.8s both;
+}
+
+/* 署名 */
+.from {
+  font-size: clamp(14px, 3.5vw, 18px);
+  color: #558b2f;
+  font-style: italic;
+  opacity: 1;
+  animation: fadeUp 1.2s ease-out 1s both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 减少动画 */
+@media (prefers-reduced-motion: reduce) {
+  .plane, .cap-particle, .confetti, .star, body::before { animation: none !important; }
+  .name, .title, .date, .blessing, .from, .graduation-icon { animation: none !important; opacity: 1 !important; }
+}
+</style>
+</head>
+<body>
+
+<script>
+const p = new URLSearchParams(location.search);
+const nameEl = document.getElementById('nameEl');
+const dateEl = document.getElementById('dateEl');
+const blessingEl = document.getElementById('blessingEl');
+const fromEl = document.getElementById('fromEl');
+if (nameEl) nameEl.textContent = p.get('n') || '亲爱的同学';
+if (dateEl) dateEl.textContent = p.get('d') || '';
+if (blessingEl) blessingEl.textContent = p.get('b') || '恭喜毕业！愿你前程似锦，归来仍是少年！';
+if (fromEl) fromEl.textContent = p.get('f') ? '— ' + p.get('f') : '';
+
+// 纸飞机
+const planes = ['✈️', '🪁', '🎓', '📜'];
+function createPlane() {
+  const el = document.createElement('div');
+  el.className = 'plane';
+  el.textContent = planes[Math.floor(Math.random() * planes.length)];
+  el.style.cssText = `
+    left: ${Math.random() * 85 + 5}%;
+    animation-duration: ${Math.random() * 5 + 8}s;
+    animation-delay: ${Math.random() * 4}s;
+    font-size: ${Math.random() * 10 + 14}px;
+  `;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 14000);
+}
+for (let i = 0; i < 6; i++) setTimeout(createPlane, i * 1200);
+
+// 毕业帽粒子（星星形状）
+function createStar() {
+  const s = document.createElement('div');
+  s.className = 'star';
+  s.style.cssText = `
+    left: ${Math.random() * 95}%;
+    top: ${Math.random() * 80}%;
+    width: ${Math.random() * 5 + 2}px;
+    height: ${Math.random() * 5 + 2}px;
+    animation-duration: ${Math.random() * 2 + 1.5}s;
+    animation-delay: ${Math.random() * 3}s;
+    background: hsl(${Math.random() * 60 + 100}, 70%, 75%);
+  `;
+  document.body.appendChild(s);
+  setTimeout(() => s.remove(), 5000);
+}
+for (let i = 0; i < 15; i++) createStar();
+
+// 彩色纸屑
+function createConfetti() {
+  const c = document.createElement('div');
+  c.className = 'confetti';
+  const cc = ['#56ab2f','#a8e063','#ffd700','#4fc3f7','#fff','#ff8a65','#ce93d8'];
+  const color = cc[Math.floor(Math.random() * cc.length)];
+  c.style.cssText = `
+    left: ${Math.random() * 92 + 4}%;
+    top: -10px;
+    width: ${Math.random() * 8 + 4}px;
+    height: ${Math.random() * 8 + 4}px;
+    background: ${color};
+    border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+    animation-duration: ${Math.random() * 3 + 4}s;
+    animation-delay: ${Math.random() * 3}s;
+  `;
+  document.body.appendChild(c);
+  setTimeout(() => c.remove(), 7000);
+}
+for (let i = 0; i < 18; i++) setTimeout(createConfetti, i * 250);
+
+// 减少动画
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.plane,.confetti,.star').forEach(el => el.remove());
+}
+</script>
+
+<!-- 卡片 -->
+<div class="card-wrap">
+  <div class="card">
+    <div class="graduation-icon">🎓</div>
+    <div class="title">毕业快乐</div>
+    <div class="name" id="nameEl"></div>
+    <div class="date" id="dateEl"></div>
+    <div class="blessing" id="blessingEl"></div>
+    <div class="from" id="fromEl"></div>
+  </div>
+</div>
+
+</body>
+</html>

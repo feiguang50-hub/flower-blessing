@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情人节</title>
+<meta property="og:title" content="💝 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="💝 收到一份专属贺卡">
+<meta name="twitter:description" content="点击打开，你们的专属回忆在里面哦">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #1a0510 0%, #3d0a20 40%, #6b1a35 100%);
+  font-family: 'Georgia', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* === 深红极光背景 === */
+.body-aurora {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 0;
+}
+.body-aurora::before {
+  content: '';
+  position: absolute; width: 100%; height: 100%;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(200,50,100,0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, rgba(150,20,80,0.25) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(255,100,150,0.12) 0%, transparent 60%);
+  animation: roseAurora 9s ease-in-out infinite;
+}
+.body-aurora::after {
+  content: '';
+  position: absolute; width: 100%; height: 100%;
+  background:
+    radial-gradient(ellipse at 20% 70%, rgba(255,80,130,0.15) 0%, transparent 45%),
+    radial-gradient(ellipse at 80% 30%, rgba(220,40,90,0.2) 0%, transparent 50%);
+  animation: roseAurora 12s ease-in-out infinite reverse;
+}
+@keyframes roseAurora {
+  0%, 100% { transform: scale(1) translate(0,0); opacity: 0.8; }
+  50% { transform: scale(1.05) translate(1%, 1%); opacity: 1; }
+}
+
+/* === 玫瑰花瓣 === */
+.petal {
+  position: fixed; font-size: 14px;
+  animation: petalFall linear infinite;
+  z-index: 1; pointer-events: none;
+  filter: drop-shadow(0 0 6px rgba(255,100,140,0.4));
+}
+@keyframes petalFall {
+  0% { transform: translateY(-8vh) rotate(0deg) translateX(0); opacity: 0; }
+  8% { opacity: 0.8; }
+  90% { opacity: 0.5; }
+  100% { transform: translateY(108vh) rotate(320deg) translateX(50px); opacity: 0; }
+}
+
+/* === 爱心 === */
+.heart {
+  position: fixed;
+  animation: heartRise linear infinite;
+  z-index: 2; pointer-events: none;
+}
+@keyframes heartRise {
+  0% { transform: translateY(105vh) scale(0.5); opacity: 0; }
+  10% { opacity: 0.9; transform: translateY(95vh) scale(1); }
+  85% { opacity: 0.6; }
+  100% { transform: translateY(-10vh) scale(0.8); opacity: 0; }
+}
+
+/* === 星光 === */
+.sparkle {
+  position: fixed;
+  background: #fff;
+  border-radius: 50%;
+  animation: sparkleFade ease-in-out infinite;
+  z-index: 1;
+}
+@keyframes sparkleFade {
+  0%, 100% { opacity: 0.1; transform: scale(0.5); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* === 卡片外框 === */
+.card-wrap {
+  position: relative;
+  padding: 3px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #e91e63, #f48fb1, #e91e63, #c2185b);
+  background-size: 400% 400%;
+  animation: rosePulse 5s ease infinite;
+  z-index: 10;
+  box-shadow: 0 0 35px rgba(233,30,99,0.45), 0 12px 40px rgba(0,0,0,0.2);
+}
+@keyframes rosePulse {
+  0% { background-position: 0% 50%; box-shadow: 0 0 30px rgba(233,30,99,0.4), 0 12px 40px rgba(0,0,0,0.2); }
+  50% { background-position: 100% 50%; box-shadow: 0 0 50px rgba(244,143,177,0.6), 0 12px 40px rgba(0,0,0,0.2); }
+  100% { background-position: 0% 50%; box-shadow: 0 0 30px rgba(233,30,99,0.4), 0 12px 40px rgba(0,0,0,0.2); }
+}
+
+.card {
+  background: linear-gradient(145deg, #fff5f8, #ffeef2);
+  border-radius: 22px;
+  padding: clamp(32px, 7vw, 52px) clamp(24px, 6vw, 44px);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  max-width: min(500px, 92vw);
+  width: 100%;
+}
+
+/* 爱心图标 */
+.valentine-icon {
+  font-size: clamp(50px, 11vw, 76px);
+  display: block;
+  margin: 0 auto 14px;
+  animation: iconDrop 0.9s cubic-bezier(0.34,1.56,0.64,1) 0.1s both;
+  filter: drop-shadow(0 4px 14px rgba(233,30,99,0.4));
+}
+@keyframes iconDrop {
+  from { transform: translateY(-50px) scale(0.5); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* 标题 */
+.title {
+  font-size: clamp(20px, 5vw, 32px);
+  font-weight: bold;
+  color: #c2185b;
+  letter-spacing: 6px;
+  margin-bottom: 12px;
+  opacity: 1;
+  animation: fadeUp 1.2s ease-out 0.2s both;
+  text-transform: uppercase;
+}
+
+/* 名字 */
+.name {
+  font-size: clamp(30px, 8vw, 52px);
+  font-weight: bold;
+  background: linear-gradient(135deg, #e91e63, #f06292, #e91e63, #c2185b);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: roseShimmer 3s ease infinite, fadeUp 1.2s ease-out 0.4s both;
+  margin-bottom: 14px;
+}
+@keyframes roseShimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 祝福语 */
+.blessing {
+  font-size: clamp(15px, 4vw, 20px);
+  color: #880e4f;
+  line-height: 1.8;
+  margin-bottom: 16px;
+  opacity: 1;
+  animation: fadeUp 1.4s ease-out 0.6s both;
+  letter-spacing: 1px;
+}
+
+/* 署名 */
+.from {
+  font-size: clamp(13px, 3.5vw, 17px);
+  color: #ad1457;
+  opacity: 1;
+  animation: fadeUp 1.4s ease-out 0.8s both;
+  letter-spacing: 2px;
+  font-style: italic;
+}
+
+/* 装饰线 */
+.card::after {
+  content: '💕';
+  display: block;
+  margin-top: 18px;
+  font-size: clamp(18px, 4vw, 26px);
+  opacity: 1;
+  animation: fadeUp 1.4s ease-out 1s both;
+}
+
+/* === 3D翻转（背面） === */
+.flip-card {
+  perspective: 1000px;
+}
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s cubic-bezier(0.34,1.56,0.64,1);
+  transform-style: preserve-3d;
+}
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+.flip-front, .flip-back {
+  backface-visibility: hidden;
+}
+.flip-back {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  transform: rotateY(180deg);
+  background: linear-gradient(145deg, #fff5f8, #ffeef2);
+  border-radius: 22px;
+  padding: clamp(32px, 7vw, 52px) clamp(24px, 6vw, 44px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.flip-back-text {
+  font-size: clamp(14px, 3.5vw, 18px);
+  color: #c2185b;
+  line-height: 2;
+  letter-spacing: 1px;
+}
+</style>
+</head>
+<body>
+
+<div class="body-aurora"></div>
+
+<div class="card-wrap">
+  <div class="card flip-card" id="card" onclick="this.classList.toggle('flipped')">
+    <div class="flip-card-inner">
+      <div class="flip-front">
+        <span class="valentine-icon" id="iconEl">💝</span>
+        <div class="title" id="titleEl">情人节快乐</div>
+        <div class="name" id="nameEl"></div>
+        <div class="blessing" id="blessingEl"></div>
+        <div class="from" id="fromEl"></div>
+      </div>
+      <div class="flip-back">
+        <div class="flip-back-text" id="backEl">点击卡片<br>翻开惊喜</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const p = new URLSearchParams(location.search);
+document.getElementById('nameEl').textContent = p.get('n') || '亲爱的';
+document.getElementById('blessingEl').textContent = p.get('b') || '愿爱与温柔永远伴你左右';
+document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
+if (p.get('i')) document.getElementById('iconEl').textContent = p.get('i');
+if (p.get('back')) {
+  document.getElementById('backEl').innerHTML = p.get('back').replace(/\\n/g,'<br>');
+}
+
+// 玫瑰花瓣
+const petals = ['🌹','🌸','💮','🏵️'];
+for (let i = 0; i < 18; i++) {
+  const el = document.createElement('div');
+  el.className = 'petal';
+  el.textContent = petals[Math.floor(Math.random() * petals.length)];
+  el.style.left = Math.random() * 100 + 'vw';
+  el.style.animationDuration = (5 + Math.random() * 5) + 's';
+  el.style.animationDelay = Math.random() * 8 + 's';
+  el.style.fontSize = (10 + Math.random() * 12) + 'px';
+  document.body.appendChild(el);
+}
+
+// 爱心上升
+const hearts = ['❤️','💕','💖','💗','💓'];
+for (let i = 0; i < 10; i++) {
+  const el = document.createElement('div');
+  el.className = 'heart';
+  el.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+  el.style.left = Math.random() * 100 + 'vw';
+  el.style.animationDuration = (6 + Math.random() *6) + 's';
+  el.style.animationDelay = (2 + Math.random() * 10) + 's';
+  el.style.fontSize = (12 + Math.random() * 16) + 'px';
+  document.body.appendChild(el);
+}
+
+// 星光
+for (let i = 0; i < 30; i++) {
+  const el = document.createElement('div');
+  el.className = 'sparkle';
+  el.style.left = Math.random() * 100 + 'vw';
+  el.style.top = Math.random() * 100 + 'vh';
+  el.style.width = el.style.height = (1 + Math.random() * 3) + 'px';
+  el.style.animationDuration = (2 + Math.random() * 3) + 's';
+  el.style.animationDelay = Math.random() * 5 + 's';
+  document.body.appendChild(el);
+}
+
+// 减少动效
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.petal,.heart,.sparkle').forEach(el => el.remove());
+}
+</script>
+</body>
+</html>

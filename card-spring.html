@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>春日祝福</title>
+<meta property="og:title" content="🌸 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(165deg, #e8f5e9 0%, #c8e6c9 30%, #a5d6a7 60%, #81c784 100%);
+  font-family: 'Georgia', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* === 清新春光背景 === */
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background:
+    radial-gradient(ellipse at 20% 15%, rgba(255,255,200,0.35) 0%, transparent 45%),
+    radial-gradient(ellipse at 80% 85%, rgba(180,255,200,0.25) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 50%, rgba(200,255,220,0.15) 0%, transparent 55%);
+  animation: springGlow 8s ease-in-out infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+@keyframes springGlow {
+  0%, 100% { transform: translate(0,0) scale(1); opacity: 0.8; }
+  50% { transform: translate(1%, 0.5%) scale(1.03); opacity: 1; }
+}
+
+/* === 飘落花瓣 === */
+.petal {
+  position: fixed;
+  font-size: 14px;
+  animation: petalFall linear infinite;
+  z-index: 1;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.08));
+}
+@keyframes petalFall {
+  0% { transform: translateY(-5vh) translateX(0) rotate(0deg); opacity: 0; }
+  8% { opacity: 1; }
+  88% { opacity: 0.8; }
+  100% { transform: translateY(105vh) translateX(60px) rotate(360deg); opacity: 0; }
+}
+
+/* === 蝴蝶 === */
+.butterfly {
+  position: fixed;
+  font-size: 16px;
+  animation: butterflyFloat ease-in-out infinite;
+  z-index: 2;
+  pointer-events: none;
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.1));
+}
+@keyframes butterflyFloat {
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  25% { transform: translate(30px, -20px) rotate(10deg) scale(1.05); }
+  50% { transform: translate(60px, 5px) rotate(-5deg) scale(0.95); }
+  75% { transform: translate(20px, -10px) rotate(8deg) scale(1.02); }
+  100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+}
+
+/* === 柳絮 === */
+.willow {
+  position: fixed;
+  font-size: 10px;
+  animation: willowFloat linear infinite;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.7;
+}
+@keyframes willowFloat {
+  0% { transform: translateY(-5vh) translateX(0); opacity: 0; }
+  10% { opacity: 0.7; }
+  90% { opacity: 0.5; }
+  100% { transform: translateY(105vh) translateX(-40px); opacity: 0; }
+}
+
+/* === 卡片主体 === */
+.card-wrap {
+  position: relative;
+  z-index: 10;
+  perspective: 1000px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.88);
+  border-radius: 24px;
+  padding: clamp(28px, 6vw, 48px) clamp(24px, 5vw, 40px);
+  text-align: center;
+  position: relative;
+  box-shadow:
+    0 8px 32px rgba(80, 160, 80, 0.2),
+    0 2px 8px rgba(0,0,0,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.8);
+  border: 1.5px solid rgba(255,255,255,0.6);
+  animation: cardFloat 5s ease-in-out infinite;
+  max-width: min(420px, 90vw);
+  width: 100%;
+}
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* 春天边框光晕 */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 26px;
+  background: linear-gradient(135deg,
+    rgba(255,182,193,0.5) 0%,
+    rgba(152,251,152,0.5) 25%,
+    rgba(175,238,238,0.5) 50%,
+    rgba(255,218,185,0.5) 75%,
+    rgba(255,182,193,0.5) 100%);
+  background-size: 400% 400%;
+  animation: springBorder 6s ease infinite;
+  z-index: -1;
+  opacity: 0.6;
+}
+@keyframes springBorder {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* 春联装饰角 */
+.corner-decor {
+  position: absolute;
+  font-size: clamp(18px, 4vw, 26px);
+  opacity: 0.25;
+}
+.corner-decor.tl { top: 10px; left: 14px; }
+.corner-decor.tr { top: 10px; right: 14px; }
+.corner-decor.bl { bottom: 10px; left: 14px; }
+.corner-decor.br { bottom: 10px; right: 14px; }
+
+/* 标题 */
+.greeting {
+  font-size: clamp(14px, 3.5vw, 18px);
+  color: #66bb6a;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  opacity: 1;
+  animation: fadeInUp 1.2s ease-out 0.3s both;
+}
+
+/* 收礼人名 */
+.name {
+  font-size: clamp(32px, 8vw, 52px);
+  font-weight: normal;
+  color: #2e7d32;
+  margin: 8px 0 16px;
+  opacity: 1;
+  animation: fadeInUp 1.2s ease-out 0.6s both;
+  line-height: 1.2;
+  word-break: break-all;
+}
+
+/* 祝福语 */
+.blessing {
+  font-size: clamp(16px, 4vw, 20px);
+  color: #388e3c;
+  line-height: 1.8;
+  margin: 12px 0 20px;
+  opacity: 1;
+  animation: fadeInUp 1.2s ease-out 0.9s both;
+}
+
+/* 分隔装饰 */
+.divider {
+  font-size: clamp(20px, 5vw, 28px);
+  color: #a5d6a7;
+  margin: 16px 0;
+  opacity: 1;
+  animation: fadeInUp 1.2s ease-out 1.1s both;
+  letter-spacing: 8px;
+}
+
+/* 日期 */
+.date {
+  font-size: clamp(13px, 3vw, 16px);
+  color: #81c784;
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+  opacity: 1;
+  animation: fadeInUp 1.2s ease-out 1.3s both;
+}
+
+/* 署名 */
+.from {
+  font-size: clamp(14px, 3.5vw, 17px);
+  color: #66bb6a;
+  margin-top: 12px;
+  opacity: 1;
+  animation: fadeInUp 1.2s ease-out 1.5s both;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === 响应式 === */
+@media (max-width: 480px) {
+  .card { padding: 24px 20px; }
+  .corner-decor { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- 装饰元素由JS生成 -->
+
+<div class="card-wrap">
+  <div class="card">
+    <div class="corner-decor tl">🌿</div>
+    <div class="corner-decor tr">🌱</div>
+    <div class="corner-decor bl">🌷</div>
+    <div class="corner-decor br">🌼</div>
+
+    <div class="greeting" id="greetingEl">春日安好</div>
+    <div class="name" id="nameEl"></div>
+    <div class="blessing" id="blessingEl"></div>
+    <div class="divider">🌸 ✿ 🌸</div>
+    <div class="date" id="dateEl"></div>
+    <div class="from" id="fromEl"></div>
+  </div>
+</div>
+
+<script>
+const p = new URLSearchParams(location.search);
+document.getElementById('nameEl').textContent = p.get('n') || '亲爱的你';
+document.getElementById('dateEl').textContent = p.get('d') || '';
+document.getElementById('blessingEl').textContent = p.get('b') || '春风十里，不如身边有你。愿这个春天，所有美好如期而至。';
+document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
+document.getElementById('greetingEl').textContent = p.get('g') || '春日安好';
+
+// 春天问候语
+const greetings = ['春日安好', '春风拂面', '春暖花开', '万物生长'];
+if (!p.get('g')) {
+  document.getElementById('greetingEl').textContent = greetings[Math.floor(Math.random() * greetings.length)];
+}
+
+// === 花瓣 ===
+const petals = ['❀', '✿', '❁', '✾', '❃', '🏵'];
+for (let i = 0; i < 14; i++) {
+  const el = document.createElement('div');
+  el.className = 'petal';
+  el.textContent = petals[Math.floor(Math.random() * petals.length)];
+  el.style.left = Math.random() * 100 + 'vw';
+  el.style.fontSize = (10 + Math.random() * 8) + 'px';
+  el.style.animationDuration = (6 + Math.random() * 6) + 's';
+  el.style.animationDelay = Math.random() * 8 + 's';
+  el.style.color = ['#ffb7c5','#ffc0cb','#ffaacc','#ff9aae','#d4a5a5'][Math.floor(Math.random()*5)];
+  document.body.appendChild(el);
+}
+
+// === 蝴蝶 ===
+const butterflies = ['🦋', '🦋', '🦗'];
+for (let i = 0; i < 3; i++) {
+  const el = document.createElement('div');
+  el.className = 'butterfly';
+  el.textContent = butterflies[i % butterflies.length];
+  el.style.left = (15 + Math.random() * 70) + 'vw';
+  el.style.top = (10 + Math.random() * 60) + 'vh';
+  el.style.animationDuration = (6 + Math.random() * 4) + 's';
+  el.style.animationDelay = Math.random() * 6 + 's';
+  document.body.appendChild(el);
+}
+
+// === 柳絮 ===
+for (let i = 0; i < 8; i++) {
+  const el = document.createElement('div');
+  el.className = 'willow';
+  el.textContent = '🌿';
+  el.style.left = Math.random() * 100 + 'vw';
+  el.style.fontSize = (8 + Math.random() * 5) + 'px';
+  el.style.animationDuration = (8 + Math.random() * 5) + 's';
+  el.style.animationDelay = Math.random() * 10 + 's';
+  el.style.color = ['#c8e6c9','#dcedc8','#f0f4c3'][Math.floor(Math.random()*3)];
+  document.body.appendChild(el);
+}
+
+// 减少动效
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.petal, .butterfly, .willow').forEach(el => el.remove());
+  document.querySelector('.card').style.animation = 'none';
+}
+</script>
+</body>
+</html>

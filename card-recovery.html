@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>早日康复</title>
+<meta property="og:title" content="💌 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #fff0ec 0%, #ffe4de 50%, #ffd0c4 100%);
+  font-family: 'Georgia', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* === 温暖阳光射线 === */
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background:
+    radial-gradient(ellipse at 60% 10%, rgba(255,220,160,0.35) 0%, transparent 55%),
+    radial-gradient(ellipse at 20% 80%, rgba(255,180,140,0.15) 0%, transparent 40%),
+    radial-gradient(ellipse at 80% 60%, rgba(255,200,150,0.1) 0%, transparent 35%);
+  animation: sunShine 8s ease-in-out infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+@keyframes sunShine {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.8; }
+  33% { transform: translate(2%, 1%) scale(1.02); opacity: 1; }
+  66% { transform: translate(-1%, 2%) scale(0.98); opacity: 0.85; }
+}
+
+/* === 漂浮爱心 === */
+.heart {
+  position: fixed;
+  font-size: 12px;
+  animation: heartFloat linear infinite;
+  z-index: 1;
+  pointer-events: none;
+  filter: drop-shadow(0 0 4px rgba(255,140,140,0.4));
+}
+@keyframes heartFloat {
+  0% { transform: translateY(-10vh) rotate(0deg) translateX(0); opacity: 0; }
+  8% { opacity: 0.8; }
+  90% { opacity: 0.7; }
+  100% { transform: translateY(105vh) rotate(30deg) translateX(30px); opacity: 0; }
+}
+
+/* === 温暖光点 === */
+.warm-dot {
+  position: fixed;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(255,210,150,0.9), rgba(255,160,100,0.5));
+  animation: warmRise linear infinite;
+  z-index: 1;
+  pointer-events: none;
+}
+@keyframes warmRise {
+  0% { transform: translateY(100vh) scale(0.3); opacity: 0; }
+  10% { opacity: 0.7; }
+  85% { opacity: 0.7; }
+  100% { transform: translateY(-5vh) scale(1); opacity: 0; }
+}
+
+/* === 温暖速度线 === */
+.speed-line {
+  position: fixed;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, rgba(255,200,150,0.6), transparent);
+  border-radius: 2px;
+  animation: speedPass linear infinite;
+  z-index: 1;
+  pointer-events: none;
+}
+@keyframes speedPass {
+  0% { transform: translateX(-100vw); opacity: 0; }
+  10% { opacity: 0.7; }
+  90% { opacity: 0.3; }
+  100% { transform: translateX(100vw); opacity: 0; }
+}
+
+/* === 边框流光（珊瑚粉） === */
+.card-wrap {
+  position: relative;
+  padding: 3px;
+  border-radius: 28px;
+  background: linear-gradient(135deg,
+    #e8847c,
+    #f4a89a,
+    #e8847c,
+    #f7bfb8,
+    #e8847c);
+  background-size: 300% 300%;
+  animation: coralBorder 4s ease infinite;
+  box-shadow:
+    0 0 28px rgba(232,132,124,0.4),
+    0 0 65px rgba(232,132,124,0.18),
+    inset 0 0 18px rgba(255,220,200,0.15);
+  z-index: 10;
+}
+@keyframes coralBorder {
+  0% { background-position: 0% 50%; box-shadow: 0 0 28px rgba(232,132,124,0.4), 0 0 65px rgba(232,132,124,0.18); }
+  50% { background-position: 100% 50%; box-shadow: 0 0 42px rgba(244,168,154,0.6), 0 0 85px rgba(232,132,124,0.28); }
+  100% { background-position: 0% 50%; box-shadow: 0 0 28px rgba(232,132,124,0.4), 0 0 65px rgba(232,132,124,0.18); }
+}
+
+/* === 卡片内容 === */
+.card {
+  background: linear-gradient(160deg, rgba(255,248,244,0.96), rgba(255,238,232,0.92));
+  border-radius: 26px;
+  padding: clamp(36px, 7vw, 60px) clamp(28px, 5vw, 50px);
+  text-align: center;
+  position: relative;
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.5);
+  box-shadow: inset 0 2px 20px rgba(255,200,180,0.15);
+}
+
+/* === 图标 === */
+.card-icon {
+  font-size: clamp(32px, 7vw, 52px);
+  display: block;
+  margin-bottom: 20px;
+  opacity: 1;
+  animation: iconDrop 0.9s cubic-bezier(0.34,1.56,0.64,1) 0.1s both;
+  filter: drop-shadow(0 4px 8px rgba(200,100,80,0.25));
+}
+@keyframes iconDrop {
+  from { opacity: 0; transform: translateY(-24px) scale(0.7); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* === 收礼人姓名 === */
+.name {
+  font-size: clamp(30px, 7vw, 54px);
+  font-weight: 700;
+  color: #c06050;
+  margin-bottom: 12px;
+  letter-spacing: 6px;
+  opacity: 1;
+  animation: nameSlide 1.1s cubic-bezier(0.34,1.56,0.64,1) 0.2s both;
+  text-shadow: 0 2px 12px rgba(200,80,60,0.15);
+}
+@keyframes nameSlide {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* === 日期 === */
+.date {
+  font-size: clamp(12px, 2.5vw, 16px);
+  color: #b88070;
+  letter-spacing: 4px;
+  margin-bottom: 28px;
+  opacity: 1;
+  animation: textSlide 1.1s cubic-bezier(0.34,1.56,0.64,1) 0.35s both;
+}
+@keyframes textSlide {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === 祝福语 === */
+.blessing {
+  font-size: clamp(15px, 3.5vw, 21px);
+  color: #a05040;
+  line-height: 1.9;
+  letter-spacing: 2px;
+  opacity: 1;
+  animation: textSlide 1.1s cubic-bezier(0.34,1.56,0.64,1) 0.5s both;
+}
+
+/* === 署名 === */
+.from {
+  font-size: clamp(12px, 2vw, 15px);
+  color: #c08070;
+  margin-top: 22px;
+  letter-spacing: 3px;
+  opacity: 1;
+  animation: textSlide 1.1s cubic-bezier(0.34,1.56,0.64,1) 0.75s both;
+}
+
+/* === 温馨小装饰 === */
+.warm-spark {
+  position: fixed;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #ffb89a;
+  animation: sparkGlow linear infinite;
+  z-index: 1;
+  pointer-events: none;
+  filter: blur(0.5px);
+}
+@keyframes sparkGlow {
+  0%, 100% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 0.9; transform: scale(1.5); }
+}
+
+/* === 无障碍：减少动画 === */
+@media (prefers-reduced-motion: reduce) {
+  .heart, .warm-dot, .speed-line, .warm-spark { animation: none !important; }
+  .card-icon, .name, .date, .blessing, .from { animation: none !important; opacity: 1; }
+  body::before { animation: none !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="card-wrap">
+  <div class="card">
+    <span class="card-icon">🌸</span>
+    <div class="name" id="nameEl"></div>
+    <div class="date" id="dateEl"></div>
+    <div class="blessing" id="blessingEl"></div>
+    <div class="from" id="fromEl"></div>
+  </div>
+</div>
+
+<script>
+const p = new URLSearchParams(location.search);
+document.getElementById('nameEl').textContent = p.get('n') || '';
+document.getElementById('dateEl').textContent = p.get('d') || '';
+document.getElementById('blessingEl').textContent = p.get('b') || '愿你被世界温柔以待，早日康复';
+document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
+
+// 漂浮爱心
+const hearts = ['💗', '💕', '🩷', '🤍', '💖'];
+for (let i = 0; i < 14; i++) {
+  const h = document.createElement('div');
+  h.className = 'heart';
+  h.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+  h.style.left = Math.random() * 100 + 'vw';
+  h.style.fontSize = (8 + Math.random() * 10) + 'px';
+  h.style.animationDuration = (6 + Math.random() * 6) + 's';
+  h.style.animationDelay = Math.random() * 8 + 's';
+  document.body.appendChild(h);
+}
+
+// 温暖光点
+for (let i = 0; i < 18; i++) {
+  const d = document.createElement('div');
+  d.className = 'warm-dot';
+  d.style.left = Math.random() * 100 + 'vw';
+  d.style.width = d.style.height = (4 + Math.random() * 9) + 'px';
+  d.style.animationDuration = (5 + Math.random() * 5) + 's';
+  d.style.animationDelay = Math.random() * 8 + 's';
+  document.body.appendChild(d);
+}
+
+// 速度线
+for (let i = 0; i < 4; i++) {
+  const l = document.createElement('div');
+  l.className = 'speed-line';
+  l.style.top = (5 + Math.random() * 85) + 'vh';
+  l.style.width = (40 + Math.random() * 60) + 'px';
+  l.style.animationDuration = (2.5 + Math.random() * 2.5) + 's';
+  l.style.animationDelay = Math.random() * 6 + 's';
+  document.body.appendChild(l);
+}
+
+// 温暖星点
+for (let i = 0; i < 10; i++) {
+  const s = document.createElement('div');
+  s.className = 'warm-spark';
+  s.style.left = Math.random() * 100 + 'vw';
+  s.style.top = Math.random() * 100 + 'vh';
+  s.style.animationDuration = (2 + Math.random() * 3) + 's';
+  s.style.animationDelay = Math.random() * 5 + 's';
+  document.body.appendChild(s);
+}
+</script>
+</body>
+</html>

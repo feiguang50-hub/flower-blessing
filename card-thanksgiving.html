@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>感恩节祝福</title>
+<meta property="og:title" content="🍁 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #8B4513 0%, #D2691E 20%, #F4A460 45%, #DEB887 70%, #8B4513 100%);
+  font-family: 'Georgia', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 暖阳光晕 */
+body::before {
+  content: '';
+  position: fixed;
+  top: -30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120%;
+  height: 80%;
+  background: radial-gradient(ellipse at center, rgba(255,200,80,0.35) 0%, rgba(255,150,50,0.15) 40%, transparent 70%);
+  animation: warmSun 4s ease-in-out infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+@keyframes warmSun {
+  0%, 100% { opacity: 0.8; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+}
+
+/* 落叶 */
+.maple-leaf {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  z-index: 1;
+  animation: fallLeaf linear infinite;
+  pointer-events: none;
+}
+.maple-leaf::before {
+  content: '🍂';
+  font-size: 20px;
+}
+@keyframes fallLeaf {
+  0% { transform: translateY(-30px) rotate(0deg) translateX(0); opacity: 1; }
+  25% { transform: translateY(25vh) rotate(90deg) translateX(15px); }
+  50% { transform: translateY(50vh) rotate(180deg) translateX(-10px); }
+  75% { transform: translateY(75vh) rotate(270deg) translateX(20px); }
+  100% { transform: translateY(105vh) rotate(360deg) translateX(-5px); opacity: 0.7; }
+}
+
+/* 枫叶 */
+.maple-leaf:nth-child(even)::before {
+  content: '🍁';
+}
+
+/* 卡片包装 */
+.card-wrap {
+  position: relative;
+  z-index: 10;
+  perspective: 1000px;
+  animation: cardFloat 4s ease-in-out infinite;
+}
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.card {
+  position: relative;
+  background: linear-gradient(145deg, rgba(255,248,220,0.96) 0%, rgba(255,228,181,0.95) 100%);
+  border-radius: 16px;
+  padding: clamp(28px, 7vw, 50px) clamp(24px, 6vw, 44px);
+  text-align: center;
+  box-shadow:
+    0 8px 32px rgba(139,69,19,0.25),
+    0 2px 8px rgba(139,69,19,0.15),
+    inset 0 1px 0 rgba(255,255,255,0.8);
+  border: 3px solid;
+  border-image: linear-gradient(135deg, #DAA520, #CD853F, #DAA520, #B8860B) 1;
+  min-width: min(340px, 90vw);
+  max-width: 420px;
+}
+
+/* 卡片顶部装饰 */
+.card::before {
+  content: '🦃';
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 36px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+  animation: iconDrop 0.8s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+.icon {
+  font-size: clamp(32px, 8vw, 48px);
+  margin-bottom: 10px;
+  animation: iconDrop 0.9s cubic-bezier(0.34,1.56,0.64,1) 0.1s both;
+}
+@keyframes iconDrop {
+  from { opacity: 0; transform: translateY(-24px) scale(0.7); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.label {
+  font-size: clamp(12px, 3vw, 14px);
+  color: #8B4513;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  opacity: 1;
+  animation: fadeIn 1s ease-out 0.3s both;
+}
+
+.name {
+  font-size: clamp(28px, 7vw, 44px);
+  font-weight: bold;
+  background: linear-gradient(135deg, #B8860B 0%, #DAA520 50%, #CD853F 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 14px;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.2s both;
+}
+
+.blessing {
+  font-size: clamp(16px, 4.5vw, 22px);
+  color: #5D4037;
+  line-height: 1.7;
+  margin-bottom: 16px;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.4s both;
+}
+
+.date {
+  font-size: clamp(13px, 3.2vw, 16px);
+  color: #A0522D;
+  margin-bottom: 6px;
+  opacity: 1;
+  animation: fadeIn 1s ease-out 0.6s both;
+}
+
+.from {
+  font-size: clamp(14px, 3.5vw, 17px);
+  color: #8B4513;
+  font-style: italic;
+  opacity: 1;
+  animation: fadeIn 1s ease-out 0.7s both;
+}
+
+.divider {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #DAA520, transparent);
+  margin: 14px auto;
+  opacity: 1;
+  animation: fadeIn 1s ease-out 0.5s both;
+}
+
+.thanks-text {
+  font-size: clamp(15px, 3.8vw, 19px);
+  color: #A0522D;
+  line-height: 1.6;
+  opacity: 1;
+  animation: fadeIn 1s ease-out 0.8s both;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 底部飘落装饰 */
+.bottom-decor {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to top, rgba(139,69,19,0.15), transparent);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* 温暖粒子光点 */
+.warm-particle {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, #FFD700, #FFA500);
+  border-radius: 50%;
+  z-index: 1;
+  animation: riseParticle linear infinite;
+  pointer-events: none;
+}
+@keyframes riseParticle {
+  0% { transform: translateY(100vh) scale(0); opacity: 0; }
+  20% { opacity: 1; transform: translateY(80vh) scale(1); }
+  100% { transform: translateY(-10vh) scale(0.5); opacity: 0; }
+}
+
+/* 响应式 */
+@media (max-width: 380px) {
+  .card { padding: 24px 18px; min-width: 300px; }
+  .card::before { font-size: 28px; top: -14px; }
+}
+</style>
+</head>
+<body>
+
+<div id="nameEl" style="display:none"></div>
+<div id="blessingEl" style="display:none"></div>
+<div id="dateEl" style="display:none"></div>
+<div id="fromEl" style="display:none"></div>
+
+<div class="card-wrap">
+  <div class="card">
+    <div class="icon">🍁</div>
+    <div class="label" id="labelEl">感恩节快乐</div>
+    <div class="name" id="nameDisplay"></div>
+    <div class="blessing" id="blessingDisplay"></div>
+    <div class="divider"></div>
+    <div class="thanks-text">感谢一路有您<br>愿温暖常伴心间</div>
+    <div class="date" id="dateDisplay"></div>
+    <div class="from" id="fromDisplay"></div>
+  </div>
+</div>
+
+<div class="bottom-decor"></div>
+
+<script>
+// URL参数读取
+const p = new URLSearchParams(location.search);
+const name = p.get('n') || '亲爱的你';
+const blessing = p.get('b') || '感恩节快乐！感谢生命中每一个温暖的瞬间';
+const date = p.get('d') || '';
+const from = p.get('f') || '';
+
+document.getElementById('nameDisplay').textContent = name;
+document.getElementById('blessingDisplay').textContent = blessing;
+document.getElementById('dateDisplay').textContent = date;
+if (from) document.getElementById('fromDisplay').textContent = '— ' + from;
+
+// 生成落叶
+function createLeaf() {
+  const leaf = document.createElement('div');
+  leaf.className = 'maple-leaf';
+  leaf.style.left = Math.random() * 100 + 'vw';
+  leaf.style.animationDuration = (4 + Math.random() * 4) + 's';
+  leaf.style.animationDelay = Math.random() * 5 + 's';
+  leaf.style.fontSize = (14 + Math.random() * 12) + 'px';
+  document.body.appendChild(leaf);
+  setTimeout(() => leaf.remove(), 9000);
+}
+for (let i = 0; i < 12; i++) {
+  setTimeout(() => createLeaf(), i * 600);
+}
+setInterval(createLeaf, 1200);
+
+// 温暖粒子
+function createParticle() {
+  const particle = document.createElement('div');
+  particle.className = 'warm-particle';
+  particle.style.left = Math.random() * 100 + 'vw';
+  particle.style.animationDuration = (5 + Math.random() * 5) + 's';
+  document.body.appendChild(particle);
+  setTimeout(() => particle.remove(), 12000);
+}
+setInterval(createParticle, 800);
+</script>
+</body>
+</html>

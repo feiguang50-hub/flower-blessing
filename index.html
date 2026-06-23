@@ -122,10 +122,8 @@ header {
 .material-preview { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
 .material-dot {
   width: 22px; height: 22px; border-radius: 50%;
-  box-shadow: 0 0 10px currentColor; flex-shrink: 0;
-}
-.theme-icon-wrap { display: flex; align-items: center; justify-content: center; margin-bottom: 4px; }
-.theme-icon { font-size: 32px; line-height: 1; }
+  box-shadow: 0 0 10px currentColor;
+  flex-shrink: 0;
 }
 
 .shape-preview { margin-bottom: 6px; display: flex; justify-content: center; }
@@ -180,8 +178,9 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 120px;
 }
-#roseCanvas {
+canvas[data-rose-canvas] {
   display: block;
   position: relative;
   z-index: 1;
@@ -229,24 +228,12 @@ header {
 }
 
 .preview-meta { font-size: 11px; color: rgba(255,255,255,0.20); margin-top: 14px; position: relative; }
-.preview-theme-icon { font-size: 56px; margin: 16px 0 10px; text-align: center; }
+.preview-tags { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 10px; position: relative; }
 .preview-tag { font-size: 10px; padding: 3px 10px; border-radius: 10px; background: rgba(255,255,255,0.04); color: #777; }
 
 /* === 步骤面板 === */
-.panel { display: none; opacity: 0; }
-.panel.active { display: block; animation: panelFadeIn 0.35s ease-out forwards; }
-
-@keyframes panelFadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* 结果页专用动画 */
-.result-page { animation: resultBounceIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
-@keyframes resultBounceIn {
-  from { opacity: 0; transform: scale(0.85); }
-  to   { opacity: 1; transform: scale(1); }
-}
+.panel { display: none; }
+.panel.active { display: block; }
 
 /* === 结果页 === */
 .result-page { text-align: center; padding: 40px 20px; position: relative; }
@@ -347,15 +334,32 @@ header {
   </div>
 
   <div class="panel" id="panel2">
-    <div class="section-label">选择主题</div>
-    <div class="options-grid" id="themeGrid"></div>
+    <div class="section-label">Step 2 · 选择花材</div>
+    <div class="options-grid" id="materialGrid"></div>
+
+    <div class="divider"></div>
+    <div class="section-label">选择形态</div>
+    <div class="options-grid" id="shapeGrid"></div>
+
+    <div class="divider"></div>
+    <div class="section-label">选择排布</div>
+    <div class="options-grid" id="arrangeGrid"></div>
 
     <div class="preview-box">
       <div class="preview-label">PREVIEW</div>
       <div class="preview-blessing" id="previewBlessing">愿你如星般璀璨</div>
-      <div class="preview-theme-icon" id="previewThemeIcon">🌸</div>
+      <div class="preview-flowers">
+        <canvas id="previewRoseCanvas" data-rose-canvas="preview" width="320" height="300"></canvas>
+      </div>
+      <div class="glass-vase">
+        <div class="vase-body"></div>
+        <div class="glass-vase-text" id="previewVaseText">收礼人姓名</div>
+      </div>
       <div class="preview-meta" id="previewMeta"></div>
+      <div class="preview-tags" id="previewTags"></div>
     </div>
+
+    <div class="bgm-hint">背景音乐功能开发中</div>
 
     <button class="btn-primary" onclick="generateLink()">生成专属链接</button>
     <button class="btn-secondary" onclick="goStep(1)">‹ 上一步</button>
@@ -575,7 +579,7 @@ function startParticles(material) {
   // 花瓣
   for (let i = 0; i < 14; i++) {
     const p = new Petal(currentMaterial);
-    p.y = Math.random() * canvas.height - 20; // 初始分布
+    p.y = Math.random() * canvas.height - 20;
     particles.push({ type: 'petal', obj: p });
   }
 
@@ -583,7 +587,7 @@ function startParticles(material) {
   for (let i = 0; i < 20; i++) {
     const s = new Sparkle();
     s.material = currentMaterial;
-    s.y = Math.random() * canvas.height; // 初始分布
+    s.y = Math.random() * canvas.height;
     particles.push({ type: 'sparkle', obj: s });
   }
 
@@ -612,21 +616,11 @@ function loop() {
   requestAnimationFrame(loop);
 }
 
-// ========== 3D 水晶玫瑰渲染系统 ==========
-(function(){
-  var rCanvas = null;
-  var rc = null;
-  var raf = null;
-  var RX = 0.30, RY = 0.85;
-  var FOV = 460;
-  var auto = true;
-  var pT = 0;
-  var FP = [];
-  var currentMat = 'amethyst';
-  var currentShape = 'round';
-
-  // 材质→颜色
-  var MAT_COLORS = {
+// ========== 3D 水晶玫瑰渲染系统 (优化版) ==========
+window._Rose = (function(){
+  // 全局状态映射
+  const states = new Map();
+  const MAT_COLORS = {
     amethyst:  {inner:[252,254,255], mid:[205,225,255], outer:[155,188,248], glow:'rgba(192,132,252,0.5)', sparkles:'rgba(233,213,255,0.6)'},
     stream:     {inner:[230,245,255], mid:[125,211,252], outer:[14,165,233], glow:'rgba(125,211,252,0.5)', sparkles:'rgba(186,230,253,0.6)'},
     stardust:   {inner:[255,250,220], mid:[253,230,138], outer:[245,158,11], glow:'rgba(253,230,138,0.5)', sparkles:'rgba(254,243,199,0.6)'},
@@ -636,61 +630,69 @@ function loop() {
     jade:       {inner:[220,252,220], mid:[134,239,172], outer:[22,163,74], glow:'rgba(134,239,172,0.5)', sparkles:'rgba(187,247,208,0.6)'},
   };
 
-  function tr(x,y,z){
-    var c1=Math.cos(RX),s1=Math.sin(RX),y1=y*c1-z*s1,z1=y*s1+z*c1;
-    var c2=Math.cos(RY),s2=Math.sin(RY);
-    return [x*c2+z1*s2,y1,-x*s2+z1*c2];
-  }
-  function pj(v,cx,cy,sc){
-    var dz=v[2]+FOV*0.5;if(dz<1)dz=1;
-    return [cx+v[0]*sc*FOV/dz, cy+v[1]*sc*FOV/dz, FOV/dz];
+  function getState(canvasId) {
+    if (!states.has(canvasId)) {
+      states.set(canvasId, {
+        RX: 0.30, RY: 0.85, FOV: 460, auto: true, raf: null, pT: 0, FP: [], material: 'amethyst', shape: 'round'
+      });
+    }
+    return states.get(canvasId);
   }
 
-  // 花瓣形状参数（按形态）
+  function tr(state, x,y,z){
+    const c1=Math.cos(state.RX),s1=Math.sin(state.RX),y1=y*c1-z*s1,z1=y*s1+z*c1;
+    const c2=Math.cos(state.RY),s2=Math.sin(state.RY);
+    return [x*c2+z1*s2,y1,-x*s2+z1*c2];
+  }
+  
+  function pj(state, v,cx,cy,sc){
+    let dz=v[2]+state.FOV*0.5;if(dz<1)dz=1;
+    return [cx+v[0]*sc*state.FOV/dz, cy+v[1]*sc*state.FOV/dz, state.FOV/dz];
+  }
+
   function getShapeParams(shape){
     if(shape==='tulip')
-      return {layers:[[5,0.000,0.14,0.09,0.068,0.04,0,0.30,0.0],[6,0.028,0.13,0.12,0.080,0.08,1,0.28,0.52],[7,0.055,0.11,0.15,0.092,0.15,2,0.26,0.18],[7,0.088,0.08,0.20,0.105,0.25,3,0.24,0.36],[8,0.125,0.04,0.25,0.115,0.36,4,0.22,0.08],[8,0.165,0.00,0.30,0.122,0.48,5,0.20,0.24],[9,0.210,-0.05,0.34,0.128,0.58,6,0.18,0.06],[9,0.260,-0.12,0.36,0.130,0.68,7,0.16,0.14],[8,0.310,-0.20,0.38,0.128,0.78,8,0.14,-0.22],[5,0.360,-0.28,0.32,0.108,1.10,9,0.12,0.38]],name:'tulip'};
+      return {layers:[[5,0.000,0.14,0.09,0.068,0.04,0,0.30,0.0],[6,0.028,0.13,0.12,0.080,0.08,1,0.28,0.52],[7,0.055,0.11,0.15,0.092,0.15,2,0.26,0.18],[7,0.088,0.08,0.20,0.105,0.25,3,0.24,0.36],[8,0.125,0.04,0.25,0.115,0.36,4,0.22,0.08],[8,0.165,0.00,0.30,0.122,0.48,5,0.20,0.24],[9,0.210,-0.05,0.34,0.128,0.58,6,0.18,0.06],[9,0.260,-0.12,0.36,0.130,0.68,7,0.16,0.14],[8,0.310,-0.20,0.38,0.128,0.78,8,0.14,-0.22],[5,0.360,-0.28,0.32,0.108,1.10,9,0.12,0.38]]};
     if(shape==='rose')
-      return {layers:[[5,0.000,0.14,0.10,0.065,0.04,0,0.30,0.0],[6,0.030,0.13,0.12,0.075,0.09,1,0.28,0.52],[8,0.055,0.11,0.16,0.090,0.17,2,0.26,0.18],[8,0.088,0.08,0.20,0.105,0.30,3,0.24,0.36],[10,0.128,0.04,0.24,0.115,0.42,4,0.22,0.08],[10,0.172,0.00,0.28,0.122,0.55,5,0.20,0.24],[12,0.222,-0.05,0.32,0.128,0.68,6,0.18,0.06],[12,0.278,-0.12,0.36,0.132,0.82,7,0.16,0.14],[11,0.335,-0.20,0.38,0.130,0.95,8,0.14,-0.22],[5,0.385,-0.28,0.30,0.108,1.25,9,0.12,0.38]],name:'rose'};
+      return {layers:[[5,0.000,0.14,0.10,0.065,0.04,0,0.30,0.0],[6,0.030,0.13,0.12,0.075,0.09,1,0.28,0.52],[8,0.055,0.11,0.16,0.090,0.17,2,0.26,0.18],[8,0.088,0.08,0.20,0.105,0.30,3,0.24,0.36],[10,0.128,0.04,0.24,0.115,0.42,4,0.22,0.08],[10,0.172,0.00,0.28,0.122,0.55,5,0.20,0.24],[12,0.222,-0.05,0.32,0.128,0.68,6,0.18,0.06],[12,0.278,-0.12,0.36,0.132,0.82,7,0.16,0.14],[11,0.335,-0.20,0.38,0.130,0.95,8,0.14,-0.22],[5,0.385,-0.28,0.30,0.108,1.25,9,0.12,0.38]]};
     if(shape==='carnation')
-      return {layers:[[6,0.000,0.14,0.10,0.045,0.04,0,0.30,0.0],[8,0.025,0.12,0.13,0.050,0.10,1,0.28,0.52],[10,0.048,0.10,0.16,0.055,0.20,2,0.26,0.18],[12,0.080,0.07,0.20,0.060,0.34,3,0.24,0.36],[14,0.118,0.03,0.24,0.065,0.48,4,0.22,0.08],[14,0.160,0.00,0.28,0.070,0.62,5,0.20,0.24],[16,0.208,-0.06,0.32,0.072,0.76,6,0.18,0.06],[14,0.258,-0.14,0.34,0.070,0.90,7,0.16,0.14],[12,0.308,-0.22,0.35,0.068,1.08,8,0.14,-0.22],[5,0.355,-0.30,0.28,0.090,1.35,9,0.12,0.38]],name:'carnation'};
-    // round (default)
-    return {layers:[[5,0.000,0.14,0.10,0.065,0.04,0,0.30,0.0],[6,0.032,0.13,0.13,0.078,0.09,1,0.28,0.52],[7,0.060,0.11,0.16,0.092,0.16,2,0.26,0.18],[7,0.095,0.08,0.20,0.108,0.28,3,0.24,0.36],[8,0.135,0.04,0.24,0.120,0.40,4,0.22,0.08],[8,0.180,0.00,0.28,0.130,0.55,5,0.20,0.24],[9,0.230,-0.05,0.32,0.138,0.68,6,0.18,0.06],[9,0.288,-0.12,0.36,0.142,0.80,7,0.16,0.14],[8,0.348,-0.20,0.38,0.140,0.90,8,0.14,-0.22],[5,0.400,-0.28,0.32,0.110,1.20,9,0.12,0.38]],name:'round'};
+      return {layers:[[6,0.000,0.14,0.10,0.045,0.04,0,0.30,0.0],[8,0.025,0.12,0.13,0.050,0.10,1,0.28,0.52],[10,0.048,0.10,0.16,0.055,0.20,2,0.26,0.18],[12,0.080,0.07,0.20,0.060,0.34,3,0.24,0.36],[14,0.118,0.03,0.24,0.065,0.48,4,0.22,0.08],[14,0.160,0.00,0.28,0.070,0.62,5,0.20,0.24],[16,0.208,-0.06,0.32,0.072,0.76,6,0.18,0.06],[14,0.258,-0.14,0.34,0.070,0.90,7,0.16,0.14],[12,0.308,-0.22,0.35,0.068,1.08,8,0.14,-0.22],[5,0.355,-0.30,0.28,0.090,1.35,9,0.12,0.38]]};
+    return {layers:[[5,0.000,0.14,0.10,0.065,0.04,0,0.30,0.0],[6,0.032,0.13,0.13,0.078,0.09,1,0.28,0.52],[7,0.060,0.11,0.16,0.092,0.16,2,0.26,0.18],[7,0.095,0.08,0.20,0.108,0.28,3,0.24,0.36],[8,0.135,0.04,0.24,0.120,0.40,4,0.22,0.08],[8,0.180,0.00,0.28,0.130,0.55,5,0.20,0.24],[9,0.230,-0.05,0.32,0.138,0.68,6,0.18,0.06],[9,0.288,-0.12,0.36,0.142,0.80,7,0.16,0.14],[8,0.348,-0.20,0.38,0.140,0.90,8,0.14,-0.22],[5,0.400,-0.28,0.32,0.110,1.20,9,0.12,0.38]]};
   }
 
   function buildPetals(shape){
-    var sp = getShapeParams(shape);
-    var P = [];
+    const sp = getShapeParams(shape);
+    const P = [];
     function ring(count,rad,baseY,len,wid,openAng,layer,baseAlpha,offset){
       offset=offset||0;
-      for(var i=0;i<count;i++){
-        var ang=(i/count)*Math.PI*2+offset;
+      for(let i=0;i<count;i++){
+        const ang=(i/count)*Math.PI*2+offset;
         P.push({ang:ang,rad:rad,baseY:baseY,len:len,wid:wid,openAng:openAng,layer:layer,baseAlpha:baseAlpha});
       }
     }
-    for(var i=0;i<sp.layers.length;i++){
-      var l=sp.layers[i];ring(l[0],l[1],l[2],l[3],l[4],l[5],l[6],l[7],l[8]);
+    for(let i=0;i<sp.layers.length;i++){
+      const l=sp.layers[i];ring(l[0],l[1],l[2],l[3],l[4],l[5],l[6],l[7],l[8]);
     }
     return P;
   }
 
-  function getPetalPoints(p){
-    var ang=p.ang;
-    var bx=Math.cos(ang)*p.rad, by=p.baseY, bz=Math.sin(ang)*p.rad;
-    var radDirX=Math.cos(ang), radDirZ=Math.sin(ang);
-    var tx=bx+p.len*Math.sin(p.openAng)*radDirX;
-    var ty=by-p.len*Math.cos(p.openAng);
-    var tz=bz+p.len*Math.sin(p.openAng)*radDirZ;
-    var wx=-Math.sin(ang), wz=Math.cos(ang);
-    var midFrac=0.62;
-    var mx=bx+p.len*midFrac*Math.sin(p.openAng)*radDirX;
-    var my=by-p.len*midFrac*Math.cos(p.openAng);
-    var mz=bz+p.len*midFrac*Math.sin(p.openAng)*radDirZ;
-    var halfW=p.wid*0.5;
+  function getPetalPoints(state, p){
+    const ang=p.ang;
+    const bx=Math.cos(ang)*p.rad, by=p.baseY, bz=Math.sin(ang)*p.rad;
+    const radDirX=Math.cos(ang), radDirZ=Math.sin(ang);
+    const tx=bx+p.len*Math.sin(p.openAng)*radDirX;
+    const ty=by-p.len*Math.cos(p.openAng);
+    const tz=bz+p.len*Math.sin(p.openAng)*radDirZ;
+    const wx=-Math.sin(ang), wz=Math.cos(ang);
+    const midFrac=0.62;
+    const mx=bx+p.len*midFrac*Math.sin(p.openAng)*radDirX;
+    const my=by-p.len*midFrac*Math.cos(p.openAng);
+    const mz=bz+p.len*midFrac*Math.sin(p.openAng)*radDirZ;
+    const halfW=p.wid*0.5;
     return{
-      base:tr(bx,by,bz), tip:tr(tx,ty,tz),
-      left:tr(mx+wx*halfW,my,mz+wz*halfW), right:tr(mx-wx*halfW,my,mz-wz*halfW),
-      depthZ:tr(bx,by,bz)[2]
+      base:tr(state, bx,by,bz), tip:tr(state, tx,ty,tz),
+      left:tr(state, mx+wx*halfW,my,mz+wz*halfW), right:tr(state, mx-wx*halfW,my,mz-wz*halfW),
+      depthZ:tr(state, bx,by,bz)[2]
     };
   }
 
@@ -701,16 +703,16 @@ function loop() {
     return mc.outer;
   }
 
-  function drawPetal(p,cx,cy,sc,mc){
-    var pts=getPetalPoints(p);
-    var pb=pj(pts.base,cx,cy,sc), pt=pj(pts.tip,cx,cy,sc);
-    var pl=pj(pts.left,cx,cy,sc), pr2=pj(pts.right,cx,cy,sc);
+  function drawPetal(state, rc, p,cx,cy,sc,mc){
+    const pts=getPetalPoints(state, p);
+    const pb=pj(state, pts.base,cx,cy,sc), pt=pj(state, pts.tip,cx,cy,sc);
+    const pl=pj(state, pts.left,cx,cy,sc), pr2=pj(state, pts.right,cx,cy,sc);
     if(pb[2]<=0||pt[2]<=0) return;
-    var f=Math.max(0,Math.min(1,(pb[2]-0.5)/1.0));
-    var baseA=Math.min(0.30,p.baseAlpha*(0.7+f*0.3));
-    var rgb=petalColor(p.layer,mc);
-    var R=rgb[0],G=rgb[1],B=rgb[2];
-    var grd=rc.createLinearGradient(pb[0],pb[1],pt[0],pt[1]);
+    const f=Math.max(0,Math.min(1,(pb[2]-0.5)/1.0));
+    const baseA=Math.min(0.30,p.baseAlpha*(0.7+f*0.3));
+    const rgb=petalColor(p.layer,mc);
+    const R=rgb[0],G=rgb[1],B=rgb[2];
+    const grd=rc.createLinearGradient(pb[0],pb[1],pt[0],pt[1]);
     grd.addColorStop(0,'rgba('+R+','+G+','+B+','+baseA.toFixed(3)+')');
     grd.addColorStop(0.45,'rgba('+R+','+G+','+B+','+(baseA*0.78).toFixed(3)+')');
     grd.addColorStop(0.80,'rgba('+R+','+G+','+B+','+(baseA*0.45).toFixed(3)+')');
@@ -731,51 +733,51 @@ function loop() {
     }
   }
 
-  function drawCenter(cx,cy,sc,mc){
-    for(var i=0;i<12;i++){
-      var a=(i/12)*Math.PI*2,r=0.020+(i%3)*0.005;
-      var v=tr(Math.cos(a)*r,0.148,Math.sin(a)*r);
-      var p2=pj(v,cx,cy,sc); if(p2[2]<=0) continue;
-      var ss=sc*p2[2], al=Math.max(0.35,Math.min(0.88,p2[2]*1.2));
+  function drawCenter(state, rc, cx,cy,sc,mc){
+    for(let i=0;i<12;i++){
+      const a=(i/12)*Math.PI*2,r=0.020+(i%3)*0.005;
+      const v=tr(state, Math.cos(a)*r,0.148,Math.sin(a)*r);
+      const p2=pj(state, v,cx,cy,sc); if(p2[2]<=0) continue;
+      const ss=sc*p2[2], al=Math.max(0.35,Math.min(0.88,p2[2]*1.2));
       rc.beginPath();rc.arc(p2[0],p2[1],ss*0.038,0,Math.PI*2);
       rc.fillStyle='rgba(255,255,255,'+al.toFixed(3)+')';rc.fill();
     }
-    var cv=tr(0,0.152,0),cp=pj(cv,cx,cy,sc);
+    const cv=tr(state, 0,0.152,0),cp=pj(state, cv,cx,cy,sc);
     if(cp[2]>0){
-      var g=rc.createRadialGradient(cp[0],cp[1],0,cp[0],cp[1],sc*cp[2]*0.08);
+      const g=rc.createRadialGradient(cp[0],cp[1],0,cp[0],cp[1],sc*cp[2]*0.08);
       g.addColorStop(0,'rgba(255,255,255,0.90)');g.addColorStop(1,'rgba(255,255,255,0)');
       rc.beginPath();rc.arc(cp[0],cp[1],sc*cp[2]*0.08,0,Math.PI*2);
       rc.fillStyle=g;rc.fill();
     }
   }
 
-  function drawStem(cx,cy,sc){
-    for(var i=0;i<22;i++){
-      var t1=i/22,t2=(i+1)/22;
-      var y1=0.10+t1*2.10,y2=0.10+t2*2.10;
-      var x1=Math.sin(t1)*0.016,x2=Math.sin(t2)*0.016;
-      var v1=tr(x1,y1,0),v2=tr(x2,y2,0);
-      var p1=pj(v1,cx,cy,sc),p2=pj(v2,cx,cy,sc);
+  function drawStem(state, rc, cx,cy,sc){
+    for(let i=0;i<22;i++){
+      const t1=i/22,t2=(i+1)/22;
+      const y1=0.10+t1*2.10,y2=0.10+t2*2.10;
+      const x1=Math.sin(t1)*0.016,x2=Math.sin(t2)*0.016;
+      const v1=tr(state, x1,y1,0),v2=tr(state, x2,y2,0);
+      const p1=pj(state, v1,cx,cy,sc),p2=pj(state, v2,cx,cy,sc);
       if(p1[2]<=0||p2[2]<=0) continue;
-      var al=0.28+(1-t1)*0.18,th=Math.max(0.5,(0.055-t1*0.028)*sc*(p1[2]+p2[2])/2);
+      const al=0.28+(1-t1)*0.18,th=Math.max(0.5,(0.055-t1*0.028)*sc*(p1[2]+p2[2])/2);
       rc.beginPath();rc.moveTo(p1[0],p1[1]);rc.lineTo(p2[0],p2[1]);
       rc.strokeStyle='rgba(192,215,255,'+al.toFixed(3)+')';rc.lineWidth=th;
       rc.lineCap='round';rc.stroke();
     }
   }
 
-  function drawLeaf(cx,cy,sc,stemY,leafAng,sz){
-    var rx0=Math.cos(leafAng)*0.04,rz0=Math.sin(leafAng)*0.04;
-    var rtp=tr(rx0,stemY,rz0), rpr=pj(rtp,cx,cy,sc);
+  function drawLeaf(state, rc, cx,cy,sc,stemY,leafAng,sz){
+    const rx0=Math.cos(leafAng)*0.04,rz0=Math.sin(leafAng)*0.04;
+    const rtp=tr(state, rx0,stemY,rz0), rpr=pj(state, rtp,cx,cy,sc);
     if(rpr[2]<=0) return;
-    var spx=rpr[0],spy=rpr[1],f=rpr[2];
-    var s=sc*f*sz, al=Math.max(0.35,Math.min(0.62,f*0.95));
-    var sa=leafAng+RY+0.45,cA=Math.cos(sa),sA=Math.sin(sa);
+    const spx=rpr[0],spy=rpr[1],f=rpr[2];
+    const s=sc*f*sz, al=Math.max(0.35,Math.min(0.62,f*0.95));
+    const sa=leafAng+state.RY+0.45,cA=Math.cos(sa),sA=Math.sin(sa);
     function lp(lx,ly){return[spx+lx*cA-ly*sA,spy+lx*sA+ly*cA];}
-    var q0=lp(0,0),q1=lp(s*0.38,s*0.16),q2=lp(s*0.60,s*0.65),q3=lp(s*0.20,s*1.30);
-    var q4=lp(0,s*1.48),q5=lp(-s*0.20,s*1.30),q6=lp(-s*0.60,s*0.65),q7=lp(-s*0.38,s*0.16);
-    var gs=lp(0,0),ge=lp(0,s*1.3);
-    var grd=rc.createLinearGradient(gs[0],gs[1],ge[0],ge[1]);
+    const q0=lp(0,0),q1=lp(s*0.38,s*0.16),q2=lp(s*0.60,s*0.65),q3=lp(s*0.20,s*1.30);
+    const q4=lp(0,s*1.48),q5=lp(-s*0.20,s*1.30),q6=lp(-s*0.60,s*0.65),q7=lp(-s*0.38,s*0.16);
+    const gs=lp(0,0),ge=lp(0,s*1.3);
+    const grd=rc.createLinearGradient(gs[0],gs[1],ge[0],ge[1]);
     grd.addColorStop(0,'rgba(185,210,250,'+al.toFixed(3)+')');
     grd.addColorStop(1,'rgba(115,165,228,'+(al*0.40).toFixed(3)+')');
     rc.beginPath();rc.moveTo(q0[0],q0[1]);
@@ -783,97 +785,110 @@ function loop() {
     rc.bezierCurveTo(q4[0],q4[1],q5[0],q5[1],q5[0],q5[1]);
     rc.bezierCurveTo(q6[0],q6[1],q7[0],q7[1],q0[0],q0[1]);
     rc.fillStyle=grd;rc.fill();
-    var v0=lp(0,s*0.05),v1=lp(0,s*1.35);
+    const v0=lp(0,s*0.05),v1=lp(0,s*1.35);
     rc.beginPath();rc.moveTo(v0[0],v0[1]);rc.lineTo(v1[0],v1[1]);
     rc.strokeStyle='rgba(225,240,255,'+(al*0.35).toFixed(3)+')';
     rc.lineWidth=Math.max(0.3,s*0.055);rc.lineCap='round';rc.stroke();
   }
 
-  // 粒子
-  var FP=[];
-  function initParticles(mc){
-    FP=[];
-    for(var i=0;i<50;i++)FP.push({x:(Math.random()-0.5)*2.2,y:(Math.random()-0.5)*2.8,z:(Math.random()-0.5)*2.2,vy:0.0006+Math.random()*0.0012,ph:Math.random()*Math.PI*2,r:0.5+Math.random()*1.1,al:0.08+Math.random()*0.22,mc:mc});
+  function initParticles(state, mc){
+    state.FP=[];
+    for(let i=0;i<50;i++)state.FP.push({x:(Math.random()-0.5)*2.2,y:(Math.random()-0.5)*2.8,z:(Math.random()-0.5)*2.2,vy:0.0006+Math.random()*0.0012,ph:Math.random()*Math.PI*2,r:0.5+Math.random()*1.1,al:0.08+Math.random()*0.22});
   }
 
-  function drawRose(cx,cy,sc,material,shape){
-    var mc=MAT_COLORS[material]||MAT_COLORS.amethyst;
-    var W=rCanvas.width, H=rCanvas.height;
+  function drawRose(state, rc, rCanvas, cx,cy,sc,material,shape){
+    const mc=MAT_COLORS[material]||MAT_COLORS.amethyst;
+    const W=rCanvas.width, H=rCanvas.height;
     rc.clearRect(0,0,W,H);
 
-    // 外发光
-    var g=rc.createRadialGradient(cx,cy-sc*0.05,sc*0.05,cx,cy,sc*1.45);
+    const g=rc.createRadialGradient(cx,cy-sc*0.05,sc*0.05,cx,cy,sc*1.45);
     g.addColorStop(0,mc.glow.replace('0.5',(0.06).toString()));g.addColorStop(1,'rgba(0,0,0,0)');
     rc.beginPath();rc.arc(cx,cy,sc*1.45,0,Math.PI*2);rc.fillStyle=g;rc.fill();
 
-    var petals=buildPetals(shape);
-    var sorted=petals.slice().sort(function(a,b){return getPetalPoints(a).depthZ-getPetalPoints(b).depthZ;});
-    for(var i=0;i<sorted.length;i++) drawPetal(sorted[i],cx,cy,sc,mc);
-    drawCenter(cx,cy,sc,mc);
-    drawStem(cx,cy,sc);
-    drawLeaf(cx,cy,sc,0.78,Math.PI*0.30,0.145);
-    drawLeaf(cx,cy,sc,1.12,-Math.PI*0.22,0.122);
+    const petals=buildPetals(shape);
+    const sorted=petals.slice().sort(function(a,b){return getPetalPoints(state, a).depthZ-getPetalPoints(state, b).depthZ;});
+    for(let i=0;i<sorted.length;i++) drawPetal(state, rc, sorted[i],cx,cy,sc,mc);
+    drawCenter(state, rc, cx,cy,sc,mc);
+    drawStem(state, rc, cx,cy,sc);
+    drawLeaf(state, rc, cx,cy,sc,0.78,Math.PI*0.30,0.145);
+    drawLeaf(state, rc, cx,cy,sc,1.12,-Math.PI*0.22,0.122);
 
-    // 花瓣飘落
-    if(!window._fallingPetals) window._fallingPetals=[];
-    var fp=window._fallingPetals;
-    while(fp.length<18){
-      var fa=Math.random()*rCanvas.width, ff=0.012+Math.random()*0.018;
-      fp.push({x:fa,y:-20-Math.random()*60,vy:ff,r:2+Math.random()*3,rot:Math.random()*Math.PI*2,dr:0.008+Math.random()*0.012,mc:mc,al:0.12+Math.random()*0.18});
-    }
-    for(var fi=0;fi<fp.length;fi++){
-      var fpe=fp[fi];fpe.y+=fpe.vy;fpe.rot+=fpe.dr;
-      if(fpe.y>rCanvas.height+30)fpe.y=-20;
-      var fr=fpe.r;
-      rc.save();rc.translate(fpe.x,fpe.y);rc.rotate(fpe.rot);
-      var frgb=fpe.mc.outer, frgba='rgba('+frgb[0]+','+frgb[1]+','+frgb[2]+','+fpe.al+')';
-      rc.beginPath();rc.ellipse(0,0,fr,fr*0.5,0,0,Math.PI*2);
-      rc.fillStyle=frgba;rc.fill();
-      rc.restore();
-    }
-
-    // 光粒子上浮
-    pT += 0.012;
-    for(var i=0;i<FP.length;i++){
-      var p=FP[i];p.y-=p.vy;if(p.y<-1.8)p.y=1.8;
-      var v=tr(p.x+Math.sin(pT*0.5+p.ph)*0.035,p.y,p.z);
-      var pp=pj(v,cx,cy,sc);if(pp[2]<=0)continue;
-      var a=Math.max(0.01,Math.min(0.5,pp[2]*0.65))*p.al;
-      var r=p.r*pp[2]*sc*0.012;if(r<0.2)continue;
+    state.pT += 0.012;
+    for(let i=0;i<state.FP.length;i++){
+      const p=state.FP[i];p.y-=p.vy;if(p.y<-1.8)p.y=1.8;
+      const v=tr(state, p.x+Math.sin(state.pT*0.5+p.ph)*0.035,p.y,p.z);
+      const pp=pj(state, v,cx,cy,sc);if(pp[2]<=0)continue;
+      const a=Math.max(0.01,Math.min(0.5,pp[2]*0.65))*p.al;
+      const r=p.r*pp[2]*sc*0.012;if(r<0.2)continue;
       rc.beginPath();rc.arc(pp[0],pp[1],r,0,Math.PI*2);
       rc.fillStyle=mc.sparkles.replace(/[\d.]+\)$/,a.toFixed(3)+')');rc.fill();
     }
 
-    if(auto) RY+=0.0018;
+    if(state.auto) state.RY+=0.0018;
   }
 
-  // 暴露给外部调用
-  window._roseRender = function(material, shape, w, h){
-    rCanvas = document.getElementById('roseCanvas');
-    if(!rCanvas) return;
-    rc = rCanvas.getContext('2d');
-    if(!rc) return;
-    if(raf) cancelAnimationFrame(raf);
-    rCanvas.width=w||320; rCanvas.height=h||300;
-    var mc=MAT_COLORS[material]||MAT_COLORS.amethyst;
-    currentMat = material; currentShape = shape;
-    initParticles(mc);
-    window._fallingPetals = []; // 重置飘落花瓣
-    RX=0.30; RY=0.85; auto=true; pT=0;
-    function frame(){
-      var cx=rCanvas.width*0.5, cy=rCanvas.height*0.46;
-      var sc=Math.min(rCanvas.width,rCanvas.height)*0.38;
-      drawRose(cx,cy,sc,material,shape||'round');
-      raf=requestAnimationFrame(frame);
-    }
-    frame();
-  };
+  return {
+    registerCanvas: function(canvasId, material, shape, w, h){
+      const canvas = document.getElementById(canvasId);
+      if(!canvas) return;
+      const rc = canvas.getContext('2d');
+      if(!rc) return;
+      
+      const state = getState(canvasId);
+      if(state.raf) cancelAnimationFrame(state.raf);
+      
+      canvas.width = w || 320;
+      canvas.height = h || 300;
+      state.material = material;
+      state.shape = shape;
+      state.RX = 0.30;
+      state.RY = 0.85;
+      state.auto = true;
+      state.pT = 0;
+      
+      const mc = MAT_COLORS[material] || MAT_COLORS.amethyst;
+      initParticles(state, mc);
+      
+      const frame = () => {
+        const cx = canvas.width * 0.5, cy = canvas.height * 0.46;
+        const sc = Math.min(canvas.width, canvas.height) * 0.195;
+        drawRose(state, rc, canvas, cx, cy, sc, material, shape || 'round');
+        state.raf = requestAnimationFrame(frame);
+      };
+      frame();
+    },
 
-  window._roseStop = function(){
-    if(raf){cancelAnimationFrame(raf);raf=null;}
-    if(rc) {rc.clearRect(0,0,rCanvas.width,rCanvas.height);}
+    stopCanvas: function(canvasId){
+      const canvas = document.getElementById(canvasId);
+      if(!canvas) return;
+      const rc = canvas.getContext('2d');
+      const state = states.get(canvasId);
+      if(state && state.raf) {
+        cancelAnimationFrame(state.raf);
+        state.raf = null;
+      }
+      if(rc) rc.clearRect(0, 0, canvas.width, canvas.height);
+    },
+
+    // 向后兼容API
+    render: function(material, shape, w, h){
+      this.registerCanvas('previewRoseCanvas', material, shape, w, h);
+    },
+
+    stop: function(){
+      this.stopCanvas('previewRoseCanvas');
+    }
   };
 })();
+
+// 向后兼容的全局API
+window._roseRender = function(material, shape, w, h){
+  window._Rose.render(material, shape, w, h);
+};
+
+window._roseStop = function(){
+  window._Rose.stop();
+};
 
 // ========== 状态 ==========
 let state = {
@@ -881,15 +896,17 @@ let state = {
   name: '',
   date: '',
   from: '',
-  theme: 'sakura',
+  material: 'amethyst',
+  shape: 'round',
+  arrangement: 'hemisphere',
 };
 
 // ========== 形态图标 ==========
 const SHAPE_ICONS = {
-  round: `<svg viewBox="0 0 40 40"><ellipse cx="20" cy="12" rx="7" ry="10" fill="currentColor" opacity="0.8"/><ellipse cx="30" cy="18" rx="7" ry="10" fill="currentColor" opacity="0.7" transform="rotate(60 20 20)"/><ellipse cx="26" cy="30" rx="7" ry="10" fill="currentColor" opacity="0.6" transform="rotate(120 20 20)"/><ellipse cx="14" cy="30" rx="7" ry="10" fill="currentColor" opacity="0.6" transform="rotate(-120 20 20)"/><ellipse cx="10" cy="18" rx="7" ry="10" fill="currentColor" opacity="0.7" transform="rotate(-60 20 20)"/><ellipse cx="20" cy="20" rx="5" ry="5" fill="currentColor"/></svg>`,
-  tulip: `<svg viewBox="0 0 40 50"><path d="M20 5 Q30 20 25 35 Q20 40 15 35 Q10 20 20 5Z" fill="currentColor" opacity="0.8"/><path d="M12 15 Q5 28 10 42 Q15 48 20 42 Q18 30 18 20Z" fill="currentColor" opacity="0.6"/><path d="M28 15 Q35 28 30 42 Q25 48 20 42 Q22 30 22 20Z" fill="currentColor" opacity="0.6"/></svg>`,
-  rose: `<svg viewBox="0 0 40 50"><ellipse cx="20" cy="18" rx="14" ry="12" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.5"/><ellipse cx="20" cy="16" rx="10" ry="9" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.6"/><ellipse cx="20" cy="15" rx="6" ry="6" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.7"/><ellipse cx="20" cy="14" rx="3" ry="3" fill="currentColor" opacity="0.8"/></svg>`,
-  carnation: `<svg viewBox="0 0 40 50"><circle cx="20" cy="20" r="14" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2,3" opacity="0.5"/><circle cx="20" cy="18" r="10" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2,3" opacity="0.6"/><circle cx="20" cy="17" r="6" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2,3" opacity="0.7"/><circle cx="20" cy="16" r="3" fill="currentColor" opacity="0.8"/></svg>`,
+  round: `<svg viewBox="0 0 40 40"><ellipse cx="20" cy="12" rx="7" ry="10" fill="currentColor" opacity="0.8"/><ellipse cx="30" cy="18" rx="7" ry="10" fill="currentColor" opacity="0.7" transform="rotate(72 20 20)"/><ellipse cx="30" cy="18" rx="7" ry="10" fill="currentColor" opacity="0.6" transform="rotate(144 20 20)"/><ellipse cx="30" cy="18" rx="7" ry="10" fill="currentColor" opacity="0.5" transform="rotate(216 20 20)"/><ellipse cx="30" cy="18" rx="7" ry="10" fill="currentColor" opacity="0.6" transform="rotate(288 20 20)"/></svg>`,
+  tulip: `<svg viewBox="0 0 40 50"><path d="M20 5 Q30 20 25 35 Q20 40 15 35 Q10 20 20 5Z" fill="currentColor" opacity="0.8"/><path d="M12 15 Q5 28 10 42 Q15 48 20 42 Q18 30 18 20Z" fill="currentColor" opacity="0.7"/><path d="M28 15 Q35 28 30 42 Q25 48 20 42 Q22 30 22 20Z" fill="currentColor" opacity="0.7"/></svg>`,
+  rose: `<svg viewBox="0 0 40 50"><ellipse cx="20" cy="18" rx="14" ry="12" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.5"/><ellipse cx="20" cy="16" rx="10" ry="9" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.6"/><ellipse cx="20" cy="14" rx="6" ry="6" fill="currentColor" opacity="0.7"/><path d="M20 30 Q18 35 18 42" stroke="currentColor" stroke-width="1" opacity="0.6"/></svg>`,
+  carnation: `<svg viewBox="0 0 40 50"><circle cx="20" cy="20" r="14" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2,3" opacity="0.5"/><circle cx="20" cy="18" r="10" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2,3" opacity="0.6"/><circle cx="20" cy="16" r="6" fill="currentColor" opacity="0.7"/><path d="M20 30 Q18 35 18 42" stroke="currentColor" stroke-width="1" opacity="0.6"/></svg>`,
 };
 
 // ========== 初始化 ==========
@@ -897,7 +914,9 @@ function init() {
   const params = new URLSearchParams(window.location.search);
   if (params.has('n')) { renderViewPage(params); return; }
 
-  renderThemeOptions();
+  renderMaterialOptions();
+  renderShapeOptions();
+  renderArrangeOptions();
 
   const today = new Date().toISOString().split('T')[0];
   document.getElementById('dateInput').value = today;
@@ -908,30 +927,10 @@ function init() {
   document.getElementById('fromInput').addEventListener('input', updatePreview);
 
   updatePreview();
+  startParticles(state.material);
 }
 
-// ========== 主题选项 ==========
-function renderThemeOptions() {
-  const grid = document.getElementById('themeGrid');
-  grid.innerHTML = CONFIG.themes.map(t => `
-    <div class="opt-card${t.value === state.theme ? ' selected' : ''}" onclick="selectTheme('${t.value}')">
-      <div class="theme-icon-wrap">
-        <span class="theme-icon">${t.icon}</span>
-      </div>
-      <div class="opt-name">${t.label}</div>
-      <div class="opt-desc">${t.desc}</div>
-      <div class="opt-check"></div>
-    </div>
-  `).join('');
-}
-
-function selectTheme(val) {
-  state.theme = val;
-  renderThemeOptions();
-  updatePreview();
-}
-
-// ========== 花材选项（保留，暂未使用） ==========
+// ========== 花材选项 ==========
 function renderMaterialOptions() {
   const grid = document.getElementById('materialGrid');
   grid.innerHTML = CONFIG.materials.map(m => `
@@ -1005,67 +1004,37 @@ function updatePreview() {
   state.date = document.getElementById('dateInput').value;
   state.from = document.getElementById('fromInput').value;
 
-  const theme = CONFIG.themes.find(t => t.value === state.theme) || CONFIG.themes[0];
+  const mat = CONFIG.materials.find(m => m.value === state.material) || CONFIG.materials[0];
+  const shape = CONFIG.shapes.find(s => s.value === state.shape) || CONFIG.shapes[0];
+  const arr = CONFIG.arrangements.find(a => a.value === state.arrangement) || CONFIG.arrangements[0];
 
   document.getElementById('previewBlessing').textContent = state.blessing;
-  document.getElementById('previewThemeIcon').textContent = theme.icon;
-  document.getElementById('previewMeta').textContent = state.from ? state.name + ' · ' + state.from : state.name;
+  document.getElementById('previewVaseText').textContent = state.from ? state.name + ' · ' + state.from : state.name;
+  document.getElementById('previewMeta').textContent = state.date ? state.date.replace(/-/g, '.') : '';
+  document.getElementById('previewTags').innerHTML = `
+    <span class="preview-tag">${mat.label} · ${mat.labelEn}</span>
+    <span class="preview-tag">${shape.label}</span>
+    <span class="preview-tag">${arr.label}</span>
+  `;
+
+  // 使用新的Rose管理器
+  window._Rose.registerCanvas('previewRoseCanvas', state.material, state.shape, 320, 300);
+  renderShapeOptions();
 }
 
-function getClipPath(shape) {
-  switch(shape.value) {
-    case 'round': return 'polygon(50% 0%, 100% 35%, 80% 100%, 20% 100%, 0% 35%)';
-    case 'tulip': return 'polygon(50% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)';
-    case 'rose': return 'polygon(50% 0%, 85% 15%, 100% 50%, 85% 85%, 50% 100%, 15% 85%, 0% 50%, 15% 15%)';
-    case 'carnation': return 'polygon(50% 0%, 100% 40%, 80% 100%, 20% 100%, 0% 40%)';
-    default: return 'polygon(50% 0%, 100% 35%, 80% 100%, 20% 100%, 0% 35%)';
-  }
-}
-
-function renderPreviewFlowers(mat, shape, arr) {
-  const container = document.getElementById('previewFlowers');
-  const count = arr.value === 'horizontal' ? 6 : arr.value === 'lshape' ? 5 : 4;
-  const heights = [48, 40, 44, 36, 30, 38];
-  let html = '';
-  for (let i = 0; i < count; i++) {
-    const h = heights[i % heights.length];
-    const centerTop = (70 - h) + Math.floor(h * 0.6);
-    const clipPath = getClipPath(shape);
-    const petalStyle = `background: linear-gradient(135deg, ${mat.color1}, ${mat.color2}); color: ${mat.glow}; height: ${h}px; top: ${70-h}px; clip-path: ${clipPath};`;
-    const cTop = centerTop + 2 + (i % 2) * 2;
-    const centerStyle = `background: radial-gradient(circle, ${mat.color1}, ${mat.color2}); color: ${mat.glow}; width: ${8+i%3*2}px; height: ${8+i%3*2}px; top: ${cTop}px;`;
-    html += `<div class="mini-flower" style="width: 50px; height: 70px;">
-      <div class="mini-petal" style="${petalStyle}"></div>
-      <div class="mini-center" style="${centerStyle}"></div>
-    </div>`;
-  }
-  container.innerHTML = html;
-}
-
-// ========== 步骤切换 ==========
-function goStep(n) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('panel' + n).classList.add('active');
-  document.querySelectorAll('.step').forEach((s, i) => {
-    s.classList.remove('active', 'done');
-    if (i+1 < n) s.classList.add('done');
-    if (i+1 === n) s.classList.add('active');
-  });
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  if (n === 2) { updatePreview(); startParticles(state.material); }
-}
-
-// ========== 生成链接 ==========
+// ========== 生成链接页面 ==========
 function generateLink() {
-  updatePreview();
-  if (!state.name || state.name === '收礼人姓名') { alert('请填写收礼人姓名'); return; }
-  const params = new URLSearchParams({
-    b: state.blessing, n: state.name, d: state.date, f: state.from,
-  });
-  const base = window.location.origin + window.location.pathname.replace('index.html', '') + state.theme + '.html';
-  const url = base + '?' + params.toString();
-  document.getElementById('resultUrl').textContent = url;
-  document.getElementById('resultDesc').innerHTML = `<strong>${state.name}</strong> 的专属祝福页<br>复制链接发给收礼人，永久有效`;
+  const params = new URLSearchParams();
+  params.set('n', state.name);
+  params.set('b', state.blessing);
+  params.set('d', state.date);
+  params.set('f', state.from);
+  params.set('m', state.material);
+  params.set('s', state.shape);
+  params.set('a', state.arrangement);
+  
+  const link = window.location.origin + window.location.pathname + '?' + params.toString();
+  document.getElementById('resultUrl').textContent = link;
   goStep(3);
 }
 
@@ -1073,105 +1042,83 @@ function copyLink() {
   const url = document.getElementById('resultUrl').textContent;
   navigator.clipboard.writeText(url).then(() => {
     const btn = document.getElementById('copyBtn');
-    btn.textContent = '已复制 ✓'; btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = '复制'; btn.classList.remove('copied'); }, 2000);
+    btn.classList.add('copied');
+    btn.textContent = '已复制';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.textContent = '复制';
+    }, 2000);
   });
 }
 
 function resetForm() {
-  state = { blessing: CONFIG.defaultBlessing, name: '', date: '', from: '', material: 'amethyst', shape: 'round', arrangement: 'hemisphere' };
+  goStep(1);
+  state.blessing = CONFIG.defaultBlessing;
+  state.name = '';
+  state.date = new Date().toISOString().split('T')[0];
+  state.from = '';
+  state.material = 'amethyst';
+  state.shape = 'round';
+  state.arrangement = 'hemisphere';
+  
   document.getElementById('blessingInput').value = '';
   document.getElementById('nameInput').value = '';
+  document.getElementById('dateInput').value = state.date;
   document.getElementById('fromInput').value = '';
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('dateInput').value = today;
-  goStep(1);
+  
+  renderMaterialOptions();
+  renderShapeOptions();
+  renderArrangeOptions();
   updatePreview();
 }
 
-// ========== 打字机效果 ==========
-function typeWriter(element, text, callback) {
-  element.innerHTML = '';
-  let i = 0;
-  const cursor = document.createElement('span');
-  cursor.className = 'type-cursor';
-  element.appendChild(cursor);
-
-  function tick() {
-    if (i < text.length) {
-      element.insertBefore(document.createTextNode(text.charAt(i)), cursor);
-      i++;
-      setTimeout(tick, 60);
-    } else {
-      setTimeout(() => { cursor.remove(); if (callback) callback(); }, 800);
-    }
-  }
-  tick();
+function goStep(step) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel' + step).classList.add('active');
+  
+  document.querySelectorAll('.step').forEach((s, i) => {
+    s.classList.remove('active', 'done');
+    if (i + 1 < step) s.classList.add('done');
+    if (i + 1 === step) s.classList.add('active');
+  });
 }
 
-// ========== 视图模式 ==========
+// ========== 视图页面 ==========
 function renderViewPage(params) {
-  const b = params.get('b') || CONFIG.defaultBlessing;
-  const n = params.get('n') || '收礼人';
-  const d = params.get('d') || '';
-  const f = params.get('f') || '';
-  const m = params.get('m') || 'amethyst';
-  const s = params.get('s') || 'round';
-  const a = params.get('a') || 'hemisphere';
-
-  const mat = CONFIG.materials.find(x => x.value === m) || CONFIG.materials[0];
-  const shape = CONFIG.shapes.find(x => x.value === s) || CONFIG.shapes[0];
-  const arr = CONFIG.arrangements.find(x => x.value === a) || CONFIG.arrangements[0];
-
-  document.querySelector('.steps')?.remove();
-  const container = document.querySelector('.container');
-  container.innerHTML = `
+  const name = params.get('n') || '亲';
+  const blessing = params.get('b') || CONFIG.defaultBlessing;
+  const date = params.get('d') || '';
+  const from = params.get('f') || '';
+  const material = params.get('m') || 'amethyst';
+  const shape = params.get('s') || 'round';
+  
+  document.querySelector('.container').innerHTML = `
     <div class="view-page">
       <div class="preview-box">
-        <div class="preview-label">CUSTOM BLESSING</div>
-        <div class="preview-blessing" id="viewBlessing"></div>
-        <div class="preview-flowers"><canvas id="roseCanvas"></canvas></div>
+        <div class="preview-label">FOR YOU</div>
+        <div class="preview-blessing">${blessing}</div>
+        <div class="preview-flowers">
+          <canvas id="viewRoseCanvas" data-rose-canvas="view" width="400" height="360"></canvas>
+        </div>
         <div class="glass-vase">
           <div class="vase-body"></div>
-          <div class="glass-vase-text">${f ? n + ' · ' + f : n}</div>
+          <div class="glass-vase-text">${from ? name + ' · ' + from : name}</div>
         </div>
-        <div class="preview-meta">${d ? d.replace(/-/g, '.') : ''}</div>
-        <div class="preview-tags">
-          <span class="preview-tag">${mat.label} · ${mat.labelEn}</span>
-          <span class="preview-tag">${shape.label}</span>
-          <span class="preview-tag">${arr.label}</span>
-        </div>
-      </div>
-      <div class="result-tip" style="text-align:center; margin-top: 28px;">
-        ${CONFIG.copyright}
+        ${date ? `<div class="preview-meta">${date.replace(/-/g, '.')}</div>` : ''}
       </div>
     </div>
   `;
-
-  // 启动3D玫瑰（大尺寸）
-  const roseCanvas = document.getElementById('roseCanvas');
-  if(roseCanvas && window._roseRender){
-    roseCanvas.width = Math.min(window.innerWidth - 40, 500);
-    roseCanvas.height = Math.round(roseCanvas.width * 0.9);
-    _roseRender(m, s, roseCanvas.width, roseCanvas.height);
-  }
-
-  // 启动粒子
-  startParticles(m);
-
-  // 打字机效果
-  typeWriter(document.getElementById('viewBlessing'), b);
-
-  // BGM
-  if (CONFIG.bgmUrl) {
-    const audio = document.createElement('audio');
-    audio.src = CONFIG.bgmUrl;
-    audio.loop = true;
-    audio.autoplay = true;
-    document.body.appendChild(audio);
-  }
+  
+  setTimeout(() => {
+    const w = Math.min(window.innerWidth - 40, 500);
+    const h = Math.round(w * 0.9);
+    window._Rose.registerCanvas('viewRoseCanvas', material, shape, w, h);
+  }, 100);
+  
+  startParticles(material);
 }
 
+// 初始化
 init();
 </script>
 </body>

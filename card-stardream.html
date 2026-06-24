@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>星语心愿</title>
+<meta property="og:title" content="💌 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0a0a1a 0%, #0d1030 35%, #111a40 70%, #0a0a1a 100%);
+  font-family: 'Georgia', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 星空渐变光晕 */
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background:
+    radial-gradient(ellipse at 65% 15%, rgba(180,160,255,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 30% 80%, rgba(100,80,200,0.08) 0%, transparent 40%),
+    radial-gradient(ellipse at 80% 75%, rgba(255,200,120,0.06) 0%, transparent 35%);
+  animation: nebulaPulse 8s ease-in-out infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+@keyframes nebulaPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* 星星 */
+.star {
+  position: fixed;
+  background: #fff;
+  border-radius: 50%;
+  animation: starTwinkle ease-in-out infinite;
+  z-index: 1;
+}
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.15; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.5); }
+}
+
+/* 流星 */
+.shooting-star {
+  position: fixed;
+  width: 2px;
+  height: 2px;
+  background: #fff;
+  border-radius: 50%;
+  z-index: 2;
+  box-shadow: 0 0 6px 2px rgba(255,255,255,0.8), 0 0 20px 4px rgba(200,220,255,0.4);
+}
+.shooting-star::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 60px; height: 1px;
+  background: linear-gradient(to right, rgba(255,255,255,0.8), transparent);
+  transform: rotate(-35deg);
+  transform-origin: left center;
+}
+@keyframes shoot {
+  0% { transform: translate(0,0) rotate(-35deg); opacity: 0; }
+  5% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { transform: translate(220px, 160px) rotate(-35deg); opacity: 0; }
+}
+
+/* 月亮光晕 */
+.moon {
+  position: fixed;
+  top: 8vh;
+  right: 12vw;
+  width: 70px; height: 70px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 65% 40%, #fffde0, #ffe8a0, #ffd060);
+  box-shadow: 0 0 30px rgba(255,230,100,0.5), 0 0 80px rgba(255,220,80,0.25);
+  z-index: 2;
+  animation: moonGlow 5s ease-in-out infinite;
+}
+@keyframes moonGlow {
+  0%, 100% { box-shadow: 0 0 30px rgba(255,230,100,0.5), 0 0 80px rgba(255,220,80,0.25); }
+  50% { box-shadow: 0 0 45px rgba(255,230,100,0.7), 0 0 100px rgba(255,220,80,0.35); }
+}
+
+/* 卡片外框呼吸光 */
+.card-wrap {
+  position: relative;
+  z-index: 10;
+  padding: 3px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, #b8a0ff, #9080e0, #b8a0ff, #c0a0ff);
+  background-size: 300% 300%;
+  animation: purplePulse 3.5s ease-in-out infinite;
+  box-shadow: 0 0 40px rgba(160,120,255,0.4), 0 0 80px rgba(140,100,255,0.15);
+}
+@keyframes purplePulse {
+  0%, 100% { background-position: 0% 50%; box-shadow: 0 0 40px rgba(160,120,255,0.4), 0 0 80px rgba(140,100,255,0.15); }
+  50% { background-position: 100% 50%; box-shadow: 0 0 60px rgba(180,140,255,0.6), 0 0 100px rgba(160,120,255,0.25); }
+}
+
+.card {
+  background: linear-gradient(145deg, rgba(10,10,28,0.97), rgba(15,18,50,0.97));
+  border-radius: 26px;
+  padding: clamp(32px, 7vw, 56px) clamp(24px, 6vw, 48px);
+  text-align: center;
+  max-width: 460px;
+  width: 90vw;
+  border: 1px solid rgba(180,160,255,0.18);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: -60px; left: -60px;
+  width: 180px; height: 180px;
+  background: radial-gradient(circle, rgba(180,160,255,0.1) 0%, transparent 70%);
+  animation: cardShimmer 5s ease-in-out infinite;
+}
+@keyframes cardShimmer {
+  0%, 100% { transform: translate(0,0); opacity: 0.4; }
+  50% { transform: translate(30px, 30px); opacity: 0.9; }
+}
+
+.tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #b8a0ff, #9080e0);
+  color: #fff;
+  font-size: clamp(11px, 2.5vw, 14px);
+  font-weight: bold;
+  padding: 5px 16px;
+  border-radius: 20px;
+  margin-bottom: 18px;
+  letter-spacing: 2px;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.1s both;
+}
+
+.name {
+  font-size: clamp(28px, 7vw, 50px);
+  font-weight: bold;
+  color: #e8d8ff;
+  text-shadow: 0 0 20px rgba(180,160,255,0.7), 0 2px 8px rgba(0,0,0,0.5);
+  margin-bottom: 14px;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.2s both;
+}
+.blessing {
+  font-size: clamp(15px, 4vw, 20px);
+  color: #c8d4ff;
+  line-height: 1.8;
+  margin: 14px 0;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.35s both;
+}
+.date {
+  font-size: clamp(12px, 3vw, 15px);
+  color: rgba(200,210,255,0.6);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.5s both;
+}
+.from {
+  font-size: clamp(12px, 3vw, 15px);
+  color: rgba(184,160,255,0.85);
+  font-style: italic;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.65s both;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.card { animation: cardFloat 4.5s ease-in-out infinite; }
+
+/* 许愿气泡 */
+.wish-bubble {
+  position: fixed;
+  font-size: 10px;
+  animation: bubbleRise linear infinite;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+}
+@keyframes bubbleRise {
+  0% { transform: translateY(100vh) scale(0); opacity: 0; }
+  10% { opacity: 0.7; transform: scale(1) translateY(90vh); }
+  85% { opacity: 0.5; }
+  100% { transform: translateY(-5vh) scale(0.5); opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<script>
+// 星星
+for (let i = 0; i < 60; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  const sz = 1 + Math.random() * 2.5;
+  s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}vw;top:${Math.random()*80}vh;animation-duration:${1.5+Math.random()*3}s;animation-delay:${Math.random()*5}s;`;
+  document.body.appendChild(s);
+}
+
+// 流星
+function spawnShootingStar(){
+  const el = document.createElement('div');
+  el.className = 'shooting-star';
+  const startX = Math.random() * 60;
+  const startY = Math.random() * 40;
+  el.style.cssText = `left:${startX}vw;top:${startY}vh;animation:shoot ${1.2+Math.random()*0.8}s ease-in forwards;`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(), 2500);
+}
+spawnShootingStar();
+setInterval(spawnShootingStar, 4000);
+
+// 月亮
+const moon = document.createElement('div');
+moon.className = 'moon';
+document.body.appendChild(moon);
+
+// 许愿气泡文字
+const wishEmojis = ['✨','⭐','🌟','💫','✦','★'];
+for (let i = 0; i < 12; i++) {
+  const b = document.createElement('div');
+  b.className = 'wish-bubble';
+  b.textContent = wishEmojis[Math.floor(Math.random()*wishEmojis.length)];
+  b.style.cssText = `left:${5+Math.random()*90}vw;animation-duration:${5+Math.random()*6}s;animation-delay:${Math.random()*6}s;font-size:${8+Math.random()*8}px;color:rgba(220,200,255,${0.4+Math.random()*0.5});`;
+  document.body.appendChild(b);
+}
+
+// URL参数
+const p = new URLSearchParams(location.search);
+const name = p.get('n') || '心想事成';
+const blessing = p.get('b') || '愿你的愿望像星星一样，在夜空中闪闪发光';
+const date = p.get('d') || '';
+const from = p.get('f') || '';
+
+document.getElementById('nameEl').textContent = name;
+document.getElementById('blessingEl').textContent = blessing;
+if(date) document.getElementById('dateEl').textContent = date;
+if(from) document.getElementById('fromEl').textContent = '— ' + from;
+</script>
+
+<div class="card-wrap">
+  <div class="card">
+    <div class="tag">⭐ 星语心愿</div>
+    <div class="name" id="nameEl"></div>
+    <div class="blessing" id="blessingEl"></div>
+    <div class="date" id="dateEl"></div>
+    <div class="from" id="fromEl"></div>
+  </div>
+</div>
+
+</body>
+</html>

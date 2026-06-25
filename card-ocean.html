@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>海风轻语</title>
+<meta property="og:title" content="💌 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg,
+    #e07030 0%,
+    #f49050 12%,
+    #ffb870 22%,
+    #ffd090 32%,
+    #87ceeb 40%,
+    #4a90c2 55%,
+    #2a6090 72%,
+    #1a4060 100%
+  );
+  font-family: 'Georgia', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 太阳光芒 */
+body::before {
+  content: '';
+  position: fixed;
+  top: 8%; left: 50%;
+  transform: translateX(-50%);
+  width: 120px; height: 120px;
+  background: radial-gradient(circle, rgba(255,240,180,0.95) 0%, rgba(255,200,80,0.6) 30%, rgba(255,160,50,0.2) 60%, transparent 75%);
+  border-radius: 50%;
+  animation: sunGlow 4s ease-in-out infinite alternate;
+  z-index: 0;
+  pointer-events: none;
+}
+@keyframes sunGlow {
+  0% { transform: translateX(-50%) scale(1); opacity: 0.9; }
+  100% { transform: translateX(-50%) scale(1.15); opacity: 1; }
+}
+
+/* 波光粼粼海面 */
+.wave {
+  position: fixed;
+  width: 200%;
+  height: 120px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath fill='rgba(255,255,255,0.15)' d='M0,60 C200,120 400,0 600,60 C800,120 1000,0 1200,60 L1200,120 L0,120 Z'/%3E%3C/svg%3E") repeat-x;
+  background-size: 600px 120px;
+  z-index: 2;
+  pointer-events: none;
+}
+.wave-1 {
+  bottom: 22%; left: 0;
+  animation: waveMove 9s linear infinite;
+  opacity: 0.7;
+}
+.wave-2 {
+  bottom: 20%; left: -50px;
+  animation: waveMove 13s linear infinite reverse;
+  opacity: 0.5;
+  background-color: rgba(100,180,220,0.08);
+}
+.wave-3 {
+  bottom: 18%; left: 0;
+  animation: waveMove 11s linear infinite;
+  opacity: 0.4;
+}
+@keyframes waveMove {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-600px); }
+}
+
+/* 帆船 */
+.boat {
+  position: fixed;
+  bottom: 30%;
+  z-index: 3;
+  animation: boatFloat 5s ease-in-out infinite;
+  font-size: 38px;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+}
+@keyframes boatFloat {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-12px) rotate(2deg); }
+}
+
+/* 海鸥 */
+.seagull {
+  position: fixed;
+  font-size: 16px;
+  z-index: 3;
+  animation: seagullFly 12s linear infinite;
+  opacity: 0.7;
+}
+@keyframes seagullFly {
+  0% { transform: translateX(-80px) translateY(0); }
+  25% { transform: translateX(20vw) translateY(-15px); }
+  50% { transform: translateX(45vw) translateY(5px); }
+  75% { transform: translateX(70vw) translateY(-10px); }
+  100% { transform: translateX(110vw) translateY(0); opacity: 0; }
+}
+
+/* 水花/浪花 */
+.splash {
+  position: fixed;
+  width: 6px; height: 6px;
+  background: rgba(200,230,255,0.8);
+  border-radius: 50%;
+  animation: splashUp 3s ease-out infinite;
+  z-index: 3;
+}
+@keyframes splashUp {
+  0% { transform: translateY(0) scale(1); opacity: 0.8; }
+  60% { transform: translateY(-40px) scale(0.5); opacity: 0; }
+  100% { transform: translateY(0) scale(0); opacity: 0; }
+}
+
+/* 卡片 */
+.card-wrap {
+  position: relative;
+  z-index: 10;
+  padding: 3px;
+  background: linear-gradient(135deg, rgba(255,210,140,0.9), rgba(100,180,220,0.7), rgba(255,210,140,0.9));
+  border-radius: 18px;
+  animation: borderBreathe 4s ease-in-out infinite;
+  box-shadow:
+    0 0 24px rgba(255,200,120,0.4),
+    0 0 50px rgba(100,180,220,0.2);
+}
+@keyframes borderBreathe {
+  0%, 100% { box-shadow: 0 0 24px rgba(255,200,120,0.4), 0 0 50px rgba(100,180,220,0.2); }
+  50% { box-shadow: 0 0 36px rgba(255,210,140,0.6), 0 0 70px rgba(100,180,220,0.3); }
+}
+
+.glass-card {
+  background: rgba(10,40,80,0.72);
+  border-radius: 16px;
+  padding: clamp(28px, 6vw, 52px) clamp(24px, 5vw, 48px);
+  text-align: center;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,210,150,0.3);
+  min-width: 280px;
+  max-width: 480px;
+}
+
+.icon {
+  font-size: clamp(36px, 9vw, 60px);
+  display: block;
+  margin-bottom: 14px;
+  animation: iconRock 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 12px rgba(255,200,100,0.7));
+}
+@keyframes iconRock {
+  0%, 100% { transform: rotate(-5deg) scale(1); }
+  50% { transform: rotate(5deg) scale(1.05); }
+}
+
+.name {
+  font-size: clamp(22px, 6vw, 38px);
+  color: #ffe8c0;
+  margin-bottom: 10px;
+  font-weight: normal;
+  letter-spacing: 0.08em;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out both;
+  text-shadow: 0 0 18px rgba(255,200,100,0.5);
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.blessing {
+  font-size: clamp(14px, 3.5vw, 18px);
+  color: #c8dff0;
+  line-height: 1.8;
+  margin: 14px 0;
+  font-style: italic;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.3s both;
+}
+
+.date {
+  font-size: clamp(11px, 2.5vw, 14px);
+  color: rgba(200,220,240,0.6);
+  letter-spacing: 0.12em;
+  margin-bottom: 6px;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.5s both;
+}
+
+.from {
+  font-size: clamp(11px, 2.5vw, 14px);
+  color: rgba(200,220,240,0.5);
+  letter-spacing: 0.08em;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.7s both;
+}
+</style>
+</head>
+<body>
+
+<div class="wave wave-1"></div>
+<div class="wave wave-2"></div>
+<div class="wave wave-3"></div>
+
+<div class="boat" style="left: 12%">⛵</div>
+<div class="boat" style="right: 15%; bottom: 33%; font-size: 28px; animation-delay: -2s">⛵</div>
+
+<div class="seagull" style="top: 22%; animation-delay: 0s">~</div>
+<div class="seagull" style="top: 28%; animation-delay: -4s; font-size: 13px">~</div>
+<div class="seagull" style="top: 18%; animation-delay: -8s">~</div>
+
+<div class="card-wrap">
+  <div class="glass-card">
+    <span class="icon" id="iconEl">🌊</span>
+    <div class="name" id="nameEl"></div>
+    <div class="blessing" id="blessingEl"></div>
+    <div class="date" id="dateEl"></div>
+    <div class="from" id="fromEl"></div>
+  </div>
+</div>
+
+<script>
+const p = new URLSearchParams(location.search);
+document.getElementById('nameEl').textContent = p.get('n') || '心向大海的你';
+document.getElementById('dateEl').textContent = p.get('d') || '';
+document.getElementById('blessingEl').textContent = p.get('b') || '愿你如海般宽广，如风般自由';
+document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
+
+// 水花
+const splashPositions = [
+  {x: 20, y: 70}, {x: 45, y: 72}, {x: 68, y: 69},
+  {x: 82, y: 73}, {x: 35, y: 71}, {x: 58, y: 70}
+];
+splashPositions.forEach((pos, i) => {
+  const s = document.createElement('div');
+  s.className = 'splash';
+  s.style.cssText = `
+    left: ${pos.x}%;
+    top: ${pos.y}%;
+    animation-delay: ${i * 0.8}s;
+  `;
+  document.body.appendChild(s);
+});
+
+// 无障碍
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.wave, .boat, .seagull, .splash, .icon, .name, .blessing, .date, .from').forEach(el => {
+    el.style.animation = 'none';
+  });
+}
+</script>
+</body>
+</html>

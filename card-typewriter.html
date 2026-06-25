@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>亲笔信笺</title>
+<meta property="og:title" content="💌 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(220,180,120,0.12) 0%, transparent 50%),
+    linear-gradient(160deg, #2c2416 0%, #3d2e1a 40%, #2a1e10 100%);
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 信纸背景纹理 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 31px,
+      rgba(200,160,80,0.08) 31px,
+      rgba(200,160,80,0.08) 32px
+    );
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* 墨迹光晕 */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(180,140,60,0.06) 0%, transparent 60%);
+  z-index: 0;
+  pointer-events: none;
+  animation: inkPulse 6s ease-in-out infinite;
+}
+@keyframes inkPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* 羽毛飘落 */
+.feather {
+  position: fixed;
+  font-size: 14px;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.5;
+  animation: featherFall linear infinite;
+  filter: blur(0.5px);
+}
+@keyframes featherFall {
+  0% { transform: translateY(-5vh) rotate(0deg) translateX(0); opacity: 0; }
+  10% { opacity: 0.5; }
+  90% { opacity: 0.3; }
+  100% { transform: translateY(105vh) rotate(360deg) translateX(40px); opacity: 0; }
+}
+
+/* 光点 */
+.sparkle {
+  position: fixed;
+  width: 3px; height: 3px;
+  background: rgba(255,220,120,0.7);
+  border-radius: 50%;
+  z-index: 2;
+  animation: sparkleFade ease-in-out infinite;
+}
+@keyframes sparkleFade {
+  0%, 100% { opacity: 0; transform: scale(0); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+/* === 贺卡主体 === */
+.card-wrap {
+  position: relative;
+  z-index: 10;
+  perspective: 800px;
+}
+.card {
+  position: relative;
+  background: linear-gradient(160deg, #f5ead8 0%, #ede0c8 100%);
+  border-radius: 4px;
+  padding: clamp(30px, 6vw, 52px) clamp(28px, 5vw, 52px);
+  max-width: min(560px, 92vw);
+  box-shadow:
+    0 0 0 1px rgba(160,120,60,0.3),
+    0 0 30px rgba(0,0,0,0.4),
+    inset 0 0 60px rgba(180,140,60,0.05);
+  transform: rotateX(2deg);
+  animation: paperFloat 7s ease-in-out infinite;
+  border-left: 3px solid rgba(160,120,60,0.2);
+  border-right: 1px solid rgba(255,255,255,0.3);
+}
+@keyframes paperFloat {
+  0%, 100% { transform: rotateX(2deg) translateY(0); }
+  50% { transform: rotateX(2deg) translateY(-6px); }
+}
+
+/* 信纸撕裂效果顶部 */
+.card::before {
+  content: '';
+  position: absolute;
+  top: -2px; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg,
+    transparent 0%, #f5ead8 2%, transparent 4%,
+    #f5ead8 6%, transparent 8%, #f5ead8 10%,
+    transparent 12%, #f5ead8 14%, transparent 16%,
+    #f5ead8 18%, transparent 20%, #f5ead8 22%,
+    transparent 24%, #f5ead8 26%, transparent 28%,
+    #f5ead8 30%, transparent 32%, #f5ead8 34%,
+    transparent 36%, #f5ead8 38%, transparent 40%,
+    #f5ead8 42%, transparent 44%, #f5ead8 46%,
+    transparent 48%, #f5ead8 50%, transparent 52%,
+    #f5ead8 54%, transparent 56%, #f5ead8 58%,
+    transparent 60%, #f5ead8 62%, transparent 64%,
+    #f5ead8 66%, transparent 68%, #f5ead8 70%,
+    transparent 72%, #f5ead8 74%, transparent 76%,
+    #f5ead8 78%, transparent 80%, #f5ead8 82%,
+    transparent 84%, #f5ead8 86%, transparent 88%,
+    #f5ead8 90%, transparent 92%, #f5ead8 94%,
+    transparent 96%, #f5ead8 98%, transparent 100%
+  );
+  opacity: 0.6;
+}
+
+/* 打字机文字 */
+.name {
+  font-size: clamp(22px, 5.5vw, 38px);
+  color: #2a1e10;
+  text-align: center;
+  margin-bottom: 16px;
+  opacity: 1;
+  animation: fadeIn 1s ease-out 0.3s both;
+  letter-spacing: 1px;
+}
+.date-line {
+  font-size: clamp(11px, 2.5vw, 14px);
+  color: #8a7060;
+  text-align: right;
+  margin-bottom: 28px;
+  opacity: 1;
+  animation: fadeIn 1s ease-out 0.5s both;
+}
+.blessing {
+  font-size: clamp(14px, 3.5vw, 19px);
+  color: #2a1e10;
+  text-align: left;
+  line-height: 2.2;
+  min-height: 120px;
+  opacity: 1;
+  animation: fadeIn 1s ease-out 0.7s both;
+  white-space: pre-line;
+}
+.from {
+  font-size: clamp(13px, 3vw, 16px);
+  color: #6a5040;
+  text-align: right;
+  margin-top: 28px;
+  opacity: 1;
+  animation: fadeIn 1s ease-out 1s both;
+}
+
+/* 打字光标 */
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background: #2a1e10;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: blink 0.7s step-end infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 打字动画 */
+.typing-char {
+  opacity: 0;
+  animation: typeIn 0.04s ease-out forwards;
+}
+@keyframes typeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 底部印章装饰 */
+.seal {
+  position: fixed;
+  bottom: 18px;
+  right: 24px;
+  width: 52px;
+  height: 52px;
+  border: 2px solid rgba(180,80,40,0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: rgba(180,80,40,0.5);
+  z-index: 20;
+  letter-spacing: 1px;
+  transform: rotate(-15deg);
+  animation: sealAppear 1.5s ease-out 2.5s both;
+}
+@keyframes sealAppear {
+  from { opacity: 0; transform: rotate(-15deg) scale(0.5); }
+  to { opacity: 1; transform: rotate(-15deg) scale(1); }
+}
+</style>
+</head>
+<body>
+
+<!-- 羽毛 -->
+<script>
+for (let i = 0; i < 10; i++) {
+  const f = document.createElement('div');
+  f.className = 'feather';
+  f.textContent = '~';
+  f.style.cssText = `
+    left:${Math.random() * 100}%;
+    top:${-5 - Math.random() * 10}%;
+    color: rgba(200,170,100,${0.3 + Math.random() * 0.3});
+    animation-duration:${8 + Math.random() * 8}s;
+    animation-delay:${Math.random() * 10}s;
+  `;
+  document.body.appendChild(f);
+}
+// 光点
+for (let i = 0; i < 12; i++) {
+  const s = document.createElement('div');
+  s.className = 'sparkle';
+  s.style.cssText = `
+    left:${Math.random() * 100}%;
+    top:${Math.random() * 100}%;
+    animation-duration:${2 + Math.random() * 3}s;
+    animation-delay:${Math.random() * 5}s;
+  `;
+  document.body.appendChild(s);
+}
+</script>
+
+<!-- 贺卡 -->
+<div class="card-wrap">
+  <div class="card">
+    <div class="name" id="nameEl"></div>
+    <div class="date-line" id="dateEl"></div>
+    <div class="blessing" id="blessingEl"></div>
+    <div class="from" id="fromEl"></div>
+  </div>
+</div>
+
+<!-- 印章 -->
+<div class="seal" id="sealEl"></div>
+
+<script>
+const p = new URLSearchParams(location.search);
+const name = p.get('n') || '亲爱的你';
+const date = p.get('d') || '';
+const blessing = p.get('b') || '见字如面，展信安好。\n有些话平时不好意思说，就让这封信替我开口吧。';
+const from = p.get('f') || '';
+
+document.getElementById('nameEl').textContent = name;
+document.getElementById('dateEl').textContent = date;
+document.getElementById('sealEl').textContent = from ? from.substring(0,2) : '心';
+
+const blessingEl = document.getElementById('blessingEl');
+const fromEl = document.getElementById('fromEl');
+
+// 打字机效果
+let idx = 0;
+const chars = blessing.split('');
+blessingEl.innerHTML = '<span class="cursor"></span>';
+
+function typeChar() {
+  if (idx < chars.length) {
+    const span = document.createElement('span');
+    span.className = 'typing-char';
+    span.textContent = chars[idx];
+    span.style.animationDelay = '0s';
+    blessingEl.insertBefore(span, blessingEl.querySelector('.cursor'));
+    idx++;
+    const delay = chars[idx-1] === '\n' ? 200 : (30 + Math.random() * 40);
+    setTimeout(typeChar, delay);
+  } else {
+    blessingEl.querySelector('.cursor')?.remove();
+    fromEl.textContent = from ? '— ' + from : '';
+  }
+}
+
+setTimeout(typeChar, 900);
+</script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>星光璀璨</title>
+<meta property="og:title" content="✨ 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #04061a 0%, #080d30 30%, #0a1040 60%, #04061a 100%);
+  font-family: 'Georgia', 'PingFang SC', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 星空光晕 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 10%, rgba(255,220,80,0.08) 0%, transparent 45%),
+    radial-gradient(ellipse at 20% 80%, rgba(120,100,255,0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 60%, rgba(200,80,255,0.06) 0%, transparent 40%);
+  animation: starGlow 6s ease-in-out infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+@keyframes starGlow {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* 星星 */
+.star {
+  position: fixed;
+  background: #fff;
+  border-radius: 50%;
+  animation: twinkle ease-in-out infinite;
+  z-index: 1;
+  pointer-events: none;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.1; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.4); }
+}
+
+/* 流星 */
+.shooting-star {
+  position: fixed;
+  width: 2px;
+  height: 2px;
+  background: linear-gradient(225deg, #fff, rgba(255,240,150,0.6), transparent);
+  border-radius: 50%;
+  animation: shoot linear infinite;
+  z-index: 2;
+  pointer-events: none;
+  box-shadow: 0 0 6px 2px rgba(255,240,150,0.4);
+}
+@keyframes shoot {
+  0% { transform: translate(0,0) rotate(-45deg); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translate(-300px, 300px) rotate(-45deg); opacity: 0; }
+}
+
+/* 边框流光 */
+.card-wrap {
+  position: relative;
+  padding: 2px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #ffd700, #ffec80, #ffd700, #fff8b0, #ffd700);
+  background-size: 300% 300%;
+  animation: borderFlow 3s ease-in-out infinite;
+  z-index: 10;
+}
+@keyframes borderFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.card-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 26px;
+  background: inherit;
+  filter: blur(12px);
+  opacity: 0.5;
+  z-index: -1;
+  animation: shadowPulse 3s ease-in-out infinite;
+}
+@keyframes shadowPulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.02); }
+}
+
+/* 卡片主体 */
+.card {
+  position: relative;
+  background: rgba(8, 12, 40, 0.9);
+  border-radius: 22px;
+  padding: clamp(36px, 7vw, 56px) clamp(28px, 5vw, 48px);
+  max-width: 88vw;
+  width: 420px;
+  text-align: center;
+  border: 1px solid rgba(255,215,0,0.25);
+  box-shadow: 0 12px 48px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,215,0,0.1);
+}
+
+/* 顶部星光图标 */
+.icon {
+  font-size: clamp(40px, 9vw, 64px);
+  display: block;
+  margin-bottom: 16px;
+  animation: iconDrop 0.9s cubic-bezier(0.34,1.56,0.64,1) 0.2s both;
+}
+@keyframes iconDrop {
+  from { transform: translateY(-30px) scale(0.5); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* 收礼人名 */
+.name {
+  font-size: clamp(26px, 6.5vw, 44px);
+  font-weight: bold;
+  background: linear-gradient(135deg, #ffd700, #fff8b0, #ffe566, #ffd700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 14px;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.4s both;
+  text-shadow: 0 0 30px rgba(255,215,0,0.3);
+}
+
+/* 祝福语 */
+.blessing {
+  font-size: clamp(15px, 4vw, 20px);
+  color: rgba(255,240,180,0.9);
+  line-height: 1.8;
+  margin: 12px 0;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.65s both;
+}
+
+/* 日期 */
+.date {
+  font-size: clamp(12px, 3vw, 15px);
+  color: rgba(255,215,0,0.5);
+  letter-spacing: 3px;
+  margin-top: 16px;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.85s both;
+}
+
+/* 署名 */
+.from {
+  font-size: clamp(13px, 3vw, 16px);
+  color: rgba(255,228,120,0.7);
+  font-style: italic;
+  margin-top: 12px;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 1.0s both;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 减少动效 */
+@media (prefers-reduced-motion: reduce) {
+  .card-wrap, body::before, .card-wrap::before { animation: none; }
+  .star, .shooting-star { animation: none; }
+  .card, .name, .blessing, .date, .from, .icon { animation: none; opacity: 1; }
+}
+</style>
+</head>
+<body>
+
+<div class="card-wrap">
+  <div class="card">
+    <span class="icon">✨</span>
+    <div class="name" id="nameEl"></div>
+    <div class="blessing" id="blessingEl"></div>
+    <div class="date" id="dateEl"></div>
+    <div class="from" id="fromEl"></div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const p = new URLSearchParams(location.search);
+  document.getElementById('nameEl').textContent = p.get('n') || '亲爱的你';
+  const b = p.get('b') || '愿你的生活如星光般璀璨\n每一天都闪闪发光';
+  document.getElementById('blessingEl').innerHTML = b.replace(/\\n/g, '<br>');
+  document.getElementById('dateEl').textContent = p.get('d') || '';
+  document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
+
+  // 星星
+  for (let i = 0; i < 60; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.cssText = `
+      left: ${Math.random()*100}%;
+      top: ${Math.random()*100}%;
+      width: ${1 + Math.random()*2.5}px;
+      height: ${1 + Math.random()*2.5}px;
+      animation-duration: ${2 + Math.random()*3}s;
+      animation-delay: ${Math.random()*4}s;
+    `;
+    document.body.appendChild(s);
+  }
+
+  // 流星
+  function spawnShooter() {
+    const s = document.createElement('div');
+    s.className = 'shooting-star';
+    s.style.left = (60 + Math.random()*40) + '%';
+    s.style.top = Math.random()*30 + '%';
+    s.style.animationDuration = (0.8 + Math.random()*0.8) + 's';
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 2000);
+  }
+  setInterval(spawnShooter, 3000);
+  setTimeout(spawnShooter, 800);
+  setTimeout(spawnShooter, 1800);
+})();
+</script>
+</body>
+</html>

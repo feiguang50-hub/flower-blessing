@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>复古剪贴簿</title>
+<meta property="og:title" content="💌 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  background: #f4ede0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 28px,
+      rgba(180,160,120,0.12) 28px,
+      rgba(180,160,120,0.12) 29px
+    );
+  font-family: 'Georgia', 'Times New Roman', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 纸张纹理 */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(139,90,43,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(139,90,43,0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 纸角折痕 */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; right: 0;
+  width: 0; height: 0;
+  border-style: solid;
+  border-width: 0 60px 60px 0;
+  border-color: transparent #d4c8b0 transparent transparent;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.card-wrap {
+  position: relative;
+  padding: 6px;
+  background: linear-gradient(135deg, #c8a870, #8b6914, #c8a870, #a07830, #c8a870);
+  background-size: 300% 300%;
+  animation: paperEdge 6s ease infinite;
+  border-radius: 4px;
+  z-index: 10;
+  box-shadow: 4px 4px 16px rgba(100,80,40,0.3), -1px -1px 4px rgba(255,240,200,0.4);
+}
+@keyframes paperEdge {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.card {
+  background: #f9f3e6;
+  border-radius: 2px;
+  padding: clamp(28px, 7vw, 48px) clamp(20px, 5vw, 40px);
+  text-align: center;
+  max-width: 500px;
+  width: 88vw;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 装订孔 */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 18px;
+  width: 2px;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 30px,
+    rgba(180,140,80,0.3) 30px,
+    rgba(180,140,80,0.3) 34px
+  );
+  pointer-events: none;
+}
+
+/* 红色装饰线 */
+.ornament {
+  color: #c0392b;
+  font-size: clamp(18px, 4vw, 26px);
+  letter-spacing: 6px;
+  margin-bottom: 12px;
+  opacity: 1;
+  animation: fadeIn 1s ease-out 0.1s both;
+}
+
+.date {
+  font-size: clamp(11px, 2.8vw, 14px);
+  color: #8b6914;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  font-style: italic;
+  opacity: 1;
+  animation: fadeIn 1s ease-out 0.2s both;
+}
+
+.name {
+  font-size: clamp(26px, 7vw, 46px);
+  font-weight: bold;
+  color: #2c1810;
+  margin-bottom: 20px;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  opacity: 1;
+  animation: fadeIn 1.2s ease-out 0.3s both;
+  position: relative;
+  display: inline-block;
+}
+
+.name::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #8b6914, transparent);
+}
+
+.blessing {
+  font-size: clamp(14px, 3.8vw, 20px);
+  color: #3d2817;
+  line-height: 2;
+  margin: 24px 0;
+  text-align: justify;
+  font-family: 'Georgia', serif;
+  opacity: 1;
+  animation: fadeIn 1.2s ease-out 0.45s both;
+}
+
+/* 分隔线 */
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
+  opacity: 1;
+  animation: fadeIn 1s ease-out 0.5s both;
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #8b6914, transparent);
+}
+.divider-star {
+  color: #c0392b;
+  font-size: 14px;
+}
+
+.from {
+  font-size: clamp(12px, 3vw, 16px);
+  color: #8b6914;
+  font-style: italic;
+  opacity: 1;
+  animation: fadeIn 1.2s ease-out 0.6s both;
+}
+
+/* 邮票装饰 */
+.stamp {
+  position: absolute;
+  top: 20px; right: 20px;
+  width: 50px; height: 60px;
+  border: 2px solid #d4c8b0;
+  border-radius: 2px;
+  background: repeating-linear-gradient(
+    45deg,
+    #f0e8d8,
+    #f0e8d8 4px,
+    #e8dcc8 4px,
+    #e8dcc8 8px
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  opacity: 0.7;
+  animation: fadeIn 1s ease-out 0.7s both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<div class="card-wrap">
+  <div class="card">
+    <div class="stamp">💌</div>
+    <div class="ornament">♦ ♦ ♦</div>
+    <div class="date" id="dateEl"></div>
+    <div class="name" id="nameEl"></div>
+    <div class="blessing" id="blessingEl"></div>
+    <div class="divider"><span class="divider-star">★</span></div>
+    <div class="from" id="fromEl"></div>
+  </div>
+</div>
+
+<script>
+const p = new URLSearchParams(location.search);
+document.getElementById('nameEl').textContent = p.get('n') || '亲爱的你';
+document.getElementById('dateEl').textContent = p.get('d') || '';
+document.getElementById('blessingEl').textContent = p.get('b') || '愿时光温柔以待';
+document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
+</script>
+
+</body>
+</html>

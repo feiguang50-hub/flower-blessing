@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>职场祝福</title>
+<meta property="og:title" content="💌 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #030a18 0%, #0a1f40 40%, #081535 100%);
+  font-family: 'Georgia', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 背景光芒射线 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 110%, rgba(0,160,255,0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 20% 80%, rgba(0,80,200,0.1) 0%, transparent 40%),
+    radial-gradient(ellipse at 80% 80%, rgba(0,80,200,0.1) 0%, transparent 40%);
+  z-index: 0;
+  pointer-events: none;
+  animation: rayPulse 4s ease-in-out infinite;
+}
+@keyframes rayPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* 速度线 */
+.speed-line {
+  position: fixed;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(0,200,255,0.7), transparent);
+  animation: speedDash linear infinite;
+  z-index: 1;
+  border-radius: 1px;
+}
+@keyframes speedDash {
+  0% { transform: translateX(-100%); opacity: 0; }
+  8% { opacity: 1; }
+  92% { opacity: 1; }
+  100% { transform: translateX(300vw); opacity: 0; }
+}
+
+/* 上升箭头 */
+.arrow-up {
+  position: fixed;
+  font-size: 20px;
+  z-index: 2;
+  animation: arrowRise ease-out forwards;
+  opacity: 0;
+  filter: drop-shadow(0 0 8px rgba(0,200,255,0.6));
+}
+@keyframes arrowRise {
+  0% { transform: translateY(105vh) rotate(-15deg); opacity: 0; }
+  15% { opacity: 0.8; }
+  80% { opacity: 0.5; }
+  100% { transform: translateY(-15vh) rotate(10deg); opacity: 0; }
+}
+
+/* 星星 */
+.star {
+  position: fixed;
+  background: #fff;
+  border-radius: 50%;
+  animation: starTwinkle ease-in-out infinite;
+  z-index: 1;
+}
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.15; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.8); }
+}
+
+/* 卡片边框流光 */
+.card-wrap {
+  position: relative;
+  z-index: 10;
+  padding: 3px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #00aaff, #0066cc, #00ccff, #0055aa, #00aaff);
+  background-size: 400% 400%;
+  animation: careerBorder 4s ease infinite;
+  box-shadow:
+    0 0 25px rgba(0,160,255,0.35),
+    0 0 55px rgba(0,100,200,0.15);
+}
+@keyframes careerBorder {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.card {
+  background: linear-gradient(160deg, #040d20 0%, #091e45 50%, #061540 100%);
+  border-radius: 18px;
+  padding: clamp(28px, 7vw, 52px) clamp(24px, 6vw, 48px);
+  text-align: center;
+  max-width: 90vw;
+  width: 460px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 顶部图标 */
+.career-icon {
+  font-size: clamp(36px, 10vw, 58px);
+  display: block;
+  margin-bottom: 10px;
+  animation: iconPop 0.9s cubic-bezier(0.34,1.56,0.64,1) 0.2s both;
+  filter: drop-shadow(0 4px 14px rgba(0,180,255,0.5));
+}
+@keyframes iconPop {
+  from { opacity: 0; transform: scale(0.3) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #0088ff, #00ccff);
+  color: #fff;
+  font-size: clamp(11px, 2.5vw, 13px);
+  font-weight: bold;
+  padding: 4px 16px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+  letter-spacing: 2px;
+  font-family: 'Arial', sans-serif;
+  opacity: 1;
+  animation: slideUp 1s ease-out 0.3s both;
+}
+
+.name {
+  font-size: clamp(28px, 8vw, 54px);
+  font-weight: bold;
+  background: linear-gradient(135deg, #00ddff, #ffffff, #00aaff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 12px;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out both;
+  line-height: 1.2;
+}
+.blessing {
+  font-size: clamp(14px, 3.8vw, 21px);
+  color: rgba(200,230,255,0.9);
+  line-height: 1.7;
+  margin-bottom: 16px;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.15s both;
+}
+.date {
+  font-size: clamp(12px, 3vw, 15px);
+  color: rgba(150,190,230,0.65);
+  margin-bottom: 8px;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.3s both;
+  letter-spacing: 1px;
+}
+.from {
+  font-size: clamp(12px, 3vw, 15px);
+  color: rgba(150,190,230,0.6);
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.4s both;
+  font-style: italic;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<script>
+const p = new URLSearchParams(location.search);
+const name = p.get('n') || '亲爱的';
+const blessing = p.get('b') || '新的舞台，新的精彩\n愿你一路繁花，万事顺遂';
+const date = p.get('d') || '';
+const from = p.get('f') || '';
+
+document.getElementById('nameEl').textContent = name;
+document.getElementById('blessingEl').innerHTML = blessing.replace(/\n/g, '<br>');
+document.getElementById('dateEl').textContent = date;
+document.getElementById('fromEl').textContent = from ? '— ' + from : '';
+
+// 星星
+for (let i = 0; i < 35; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  s.style.cssText = `
+    left: ${Math.random()*100}vw;
+    top: ${Math.random()*100}vh;
+    width: ${1+Math.random()*3}px;
+    height: ${1+Math.random()*3}px;
+    animation-duration: ${1.5+Math.random()*3}s;
+    animation-delay: ${Math.random()*3}s;
+  `;
+  document.body.appendChild(s);
+}
+
+// 速度线
+for (let i = 0; i < 6; i++) {
+  const line = document.createElement('div');
+  line.className = 'speed-line';
+  line.style.cssText = `
+    top: ${10 + Math.random()*80}%;
+    width: ${80+Math.random()*120}px;
+    left: -${120+Math.random()*80}px;
+    animation-duration: ${1.2+Math.random()*1.5}s;
+    animation-delay: ${Math.random()*4}s;
+    opacity: 0;
+  `;
+  document.body.appendChild(line);
+}
+
+// 上升箭头
+const arrowIcons = ['🚀', '📈', '⬆', '💼'];
+for (let i = 0; i < 8; i++) {
+  const a = document.createElement('div');
+  a.className = 'arrow-up';
+  a.textContent = arrowIcons[i % arrowIcons.length];
+  const x = 5 + Math.random() * 88;
+  a.style.cssText = `
+    left: ${x}%;
+    animation-duration: ${4+Math.random()*3}s;
+    animation-delay: ${Math.random()*6}s;
+    font-size: ${14+Math.random()*14}px;
+  `;
+  document.body.appendChild(a);
+}
+
+// 减少动效
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.star,.speed-line,.arrow-up').forEach(e => e.remove());
+}
+</script>
+
+<div class="card-wrap">
+  <div class="card">
+    <span class="career-icon">🚀</span>
+    <div class="tag">✨ 职场祝福</div>
+    <div class="name" id="nameEl"></div>
+    <div class="blessing" id="blessingEl"></div>
+    <div class="date" id="dateEl"></div>
+    <div class="from" id="fromEl"></div>
+  </div>
+</div>
+
+</body>
+</html>

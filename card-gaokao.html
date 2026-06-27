@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高考加油</title>
+<meta property="og:title" content="💌 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="💌 收到一份专属贺卡">
+<meta name="twitter:description" content="点击打开，你们的专属回忆在里面哦">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #060e1e 0%, #0c1f3f 40%, #143060 100%);
+  font-family: 'Georgia', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* === 光芒射线 === */
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(255,220,60,0.22) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 0%, rgba(100,160,255,0.12) 0%, transparent 40%),
+    radial-gradient(ellipse at 20% 50%, rgba(255,200,60,0.08) 0%, transparent 35%),
+    radial-gradient(ellipse at 80% 50%, rgba(255,200,60,0.08) 0%, transparent 35%);
+  animation: rayPulse 4s ease-in-out infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+@keyframes rayPulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.03); }
+}
+
+/* === 速度线 === */
+.speed-line {
+  position: fixed;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255,220,80,0.8), transparent);
+  animation: speedDash linear infinite;
+  z-index: 1;
+}
+@keyframes speedDash {
+  0% { transform: translateX(-100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateX(300vw); opacity: 0; }
+}
+
+/* === 星星闪烁 === */
+.star {
+  position: fixed;
+  background: #fff;
+  border-radius: 50%;
+  animation: starTwinkle ease-in-out infinite;
+  z-index: 1;
+}
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.6); }
+}
+
+/* === 铅笔上升 === */
+.pencil {
+  position: fixed;
+  font-size: 22px;
+  z-index: 2;
+  animation: pencilRise ease-out forwards;
+  filter: drop-shadow(0 4px 12px rgba(255,200,60,0.4));
+}
+@keyframes pencilRise {
+  0% { transform: translateY(90vh) rotate(-15deg) scale(0.5); opacity: 0; }
+  15% { opacity: 1; transform: translateY(65vh) rotate(-5deg) scale(1); }
+  70% { transform: translateY(25vh) rotate(5deg) scale(1.1); opacity: 1; }
+  100% { transform: translateY(-15vh) rotate(10deg) scale(0.7); opacity: 0; }
+}
+
+/* === 书本漂浮 === */
+.book {
+  position: fixed;
+  font-size: 18px;
+  animation: bookFloat ease-in-out infinite;
+  z-index: 2;
+  filter: drop-shadow(0 4px 10px rgba(255,200,60,0.3));
+}
+@keyframes bookFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-18px) rotate(5deg); }
+}
+
+/* === 卡片 === */
+.card-wrap {
+  position: relative;
+  z-index: 10;
+  padding: 3px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #ffd700, #ff9500, #ffd700, #ffb800);
+  background-size: 300% 300%;
+  animation: borderFlow 3s ease infinite;
+  box-shadow: 0 0 30px rgba(255,200,60,0.35), 0 0 60px rgba(255,180,0,0.15);
+}
+@keyframes borderFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.card {
+  background: linear-gradient(160deg, #0c1a30 0%, #142850 50%, #1a3a70 100%);
+  border-radius: 22px;
+  padding: clamp(28px, 7vw, 56px) clamp(24px, 6vw, 52px);
+  text-align: center;
+  max-width: 90vw;
+  width: 480px;
+  position: relative;
+  overflow: hidden;
+  border: none;
+}
+
+/* 卡片内光芒 */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(255,220,80,0.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #ffd700, #ff9500);
+  color: #060e1e;
+  font-size: clamp(11px, 2.5vw, 14px);
+  font-weight: bold;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+  letter-spacing: 2px;
+  font-family: 'Arial', sans-serif;
+}
+
+.name {
+  font-size: clamp(28px, 8vw, 54px);
+  font-weight: bold;
+  background: linear-gradient(135deg, #ffd700, #fff5b0, #ffd700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 10px;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out both;
+  line-height: 1.2;
+  text-shadow: none;
+}
+.blessing {
+  font-size: clamp(15px, 4vw, 22px);
+  color: rgba(255,240,180,0.92);
+  line-height: 1.7;
+  margin-bottom: 18px;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.2s both;
+}
+.date {
+  font-size: clamp(12px, 3vw, 15px);
+  color: rgba(200,200,220,0.7);
+  margin-bottom: 8px;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.35s both;
+  font-family: 'Arial', sans-serif;
+  letter-spacing: 1px;
+}
+.from {
+  font-size: clamp(12px, 3vw, 15px);
+  color: rgba(200,200,220,0.65);
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.45s both;
+  font-style: italic;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<script>
+// 名字
+const p = new URLSearchParams(location.search);
+document.getElementById('nameEl').textContent = p.get('n') || '考生';
+document.getElementById('blessingEl').textContent = p.get('b') || '愿你笔下生花，金榜题名！';
+document.getElementById('dateEl').textContent = p.get('d') || '';
+document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
+
+// 星星
+for (let i = 0; i < 35; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  s.style.cssText = `
+    left: ${Math.random()*100}vw;
+    top: ${Math.random()*100}vh;
+    width: ${1+Math.random()*3}px;
+    height: ${1+Math.random()*3}px;
+    animation-duration: ${1.5+Math.random()*3}s;
+    animation-delay: ${Math.random()*3}s;
+  `;
+  document.body.appendChild(s);
+}
+
+// 速度线
+for (let i = 0; i < 12; i++) {
+  const line = document.createElement('div');
+  line.className = 'speed-line';
+  const top = 5 + Math.random() * 85;
+  const dur = 0.8 + Math.random() * 1.2;
+  const delay = Math.random() * 4;
+  const w = 80 + Math.random() * 150;
+  line.style.cssText = `
+    left: -20px;
+    top: ${top}%;
+    width: ${w}px;
+    animation-duration: ${dur}s;
+    animation-delay: ${delay}s;
+  `;
+  document.body.appendChild(line);
+}
+
+// 铅笔上升
+const pencils = ['✏️', '📖', '📚', '✒️', '📝'];
+for (let i = 0; i < 8; i++) {
+  const el = document.createElement('div');
+  el.className = 'pencil';
+  el.textContent = pencils[i % pencils.length];
+  const x = 8 + Math.random() * 84;
+  const delay = Math.random() * 6;
+  const dur = 4 + Math.random() * 3;
+  el.style.cssText = `
+    left: ${x}%;
+    bottom: -30px;
+    animation-duration: ${dur}s;
+    animation-delay: ${delay}s;
+  `;
+  document.body.appendChild(el);
+}
+
+// 书本漂浮
+const bookEmojis = ['📖', '📚', '📕'];
+for (let i = 0; i < 5; i++) {
+  const b = document.createElement('div');
+  b.className = 'book';
+  b.textContent = bookEmojis[i % bookEmojis.length];
+  b.style.cssText = `
+    left: ${5 + Math.random() * 88}%;
+    top: ${10 + Math.random() * 70}%;
+    animation-duration: ${3 + Math.random() * 2}s;
+    animation-delay: ${Math.random() * 4}s;
+    font-size: ${14 + Math.random() * 10}px;
+  `;
+  document.body.appendChild(b);
+}
+
+// 减少动效
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.star,.speed-line,.pencil,.book').forEach(e => e.remove());
+}
+</script>
+
+<div class="card-wrap">
+  <div class="card">
+    <div class="tag">✊ 高考冲刺</div>
+    <div class="name" id="nameEl"></div>
+    <div class="blessing" id="blessingEl"></div>
+    <div class="date" id="dateEl"></div>
+    <div class="from" id="fromEl"></div>
+  </div>
+</div>
+
+</body>
+</html>

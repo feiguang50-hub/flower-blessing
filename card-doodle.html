@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>童趣涂鸦祝福</title>
+<meta property="og:title" content="💌 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --doodle-yellow: #FFD93D;
+  --doodle-orange: #FF8C42;
+  --doodle-pink: #FF6B9D;
+  --doodle-blue: #6BCBEF;
+  --doodle-green: #7ED957;
+  --doodle-purple: #C9A0FF;
+  --paper-bg: #FFF9E6;
+  --pencil-gray: #555;
+}
+
+/* 纸纹背景 */
+body {
+  min-height: 100vh;
+  background-color: var(--paper-bg);
+  background-image:
+    /* 铅笔线条纹理 */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 28px,
+      rgba(200,180,150,0.15) 28px,
+      rgba(200,180,150,0.15) 29px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 28px,
+      rgba(200,180,150,0.08) 28px,
+      rgba(200,180,150,0.08) 29px
+    ),
+    /* 纸纹颗粒 */
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  font-family: 'Comic Sans MS', 'Marker Felt', 'PingFang SC', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 涂鸦装饰容器 */
+.doodle-decor {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* 简笔画太阳 */
+.doodle-sun {
+  position: absolute;
+  top: 8%;
+  right: 10%;
+  width: 70px;
+  height: 70px;
+  animation: sunWobble 4s ease-in-out infinite;
+}
+.doodle-sun .sun-body {
+  width: 50px;
+  height: 50px;
+  background: var(--doodle-yellow);
+  border-radius: 50%;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  box-shadow: 0 0 20px var(--doodle-yellow);
+}
+.doodle-sun .ray {
+  position: absolute;
+  width: 4px;
+  height: 16px;
+  background: var(--doodle-orange);
+  border-radius: 2px;
+}
+.doodle-sun .ray:nth-child(2) { top: -8px; left: 23px; transform: rotate(0deg); }
+.doodle-sun .ray:nth-child(3) { top: 5px; right: -6px; transform: rotate(90deg); }
+.doodle-sun .ray:nth-child(4) { bottom: -8px; left: 23px; transform: rotate(0deg); }
+.doodle-sun .ray:nth-child(5) { top: 5px; left: -6px; transform: rotate(90deg); }
+.doodle-sun .ray:nth-child(6) { top: -2px; right: 2px; transform: rotate(45deg); }
+.doodle-sun .ray:nth-child(7) { bottom: 2px; right: 2px; transform: rotate(-45deg); }
+.doodle-sun .ray:nth-child(8) { bottom: 2px; left: 2px; transform: rotate(45deg); }
+.doodle-sun .ray:nth-child(9) { top: -2px; left: 2px; transform: rotate(-45deg); }
+@keyframes sunWobble {
+  0%, 100% { transform: rotate(-5deg) scale(1); }
+  50% { transform: rotate(5deg) scale(1.05); }
+}
+
+/* 简笔画云 */
+.doodle-cloud {
+  position: absolute;
+  top: 12%;
+  left: 8%;
+  animation: cloudFloat 8s ease-in-out infinite;
+}
+.doodle-cloud .cloud-body {
+  position: relative;
+}
+.doodle-cloud .cloud-body::before,
+.doodle-cloud .cloud-body::after,
+.doodle-cloud .cloud-body span {
+  content: '';
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.05);
+}
+.doodle-cloud .cloud-body::before {
+  width: 40px;
+  height: 40px;
+  top: 10px;
+  left: 0;
+}
+.doodle-cloud .cloud-body::after {
+  width: 55px;
+  height: 55px;
+  top: 0;
+  left: 25px;
+}
+.doodle-cloud .cloud-body span {
+  width: 35px;
+  height: 35px;
+  top: 15px;
+  left: 65px;
+}
+@keyframes cloudFloat {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(20px); }
+}
+
+/* 简笔画小花 */
+.doodle-flower {
+  position: absolute;
+  bottom: 10%;
+  left: 6%;
+  animation: flowerSway 3s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+.doodle-flower .stem {
+  width: 4px;
+  height: 40px;
+  background: var(--doodle-green);
+  margin: 0 auto;
+  border-radius: 2px;
+}
+.doodle-flower .petal {
+  width: 12px;
+  height: 12px;
+  background: var(--doodle-pink);
+  border-radius: 50%;
+  position: absolute;
+}
+.doodle-flower .petal:nth-child(2) { top: -6px; left: 0; }
+.doodle-flower .petal:nth-child(3) { top: -6px; right: 0; }
+.doodle-flower .petal:nth-child(4) { top: 0; left: -6px; }
+.doodle-flower .petal:nth-child(5) { top: 0; right: -6px; }
+.doodle-flower .flower-center {
+  width: 12px;
+  height: 12px;
+  background: var(--doodle-yellow);
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+@keyframes flowerSway {
+  0%, 100% { transform: rotate(-8deg); }
+  50% { transform: rotate(8deg); }
+}
+
+/* 简笔画星星 */
+.doodle-star {
+  position: absolute;
+  animation: starTwinkle 2s ease-in-out infinite;
+  font-size: 28px;
+}
+.doodle-star:nth-child(1) { top: 20%; left: 15%; animation-delay: 0s; color: var(--doodle-yellow); }
+.doodle-star:nth-child(2) { top: 35%; right: 12%; animation-delay: 0.5s; color: var(--doodle-orange); }
+.doodle-star:nth-child(3) { bottom: 25%; right: 18%; animation-delay: 1s; color: var(--doodle-pink); }
+@keyframes starTwinkle {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  50% { transform: scale(1.2) rotate(15deg); opacity: 0.8; }
+}
+
+/* 简笔画房子 */
+.doodle-house {
+  position: absolute;
+  bottom: 8%;
+  right: 8%;
+  animation: houseBob 5s ease-in-out infinite;
+}
+.doodle-house .roof {
+  width: 0;
+  height: 0;
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+  border-bottom: 25px solid var(--doodle-orange);
+}
+.doodle-house .body {
+  width: 60px;
+  height: 45px;
+  background: var(--doodle-pink);
+  border-radius: 3px;
+  position: relative;
+}
+.doodle-house .door {
+  width: 16px;
+  height: 24px;
+  background: var(--doodle-orange);
+  border-radius: 2px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.doodle-house .window {
+  width: 14px;
+  height: 14px;
+  background: var(--doodle-blue);
+  border: 2px solid white;
+  border-radius: 2px;
+  position: absolute;
+  top: 8px;
+}
+.doodle-house .window:nth-child(3) { left: 6px; }
+.doodle-house .window:nth-child(4) { right: 6px; }
+@keyframes houseBob {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-5px) rotate(2deg); }
+}
+
+/* 简笔画彩虹 */
+.doodle-rainbow {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 80px;
+  overflow: hidden;
+  animation: rainbowFade 6s ease-in-out infinite;
+}
+.doodle-rainbow::before {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 100px;
+  border-radius: 100px 100px 0 0;
+  background: 
+    linear-gradient(90deg, 
+      var(--doodle-pink) 14%, 
+      var(--doodle-orange) 28%, 
+      var(--doodle-yellow) 42%, 
+      var(--doodle-green) 57%, 
+      var(--doodle-blue) 71%, 
+      var(--doodle-purple) 85%
+    );
+  background-size: 200px 100%;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  border: 5px solid var(--pencil-gray);
+  border-bottom: none;
+  border-radius: 100px 100px 0 0;
+  box-sizing: border-box;
+}
+@keyframes rainbowFade {
+  0%, 100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+}
+
+/* 涂鸦便签纸卡片 */
+.card-wrap {
+  position: relative;
+  z-index: 10;
+  animation: cardBounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.card {
+  background: #FFFEF5;
+  border: 3px solid var(--pencil-gray);
+  border-radius: 4px;
+  padding: clamp(28px, 6vw, 50px);
+  max-width: min(480px, 92vw);
+  width: 100%;
+  text-align: center;
+  position: relative;
+  box-shadow: 
+    4px 4px 0 rgba(0,0,0,0.08),
+    8px 8px 0 rgba(0,0,0,0.04);
+  transform: rotate(-1deg);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 20px;
+  background: var(--doodle-yellow);
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* 涂鸦手撕边缘效果（顶部） */
+.card::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  border: 3px dashed var(--pencil-gray);
+  border-radius: 6px;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+@keyframes cardBounce {
+  0% { opacity: 0; transform: scale(0.5) rotate(-5deg); }
+  60% { transform: scale(1.05) rotate(-0.5deg); }
+  100% { opacity: 1; transform: scale(1) rotate(-1deg); }
+}
+
+/* 名字 */
+.name {
+  font-size: clamp(28px, 8vw, 48px);
+  color: var(--doodle-pink);
+  margin-bottom: 8px;
+  text-shadow: 
+    2px 2px 0 var(--doodle-orange),
+    4px 4px 0 rgba(0,0,0,0.05);
+  animation: namePop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
+  letter-spacing: 2px;
+}
+@keyframes namePop {
+  0% { opacity: 0; transform: scale(0.3) rotate(-10deg); }
+  100% { opacity: 1; transform: scale(1) rotate(-1deg); }
+}
+
+/* 日期 */
+.date {
+  font-size: clamp(13px, 3.5vw, 18px);
+  color: var(--pencil-gray);
+  margin-bottom: 20px;
+  animation: slideUp 0.5s ease-out 0.5s both;
+  opacity: 1;
+  letter-spacing: 1px;
+}
+
+/* 祝福语 */
+.blessing {
+  font-size: clamp(16px, 4.5vw, 22px);
+  color: #444;
+  line-height: 1.7;
+  margin-bottom: 24px;
+  animation: slideUp 0.5s ease-out 0.7s both;
+  opacity: 1;
+  padding: 0 10px;
+  word-break: break-all;
+}
+
+/* 署名 */
+.from {
+  font-size: clamp(13px, 3.5vw, 17px);
+  color: var(--doodle-blue);
+  animation: slideUp 0.5s ease-out 0.9s both;
+  opacity: 1;
+  font-style: italic;
+}
+
+@keyframes slideUp {
+  0% { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* 涂鸦小元素 */
+.doodle-sticker {
+  position: absolute;
+  font-size: 24px;
+  animation: stickerWobble 3s ease-in-out infinite;
+  z-index: 5;
+}
+.doodle-sticker:nth-child(1) { top: -15px; left: 15px; animation-delay: 0s; }
+.doodle-sticker:nth-child(2) { top: -10px; right: 20px; animation-delay: 0.5s; font-size: 20px; }
+.doodle-sticker:nth-child(3) { bottom: 20px; left: 10px; animation-delay: 1s; font-size: 18px; }
+.doodle-sticker:nth-child(4) { bottom: 25px; right: 15px; animation-delay: 1.5s; font-size: 22px; }
+@keyframes stickerWobble {
+  0%, 100% { transform: rotate(-8deg) scale(1); }
+  50% { transform: rotate(8deg) scale(1.1); }
+}
+
+/* 减少动效 */
+@media (prefers-reduced-motion: reduce) {
+  .doodle-sun, .doodle-cloud, .doodle-flower, 
+  .doodle-star, .doodle-house, .doodle-rainbow,
+  .doodle-sticker, .card, .name, .date, .blessing, .from {
+    animation: none;
+  }
+  .card { opacity: 1; }
+  .name, .date, .blessing, .from { opacity: 1; }
+}
+</style>
+</head>
+<body>
+
+<!-- 涂鸦装饰 -->
+<div class="doodle-decor">
+  <!-- 彩虹 -->
+  <div class="doodle-rainbow"></div>
+  
+  <!-- 太阳 -->
+  <div class="doodle-sun">
+    <div class="ray"></div>
+    <div class="ray"></div>
+    <div class="ray"></div>
+    <div class="ray"></div>
+    <div class="ray"></div>
+    <div class="ray"></div>
+    <div class="ray"></div>
+    <div class="ray"></div>
+    <div class="sun-body"></div>
+  </div>
+  
+  <!-- 云 -->
+  <div class="doodle-cloud">
+    <div class="cloud-body"><span></span></div>
+  </div>
+  
+  <!-- 小花 -->
+  <div class="doodle-flower">
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="flower-center"></div>
+    <div class="stem"></div>
+  </div>
+  
+  <!-- 星星 -->
+  <div class="doodle-star">★</div>
+  <div class="doodle-star">★</div>
+  <div class="doodle-star">★</div>
+  
+  <!-- 小房子 -->
+  <div class="doodle-house">
+    <div class="roof"></div>
+    <div class="body">
+      <div class="window"></div>
+      <div class="window"></div>
+      <div class="door"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 卡片 -->
+<div class="card-wrap">
+  <!-- 贴纸装饰 -->
+  <span class="doodle-sticker">🌟</span>
+  <span class="doodle-sticker">✨</span>
+  <span class="doodle-sticker">🌸</span>
+  <span class="doodle-sticker">💖</span>
+  
+  <div class="card">
+    <div class="name" id="nameEl">亲爱的你</div>
+    <div class="date" id="dateEl"></div>
+    <div class="blessing" id="blessingEl">愿每一天都像画画一样快乐美好</div>
+    <div class="from" id="fromEl"></div>
+  </div>
+</div>
+
+<script>
+const p = new URLSearchParams(location.search);
+document.getElementById('nameEl').textContent = p.get('n') || '亲爱的你';
+document.getElementById('dateEl').textContent = p.get('d') || '';
+const blessing = p.get('b') || '愿每一天都像画画一样快乐美好';
+document.getElementById('blessingEl').textContent = blessing;
+document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
+</script>
+
+</body>
+</html>

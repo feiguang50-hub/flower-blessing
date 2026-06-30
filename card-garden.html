@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>浪漫花园</title>
+<meta property="og:title" content="🌹 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --garden-pink: #ff9eb5;
+  --garden-deep: #d4607a;
+  --garden-soft: #ffc8d8;
+  --garden-white: #fff5f7;
+  --leaf-green: #5a9e6a;
+  --leaf-dark: #3a7048;
+  --text-rose: #c04060;
+  --text-muted: rgba(160,60,80,0.65);
+  --card-bg: rgba(255,240,245,0.88);
+  --card-border: rgba(212,96,122,0.4);
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg,
+    #c8e8c0 0%,
+    #a8d8a0 20%,
+    #90c890 35%,
+    #e0f0e8 50%,
+    #ffe8f0 65%,
+    #ffd0e0 80%,
+    #ffb8d0 100%);
+  font-family: 'Georgia', 'PingFang SC', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 花瓣飘落 */
+.petal {
+  position: fixed;
+  z-index: 5; pointer-events: none;
+  font-size: 14px;
+  animation: petalFall var(--dur, 6s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+@keyframes petalFall {
+  0% { transform: translateY(-10px) translateX(0) rotate(0deg); opacity: 0; }
+  8% { opacity: 1; }
+  50% { transform: translateY(55vh) translateX(calc(var(--dx, 20px))) rotate(180deg); }
+  100% { transform: translateY(110vh) translateX(calc(var(--dx) * 0.4)) rotate(360deg); opacity: 0; }
+}
+
+/* 花园背景光斑 */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,200,220,0.3) 0%, transparent 30%),
+    radial-gradient(circle at 80% 20%, rgba(255,180,210,0.25) 0%, transparent 28%),
+    radial-gradient(circle at 60% 70%, rgba(180,230,180,0.2) 0%, transparent 25%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 篱笆 */
+.fence {
+  position: fixed;
+  bottom: 8vh; left: 0; right: 0;
+  height: 40px;
+  z-index: 2; pointer-events: none;
+  display: flex;
+  justify-content: center;
+  gap: 0;
+}
+.fence-post {
+  width: 8px; height: 35px;
+  background: linear-gradient(180deg, #c8a878, #a07848);
+  border-radius: 2px 2px 0 0;
+  position: relative;
+  margin: 0 25px;
+}
+.fence-post::before {
+  content: '';
+  position: absolute;
+  top: -5px; left: 50%; transform: translateX(-50%);
+  width: 12px; height: 8px;
+  background: #d4b888;
+  border-radius: 50% 50% 0 0;
+}
+
+/* 花丛 */
+.bush {
+  position: fixed;
+  bottom: 10vh;
+  z-index: 3; pointer-events: none;
+  font-size: 36px;
+  animation: bushSway 5s ease-in-out infinite;
+}
+.bush:nth-child(1) { left: 5%; }
+.bush:nth-child(2) { right: 5%; animation-delay: 1.5s; }
+@keyframes bushSway {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+
+/* 卡片 */
+.card-wrap {
+  position: relative;
+  z-index: 10;
+  padding: 2px;
+  border-radius: 20px;
+  background: linear-gradient(135deg,
+    rgba(212,96,122,0.5) 0%,
+    rgba(255,158,181,0.4) 50%,
+    rgba(212,96,122,0.5) 100%);
+  background-size: 200% 200%;
+  animation: borderFlow 4s ease-in-out infinite;
+  box-shadow: 0 0 25px rgba(212,96,122,0.25), 0 8px 32px rgba(0,0,0,0.2);
+}
+@keyframes borderFlow {
+  0%, 100% { background-position: 0% 50%; box-shadow: 0 0 25px rgba(212,96,122,0.25), 0 8px 32px rgba(0,0,0,0.2); }
+  50% { background-position: 100% 50%; box-shadow: 0 0 35px rgba(212,96,122,0.4), 0 8px 32px rgba(0,0,0,0.2); }
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  padding: clamp(28px, 6vw, 48px) clamp(24px, 5vw, 44px);
+  text-align: center;
+  max-width: min(420px, 92vw);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: cardFloat 4s ease-in-out infinite;
+}
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.name {
+  font-size: clamp(22px, 6vw, 36px);
+  font-weight: normal;
+  color: var(--text-rose);
+  margin-bottom: 10px;
+  letter-spacing: 0.1em;
+  opacity: 1;
+  animation: fadeUp 1.2s ease-out both;
+}
+
+.date {
+  font-size: clamp(12px, 3vw, 14px);
+  color: var(--text-muted);
+  margin-bottom: 20px;
+  letter-spacing: 0.15em;
+  opacity: 1;
+  animation: fadeUp 1.2s ease-out 0.2s both;
+}
+
+.divider {
+  width: 50px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--garden-deep), transparent);
+  margin: 16px auto;
+  opacity: 1;
+  animation: fadeIn 1s ease-out 0.4s both;
+}
+
+.blessing {
+  font-size: clamp(14px, 3.5vw, 17px);
+  color: var(--text-rose);
+  line-height: 1.9;
+  margin-bottom: 22px;
+  opacity: 1;
+  animation: fadeUp 1.2s ease-out 0.5s both;
+}
+
+.from {
+  font-size: clamp(12px, 3vw, 14px);
+  color: var(--text-muted);
+  opacity: 1;
+  animation: fadeUp 1.2s ease-out 0.8s both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+</style>
+</head>
+<body>
+
+<div class="fence">
+  <div class="fence-post"></div>
+  <div class="fence-post"></div>
+  <div class="fence-post"></div>
+  <div class="fence-post"></div>
+  <div class="fence-post"></div>
+</div>
+<div class="bush">🌷🌸🌻</div>
+<div class="bush">🌻🌸🌷</div>
+
+<div class="card-wrap">
+  <div class="card">
+    <div class="name" id="nameEl"></div>
+    <div class="date" id="dateEl"></div>
+    <div class="divider"></div>
+    <div class="blessing" id="blessingEl"></div>
+    <div class="from" id="fromEl"></div>
+  </div>
+</div>
+
+<script>
+// 花瓣飘落
+const petals = ['🌸', '🌺', '🌷', '🌹', '💮'];
+for (let i = 0; i < 16; i++) {
+  const p = document.createElement('div');
+  p.className = 'petal';
+  p.textContent = petals[Math.floor(Math.random() * petals.length)];
+  p.style.left = Math.random() * 100 + '%';
+  p.style.top = (Math.random() * -10 - 5) + '%';
+  p.style.setProperty('--dur', (5 + Math.random() * 6) + 's');
+  p.style.setProperty('--delay', Math.random() * 8 + 's');
+  p.style.setProperty('--dx', (Math.random() > 0.5 ? 1 : -1) * (12 + Math.random() * 30) + 'px');
+  p.style.fontSize = (12 + Math.random() * 10) + 'px';
+  document.body.appendChild(p);
+}
+
+const params = new URLSearchParams(location.search);
+document.getElementById('nameEl').textContent = params.get('n') || '花园里的你';
+document.getElementById('dateEl').textContent = params.get('d') || '';
+document.getElementById('blessingEl').textContent = params.get('b') || '愿你的生活像花园一样美好';
+document.getElementById('fromEl').textContent = params.get('f') ? '— ' + params.get('f') : '';
+
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.petal, .bush, .card-wrap, .card').forEach(el => el.style.animation = 'none');
+}
+</script>
+</body>
+</html>

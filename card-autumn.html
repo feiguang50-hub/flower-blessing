@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>秋日暖枫</title>
+<meta property="og:title" content="🍂 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --autumn-sky-top: #8b7355;
+  --autumn-sky-mid: #c4956a;
+  --autumn-ground: #5c3d1e;
+  --leaf-red: #d4553a;
+  --leaf-orange: #e8823a;
+  --leaf-gold: #f0b835;
+  --leaf-dark: #8b3a1e;
+  --text-warm: #fff0d6;
+  --text-muted: rgba(255,240,210,0.6);
+  --card-bg: rgba(60,30,10,0.82);
+  --card-border: rgba(240,184,53,0.35);
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg,
+    #7a6040 0%,
+    #a07848 20%,
+    #c4956a 40%,
+    #d4a574 55%,
+    #b08050 70%,
+    #6b4820 85%,
+    #4a2e10 100%);
+  font-family: 'Georgia', 'PingFang SC', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 夕阳余晖 */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 60%, rgba(255,160,60,0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 0%, rgba(255,100,50,0.08) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 枫树 */
+.tree {
+  position: fixed;
+  bottom: 10vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1; pointer-events: none;
+  font-size: 90px;
+  animation: treeSway 6s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(200,100,50,0.3));
+}
+@keyframes treeSway {
+  0%, 100% { transform: translateX(-50%) rotate(-1deg); }
+  50% { transform: translateX(-50%) rotate(1deg); }
+}
+
+/* 枫叶飘落 */
+.leaf {
+  position: fixed;
+  z-index: 5; pointer-events: none;
+  font-size: 18px;
+  animation: leafFall var(--dur, 6s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+@keyframes leafFall {
+  0% { transform: translateY(-20px) translateX(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  25% { transform: translateY(25vh) translateX(calc(var(--dx, 15px))) rotate(60deg); }
+  50% { transform: translateY(50vh) translateX(calc(var(--dx) * -0.5)) rotate(140deg); }
+  75% { transform: translateY(75vh) translateX(calc(var(--dx) * 0.8)) rotate(220deg); }
+  90% { opacity: 0.7; }
+  100% { transform: translateY(105vh) translateX(calc(var(--dx) * 0.3)) rotate(300deg); opacity: 0; }
+}
+
+/* 地面 */
+.ground {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 12vh;
+  z-index: 3;
+  background: linear-gradient(180deg, #6b4820 0%, #4a2e10 100%);
+  border-top: 3px solid #8b5a28;
+}
+.ground::before {
+  content: '';
+  position: absolute;
+  top: -8px; left: 0; right: 0;
+  height: 10px;
+  background: repeating-linear-gradient(90deg,
+    transparent 0px, transparent 20px,
+    rgba(139,90,40,0.5) 20px, rgba(139,90,40,0.5) 24px);
+  filter: blur(2px);
+}
+
+/* 落叶堆 */
+.pile {
+  position: absolute;
+  font-size: 14px;
+  z-index: 4;
+  animation: pileSway 4s ease-in-out infinite;
+}
+.pile:nth-child(1) { left: 10%; bottom: 10vh; }
+.pile:nth-child(2) { left: 80%; bottom: 10vh; animation-delay: 1s; }
+@keyframes pileSway {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+
+/* 卡片 */
+.card-wrap {
+  position: relative;
+  z-index: 10;
+  padding: 2px;
+  border-radius: 20px;
+  background: linear-gradient(135deg,
+    rgba(240,184,53,0.5) 0%,
+    rgba(212,85,58,0.4) 50%,
+    rgba(240,184,53,0.5) 100%);
+  background-size: 200% 200%;
+  animation: borderFlow 4s ease-in-out infinite;
+  box-shadow: 0 0 25px rgba(240,184,53,0.25), 0 8px 32px rgba(0,0,0,0.5);
+}
+@keyframes borderFlow {
+  0%, 100% { background-position: 0% 50%; box-shadow: 0 0 25px rgba(240,184,53,0.25), 0 8px 32px rgba(0,0,0,0.5); }
+  50% { background-position: 100% 50%; box-shadow: 0 0 35px rgba(240,184,53,0.4), 0 8px 32px rgba(0,0,0,0.5); }
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  padding: clamp(28px, 6vw, 48px) clamp(24px, 5vw, 44px);
+  text-align: center;
+  max-width: min(420px, 92vw);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  animation: cardFloat 4s ease-in-out infinite;
+}
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.name {
+  font-size: clamp(22px, 6vw, 36px);
+  font-weight: normal;
+  color: var(--leaf-gold);
+  margin-bottom: 10px;
+  letter-spacing: 0.1em;
+  opacity: 1;
+  animation: fadeUp 1.2s ease-out both;
+  text-shadow: 0 0 10px rgba(240,184,53,0.5);
+}
+
+.date {
+  font-size: clamp(12px, 3vw, 14px);
+  color: var(--text-muted);
+  margin-bottom: 20px;
+  letter-spacing: 0.15em;
+  opacity: 1;
+  animation: fadeUp 1.2s ease-out 0.2s both;
+}
+
+.divider {
+  width: 50px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--leaf-gold), transparent);
+  margin: 16px auto;
+  opacity: 1;
+  animation: fadeIn 1s ease-out 0.4s both;
+}
+
+.blessing {
+  font-size: clamp(14px, 3.5vw, 17px);
+  color: var(--text-warm);
+  line-height: 1.9;
+  margin-bottom: 22px;
+  opacity: 1;
+  animation: fadeUp 1.2s ease-out 0.5s both;
+}
+
+.from {
+  font-size: clamp(12px, 3vw, 14px);
+  color: var(--text-muted);
+  opacity: 1;
+  animation: fadeUp 1.2s ease-out 0.8s both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+</style>
+</head>
+<body>
+
+<div class="tree">🍁</div>
+<div class="ground">
+  <div class="pile">🍂🍁</div>
+  <div class="pile">🍁🍂</div>
+</div>
+
+<div class="card-wrap">
+  <div class="card">
+    <div class="name" id="nameEl"></div>
+    <div class="date" id="dateEl"></div>
+    <div class="divider"></div>
+    <div class="blessing" id="blessingEl"></div>
+    <div class="from" id="fromEl"></div>
+  </div>
+</div>
+
+<script>
+// 枫叶飘落
+const leafEmojis = ['🍂', '🍁', '🍂', '🍁'];
+const container = document.body;
+for (let i = 0; i < 14; i++) {
+  const leaf = document.createElement('div');
+  leaf.className = 'leaf';
+  leaf.textContent = leafEmojis[Math.floor(Math.random() * leafEmojis.length)];
+  leaf.style.left = Math.random() * 100 + '%';
+  leaf.style.top = (Math.random() * -10 - 5) + '%';
+  leaf.style.setProperty('--dur', (5 + Math.random() * 5) + 's');
+  leaf.style.setProperty('--delay', Math.random() * 6 + 's');
+  leaf.style.setProperty('--dx', (Math.random() > 0.5 ? 1 : -1) * (10 + Math.random() * 25) + 'px');
+  leaf.style.fontSize = (14 + Math.random() * 10) + 'px';
+  container.appendChild(leaf);
+}
+
+const p = new URLSearchParams(location.search);
+document.getElementById('nameEl').textContent = p.get('n') || '秋日里的你';
+document.getElementById('dateEl').textContent = p.get('d') || '';
+document.getElementById('blessingEl').textContent = p.get('b') || '愿秋风温柔，愿所有美好如约而至';
+document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
+
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.leaf, .tree, .card-wrap, .card, .pile').forEach(el => {
+    el.style.animation = 'none';
+  });
+}
+</script>
+</body>
+</html>

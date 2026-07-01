@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日落海滩</title>
+<meta property="og:title" content="🌅 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --sun-orange: #ff7e5f;
+  --sun-pink: #feb47b;
+  --sky-top: #1a0533;
+  --sky-mid: #7b2d5b;
+  --ocean-deep: #0a2a4a;
+  --ocean-mid: #1a5a8a;
+  --sand: #f4d9a0;
+  --sand-dark: #d4b078;
+  --palm-green: #2d6a2d;
+  --palm-dark: #1a4a1a;
+  --text-warm: #fff8f0;
+  --text-muted: rgba(255,240,230,0.7);
+  --card-bg: rgba(15,25,50,0.82);
+  --card-border: rgba(255,180,100,0.35);
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg,
+    #1a0533 0%,
+    #4a1540 18%,
+    #9b3060 32%,
+    #d4607a 45%,
+    #ff7e5f 55%,
+    #feb47b 62%,
+    #f4d9a0 72%,
+    #e8c880 80%,
+    #d4a860 100%);
+  font-family: 'Georgia', 'PingFang SC', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 太阳 */
+.sun {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, #fff8e0 0%, #ffcc66 40%, #ff8844 80%, transparent 100%);
+  border-radius: 50%;
+  z-index: 1;
+  pointer-events: none;
+  box-shadow:
+    0 0 40px 15px rgba(255,180,80,0.5),
+    0 0 80px 30px rgba(255,120,60,0.3),
+    0 0 120px 60px rgba(255,80,40,0.15);
+  animation: sunPulse 4s ease-in-out infinite;
+}
+@keyframes sunPulse {
+  0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.95; }
+  50% { transform: translateX(-50%) scale(1.05); opacity: 1; }
+}
+
+/* 阳光射线 */
+.sun-rays {
+  position: fixed;
+  top: 28%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 300px;
+  z-index: 0;
+  pointer-events: none;
+  animation: raysRotate 30s linear infinite;
+}
+.ray {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 2px;
+  height: 140px;
+  background: linear-gradient(180deg, rgba(255,200,100,0.4) 0%, transparent 100%);
+  transform-origin: 50% 0%;
+  border-radius: 50%;
+}
+.ray:nth-child(1)  { transform: rotate(0deg); }
+.ray:nth-child(2)  { transform: rotate(20deg); }
+.ray:nth-child(3)  { transform: rotate(40deg); }
+.ray:nth-child(4)  { transform: rotate(60deg); }
+.ray:nth-child(5)  { transform: rotate(80deg); }
+.ray:nth-child(6)  { transform: rotate(100deg); }
+.ray:nth-child(7)  { transform: rotate(120deg); }
+.ray:nth-child(8)  { transform: rotate(140deg); }
+.ray:nth-child(9)  { transform: rotate(160deg); }
+.ray:nth-child(10) { transform: rotate(180deg); }
+.ray:nth-child(11) { transform: rotate(200deg); }
+.ray:nth-child(12) { transform: rotate(220deg); }
+.ray:nth-child(13) { transform: rotate(240deg); }
+.ray:nth-child(14) { transform: rotate(260deg); }
+.ray:nth-child(15) { transform: rotate(280deg); }
+.ray:nth-child(16) { transform: rotate(300deg); }
+.ray:nth-child(17) { transform: rotate(320deg); }
+.ray:nth-child(18) { transform: rotate(340deg); }
+
+@keyframes raysRotate {
+  from { transform: translateX(-50%) rotate(0deg); }
+  to { transform: translateX(-50%) rotate(360deg); }
+}
+
+/* 云朵 */
+.cloud {
+  position: fixed;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.6;
+  animation: cloudDrift 20s ease-in-out infinite;
+}
+.cloud::before, .cloud::after {
+  content: '';
+  position: absolute;
+  background: rgba(255,230,200,0.8);
+  border-radius: 50%;
+}
+.cloud-1 { top: 12%; left: 10%; font-size: 28px; animation-delay: 0s; }
+.cloud-2 { top: 18%; right: 15%; font-size: 22px; animation-delay: -7s; }
+.cloud-3 { top: 8%; right: 35%; font-size: 18px; animation-delay: -14s; }
+@keyframes cloudDrift {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(15px); }
+}
+
+/* 海鸥 */
+.bird {
+  position: fixed;
+  z-index: 3;
+  font-size: 16px;
+  pointer-events: none;
+  animation: birdFly 8s ease-in-out infinite;
+}
+.bird:nth-child(1) { top: 28%; left: 20%; animation-delay: 0s; animation-duration: 7s; }
+.bird:nth-child(2) { top: 22%; left: 60%; animation-delay: -3s; animation-duration: 9s; }
+.bird:nth-child(3) { top: 35%; left: 40%; animation-delay: -6s; animation-duration: 8s; font-size: 13px; }
+@keyframes birdFly {
+  0% { transform: translateX(0) translateY(0); }
+  25% { transform: translateX(20px) translateY(-8px); }
+  50% { transform: translateX(40px) translateY(0); }
+  75% { transform: translateX(20px) translateY(8px); }
+  100% { transform: translateX(0) translateY(0); }
+}
+
+/* 海洋 */
+.ocean {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 32%;
+  z-index: 4;
+  pointer-events: none;
+  overflow: hidden;
+}
+.ocean-surface {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    rgba(26,90,138,0.7) 0%,
+    rgba(10,42,74,0.9) 50%,
+    rgba(5,20,40,1) 100%);
+}
+
+.ocean-wave {
+  position: absolute;
+  left: -10%; right: -10%;
+  height: 4px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,180,120,0.4) 25%,
+    rgba(255,200,140,0.5) 50%,
+    rgba(255,180,120,0.4) 75%,
+    transparent 100%);
+  border-radius: 50%;
+  animation: oceanWave 3s ease-in-out infinite;
+}
+.ocean-wave:nth-child(1) { top: 10%; animation-duration: 2.8s; }
+.ocean-wave:nth-child(2) { top: 22%; animation-duration: 3.4s; animation-delay: 0.5s; }
+.ocean-wave:nth-child(3) { top: 34%; animation-duration: 3.0s; animation-delay: 1s; }
+.ocean-wave:nth-child(4) { top: 46%; animation-duration: 3.6s; animation-delay: 0.2s; }
+.ocean-wave:nth-child(5) { top: 58%; animation-duration: 2.6s; animation-delay: 1.5s; }
+
+@keyframes oceanWave {
+  0%, 100% { transform: translateX(-6%) scaleX(0.94); opacity: 0.5; }
+  50% { transform: translateX(6%) scaleX(1.06); opacity: 0.9; }
+}
+
+/* 沙滩 */
+.sand-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 10%;
+  background: linear-gradient(180deg,
+    #f4d9a0 0%,
+    #e8c880 50%,
+    #d4a860 100%);
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* 贝壳 */
+.shell {
+  position: fixed;
+  bottom: 2%;
+  z-index: 6;
+  font-size: 18px;
+  pointer-events: none;
+  animation: shellBob 4s ease-in-out infinite;
+}
+.shell:nth-child(1) { left: 12%; animation-delay: 0s; }
+.shell:nth-child(2) { left: 75%; animation-delay: 1.5s; font-size: 14px; }
+.shell:nth-child(3) { left: 85%; animation-delay: 0.8s; }
+@keyframes shellBob {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-5px) rotate(3deg); }
+}
+
+/* 棕榈树 */
+.palm {
+  position: fixed;
+  bottom: 8%;
+  z-index: 6;
+  pointer-events: none;
+  font-size: 52px;
+  animation: palmSway 5s ease-in-out infinite;
+}
+.palm:nth-child(1) { left: 3%; animation-delay: 0s; }
+.palm:nth-child(2) { right: 3%; animation-delay: 1.5s; transform: scaleX(-1); }
+@keyframes palmSway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+.palm:nth-child(2) { animation-name: palmSwayR; }
+@keyframes palmSwayR {
+  0%, 100% { transform: scaleX(-1) rotate(-3deg); }
+  50% { transform: scaleX(-1) rotate(3deg); }
+}
+
+/* 帆船 */
+.boat {
+  position: fixed;
+  bottom: 34%;
+  z-index: 5;
+  pointer-events: none;
+  animation: boatFloat 5s ease-in-out infinite;
+}
+@keyframes boatFloat {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-6px) rotate(1deg); }
+}
+
+/* 卡片 */
+.card-wrap {
+  position: relative;
+  z-index: 20;
+  padding: 2px;
+  border-radius: 20px;
+  background: linear-gradient(135deg,
+    rgba(255,126,95,0.5) 0%,
+    rgba(254,180,123,0.4) 50%,
+    rgba(255,126,95,0.5) 100%);
+  background-size: 200% 200%;
+  animation: borderFlow 4s ease-in-out infinite;
+  box-shadow:
+    0 0 25px rgba(255,126,95,0.3),
+    0 8px 32px rgba(0,0,0,0.4);
+}
+@keyframes borderFlow {
+  0%, 100% { background-position: 0% 50%; box-shadow: 0 0 25px rgba(255,126,95,0.3), 0 8px 32px rgba(0,0,0,0.4); }
+  50% { background-position: 100% 50%; box-shadow: 0 0 38px rgba(255,180,100,0.45), 0 8px 32px rgba(0,0,0,0.4); }
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  padding: clamp(28px, 6vw, 48px) clamp(24px, 5vw, 44px);
+  text-align: center;
+  max-width: min(420px, 92vw);
+  animation: cardFloat 4s ease-in-out infinite;
+}
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.name {
+  font-size: clamp(22px, 6vw, 36px);
+  font-weight: normal;
+  color: var(--sun-pink);
+  margin-bottom: 10px;
+  letter-spacing: 0.1em;
+  opacity: 1;
+  animation: fadeUp 1.2s ease-out both;
+  text-shadow: 0 0 12px rgba(255,180,100,0.5);
+}
+
+.date {
+  font-size: clamp(12px, 3vw, 14px);
+  color: var(--text-muted);
+  margin-bottom: 20px;
+  letter-spacing: 0.15em;
+  opacity: 1;
+  animation: fadeUp 1.2s ease-out 0.2s both;
+}
+
+.divider {
+  width: 50px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--sun-pink), transparent);
+  margin: 16px auto;
+  opacity: 1;
+  animation: fadeIn 1s ease-out 0.4s both;
+}
+
+.blessing {
+  font-size: clamp(14px, 3.5vw, 17px);
+  color: var(--text-warm);
+  line-height: 1.9;
+  margin-bottom: 22px;
+  opacity: 1;
+  animation: fadeUp 1.2s ease-out 0.5s both;
+}
+
+.from {
+  font-size: clamp(12px, 3vw, 14px);
+  color: var(--text-muted);
+  opacity: 1;
+  animation: fadeUp 1.2s ease-out 0.8s both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+</style>
+</head>
+<body>
+
+<div class="sun-rays">
+  <div class="ray"></div><div class="ray"></div><div class="ray"></div>
+  <div class="ray"></div><div class="ray"></div><div class="ray"></div>
+  <div class="ray"></div><div class="ray"></div><div class="ray"></div>
+  <div class="ray"></div><div class="ray"></div><div class="ray"></div>
+  <div class="ray"></div><div class="ray"></div><div class="ray"></div>
+  <div class="ray"></div><div class="ray"></div><div class="ray"></div>
+</div>
+<div class="sun"></div>
+
+<div class="cloud cloud-1">☁️</div>
+<div class="cloud cloud-2">☁️</div>
+<div class="cloud cloud-3">☁️</div>
+
+<div class="bird">🕊️</div>
+<div class="bird">🕊️</div>
+<div class="bird">🕊️</div>
+
+<div class="ocean">
+  <div class="ocean-surface"></div>
+  <div class="ocean-wave"></div>
+  <div class="ocean-wave"></div>
+  <div class="ocean-wave"></div>
+  <div class="ocean-wave"></div>
+  <div class="ocean-wave"></div>
+</div>
+
+<div class="boat">⛵</div>
+
+<div class="sand-bar"></div>
+<div class="shell">🐚</div>
+<div class="shell">🪸</div>
+<div class="shell">🐚</div>
+
+<div class="palm">🌴</div>
+<div class="palm">🌴</div>
+
+<div class="card-wrap">
+  <div class="card">
+    <div class="name" id="nameEl"></div>
+    <div class="date" id="dateEl"></div>
+    <div class="divider"></div>
+    <div class="blessing" id="blessingEl"></div>
+    <div class="from" id="fromEl"></div>
+  </div>
+</div>
+
+<script>
+const params = new URLSearchParams(location.search);
+document.getElementById('nameEl').textContent = params.get('n') || '海边的你';
+document.getElementById('dateEl').textContent = params.get('d') || '';
+document.getElementById('blessingEl').textContent = params.get('b') || '愿你的生活像海风一样自由，像日落一样温暖';
+document.getElementById('fromEl').textContent = params.get('f') ? '— ' + params.get('f') : '';
+
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.sun, .sun-rays, .ocean-wave, .card-wrap, .card, .boat, .shell, .palm, .bird, .cloud').forEach(el => {
+    el.style.animation = 'none';
+  });
+}
+</script>
+</body>
+</html>

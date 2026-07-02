@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>冰霜祝福</title>
+<meta property="og:title" content="💌 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  min-height:100vh;
+  background:linear-gradient(180deg,#1a2a4a 0%,#1e3a5f 30%,#2a4a6a 60%,#1a2a4a 100%);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+  font-family:'Microsoft YaHei',sans-serif;
+  position:relative;
+}
+/* 霜花背景 */
+.frost-bg{
+  position:fixed;inset:0;pointer-events:none;
+}
+/* 雪花 */
+.snowflake{
+  position:absolute;
+  color:rgba(255,255,255,0.85);
+  animation:snowFall var(--d,10s) linear infinite;
+  opacity:0;
+}
+@keyframes snowFall{
+  0%{transform:translateY(-5vh) rotate(0deg);opacity:0}
+  10%{opacity:0.9}
+  90%{opacity:0.7}
+  100%{transform:translateY(105vh) rotate(360deg);opacity:0}
+}
+/* 冰晶装饰 */
+.crystal{
+  position:absolute;
+  color:rgba(200,230,255,0.6);
+  animation:crystalGlow 4s ease-in-out infinite alternate;
+}
+@keyframes crystalGlow{
+  0%{opacity:0.3;filter:drop-shadow(0 0 4px rgba(200,230,255,0.4))}
+  100%{opacity:0.8;filter:drop-shadow(0 0 12px rgba(200,230,255,0.8))}
+}
+/* 霜雾感 */
+.frost-overlay{
+  position:fixed;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 20%,rgba(200,230,255,0.08) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 70% at 85% 75%,rgba(180,220,255,0.06) 0%,transparent 60%);
+  animation:frostBreath 8s ease-in-out infinite alternate;
+}
+@keyframes frostBreath{
+  0%{opacity:0.6}
+  100%{opacity:1}
+}
+/* 窗框 */
+.window-frame{
+  position:fixed;inset:0;pointer-events:none;
+  border:12px solid rgba(180,210,240,0.18);
+  border-radius:8px;
+  margin:20px;
+}
+/* 卡片外框 */
+.card-wrap{
+  position:relative;
+  padding:2px;
+  background:linear-gradient(135deg,#a8d4f0,#d0e8f8,#ffffff,#a8d4f0);
+  background-size:400% 400%;
+  border-radius:20px;
+  animation:borderFlow 7s ease infinite;
+  box-shadow:0 0 35px rgba(160,210,250,0.45),0 0 60px rgba(160,210,250,0.2),0 15px 45px rgba(0,0,0,0.25);
+  z-index:10;
+}
+@keyframes borderFlow{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+/* 卡片主体 */
+.card{
+  background:linear-gradient(180deg,rgba(220,240,255,0.95) 0%,rgba(240,250,255,0.97) 100%);
+  border-radius:18px;
+  padding:clamp(34px,9vw,56px) clamp(26px,7vw,48px);
+  text-align:center;
+  max-width:min(520px,94vw);
+  min-height:min(400px,75vh);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;
+  overflow:hidden;
+  animation:cardFloat 6s ease-in-out infinite alternate;
+  border:1px solid rgba(200,230,255,0.5);
+  /* 霜花玻璃效果 */
+  backdrop-filter:blur(2px);
+}
+@keyframes cardFloat{
+  0%{transform:translateY(0)}
+  100%{transform:translateY(-6px)}
+}
+/* 卡片霜花纹理 */
+.card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(255,255,255,0.5),transparent 70%);
+  pointer-events:none;
+}
+/* 冰晶角 */
+.ice-corner{
+  position:absolute;
+  font-size:20px;
+  opacity:0.5;
+}
+.ice-corner:nth-child(1){top:10px;left:14px}
+.ice-corner:nth-child(2){top:10px;right:14px;transform:scaleX(-1)}
+.ice-corner:nth-child(3){bottom:10px;left:14px;transform:scaleY(-1)}
+.ice-corner:nth-child(4){bottom:10px;right:14px;transform:scale(-1)}
+/* 图标 */
+.icon{
+  font-size:clamp(44px,11vw,64px);
+  margin-bottom:16px;
+  animation:iconDrop 0.9s cubic-bezier(0.34,1.56,0.64,1) 0.2s both;
+  filter:drop-shadow(0 2px 8px rgba(140,190,240,0.4));
+}
+@keyframes iconDrop{
+  from{transform:translateY(-35px) scale(0.5);opacity:0}
+  to{transform:translateY(0) scale(1);opacity:1}
+}
+/* 姓名 */
+.name{
+  font-size:clamp(25px,6vw,40px);
+  font-weight:700;
+  color:#2a5a8a;
+  margin-bottom:12px;
+  animation:slideUp 1.2s ease-out 0.4s both;
+  opacity:1;
+  text-shadow:0 1px 4px rgba(140,190,240,0.4);
+}
+@keyframes slideUp{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:translateY(0)}
+}
+/* 日期 */
+.date{
+  font-size:clamp(13px,3vw,16px);
+  color:rgba(100,150,200,0.65);
+  margin-bottom:18px;
+  letter-spacing:2px;
+  animation:slideUp 1.2s ease-out 0.7s both;
+  opacity:1;
+}
+/* 祝福语 */
+.blessing{
+  font-size:clamp(15px,4vw,20px);
+  line-height:1.9;
+  color:#3a6a9a;
+  margin-bottom:22px;
+  animation:slideUp 1.2s ease-out 1s both;
+  opacity:1;
+}
+/* 署名 */
+.from{
+  font-size:clamp(13px,3vw,15px);
+  color:rgba(100,150,200,0.5);
+  animation:slideUp 1.2s ease-out 1.3s both;
+  opacity:1;
+}
+@media(prefers-reduced-motion:reduce){
+  .card,.card-wrap,.snowflake,.crystal,.frost-overlay{animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<div class="frost-bg" id="frostBg"></div>
+<div class="frost-overlay"></div>
+<div class="window-frame"></div>
+
+<div class="card-wrap">
+  <div class="card">
+    <div class="ice-corner">❄️</div>
+    <div class="ice-corner">❄️</div>
+    <div class="ice-corner">❄️</div>
+    <div class="ice-corner">❄️</div>
+    <div class="icon" id="iconEl">❄️</div>
+    <div class="name" id="nameEl"></div>
+    <div class="date" id="dateEl"></div>
+    <div class="blessing" id="blessingEl"></div>
+    <div class="from" id="fromEl"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var bg=document.getElementById('frostBg');
+  var snowEmojis=['❄️','❅','❆','✦','✧'];
+  // 雪花
+  for(var i=0;i<18;i++){
+    var s=document.createElement('div');
+    s.className='snowflake';
+    s.textContent=snowEmojis[i%snowEmojis.length];
+    var sz=Math.random()*12+10;
+    s.style.cssText='left:'+(Math.random()*92+3)+'%;font-size:'+sz+'px;animation-duration:'+(Math.random()*8+8)+'s;animation-delay:'+(Math.random()*10)+'s';
+    bg.appendChild(s);
+  }
+  // 冰晶装饰
+  var crystalPos=[
+    {t:'5%',l:'5%',s:'28px'},{t:'12%',r:'8%',s:'22px'},{b:'8%',l:'5%',s:'24px'},{b:'15%',r:'6%',s:'20px'},
+    {t:'30%',l:'2%',s:'18px'},{t:'25%',r:'3%',s:'16px'},{b:'30%',l:'3%',s:'20px'},{b:'25%',r:'2%',s:'18px'}
+  ];
+  crystalPos.forEach(function(pos,i){
+    var c=document.createElement('div');
+    c.className='crystal';
+    c.textContent='❄️';
+    var style='position:absolute;';
+    if(pos.t) style+='top:'+pos.t+';';
+    if(pos.b) style+='bottom:'+pos.b+';';
+    if(pos.l) style+='left:'+pos.l+';';
+    if(pos.r) style+='right:'+pos.r+';';
+    style+='font-size:'+pos.s+';animation-delay:'+(i*0.5)+'s';
+    c.style.cssText=style;
+    bg.appendChild(c);
+  });
+  // 参数
+  var p=new URLSearchParams(location.search);
+  document.getElementById('nameEl').textContent=p.get('n')||'亲爱的';
+  document.getElementById('dateEl').textContent=p.get('d')||'';
+  document.getElementById('blessingEl').textContent=p.get('b')||'愿你如冰雪般纯净，永远保持内心的澄澈与明亮';
+  var from=p.get('f');
+  if(from) document.getElementById('fromEl').textContent='— '+from;
+  var icon=p.get('i');
+  if(icon) document.getElementById('iconEl').textContent=icon;
+})();
+</script>
+</body>
+</html>

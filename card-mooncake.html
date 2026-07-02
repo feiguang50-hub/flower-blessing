@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>月饼祝福</title>
+<meta property="og:title" content="🥮 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  min-height:100vh;
+  background:linear-gradient(180deg,#0a0a1e 0%,#1a1040 25%,#2a1850 50%,#1a1040 75%,#0a0a1e 100%);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+  font-family:'Microsoft YaHei',sans-serif;
+  position:relative;
+}
+/* 月光 */
+.moon{
+  position:fixed;
+  top:8%;left:50%;transform:translateX(-50%);
+  width:clamp(80px,20vw,140px);
+  height:clamp(80px,20vw,140px);
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#fffde7,#ffd54f 40%,#ff8f00 100%);
+  box-shadow:0 0 40px 15px rgba(255,213,79,0.35),0 0 80px 30px rgba(255,183,77,0.15);
+  animation:moonGlow 4s ease-in-out infinite alternate;
+}
+@keyframes moonGlow{
+  0%{box-shadow:0 0 40px 15px rgba(255,213,79,0.35),0 0 80px 30px rgba(255,183,77,0.15)}
+  100%{box-shadow:0 0 55px 20px rgba(255,213,79,0.45),0 0 100px 40px rgba(255,183,77,0.2)}
+}
+/* 月兔 */
+.moon-rabbit{
+  position:fixed;
+  top:calc(8% + clamp(30px,8vw,55px));left:calc(50% + clamp(25px,7vw,50px));
+  font-size:clamp(18px,4vw,28px);
+  animation:rabbitJump 3s ease-in-out infinite alternate;
+}
+@keyframes rabbitJump{
+  0%{transform:translateY(0)}
+  100%{transform:translateY(-8px)}
+}
+/* 背景星星 */
+.stars-bg{position:fixed;inset:0;pointer-events:none}
+.star-dot{
+  position:absolute;border-radius:50%;background:#fff;
+  animation:twinkle var(--d,3s) ease-in-out infinite alternate;
+}
+@keyframes twinkle{
+  0%{opacity:0.2;transform:scale(0.8)}
+  100%{opacity:1;transform:scale(1.2)}
+}
+/* 孔明灯 */
+.wish-lantern{
+  position:absolute;
+  font-size:22px;
+  animation:lanternRise var(--d,12s) ease-in infinite;
+  opacity:0;
+}
+@keyframes lanternRise{
+  0%{transform:translateY(0) rotate(-5deg);opacity:0}
+  10%{opacity:0.9}
+  80%{opacity:0.7}
+  100%{transform:translateY(-120vh) rotate(5deg);opacity:0}
+}
+/* 月饼飘落 */
+.mooncake-fall{
+  position:absolute;
+  animation:mooncakeFall var(--d,14s) linear infinite;
+  opacity:0;
+}
+@keyframes mooncakeFall{
+  0%{transform:translateY(-8vh) rotate(0deg);opacity:0}
+  10%{opacity:0.8}
+  90%{opacity:0.7}
+  100%{transform:translateY(108vh) rotate(360deg);opacity:0}
+}
+/* 云朵 */
+.cloud{
+  position:absolute;
+  font-size:clamp(28px,6vw,48px);
+  animation:cloudDrift var(--d,30s) linear infinite;
+  opacity:0.4;
+}
+@keyframes cloudDrift{
+  0%{transform:translateX(-100%)}
+  100%{transform:translateX(calc(100vw + 100%))}
+}
+/* 卡片外框 */
+.card-wrap{
+  position:relative;
+  padding:2px;
+  background:linear-gradient(135deg,#c9a227,#f0d060,#ffd700,#c9a227);
+  background-size:400% 400%;
+  border-radius:20px;
+  animation:borderFlow 7s ease infinite;
+  box-shadow:0 0 35px rgba(255,215,0,0.4),0 0 60px rgba(200,160,30,0.2),0 15px 45px rgba(0,0,0,0.3);
+  z-index:10;
+}
+@keyframes borderFlow{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+/* 卡片主体 */
+.card{
+  background:linear-gradient(180deg,rgba(40,20,10,0.97) 0%,rgba(30,15,5,0.98) 100%);
+  border-radius:18px;
+  padding:clamp(34px,9vw,56px) clamp(26px,7vw,48px);
+  text-align:center;
+  max-width:min(520px,94vw);
+  min-height:min(400px,75vh);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;
+  overflow:hidden;
+  animation:cardFloat 6s ease-in-out infinite alternate;
+  border:1px solid rgba(255,200,80,0.2);
+}
+@keyframes cardFloat{
+  0%{transform:translateY(0)}
+  100%{transform:translateY(-6px)}
+}
+/* 暖光内发光 */
+.card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(255,180,60,0.08),transparent 70%);
+  pointer-events:none;
+}
+/* 月饼图标 */
+.icon{
+  font-size:clamp(44px,11vw,66px);
+  margin-bottom:16px;
+  animation:iconDrop 0.9s cubic-bezier(0.34,1.56,0.64,1) 0.2s both;
+  filter:drop-shadow(0 2px 10px rgba(255,200,60,0.5));
+}
+@keyframes iconDrop{
+  from{transform:translateY(-35px) scale(0.5);opacity:0}
+  to{transform:translateY(0) scale(1);opacity:1}
+}
+/* 姓名 */
+.name{
+  font-size:clamp(25px,6vw,40px);
+  font-weight:700;
+  background:linear-gradient(135deg,#ffd700,#f0c030,#c9a227);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  margin-bottom:12px;
+  animation:slideUp 1.2s ease-out 0.4s both;
+  opacity:1;
+}
+@keyframes slideUp{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:translateY(0)}
+}
+/* 日期 */
+.date{
+  font-size:clamp(13px,3vw,16px);
+  color:rgba(255,200,100,0.6);
+  margin-bottom:18px;
+  letter-spacing:2px;
+  animation:slideUp 1.2s ease-out 0.7s both;
+  opacity:1;
+}
+/* 祝福语 */
+.blessing{
+  font-size:clamp(15px,4vw,20px);
+  line-height:1.9;
+  color:rgba(255,220,160,0.92);
+  margin-bottom:22px;
+  animation:slideUp 1.2s ease-out 1s both;
+  opacity:1;
+}
+/* 署名 */
+.from{
+  font-size:clamp(13px,3vw,15px);
+  color:rgba(255,200,100,0.5);
+  animation:slideUp 1.2s ease-out 1.3s both;
+  opacity:1;
+}
+/* 装饰角标 */
+.mooncake-corner{
+  position:absolute;
+  font-size:18px;
+  opacity:0.4;
+}
+.mooncake-corner:nth-child(1){top:12px;left:16px}
+.mooncake-corner:nth-child(2){top:12px;right:16px}
+.mooncake-corner:nth-child(3){bottom:12px;left:16px}
+.mooncake-corner:nth-child(4){bottom:12px;right:16px}
+@media(prefers-reduced-motion:reduce){
+  .card,.card-wrap,.moon,.star-dot,.wish-lantern,.mooncake-fall,.cloud{animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<div class="stars-bg" id="starsBg"></div>
+<div class="moon"></div>
+<div class="moon-rabbit">🐇</div>
+
+<div class="card-wrap">
+  <div class="card">
+    <div class="mooncake-corner">🥮</div>
+    <div class="mooncake-corner">🥮</div>
+    <div class="mooncake-corner">🥮</div>
+    <div class="mooncake-corner">🥮</div>
+    <div class="icon" id="iconEl">🥮</div>
+    <div class="name" id="nameEl"></div>
+    <div class="date" id="dateEl"></div>
+    <div class="blessing" id="blessingEl"></div>
+    <div class="from" id="fromEl"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var bg=document.getElementById('starsBg');
+  // 星星
+  for(var i=0;i<60;i++){
+    var d=document.createElement('div');
+    d.className='star-dot';
+    var size=Math.random()*2+0.5;
+    d.style.cssText='width:'+size+'px;height:'+size+'px;left:'+(Math.random()*100)+'%;top:'+(Math.random()*100)+'%;--d:'+(Math.random()*4+2)+'s;animation-delay:'+(Math.random()*4)+'s';
+    bg.appendChild(d);
+  }
+  // 孔明灯
+  for(var j=0;j<5;j++){
+    var l=document.createElement('div');
+    l.className='wish-lantern';
+    l.textContent='🏮';
+    l.style.cssText='left:'+(Math.random()*80+10)+'%;bottom:'+(Math.random()*20+5)+'%;font-size:'+(Math.random()*10+18)+'px;animation-duration:'+(Math.random()*6+10)+'s;animation-delay:'+(Math.random()*12)+'s';
+    bg.appendChild(l);
+  }
+  // 月饼飘落
+  for(var k=0;k<6;k++){
+    var m=document.createElement('div');
+    m.className='mooncake-fall';
+    m.textContent='🥮';
+    m.style.cssText='left:'+(Math.random()*88+5)+'%;font-size:'+(Math.random()*12+14)+'px;animation-duration:'+(Math.random()*10+12)+'s;animation-delay:'+(Math.random()*10)+'s';
+    bg.appendChild(m);
+  }
+  // 参数
+  var p=new URLSearchParams(location.search);
+  document.getElementById('nameEl').textContent=p.get('n')||'亲爱的';
+  document.getElementById('dateEl').textContent=p.get('d')||'';
+  document.getElementById('blessingEl').textContent=p.get('b')||'月圆人团圆，愿你中秋快乐，阖家幸福';
+  var from=p.get('f');
+  if(from) document.getElementById('fromEl').textContent='— '+from;
+  var icon=p.get('i');
+  if(icon) document.getElementById('iconEl').textContent=icon;
+})();
+</script>
+</body>
+</html>

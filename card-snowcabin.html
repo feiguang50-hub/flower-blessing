@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>雪夜小木屋</title>
+<meta property="og:title" content="🏔️ 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --night-deep: #0a1628;
+  --night-snow: #1a2a4a;
+  --cabin-wood: #8b5a2b;
+  --cabin-warm: #ffd27f;
+  --cabin-glow: rgba(255, 200, 100, 0.6);
+  --snow-white: #e8f4ff;
+  --text-warm: #f5e6d0;
+  --text-muted: rgba(240, 230, 210, 0.6);
+  --card-bg: rgba(20, 35, 60, 0.88);
+  --card-border: rgba(255, 210, 130, 0.35);
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 50% 0%, #1a2a4a 0%, transparent 50%),
+    linear-gradient(180deg, #0a1628 0%, #0f1e38 40%, #162845 70%, #1a3050 100%);
+  font-family: 'Georgia', 'PingFang SC', 'Microsoft YaHei', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 雪花飘落 */
+.snowflake {
+  position: fixed;
+  color: var(--snow-white);
+  font-size: 10px;
+  opacity: 0.8;
+  animation: snowFall linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+@keyframes snowFall {
+  0% { transform: translateY(-10px) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.9; }
+  90% { opacity: 0.7; }
+  100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+}
+
+/* 星星 */
+.star {
+  position: fixed;
+  background: white;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: starTwinkle 3s ease-in-out infinite;
+}
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.15; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.2); }
+}
+
+/* 雪山背景 */
+.mountain-bg {
+  position: fixed;
+  bottom: 18%; left: 0; right: 0;
+  height: 45%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* 小木屋 */
+.cabin {
+  position: fixed;
+  bottom: 22%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
+/* 木屋窗户暖光 */
+.window-glow {
+  position: absolute;
+  background: var(--cabin-glow);
+  border-radius: 50%;
+  filter: blur(8px);
+  animation: windowPulse 3s ease-in-out infinite;
+}
+@keyframes windowPulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.1); }
+}
+
+/* 烟囱烟雾 */
+.smoke {
+  position: fixed;
+  font-size: 14px;
+  opacity: 0.5;
+  animation: smokeRise 4s ease-out infinite;
+  pointer-events: none;
+  z-index: 4;
+}
+@keyframes smokeRise {
+  0% { transform: translateY(0) scale(1); opacity: 0.5; }
+  100% { transform: translateY(-60px) scale(1.5); opacity: 0; }
+}
+
+/* 积雪地面 */
+.snow-ground {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 22%;
+  background: linear-gradient(180deg,
+    rgba(200, 220, 255, 0.15) 0%,
+    rgba(220, 235, 255, 0.25) 30%,
+    rgba(230, 240, 255, 0.35) 100%);
+  z-index: 3;
+  border-radius: 50% 50% 0 0 / 20% 20% 0 0;
+}
+
+/* 卡片 */
+.card-wrap {
+  position: relative;
+  z-index: 10;
+  padding: 2px;
+  border-radius: 20px;
+  background: linear-gradient(135deg,
+    rgba(255, 210, 130, 0.5) 0%,
+    rgba(200, 160, 80, 0.3) 50%,
+    rgba(255, 210, 130, 0.5) 100%);
+  background-size: 200% 200%;
+  animation: borderWarm 4s ease-in-out infinite;
+  box-shadow:
+    0 0 20px rgba(255, 180, 80, 0.25),
+    0 8px 32px rgba(0, 0, 0, 0.5);
+}
+@keyframes borderWarm {
+  0%, 100% { background-position: 0% 50%; box-shadow: 0 0 20px rgba(255, 180, 80, 0.25), 0 8px 32px rgba(0,0,0,0.5); }
+  50% { background-position: 100% 50%; box-shadow: 0 0 35px rgba(255, 200, 100, 0.4), 0 8px 32px rgba(0,0,0,0.5); }
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  padding: clamp(28px, 6vw, 48px) clamp(24px, 5vw, 44px);
+  text-align: center;
+  max-width: min(420px, 92vw);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: cardFloat 4s ease-in-out infinite;
+}
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.name {
+  font-size: clamp(22px, 6vw, 36px);
+  font-weight: normal;
+  color: var(--cabin-warm);
+  margin-bottom: 10px;
+  letter-spacing: 0.08em;
+  opacity: 1;
+  animation: fadeUp 1.2s ease-out both;
+  text-shadow: 0 0 12px rgba(255, 200, 100, 0.4);
+}
+
+.date {
+  font-size: clamp(12px, 3vw, 14px);
+  color: var(--text-muted);
+  margin-bottom: 20px;
+  letter-spacing: 0.15em;
+  opacity: 1;
+  animation: fadeUp 1.2s ease-out 0.2s both;
+}
+
+.divider {
+  width: 50px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cabin-warm), transparent);
+  margin: 16px auto;
+  opacity: 1;
+  animation: fadeIn 1s ease-out 0.4s both;
+}
+
+.blessing {
+  font-size: clamp(14px, 3.5vw, 17px);
+  color: var(--text-warm);
+  line-height: 1.9;
+  margin-bottom: 22px;
+  opacity: 1;
+  animation: fadeUp 1.2s ease-out 0.5s both;
+}
+
+.from {
+  font-size: clamp(12px, 3vw, 14px);
+  color: var(--text-muted);
+  opacity: 1;
+  animation: fadeUp 1.2s ease-out 0.8s both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .snowflake, .star, .window-glow, .smoke, .card-wrap, .card { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- 星星 -->
+<div id="stars"></div>
+
+<!-- 雪山背景 -->
+<svg class="mountain-bg" viewBox="0 0 1440 400" preserveAspectRatio="xMidYMax slice">
+  <path d="M0 400 L0 250 Q200 120 400 200 Q600 80 800 160 Q1000 60 1200 140 Q1350 100 1440 150 L1440 400Z" fill="#0d1e38"/>
+  <path d="M0 400 L0 300 Q300 200 500 260 Q700 180 900 240 Q1100 170 1300 220 Q1400 190 1440 210 L1440 400Z" fill="#122244" opacity="0.8"/>
+  <path d="M0 400 L0 350 Q200 300 400 330 Q600 290 800 320 Q1000 280 1200 310 Q1350 290 1440 320 L1440 400Z" fill="#1a2d4a" opacity="0.6"/>
+  <!-- 雪顶 -->
+  <path d="M400 200 Q420 170 440 155 Q460 140 480 155 Q500 170 520 200" fill="#d8e8f8" opacity="0.5"/>
+  <path d="M800 160 Q825 130 850 115 Q875 100 900 115 Q925 130 950 160" fill="#d8e8f8" opacity="0.4"/>
+  <path d="M1200 140 Q1220 115 1240 100 Q1260 85 1280 100 Q1300 115 1320 140" fill="#d8e8f8" opacity="0.35"/>
+</svg>
+
+<!-- 小木屋 -->
+<div class="cabin">
+  <!-- 木屋主体 -->
+  <svg width="180" height="130" viewBox="0 0 180 130" fill="none">
+    <!-- 墙壁 -->
+    <rect x="20" y="50" width="140" height="80" fill="#5a3820" rx="2"/>
+    <rect x="20" y="50" width="140" height="80" fill="url(#woodGrain)" rx="2"/>
+    <!-- 屋顶 -->
+    <path d="M10 55 L90 5 L170 55Z" fill="#3d2510"/>
+    <path d="M10 55 L90 5 L170 55 L165 55 L90 10 L15 55Z" fill="#4a2e15"/>
+    <!-- 积雪 -->
+    <path d="M10 55 Q50 50 90 48 Q130 46 170 55 L165 55 Q130 48 90 50 Q50 52 15 55Z" fill="#d8e8f8" opacity="0.7"/>
+    <!-- 烟囱 -->
+    <rect x="130" y="20" width="18" height="35" fill="#6b4420"/>
+    <rect x="128" y="18" width="22" height="6" fill="#5a3818"/>
+    <!-- 烟囱积雪 -->
+    <path d="M128 18 Q138 16 148 18 L148 18 Q138 20 128 18Z" fill="#d8e8f8" opacity="0.8"/>
+    <!-- 窗户 -->
+    <rect x="35" y="65" width="30" height="25" fill="#2a1a08" rx="1"/>
+    <rect x="37" y="67" width="26" height="21" fill="rgba(255, 200, 100, 0.7)" rx="1"/>
+    <rect x="49" y="65" width="2" height="25" fill="#4a2e15"/>
+    <rect x="35" y="77" width="30" height="2" fill="#4a2e15"/>
+    <!-- 右侧窗户 -->
+    <rect x="115" y="65" width="30" height="25" fill="#2a1a08" rx="1"/>
+    <rect x="117" y="67" width="26" height="21" fill="rgba(255, 200, 100, 0.6)" rx="1"/>
+    <rect x="129" y="65" width="2" height="25" fill="#4a2e15"/>
+    <rect x="115" y="77" width="30" height="2" fill="#4a2e15"/>
+    <!-- 门 -->
+    <rect x="75" y="90" width="30" height="40" fill="#3d2510" rx="2"/>
+    <rect x="77" y="92" width="26" height="36" fill="#2a1a08" rx="1"/>
+    <circle cx="98" cy="112" r="2" fill="#8b7355"/>
+    <!-- 木纹 -->
+    <defs>
+      <pattern id="woodGrain" patternUnits="userSpaceOnUse" width="10" height="10">
+        <line x1="0" y1="0" x2="0" y2="10" stroke="rgba(0,0,0,0.1)" stroke-width="1"/>
+      </pattern>
+    </defs>
+  </svg>
+  <!-- 窗户光晕 -->
+  <div class="window-glow" style="bottom: 52%; left: 28%; width: 40px; height: 30px;"></div>
+  <div class="window-glow" style="bottom: 52%; right: 28%; width: 40px; height: 30px;"></div>
+</div>
+
+<!-- 烟雾 -->
+<div id="smokeField"></div>
+
+<!-- 积雪地面 -->
+<div class="snow-ground"></div>
+
+<!-- 雪花 -->
+<div id="snowField"></div>
+
+<!-- 贺卡 -->
+<div class="card-wrap">
+  <div class="card">
+    <div class="name" id="nameEl"></div>
+    <div class="date" id="dateEl"></div>
+    <div class="divider"></div>
+    <div class="blessing" id="blessingEl"></div>
+    <div class="from" id="fromEl"></div>
+  </div>
+</div>
+
+<script>
+const p = new URLSearchParams(location.search);
+document.getElementById('nameEl').textContent = p.get('n') || '雪夜里的你';
+document.getElementById('dateEl').textContent = p.get('d') || '';
+document.getElementById('blessingEl').textContent = p.get('b') || '愿你在每个寒冷的夜里，都有一盏灯为你亮着';
+document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
+
+// 星星
+const starsEl = document.getElementById('stars');
+for (let i = 0; i < 35; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  s.style.left = Math.random() * 100 + '%';
+  s.style.top = Math.random() * 45 + '%';
+  s.style.width = s.style.height = (1 + Math.random() * 1.5) + 'px';
+  s.style.animationDuration = (2.5 + Math.random() * 3) + 's';
+  s.style.animationDelay = Math.random() * 3 + 's';
+  starsEl.appendChild(s);
+}
+
+// 雪花
+const snowField = document.getElementById('snowField');
+const flakes = ['❄', '❅', '❆', '✦', '•'];
+for (let i = 0; i < 40; i++) {
+  const s = document.createElement('div');
+  s.className = 'snowflake';
+  s.textContent = flakes[Math.floor(Math.random() * flakes.length)];
+  s.style.left = Math.random() * 100 + '%';
+  s.style.fontSize = (8 + Math.random() * 10) + 'px';
+  s.style.opacity = 0.4 + Math.random() * 0.5;
+  s.style.animationDuration = (5 + Math.random() * 10) + 's';
+  s.style.animationDelay = Math.random() * 10 + 's';
+  snowField.appendChild(s);
+}
+
+// 烟雾
+const smokeField = document.getElementById('smokeField');
+for (let i = 0; i < 5; i++) {
+  const s = document.createElement('div');
+  s.className = 'smoke';
+  s.textContent = '☁';
+  s.style.left = (68 + Math.random() * 6) + '%';
+  s.style.top = (28 - i * 2) + '%';
+  s.style.fontSize = (10 + Math.random() * 8) + 'px';
+  s.style.animationDuration = (3 + Math.random() * 2) + 's';
+  s.style.animationDelay = (i * 0.8) + 's';
+  smokeField.appendChild(s);
+}
+
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.snowflake, .star, .window-glow, .smoke, .card-wrap, .card').forEach(el => {
+    el.style.animation = 'none';
+  });
+}
+</script>
+</body>
+</html>

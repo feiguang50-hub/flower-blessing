@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>雨夜絮语</title>
+<meta property="og:title" content="🌧️ 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --night-sky: #0d1117;
+  --rain-gray: #1c2433;
+  --lamp-warm: #ffb347;
+  --lamp-glow: rgba(255, 179, 71, 0.4);
+  --text-warm: #f5e6c8;
+  --text-muted: rgba(245, 230, 200, 0.5);
+  --card-bg: rgba(13, 17, 23, 0.88);
+  --rain-line: rgba(150, 180, 220, 0.35);
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg,
+    #0d1117 0%,
+    #161b28 30%,
+    #1c2433 60%,
+    #12171f 100%);
+  font-family: 'Georgia', 'PingFang SC', 'Microsoft YaHei', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 窗户边框 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  border: 8px solid rgba(30, 40, 55, 0.8);
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 100;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
+}
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 100%;
+  background: rgba(30, 40, 55, 0.6);
+  pointer-events: none;
+  z-index: 101;
+}
+
+/* 路灯光晕 */
+.lamp-glow {
+  position: fixed;
+  bottom: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 200px;
+  background: radial-gradient(ellipse at 50% 100%,
+    rgba(255, 179, 71, 0.25) 0%,
+    rgba(255, 179, 71, 0.1) 30%,
+    transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+  animation: lampPulse 4s ease-in-out infinite;
+}
+@keyframes lampPulse {
+  0%, 100% { opacity: 0.8; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+}
+
+/* 路灯 */
+.lamp-post {
+  position: fixed;
+  bottom: 22%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 80px;
+  z-index: 2;
+  pointer-events: none;
+  filter: drop-shadow(0 0 20px rgba(255, 179, 71, 0.7));
+  animation: lampSway 5s ease-in-out infinite;
+}
+@keyframes lampSway {
+  0%, 100% { transform: translateX(-50%) rotate(-1.5deg); }
+  50% { transform: translateX(-50%) rotate(1.5deg); }
+}
+
+/* 雨滴 */
+.raindrops {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+.raindrop {
+  position: absolute;
+  width: 1.5px;
+  height: 18px;
+  background: linear-gradient(180deg, transparent 0%, rgba(150, 180, 220, 0.5) 50%, rgba(150, 180, 220, 0.2) 100%);
+  animation: rainFall linear infinite;
+  border-radius: 0 0 50% 50%;
+}
+@keyframes rainFall {
+  0% { transform: translateY(-30px); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+/* 雨伞 */
+.umbrella {
+  position: fixed;
+  font-size: 50px;
+  z-index: 4;
+  pointer-events: none;
+  animation: umbrellaSway 4s ease-in-out infinite;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+@keyframes umbrellaSway {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50% { transform: translateY(-8px) rotate(5deg); }
+}
+
+/* 水洼波纹 */
+.puddles {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 22%;
+  z-index: 1;
+  pointer-events: none;
+}
+.puddle {
+  position: absolute;
+  border: 1px solid rgba(100, 140, 180, 0.3);
+  border-radius: 50%;
+  animation: puddleRipple 3s ease-out infinite;
+}
+@keyframes puddleRipple {
+  0% { transform: scale(0); opacity: 0; box-shadow: none; }
+  20% { opacity: 0.6; box-shadow: 0 0 10px rgba(100, 160, 220, 0.3); }
+  100% { transform: scale(1.5); opacity: 0; box-shadow: none; }
+}
+
+/* 雾气 */
+.mist {
+  position: fixed;
+  bottom: 15%;
+  left: 0;
+  width: 200%;
+  height: 40%;
+  background: linear-gradient(180deg,
+    transparent 0%,
+    rgba(100, 120, 150, 0.06) 40%,
+    rgba(100, 120, 150, 0.1) 60%,
+    transparent 100%);
+  animation: mistDrift 12s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+@keyframes mistDrift {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+/* 窗框雨滴 */
+.window-drops {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+.window-drop {
+  position: absolute;
+  width: 2px;
+  background: linear-gradient(180deg,
+    rgba(150, 180, 220, 0.5) 0%,
+    rgba(150, 180, 220, 0.1) 100%);
+  border-radius: 0 0 2px 2px;
+  animation: dropSlide 4s ease-in infinite;
+}
+@keyframes dropSlide {
+  0% { transform: translateY(0); opacity: 0.6; }
+  80% { opacity: 0.6; }
+  100% { transform: translateY(60px); opacity: 0; }
+}
+
+/* 卡片外框 */
+.card-wrap {
+  position: relative;
+  z-index: 10;
+  padding: 3px;
+  border-radius: 18px;
+  background: linear-gradient(135deg,
+    #ffb347 0%,
+    #ffd54f 30%,
+    #f5e6c8 50%,
+    #ffd54f 70%,
+    #ffb347 100%);
+  background-size: 300% 300%;
+  animation: lampBorder 5s ease-in-out infinite;
+  box-shadow:
+    0 0 25px rgba(255, 179, 71, 0.4),
+    0 0 50px rgba(255, 179, 71, 0.15),
+    0 8px 32px rgba(0, 0, 0, 0.4);
+}
+@keyframes lampBorder {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.card {
+  background: rgba(13, 17, 23, 0.9);
+  border-radius: 16px;
+  padding: clamp(28px, 6vw, 52px) clamp(24px, 5vw, 48px);
+  max-width: 460px;
+  width: 90vw;
+  text-align: center;
+  position: relative;
+  border: 1px solid rgba(255, 179, 71, 0.15);
+  animation: cardFloat 5s ease-in-out infinite;
+}
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.icon {
+  font-size: clamp(42px, 10vw, 68px);
+  display: block;
+  margin-bottom: 12px;
+  animation: iconDrop 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+  filter: drop-shadow(0 4px 12px rgba(255, 179, 71, 0.4));
+}
+@keyframes iconDrop {
+  from { opacity: 0; transform: translateY(-50px) scale(0.5); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.name {
+  font-size: clamp(26px, 7vw, 44px);
+  font-weight: bold;
+  color: #f5e6c8;
+  margin-bottom: 10px;
+  text-shadow: 0 0 20px rgba(255, 179, 71, 0.5), 0 2px 4px rgba(0,0,0,0.4);
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.4s both;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.date {
+  font-size: clamp(13px, 3vw, 17px);
+  color: rgba(255, 179, 71, 0.6);
+  margin-bottom: 16px;
+  letter-spacing: 2px;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.6s both;
+}
+
+.blessing {
+  font-size: clamp(17px, 4.5vw, 24px);
+  color: #f5e6c8;
+  line-height: 1.7;
+  margin-bottom: 20px;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.8s both;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.from {
+  font-size: clamp(13px, 3vw, 17px);
+  color: rgba(255, 179, 71, 0.6);
+  font-style: italic;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 1s both;
+}
+
+.from::before { content: '— '; }
+
+/* 角落装饰 */
+.corner-deco {
+  position: absolute;
+  font-size: 20px;
+  opacity: 0.45;
+  pointer-events: none;
+}
+.corner-deco.tl { top: 10px; left: 12px; }
+.corner-deco.tr { top: 10px; right: 12px; }
+.corner-deco.bl { bottom: 10px; left: 12px; }
+.corner-deco.br { bottom: 10px; right: 12px; }
+
+/* 减少动效 */
+@media (prefers-reduced-motion: reduce) {
+  .raindrop, .umbrella, .puddle, .lamp-post, .window-drop, .card {
+    animation: none;
+  }
+  .name, .date, .blessing, .from, .icon {
+    animation: none;
+    opacity: 1;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- 路灯光晕 -->
+<div class="lamp-glow"></div>
+
+<!-- 路灯 -->
+<div class="lamp-post">🏮</div>
+
+<!-- 雨滴 -->
+<div class="raindrops" id="raindrops"></div>
+
+<!-- 雨伞 -->
+<div class="umbrella" style="top: 8%; right: 8%;">☂️</div>
+<div class="umbrella" style="bottom: 30%; left: 5%; font-size: 36px; animation-delay: -1.5s; opacity: 0.6;">🌂</div>
+
+<!-- 水洼 -->
+<div class="puddles" id="puddles"></div>
+
+<!-- 雾气 -->
+<div class="mist"></div>
+
+<!-- 窗框雨滴 -->
+<div class="window-drops" id="windowDrops"></div>
+
+<!-- 卡片 -->
+<div class="card-wrap">
+  <div class="card">
+    <span class="corner-deco tl">🌧️</span>
+    <span class="corner-deco tr">🏮</span>
+    <span class="corner-deco bl">☂️</span>
+    <span class="corner-deco br">💧</span>
+
+    <span class="icon" id="iconEl">🌧️</span>
+    <div class="name" id="nameEl"></div>
+    <div class="date" id="dateEl"></div>
+    <div class="blessing" id="blessingEl"></div>
+    <div class="from" id="fromEl"></div>
+  </div>
+</div>
+
+<script>
+// 参数读取
+const p = new URLSearchParams(location.search);
+const icon = p.get('i') || '🌧️';
+document.getElementById('iconEl').textContent = icon;
+document.getElementById('nameEl').textContent = p.get('n') || '亲爱的你';
+document.getElementById('dateEl').textContent = p.get('d') || '';
+document.getElementById('blessingEl').textContent = p.get('b') || '无论雨天晴天，愿你心里永远有光';
+document.getElementById('fromEl').textContent = p.get('f') || '';
+
+// 生成雨滴
+const raindropsEl = document.getElementById('raindrops');
+for (let i = 0; i < 60; i++) {
+  const drop = document.createElement('div');
+  drop.className = 'raindrop';
+  drop.style.left = Math.random() * 100 + '%';
+  drop.style.height = (12 + Math.random() * 16) + 'px';
+  drop.style.animationDuration = (0.8 + Math.random() * 0.6) + 's';
+  drop.style.animationDelay = Math.random() * 3 + 's';
+  raindropsEl.appendChild(drop);
+}
+
+// 生成水洼波纹
+const puddlesEl = document.getElementById('puddles');
+for (let i = 0; i < 8; i++) {
+  const puddle = document.createElement('div');
+  puddle.className = 'puddle';
+  puddle.style.left = (5 + Math.random() * 90) + '%';
+  puddle.style.bottom = (Math.random() * 20) + '%';
+  puddle.style.width = (30 + Math.random() * 50) + 'px';
+  puddle.style.height = puddle.style.width;
+  puddle.style.animationDuration = (2.5 + Math.random() * 2) + 's';
+  puddle.style.animationDelay = Math.random() * 3 + 's';
+  puddlesEl.appendChild(puddle);
+}
+
+// 生成窗框雨滴
+const windowDropsEl = document.getElementById('windowDrops');
+for (let i = 0; i < 10; i++) {
+  const drop = document.createElement('div');
+  drop.className = 'window-drop';
+  drop.style.left = (5 + Math.random() * 90) + '%';
+  drop.style.top = (5 + Math.random() * 60) + '%';
+  drop.style.height = (30 + Math.random() * 50) + 'px';
+  drop.style.animationDuration = (3 + Math.random() * 2) + 's';
+  drop.style.animationDelay = Math.random() * 4 + 's';
+  windowDropsEl.appendChild(drop);
+}
+
+// 减少动效
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.raindrop, .umbrella, .puddle, .lamp-post, .window-drop, .card').forEach(el => {
+    el.style.animation = 'none';
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>嘉年华</title>
+<meta property="og:title" content="🎪 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --sky-top: #6a4fb8;
+  --sky-mid: #ff6b9d;
+  --sky-bottom: #ffb347;
+  --carnival-pink: #ff69b4;
+  --carnival-yellow: #ffd700;
+  --carnival-cyan: #00d4ff;
+  --carnival-orange: #ff8c42;
+  --carnival-green: #7ed957;
+  --text-white: #ffffff;
+  --text-shadow: rgba(180, 60, 120, 0.8);
+  --card-bg: rgba(60, 20, 60, 0.82);
+  --card-border: rgba(255, 200, 255, 0.35);
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg,
+    #6a4fb8 0%,
+    #a855c0 20%,
+    #ff6b9d 45%,
+    #ff8c6b 65%,
+    #ffb347 80%,
+    #ffd54f 100%);
+  font-family: 'Georgia', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 聚光灯效果 */
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200%;
+  height: 100%;
+  background: radial-gradient(ellipse at 50% 0%,
+    rgba(255, 255, 200, 0.3) 0%,
+    rgba(255, 200, 150, 0.15) 20%,
+    transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+  animation: spotlightPulse 4s ease-in-out infinite;
+}
+@keyframes spotlightPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* 彩旗 */
+.pennants {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+.pennant {
+  position: absolute;
+  top: 0;
+  font-size: 28px;
+  animation: pennantWave 3s ease-in-out infinite;
+  transform-origin: top center;
+}
+@keyframes pennantWave {
+  0%, 100% { transform: rotate(-8deg); }
+  50% { transform: rotate(8deg); }
+}
+
+/* 彩色气球 */
+.balloons {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.balloon {
+  position: absolute;
+  font-size: 42px;
+  animation: balloonFloat 8s ease-in-out infinite;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+}
+@keyframes balloonFloat {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  25% { transform: translateY(-18px) rotate(3deg); }
+  50% { transform: translateY(-8px) rotate(-3deg); }
+  75% { transform: translateY(-22px) rotate(5deg); }
+}
+
+/* 旋转木马顶部 */
+.ferris-wheel {
+  position: fixed;
+  top: 8%;
+  right: 8%;
+  font-size: 90px;
+  z-index: 2;
+  pointer-events: none;
+  animation: ferrisSpin 12s linear infinite;
+  filter: drop-shadow(0 0 20px rgba(255, 200, 100, 0.5));
+}
+@keyframes ferrisSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 摩天轮 cabin dots */
+.cabin-dots {
+  position: fixed;
+  top: calc(8% + 45px);
+  right: calc(8% + 45px);
+  width: 80px;
+  height: 80px;
+  z-index: 2;
+  pointer-events: none;
+  animation: ferrisSpin 12s linear infinite;
+}
+.cabin-dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #ff69b4;
+  border-radius: 50%;
+  animation: cabinBob 2s ease-in-out infinite;
+}
+@keyframes cabinBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* 棉花糖 */
+.cotton-candy {
+  position: fixed;
+  font-size: 38px;
+  z-index: 2;
+  pointer-events: none;
+  animation: cottonFloat 7s ease-in-out infinite;
+  filter: drop-shadow(0 4px 10px rgba(180, 100, 180, 0.4));
+}
+@keyframes cottonFloat {
+  0%, 100% { transform: translateY(0) rotate(-6deg); }
+  33% { transform: translateY(-14px) rotate(4deg); }
+  66% { transform: translateY(-7px) rotate(-4deg); }
+}
+
+/* 星星闪烁 */
+.stars {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.star {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  animation: twinkle 2s ease-in-out infinite;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.1; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+/* 卡片外框发光 */
+.card-wrap {
+  position: relative;
+  z-index: 10;
+  padding: 3px;
+  border-radius: 24px;
+  background: linear-gradient(135deg,
+    #ff69b4 0%,
+    #ffd700 25%,
+    #00d4ff 50%,
+    #7ed957 75%,
+    #ff69b4 100%);
+  background-size: 300% 300%;
+  animation: carnivalBorder 4s ease-in-out infinite;
+  box-shadow:
+    0 0 25px rgba(255, 105, 180, 0.4),
+    0 0 50px rgba(255, 215, 0, 0.2),
+    0 8px 32px rgba(0, 0, 0, 0.3);
+}
+@keyframes carnivalBorder {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.card {
+  background: rgba(60, 20, 60, 0.82);
+  border-radius: 22px;
+  padding: clamp(28px, 6vw, 52px) clamp(24px, 5vw, 48px);
+  max-width: 480px;
+  width: 90vw;
+  text-align: center;
+  position: relative;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 200, 255, 0.25);
+  animation: cardFloat 5s ease-in-out infinite;
+  box-shadow: inset 0 0 30px rgba(255, 150, 200, 0.1);
+}
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.icon {
+  font-size: clamp(44px, 10vw, 72px);
+  display: block;
+  margin-bottom: 12px;
+  animation: iconDrop 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+  filter: drop-shadow(0 4px 12px rgba(255, 105, 180, 0.5));
+}
+@keyframes iconDrop {
+  from { opacity: 0; transform: translateY(-50px) scale(0.5); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.name {
+  font-size: clamp(26px, 7vw, 44px);
+  font-weight: bold;
+  color: #ffd700;
+  margin-bottom: 10px;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 2px 4px rgba(0,0,0,0.4);
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.4s both;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.date {
+  font-size: clamp(13px, 3vw, 17px);
+  color: rgba(255, 200, 255, 0.7);
+  margin-bottom: 16px;
+  letter-spacing: 2px;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.6s both;
+}
+
+.blessing {
+  font-size: clamp(17px, 4.5vw, 24px);
+  color: #ffffff;
+  line-height: 1.7;
+  margin-bottom: 20px;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.8s both;
+  text-shadow: 0 2px 8px rgba(180, 80, 140, 0.5);
+}
+
+.from {
+  font-size: clamp(13px, 3vw, 17px);
+  color: rgba(255, 200, 255, 0.6);
+  font-style: italic;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 1s both;
+}
+
+.from::before {
+  content: '— ';
+}
+
+/* 角落装饰 */
+.corner-deco {
+  position: absolute;
+  font-size: 24px;
+  opacity: 0.6;
+  pointer-events: none;
+}
+.corner-deco.tl { top: 10px; left: 12px; }
+.corner-deco.tr { top: 10px; right: 12px; }
+.corner-deco.bl { bottom: 10px; left: 12px; }
+.corner-deco.br { bottom: 10px; right: 12px; }
+
+/* 减少动效 */
+@media (prefers-reduced-motion: reduce) {
+  .balloon, .ferris-wheel, .cotton-candy, .pennant, .star, .card {
+    animation: none;
+  }
+  .name, .date, .blessing, .from, .icon {
+    animation: none;
+    opacity: 1;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- 彩旗 -->
+<div class="pennants" id="pennants"></div>
+
+<!-- 星星 -->
+<div class="stars" id="stars"></div>
+
+<!-- 气球 -->
+<div class="balloons" id="balloons"></div>
+
+<!-- 旋转木马 -->
+<div class="ferris-wheel">🎡</div>
+
+<!-- 棉花糖 -->
+<div class="cotton-candy" style="top: 15%; left: 6%;">🍭</div>
+<div class="cotton-candy" style="top: 55%; left: 3%; animation-delay: -2s;">🍬</div>
+
+<!-- 卡片 -->
+<div class="card-wrap">
+  <div class="card">
+    <span class="corner-deco tl">🎪</span>
+    <span class="corner-deco tr">🎠</span>
+    <span class="corner-deco bl">🎯</span>
+    <span class="corner-deco br">🎨</span>
+
+    <span class="icon" id="iconEl">🎪</span>
+    <div class="name" id="nameEl"></div>
+    <div class="date" id="dateEl"></div>
+    <div class="blessing" id="blessingEl"></div>
+    <div class="from" id="fromEl"></div>
+  </div>
+</div>
+
+<script>
+// 参数读取
+const p = new URLSearchParams(location.search);
+const iconMap = { '🎪': '🎪', '🎡': '🎡', '🎠': '🎠', '🎨': '🎨', '🎯': '🎯', '🎲': '🎲' };
+const icon = p.get('i') || '🎪';
+document.getElementById('iconEl').textContent = icon;
+document.getElementById('nameEl').textContent = p.get('n') || '亲爱的你';
+document.getElementById('dateEl').textContent = p.get('d') || '';
+document.getElementById('blessingEl').textContent = p.get('b') || '愿你的生活像嘉年华一样精彩纷呈';
+document.getElementById('fromEl').textContent = p.get('f') || '';
+
+// 生成彩旗
+const pennantColors = ['#ff69b4', '#ffd700', '#00d4ff', '#7ed957', '#ff8c42', '#ff6b9d'];
+const pennantEmos = ['🎈', '🎊', '🎉', '🎁', '⭐', '🌟'];
+const pennantsEl = document.getElementById('pennants');
+for (let i = 0; i < 18; i++) {
+  const pennant = document.createElement('div');
+  pennant.className = 'pennant';
+  pennant.textContent = pennantEmos[i % pennantEmos.length];
+  pennant.style.left = (i * 5.6) + '%';
+  pennant.style.color = pennantColors[i % pennantColors.length];
+  pennant.style.animationDelay = (i * 0.15) + 's';
+  pennant.style.fontSize = (22 + Math.random() * 8) + 'px';
+  pennantsEl.appendChild(pennant);
+}
+
+// 生成星星
+const starsEl = document.getElementById('stars');
+for (let i = 0; i < 30; i++) {
+  const star = document.createElement('div');
+  star.className = 'star';
+  star.style.left = Math.random() * 100 + '%';
+  star.style.top = Math.random() * 60 + '%';
+  star.style.width = (2 + Math.random() * 4) + 'px';
+  star.style.height = star.style.width;
+  star.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+  star.style.animationDelay = Math.random() * 3 + 's';
+  starsEl.appendChild(star);
+}
+
+// 生成气球
+const balloonEmos = ['🎈', '🎉', '🎊', '🎁', '🎀', '🌈'];
+const balloonColors = ['#ff69b4', '#ffd700', '#00d4ff', '#7ed957', '#ff8c42', '#ff6b9d'];
+const balloonsEl = document.getElementById('balloons');
+for (let i = 0; i < 12; i++) {
+  const balloon = document.createElement('div');
+  balloon.className = 'balloon';
+  balloon.textContent = balloonEmos[i % balloonEmos.length];
+  balloon.style.left = (5 + Math.random() * 85) + '%';
+  balloon.style.top = (10 + Math.random() * 70) + '%';
+  balloon.style.animationDuration = (6 + Math.random() * 5) + 's';
+  balloon.style.animationDelay = Math.random() * 4 + 's';
+  balloon.style.fontSize = (32 + Math.random() * 20) + 'px';
+  balloonsEl.appendChild(balloon);
+}
+
+// 减少动效
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.balloon, .ferris-wheel, .cotton-candy, .pennant, .star, .card').forEach(el => {
+    el.style.animation = 'none';
+  });
+}
+</script>
+</body>
+</html>

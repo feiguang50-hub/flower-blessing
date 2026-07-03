@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>初雪告白</title>
+<meta property="og:title" content="💌 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --twilight-top: #2d1b4e;
+  --twilight-mid: #5a3d7a;
+  --twilight-low: #8b6aaa;
+  --snow-pink: #ffb8d0;
+  --snow-white: #ffffff;
+  --glow-warm: #ffd4e8;
+  --card-bg: rgba(45, 27, 78, 0.9);
+  --card-border: rgba(255, 184, 208, 0.3);
+  --text-pink: #ffd4e8;
+  --text-cream: #fff0f5;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg,
+    #2d1b4e 0%,
+    #5a3d7a 35%,
+    #8b6aaa 60%,
+    #c8a0d0 100%);
+  font-family: 'Georgia', 'PingFang SC', 'Microsoft YaHei', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 初雪飘落 */
+.snow-wrap { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.snowflake {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.9);
+  animation: snowfall linear infinite;
+  top: -20px;
+  font-size: 14px;
+}
+@keyframes snowfall {
+  0% { transform: translateY(-20px) translateX(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 0.7; }
+  100% { transform: translateY(100vh) translateX(30px) rotate(360deg); opacity: 0; }
+}
+
+/* 路灯 */
+.lamp {
+  position: fixed;
+  bottom: 20%;
+  z-index: 1;
+}
+.lamp.left { left: 10%; }
+.lamp.right { right: 10%; transform: scaleX(-1); }
+.lamp svg { width: 50px; height: 120px; }
+
+/* 地面积雪 */
+.ground {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20%;
+  background: linear-gradient(180deg, rgba(255, 220, 240, 0.3) 0%, rgba(255, 240, 250, 0.8) 100%);
+  border-radius: 50% 50% 0 0 / 25% 25% 0 0;
+  z-index: 1;
+}
+
+/* 粉光晕 */
+.glow {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255, 180, 220, 0.2) 0%, transparent 70%);
+  z-index: 0;
+  animation: glowPulse 4s ease-in-out infinite;
+}
+@keyframes glowPulse {
+  0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.5; }
+  50% { transform: translateX(-50%) scale(1.1); opacity: 0.8; }
+}
+
+/* 卡片 */
+.card-wrap {
+  position: relative;
+  z-index: 10;
+  cursor: pointer;
+  perspective: 1000px;
+  margin: 20px;
+}
+.card {
+  width: min(420px, 92vw);
+  min-height: 260px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 36px 32px;
+  text-align: center;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow:
+    0 0 30px rgba(255, 184, 208, 0.2),
+    0 8px 40px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  animation: borderPulse 4s ease-in-out infinite;
+}
+@keyframes borderPulse {
+  0%, 100% { border-color: rgba(255, 184, 208, 0.25); }
+  50% { border-color: rgba(255, 184, 208, 0.55); }
+}
+.card.flipped { transform: rotateY(180deg); }
+.card-front, .card-back {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.card-back {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(90, 61, 122, 0.95), rgba(45, 27, 78, 0.95));
+  border: 1px solid rgba(255, 184, 208, 0.35);
+  border-radius: 20px;
+  padding: 36px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotateY(180deg);
+  font-size: clamp(14px, 3.5vw, 17px);
+  color: var(--text-pink);
+  line-height: 1.8;
+  letter-spacing: 0.05em;
+}
+
+.name {
+  font-size: clamp(28px, 7vw, 48px);
+  color: #ffffff;
+  text-shadow: 0 0 20px rgba(255, 184, 208, 0.7);
+  margin-bottom: 10px;
+  animation: fadeSlideIn 1s ease-out 0.3s both;
+}
+.date {
+  font-size: clamp(13px, 3vw, 16px);
+  color: var(--snow-pink);
+  margin-bottom: 18px;
+  letter-spacing: 0.12em;
+  animation: fadeSlideIn 1s ease-out 0.6s both;
+}
+.blessing {
+  font-size: clamp(16px, 4vw, 22px);
+  color: var(--text-cream);
+  line-height: 1.8;
+  margin-bottom: 20px;
+  animation: fadeSlideIn 1s ease-out 0.9s both;
+}
+.from {
+  font-size: clamp(13px, 3vw, 16px);
+  color: var(--snow-pink);
+  letter-spacing: 0.1em;
+  animation: fadeSlideIn 1s ease-out 1.2s both;
+}
+
+.hint {
+  position: absolute;
+  bottom: 12px;
+  right: 16px;
+  font-size: 11px;
+  color: rgba(255, 184, 208, 0.4);
+  animation: fadeSlideIn 1s ease-out 1.5s both;
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 爱心上浮 */
+.heart {
+  position: fixed;
+  color: rgba(255, 184, 208, 0.5);
+  font-size: 16px;
+  animation: heartRise linear infinite;
+  z-index: 2;
+}
+@keyframes heartRise {
+  0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+  10% { opacity: 0.8; }
+  80% { opacity: 0.5; }
+  100% { transform: translateY(-20px) scale(1.2); opacity: 0; }
+}
+
+/* 响应式 */
+@media (max-width: 480px) {
+  .card { padding: 28px 20px; min-height: 220px; }
+  .lamp svg { width: 35px; height: 85px; }
+}
+</style>
+</head>
+<body>
+
+<div class="glow"></div>
+<div class="snow-wrap" id="snowWrap"></div>
+
+<!-- 路灯左 -->
+<div class="lamp left">
+  <svg viewBox="0 0 50 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="22" y="40" width="6" height="75" fill="#6a5a4a"/>
+    <rect x="18" y="35" width="14" height="8" fill="#7a6a5a" rx="2"/>
+    <ellipse cx="25" cy="28" rx="12" ry="8" fill="#5a4a3a" opacity="0.8"/>
+    <ellipse cx="25" cy="26" rx="8" ry="5" fill="rgba(255,220,150,0.9)"/>
+    <ellipse cx="25" cy="26" rx="8" ry="5" fill="rgba(255,220,150,0.9)" filter="url(#glow)"/>
+    <defs>
+      <filter id="glow">
+        <feGaussianBlur stdDeviation="3" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+  </svg>
+</div>
+
+<!-- 路灯右 -->
+<div class="lamp right">
+  <svg viewBox="0 0 50 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="22" y="40" width="6" height="75" fill="#6a5a4a"/>
+    <rect x="18" y="35" width="14" height="8" fill="#7a6a5a" rx="2"/>
+    <ellipse cx="25" cy="28" rx="12" ry="8" fill="#5a4a3a" opacity="0.8"/>
+    <ellipse cx="25" cy="26" rx="8" ry="5" fill="rgba(255,220,150,0.9)"/>
+  </svg>
+</div>
+
+<!-- 积雪地面 -->
+<div class="ground"></div>
+
+<!-- 贺卡 -->
+<div class="card-wrap" id="cardWrap">
+  <div class="card" id="card">
+    <div class="card-front">
+      <div class="name" id="nameEl"></div>
+      <div class="date" id="dateEl"></div>
+      <div class="blessing" id="blessingEl"></div>
+      <div class="from" id="fromEl"></div>
+      <div class="hint">💕 点击卡片打开</div>
+    </div>
+    <div class="card-back">
+      <div id="backEl"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// 雪花
+const snowWrap = document.getElementById('snowWrap');
+const flakes = ['❄', '❅', '❆', '❁', '✿'];
+for (let i = 0; i < 40; i++) {
+  const s = document.createElement('div');
+  s.className = 'snowflake';
+  s.textContent = flakes[Math.floor(Math.random() * flakes.length)];
+  s.style.left = Math.random() * 100 + '%';
+  s.style.fontSize = (8 + Math.random() * 14) + 'px';
+  s.style.animationDuration = (6 + Math.random() * 10) + 's';
+  s.style.animationDelay = Math.random() * 10 + 's';
+  s.style.opacity = 0.4 + Math.random() * 0.5;
+  snowWrap.appendChild(s);
+}
+
+// 爱心上浮
+function addHeart() {
+  const heart = document.createElement('div');
+  heart.className = 'heart';
+  heart.textContent = '💗';
+  heart.style.left = (20 + Math.random() * 60) + '%';
+  heart.style.fontSize = (10 + Math.random() * 14) + 'px';
+  heart.style.animationDuration = (6 + Math.random() * 6) + 's';
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 12000);
+}
+for (let i = 0; i < 5; i++) setTimeout(addHeart, i * 2000);
+setInterval(addHeart, 2500);
+
+// 参数
+const p = new URLSearchParams(location.search);
+document.getElementById('nameEl').textContent = p.get('n') || '亲爱的你';
+document.getElementById('dateEl').textContent = p.get('d') || '';
+document.getElementById('blessingEl').textContent = p.get('b') || '初雪已至，愿与你共白头';
+document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
+if (p.get('back')) {
+  document.getElementById('backEl').innerHTML = p.get('back').replace(/\\n/g, '<br>');
+}
+
+// 翻转
+document.getElementById('cardWrap').addEventListener('click', () => {
+  document.getElementById('card').classList.toggle('flipped');
+});
+</script>
+</body>
+</html>

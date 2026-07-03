@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>蜜桃气泡</title>
+<meta property="og:title" content="🍑 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --peach-soft: #ffe5d4;
+  --peach-mid: #ffb8a0;
+  --peach-deep: #ff8a70;
+  --mint-soft: #c8f0e8;
+  --mint-mid: #a0e0d0;
+  --cream: #fff8f4;
+  --card-bg: rgba(255, 240, 244, 0.92);
+  --card-border: rgba(255, 138, 112, 0.3);
+  --text-peach: #e06050;
+  --text-cream: #7a4035;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(145deg,
+    #fff0f0 0%,
+    #ffe5d4 30%,
+    #ffd8c8 60%,
+    #ffc8b8 100%);
+  font-family: 'Georgia', 'PingFang SC', 'Microsoft YaHei', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 气泡 */
+.bubbles { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.bubble {
+  position: absolute;
+  bottom: -30px;
+  border-radius: 50%;
+  animation: bubbleRise linear infinite;
+  opacity: 0.6;
+}
+@keyframes bubbleRise {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  10% { opacity: 0.7; }
+  80% { opacity: 0.4; }
+  100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+}
+
+/* 漂浮爱心星星 */
+.floaties { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+.floatie {
+  position: absolute;
+  animation: floatieUp ease-in-out infinite;
+  opacity: 0.7;
+}
+@keyframes floatieUp {
+  0%, 100% { transform: translateY(0) rotate(-5deg); opacity: 0.5; }
+  50% { transform: translateY(-20px) rotate(5deg); opacity: 0.9; }
+}
+
+/* 蜜桃装饰 */
+.peach-slice {
+  position: fixed;
+  z-index: 1;
+  opacity: 0.85;
+}
+.peach-slice.top-right {
+  top: 3%;
+  right: 5%;
+  font-size: 50px;
+  transform: rotate(15deg);
+  animation: floatieUp 3s ease-in-out infinite;
+}
+.peach-slice.bottom-left {
+  bottom: 5%;
+  left: 5%;
+  font-size: 40px;
+  transform: rotate(-20deg);
+  animation: floatieUp 3.5s ease-in-out infinite 0.5s;
+}
+
+/* 丝带角落 */
+.ribbon {
+  position: fixed;
+  z-index: 2;
+  pointer-events: none;
+}
+.ribbon.top-left {
+  top: 0; left: 0;
+  width: 80px; height: 80px;
+  background: linear-gradient(135deg, rgba(255,138,112,0.3) 0%, transparent 50%);
+}
+.ribbon.bottom-right {
+  bottom: 0; right: 0;
+  width: 80px; height: 80px;
+  background: linear-gradient(315deg, rgba(255,138,112,0.3) 0%, transparent 50%);
+}
+
+/* 卡片 */
+.card-wrap {
+  position: relative;
+  z-index: 10;
+  cursor: pointer;
+  perspective: 1000px;
+  margin: 20px;
+}
+.card {
+  width: min(420px, 92vw);
+  min-height: 260px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 24px;
+  padding: 36px 32px;
+  text-align: center;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow:
+    0 0 30px rgba(255, 138, 112, 0.2),
+    0 8px 40px rgba(200, 100, 80, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  animation: borderPulse 4s ease-in-out infinite;
+}
+@keyframes borderPulse {
+  0%, 100% { border-color: rgba(255, 138, 112, 0.25); }
+  50% { border-color: rgba(255, 138, 112, 0.5); }
+}
+.card.flipped { transform: rotateY(180deg); }
+.card-front, .card-back {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.card-back {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 200, 190, 0.95), rgba(255, 230, 220, 0.95));
+  border: 1px solid rgba(255, 138, 112, 0.4);
+  border-radius: 24px;
+  padding: 36px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotateY(180deg);
+  font-size: clamp(14px, 3.5vw, 17px);
+  color: var(--text-cream);
+  line-height: 1.8;
+  letter-spacing: 0.05em;
+}
+
+.name {
+  font-size: clamp(28px, 7vw, 48px);
+  color: var(--text-peach);
+  text-shadow: 0 2px 8px rgba(255, 138, 112, 0.3);
+  margin-bottom: 10px;
+  animation: fadeSlideIn 1s ease-out 0.3s both;
+}
+.date {
+  font-size: clamp(13px, 3vw, 16px);
+  color: var(--peach-deep);
+  margin-bottom: 18px;
+  letter-spacing: 0.12em;
+  animation: fadeSlideIn 1s ease-out 0.6s both;
+}
+.blessing {
+  font-size: clamp(16px, 4vw, 22px);
+  color: var(--text-cream);
+  line-height: 1.8;
+  margin-bottom: 20px;
+  animation: fadeSlideIn 1s ease-out 0.9s both;
+}
+.from {
+  font-size: clamp(13px, 3vw, 16px);
+  color: var(--peach-deep);
+  letter-spacing: 0.1em;
+  animation: fadeSlideIn 1s ease-out 1.2s both;
+}
+
+.hint {
+  position: absolute;
+  bottom: 12px;
+  right: 16px;
+  font-size: 11px;
+  color: rgba(255, 138, 112, 0.4);
+  animation: fadeSlideIn 1s ease-out 1.5s both;
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 响应式 */
+@media (max-width: 480px) {
+  .card { padding: 28px 20px; min-height: 220px; }
+  .peach-slice.top-right { font-size: 35px; }
+  .peach-slice.bottom-left { font-size: 28px; }
+}
+</style>
+</head>
+<body>
+
+<div class="bubbles" id="bubbles"></div>
+<div class="floaties" id="floaties"></div>
+<div class="ribbon top-left"></div>
+<div class="ribbon bottom-right"></div>
+
+<div class="peach-slice top-right">🍑</div>
+<div class="peach-slice bottom-left">🧡</div>
+
+<!-- 贺卡 -->
+<div class="card-wrap" id="cardWrap">
+  <div class="card" id="card">
+    <div class="card-front">
+      <div class="name" id="nameEl"></div>
+      <div class="date" id="dateEl"></div>
+      <div class="blessing" id="blessingEl"></div>
+      <div class="from" id="fromEl"></div>
+      <div class="hint">🍑 点击卡片打开</div>
+    </div>
+    <div class="card-back">
+      <div id="backEl"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// 气泡
+const bubbles = document.getElementById('bubbles');
+const bubbleColors = ['rgba(255,184,160,0.5)', 'rgba(200,240,232,0.4)', 'rgba(255,200,180,0.4)'];
+for (let i = 0; i < 20; i++) {
+  const b = document.createElement('div');
+  b.className = 'bubble';
+  const size = 8 + Math.random() * 20;
+  b.style.width = size + 'px';
+  b.style.height = size + 'px';
+  b.style.left = Math.random() * 100 + '%';
+  b.style.background = bubbleColors[Math.floor(Math.random() * bubbleColors.length)];
+  b.style.animationDuration = (8 + Math.random() * 8) + 's';
+  b.style.animationDelay = Math.random() * 8 + 's';
+  bubbles.appendChild(b);
+}
+
+// 漂浮装饰
+const floaties = document.getElementById('floaties');
+const floatIcons = ['✨', '💕', '🌸', '⭐', '💗', '🍬'];
+for (let i = 0; i < 12; i++) {
+  const f = document.createElement('div');
+  f.className = 'floatie';
+  f.textContent = floatIcons[Math.floor(Math.random() * floatIcons.length)];
+  f.style.left = (5 + Math.random() * 90) + '%';
+  f.style.top = (5 + Math.random() * 85) + '%';
+  f.style.fontSize = (10 + Math.random() * 16) + 'px';
+  f.style.animationDuration = (3 + Math.random() * 3) + 's';
+  f.style.animationDelay = Math.random() * 3 + 's';
+  floaties.appendChild(f);
+}
+
+// 参数
+const p = new URLSearchParams(location.search);
+document.getElementById('nameEl').textContent = p.get('n') || '亲爱的你';
+document.getElementById('dateEl').textContent = p.get('d') || '';
+document.getElementById('blessingEl').textContent = p.get('b') || '愿你的生活像蜜桃一样甜';
+document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
+if (p.get('back')) {
+  document.getElementById('backEl').innerHTML = p.get('back').replace(/\\n/g, '<br>');
+}
+
+// 翻转
+document.getElementById('cardWrap').addEventListener('click', () => {
+  document.getElementById('card').classList.toggle('flipped');
+});
+</script>
+</body>
+</html>

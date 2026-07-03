@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>深空宇宙</title>
+<meta property="og:title" content="🚀 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 50% 80%, #1a0530 0%, #0a0520 40%, #050210 100%);
+  font-family: 'Georgia', 'PingFang SC', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 深空星云层 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 30%, rgba(120,40,180,0.25) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 60%, rgba(40,80,200,0.2) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 20%, rgba(200,60,120,0.15) 0%, transparent 50%);
+  z-index: 0;
+  pointer-events: none;
+  animation: nebulaPulse 10s ease-in-out infinite alternate;
+}
+@keyframes nebulaPulse {
+  0% { opacity: 0.7; transform: scale(1) translateX(0); }
+  100% { opacity: 1; transform: scale(1.08) translateX(-2%); }
+}
+
+/* 星尘粒子 */
+.stardust {
+  position: fixed;
+  width: 2px; height: 2px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 50%;
+  animation: dustFloat linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+@keyframes dustFloat {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 0.8; }
+  100% { transform: translateY(-100vh) translateX(30px); opacity: 0; }
+}
+
+/* 流星 */
+.shooting-star {
+  position: fixed;
+  width: 3px; height: 3px;
+  background: linear-gradient(225deg, #fff, rgba(255,255,255,0));
+  border-radius: 50%;
+  animation: shoot linear infinite;
+  z-index: 2;
+  pointer-events: none;
+}
+@keyframes shoot {
+  0% { transform: translateX(0) translateY(0); opacity: 1; }
+  70% { opacity: 1; }
+  100% { transform: translateX(-350px) translateY(350px); opacity: 0; }
+}
+
+/* 火箭 */
+.rocket {
+  position: fixed;
+  font-size: 22px;
+  animation: rocketFly linear infinite;
+  z-index: 3;
+  pointer-events: none;
+}
+@keyframes rocketFly {
+  0% { transform: translateY(100vh) rotate(-15deg); opacity: 0; }
+  5% { opacity: 1; }
+  95% { opacity: 1; }
+  100% { transform: translateY(-20vh) rotate(-15deg); opacity: 0; }
+}
+
+/* 行星光环 */
+.ring {
+  position: fixed;
+  border-radius: 50%;
+  border: 2px solid rgba(200,160,255,0.25);
+  animation: ringSpin linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+@keyframes ringSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 卡片外框 */
+.card-wrap {
+  position: relative;
+  z-index: 20;
+  padding: 3px;
+  background: linear-gradient(135deg, #6040c0, #c040a0, #4060e0, #6040c0);
+  background-size: 300% 300%;
+  animation: cosmicBorder 8s ease infinite, cardFloat 6s ease-in-out infinite;
+  border-radius: 20px;
+  box-shadow:
+    0 0 30px rgba(100,60,200,0.4),
+    0 0 60px rgba(180,60,220,0.2),
+    0 0 100px rgba(60,100,220,0.1);
+}
+@keyframes cosmicBorder {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0) rotate(-0.5deg); }
+  50% { transform: translateY(-14px) rotate(0.5deg); }
+}
+
+.glass-card {
+  background: rgba(10,5,32,0.82);
+  border-radius: 17px;
+  padding: clamp(30px, 6vw, 52px) clamp(24px, 5vw, 48px);
+  text-align: center;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(160,120,255,0.25);
+  min-width: 280px;
+  max-width: 460px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 卡片内星云光效 */
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(100,40,180,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(40,80,200,0.1) 0%, transparent 50%);
+  pointer-events: none;
+  border-radius: 17px;
+}
+
+.icon {
+  font-size: clamp(38px, 9vw, 60px);
+  display: block;
+  margin-bottom: 14px;
+  animation: rocketDrop 1s cubic-bezier(0.34,1.56,0.64,1) 0.15s both;
+  filter: drop-shadow(0 0 12px rgba(200,160,255,0.7));
+}
+@keyframes rocketDrop {
+  from { transform: translateY(-40px) scale(0.4); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.name {
+  font-size: clamp(22px, 6vw, 40px);
+  color: #e0d0ff;
+  margin-bottom: 12px;
+  font-weight: normal;
+  letter-spacing: 0.1em;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.3s both;
+  text-shadow: 0 0 20px rgba(180,120,255,0.7);
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.blessing {
+  font-size: clamp(14px, 3.5vw, 18px);
+  color: rgba(220,200,255,0.88);
+  line-height: 1.9;
+  margin-bottom: 16px;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.55s both;
+}
+
+.date {
+  font-size: clamp(12px, 2.8vw, 15px);
+  color: rgba(180,160,220,0.6);
+  letter-spacing: 0.12em;
+  margin-bottom: 6px;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.75s both;
+}
+
+.from {
+  font-size: clamp(12px, 2.8vw, 15px);
+  color: rgba(180,160,220,0.55);
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.9s both;
+}
+
+/* 角落装饰 */
+.corner-star {
+  position: absolute;
+  font-size: 12px;
+  color: rgba(180,140,255,0.5);
+  animation: starTwinkle 3s ease-in-out infinite;
+}
+.corner-star.tl { top: 10px; left: 14px; animation-delay: 0s; }
+.corner-star.tr { top: 10px; right: 14px; animation-delay: 1s; }
+.corner-star.bl { bottom: 10px; left: 14px; animation-delay: 2s; }
+.corner-star.br { bottom: 10px; right: 14px; animation-delay: 0.5s; }
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 0.9; transform: scale(1.2); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shooting-star, .rocket, .stardust, .ring, .card-wrap, .icon, .name, .blessing, .date, .from {
+    animation: none !important;
+  }
+}
+</style>
+</head>
+<body>
+  <!-- 星尘粒子 -->
+  <script>
+    // 星尘
+    for (let i = 0; i < 40; i++) {
+      const d = document.createElement('div');
+      d.className = 'stardust';
+      d.style.left = Math.random() * 100 + 'vw';
+      d.style.top = (Math.random() * 60 + 40) + 'vh';
+      d.style.animationDuration = (Math.random() * 6 + 5) + 's';
+      d.style.animationDelay = (Math.random() * 8) + 's';
+      d.style.width = d.style.height = (Math.random() * 2 + 1) + 'px';
+      document.body.appendChild(d);
+    }
+    // 流星
+    for (let i = 0; i < 4; i++) {
+      const s = document.createElement('div');
+      s.className = 'shooting-star';
+      s.style.left = (20 + Math.random() * 60) + 'vw';
+      s.style.top = (Math.random() * 30) + 'vh';
+      s.style.animationDuration = (Math.random() * 1.5 + 1.2) + 's';
+      s.style.animationDelay = (Math.random() * 8) + 's';
+      document.body.appendChild(s);
+    }
+    // 火箭
+    for (let i = 0; i < 3; i++) {
+      const r = document.createElement('div');
+      r.className = 'rocket';
+      r.textContent = ['🚀','🛸','✨'][i];
+      r.style.left = (10 + i * 35) + 'vw';
+      r.style.fontSize = (16 + i * 4) + 'px';
+      r.style.animationDuration = (Math.random() * 4 + 5) + 's';
+      r.style.animationDelay = (i * 2.5 + Math.random() * 3) + 's';
+      document.body.appendChild(r);
+    }
+    // 行星光环
+    for (let i = 0; i < 2; i++) {
+      const r = document.createElement('div');
+      r.className = 'ring';
+      r.style.width = (60 + i * 40) + 'px';
+      r.style.height = (60 + i * 40) + 'px';
+      r.style.left = (10 + i * 65) + 'vw';
+      r.style.top = (15 + i * 5) + 'vh';
+      r.style.animationDuration = (20 + i * 10) + 's';
+      r.style.animationDelay = (i * 5) + 's';
+      r.style.borderWidth = (1 + i) + 'px';
+      document.body.appendChild(r);
+    }
+  </script>
+
+  <div class="card-wrap">
+    <div class="glass-card">
+      <span class="corner-star tl">✦</span>
+      <span class="corner-star tr">✦</span>
+      <span class="corner-star bl">✦</span>
+      <span class="corner-star br">✦</span>
+      <span class="icon" id="iconEl">🚀</span>
+      <div class="name" id="nameEl"></div>
+      <div class="blessing" id="blessingEl"></div>
+      <div class="date" id="dateEl"></div>
+      <div class="from" id="fromEl"></div>
+    </div>
+  </div>
+
+  <script>
+    const p = new URLSearchParams(location.search);
+    document.getElementById('nameEl').textContent = p.get('n') || '亲爱的你';
+    document.getElementById('blessingEl').textContent = p.get('b') || '愿你如星辰般璀璨，探索无限宇宙';
+    document.getElementById('dateEl').textContent = p.get('d') || '';
+    document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
+    if (p.get('i')) document.getElementById('iconEl').textContent = p.get('i');
+  </script>
+</body>
+</html>

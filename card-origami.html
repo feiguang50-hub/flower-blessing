@@ -3,195 +3,410 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta property="og:title" content="💌 收到一份专属贺卡">
+<title>纸鹤寄情</title>
+<meta property="og:title" content="🦢 收到一份专属贺卡">
 <meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
 <meta property="og:type" content="website">
-<title>折纸千纸鹤祝福</title>
+<meta name="twitter:card" content="summary">
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-  min-height:100vh;
-  background:linear-gradient(180deg,#faf5f0 0%,#f0e8df 40%,#e8dfd5 100%);
-  display:flex;align-items:center;justify-content:center;
-  overflow:hidden;
-  font-family:'Microsoft YaHei',sans-serif;
-  position:relative;
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --paper-white: #faf8f5;
+  --paper-cream: #f0e6d3;
+  --paper-pink: #ffb8c6;
+  --paper-rose: #e8919e;
+  --paper-gold: #d4a84b;
+  --paper-shadow: rgba(180, 140, 100, 0.35);
+  --bg-top: #1a1a2e;
+  --bg-mid: #2d1b4e;
+  --bg-bottom: #1a0f2e;
+  --text-main: #faf8f5;
+  --text-shadow: rgba(212, 168, 75, 0.9);
+  --card-bg: rgba(240, 230, 211, 0.92);
+  --card-border: rgba(232, 145, 158, 0.5);
 }
-/* 和纸纹理 */
-.washi{
-  position:fixed;inset:0;pointer-events:none;opacity:0.06;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg,
+    #1a1a2e 0%,
+    #2d1b4e 35%,
+    #3d2060 55%,
+    #1a0f2e 100%);
+  font-family: 'Georgia', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
 }
-/* 纸鹤 */
-.crane{
-  position:absolute;
-  font-size:28px;
-  opacity:0.75;
-  animation:craneFloat var(--d,8s) ease-in-out infinite alternate;
-  filter:drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+
+/* 背景纸纹理 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(255,255,255,0.008) 3px,
+      rgba(255,255,255,0.008) 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 5px,
+      rgba(255,255,255,0.005) 5px,
+      rgba(255,255,255,0.005) 6px
+    );
+  pointer-events: none;
+  z-index: 1;
 }
-@keyframes craneFloat{
-  0%{transform:translateY(0) rotate(-5deg)}
-  100%{transform:translateY(-20px) rotate(5deg)}
+
+/* 柔和光晕 */
+body::after {
+  content: '';
+  position: fixed;
+  top: -40%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160%;
+  height: 100%;
+  background: radial-gradient(ellipse at 50% 20%,
+    rgba(232, 145, 158, 0.18) 0%,
+    rgba(212, 168, 75, 0.08) 25%,
+    transparent 55%);
+  pointer-events: none;
+  z-index: 1;
+  animation: ambientGlow 6s ease-in-out infinite;
 }
-/* 纸片 */
-.paper{
-  position:absolute;
-  font-size:18px;
-  opacity:0.5;
-  animation:paperFall var(--d,10s) linear infinite;
+@keyframes ambientGlow {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
 }
-@keyframes paperFall{
-  0%{transform:translateY(-60px) rotate(0deg);opacity:0}
-  10%{opacity:0.5}
-  90%{opacity:0.5}
-  100%{transform:translateY(110vh) rotate(360deg);opacity:0}
+
+/* 纸鹤容器 */
+.origami-container {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
 }
-/* 卡片外框 */
-.card-wrap{
-  position:relative;
-  padding:2px;
-  background:linear-gradient(135deg,#c0392b,#e74c3c,#f1948a,#c0392b);
-  background-size:300% 300%;
-  border-radius:18px;
-  animation:borderFlow 5s linear infinite;
-  box-shadow:0 0 20px rgba(192,57,43,0.25),0 8px 32px rgba(0,0,0,0.12);
-  z-index:10;
+
+/* 纸鹤 - 3D折叠效果 */
+.crane {
+  position: absolute;
+  font-size: 28px;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+  animation: floatCrane 8s ease-in-out infinite;
 }
-@keyframes borderFlow{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
+
+.crane-body {
+  position: relative;
+  display: inline-block;
+  animation: foldCrane 3s ease-in-out infinite;
+  transform-style: preserve-3d;
 }
-/* 卡片主体 */
-.card{
-  background:linear-gradient(160deg,rgba(255,248,243,0.97) 0%,rgba(250,243,238,0.98) 100%);
-  border-radius:16px;
-  padding:clamp(32px,8vw,52px) clamp(24px,6vw,44px);
-  text-align:center;
-  max-width:min(500px,94vw);
-  min-height:min(380px,72vh);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  position:relative;
-  overflow:hidden;
-  animation:cardFloat 6s ease-in-out infinite alternate;
-  border:1px solid rgba(192,57,43,0.12);
+
+@keyframes foldCrane {
+  0%, 100% { transform: scaleX(1) rotate(0deg); }
+  25% { transform: scaleX(0.9) rotate(2deg); }
+  75% { transform: scaleX(1.05) rotate(-2deg); }
 }
-@keyframes cardFloat{
-  0%{transform:translateY(0)}
-  100%{transform:translateY(-6px)}
+
+@keyframes floatCrane {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  25% { transform: translateY(-20px) rotate(5deg); }
+  50% { transform: translateY(-10px) rotate(-3deg); }
+  75% { transform: translateY(-25px) rotate(3deg); }
 }
+
+/* 纸鹤飘落 */
+.c1 { top: 8%; left: 8%; font-size: 22px; animation-delay: 0s; animation-duration: 9s; }
+.c2 { top: 15%; right: 12%; font-size: 18px; animation-delay: 1.5s; animation-duration: 11s; }
+.c3 { top: 55%; left: 5%; font-size: 20px; animation-delay: 0.8s; animation-duration: 10s; }
+.c4 { top: 70%; right: 8%; font-size: 24px; animation-delay: 2.2s; animation-duration: 8s; }
+.c5 { top: 35%; left: 88%; font-size: 16px; animation-delay: 3.5s; animation-duration: 12s; }
+.c6 { top: 82%; left: 20%; font-size: 19px; animation-delay: 1s; animation-duration: 9.5s; }
+.c7 { top: 6%; left: 45%; font-size: 15px; animation-delay: 4s; animation-duration: 13s; }
+.c8 { top: 62%; left: 75%; font-size: 21px; animation-delay: 2.8s; animation-duration: 10.5s; }
+
+/* 爱心点缀 */
+.hearts-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.heart {
+  position: absolute;
+  font-size: 14px;
+  opacity: 0;
+  animation: heartRise 7s ease-in-out infinite;
+}
+
+@keyframes heartRise {
+  0% { opacity: 0; transform: translateY(0) scale(0.6); }
+  15% { opacity: 0.7; }
+  85% { opacity: 0.5; }
+  100% { opacity: 0; transform: translateY(-120px) scale(1.1); }
+}
+
+.h1 { left: 15%; bottom: 5%; animation-delay: 0s; font-size: 12px; }
+.h2 { left: 30%; bottom: 8%; animation-delay: 1.2s; font-size: 10px; }
+.h3 { left: 50%; bottom: 3%; animation-delay: 2.5s; font-size: 14px; }
+.h4 { left: 70%; bottom: 6%; animation-delay: 0.7s; font-size: 11px; }
+.h5 { left: 85%; bottom: 4%; animation-delay: 3.3s; font-size: 13px; }
+.h6 { left: 22%; bottom: 10%; animation-delay: 4.1s; font-size: 9px; }
+.h7 { left: 60%; bottom: 7%; animation-delay: 1.8s; font-size: 12px; }
+.h8 { left: 78%; bottom: 5%; animation-delay: 2.9s; font-size: 10px; }
+
+/* 星星 */
+.stars-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: #faf8f5;
+  border-radius: 50%;
+  box-shadow: 0 0 6px 2px rgba(250, 248, 245, 0.6);
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.4); }
+}
+
+/* 卡片外框 - 折纸感 */
+.card-wrap {
+  position: relative;
+  z-index: 10;
+  padding: 3px;
+  background: linear-gradient(135deg,
+    rgba(255, 184, 198, 0.8),
+    rgba(232, 145, 158, 0.6),
+    rgba(212, 168, 75, 0.8),
+    rgba(240, 230, 211, 0.7),
+    rgba(255, 184, 198, 0.8));
+  background-size: 300% 300%;
+  animation: borderFlow 6s ease infinite;
+  border-radius: 16px;
+  box-shadow:
+    0 0 25px rgba(232, 145, 158, 0.4),
+    0 0 50px rgba(212, 168, 75, 0.2);
+}
+
+@keyframes borderFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: clamp(32px, 8vw, 56px) clamp(24px, 6vw, 48px);
+  text-align: center;
+  max-width: min(520px, 92vw);
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  animation: cardFloat 5s ease-in-out infinite;
+  box-shadow:
+    inset 0 0 30px rgba(255, 240, 220, 0.4),
+    0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  border: 1px solid rgba(212, 168, 75, 0.2);
+  border-radius: 10px;
+  pointer-events: none;
+}
+
 /* 纸鹤图标 */
-.icon{
-  font-size:clamp(42px,11vw,62px);
-  margin-bottom:14px;
-  animation:iconDrop 0.8s cubic-bezier(0.34,1.56,0.64,1) 0.2s both;
-  filter:drop-shadow(0 2px 6px rgba(192,57,43,0.25));
+.crane-icon {
+  font-size: clamp(42px, 10vw, 64px);
+  filter: drop-shadow(0 2px 10px rgba(232, 145, 158, 0.5));
+  animation: iconDrop 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both,
+             iconBob 3s ease-in-out 1.2s infinite;
+  opacity: 1;
 }
-@keyframes iconDrop{
-  from{transform:translateY(-30px) scale(0.6);opacity:0}
-  to{transform:translateY(0) scale(1);opacity:1}
+
+@keyframes iconDrop {
+  from { opacity: 0; transform: translateY(-40px) scale(0.5) rotate(-20deg); }
+  to { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
 }
-/* 姓名 */
-.name{
-  font-size:clamp(24px,6vw,38px);
-  font-weight:700;
-  color:#c0392b;
-  margin-bottom:10px;
-  animation:slideUp 1.2s ease-out 0.4s both;
-  opacity:1;
+
+@keyframes iconBob {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-6px) rotate(3deg); }
+  75% { transform: translateY(4px) rotate(-2deg); }
 }
-@keyframes slideUp{
-  from{opacity:0;transform:translateY(16px)}
-  to{opacity:1;transform:translateY(0)}
+
+/* 文字 */
+.name {
+  font-size: clamp(26px, 7vw, 42px);
+  font-weight: bold;
+  color: #c0406a;
+  text-shadow: 0 1px 8px rgba(192, 64, 106, 0.25);
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.6s both;
+  letter-spacing: 2px;
 }
-/* 日期 */
-.date{
-  font-size:clamp(13px,3vw,16px);
-  color:rgba(150,80,70,0.6);
-  margin-bottom:18px;
-  letter-spacing:2px;
-  animation:slideUp 1.2s ease-out 0.7s both;
-  opacity:1;
+
+.blessing {
+  font-size: clamp(15px, 4vw, 19px);
+  color: #5a3a3a;
+  line-height: 1.8;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.9s both;
+  max-width: 380px;
 }
-/* 祝福语 */
-.blessing{
-  font-size:clamp(15px,4vw,20px);
-  line-height:1.9;
-  color:#5d4037;
-  margin-bottom:22px;
-  animation:slideUp 1.2s ease-out 1s both;
-  opacity:1;
+
+.date {
+  font-size: clamp(12px, 3vw, 15px);
+  color: #a08070;
+  letter-spacing: 3px;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 1.2s both;
 }
-/* 署名 */
-.from{
-  font-size:clamp(13px,3vw,15px);
-  color:rgba(150,80,70,0.55);
-  animation:slideUp 1.2s ease-out 1.3s both;
-  opacity:1;
+
+.from {
+  font-size: clamp(12px, 3vw, 14px);
+  color: #b09080;
+  font-style: italic;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 1.5s both;
 }
-/* 角落折纸装饰 */
-.corner-fold{
-  position:absolute;
-  width:0;height:0;
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-.corner-fold.tl{top:0;left:0;border-top:28px solid rgba(220,180,170,0.35);border-right:28px solid transparent}
-.corner-fold.tr{top:0;right:0;border-top:28px solid rgba(220,180,170,0.35);border-left:28px solid transparent}
-.corner-fold.bl{bottom:0;left:0;border-bottom:28px solid rgba(220,180,170,0.35);border-right:28px solid transparent}
-.corner-fold.br{bottom:0;right:0;border-bottom:28px solid rgba(220,180,170,0.35);border-left:28px solid transparent}
-@media(prefers-reduced-motion:reduce){
-  .card,.card-wrap,.crane,.paper{animation:none!important}
+
+/* 折纸装饰线 */
+.fold-line {
+  position: absolute;
+  background: rgba(212, 168, 75, 0.15);
+  pointer-events: none;
+}
+
+.fl-h {
+  left: 10%;
+  right: 10%;
+  height: 1px;
+}
+
+.fl1 { top: 30%; }
+.fl2 { top: 65%; }
+
+/* 角落丝带 */
+.corner-ribbon {
+  position: absolute;
+  font-size: 18px;
+  opacity: 0.7;
+}
+.cr-tl { top: 12px; left: 12px; }
+.cr-tr { top: 12px; right: 12px; transform: scaleX(-1); }
+.cr-bl { bottom: 12px; left: 12px; transform: scaleY(-1); }
+.cr-br { bottom: 12px; right: 12px; transform: scale(-1); }
+
+/* 减少动画 */
+@media (prefers-reduced-motion: reduce) {
+  .card, .crane, .heart, .star { animation: none; }
+  .card-wrap { animation: none; background: linear-gradient(135deg, rgba(255,184,198,0.8), rgba(232,145,158,0.6), rgba(212,168,75,0.8)); }
 }
 </style>
 </head>
 <body>
 
-<div class="washi"></div>
-<div id="decorations"></div>
+<!-- 纸鹤装饰 -->
+<div class="origami-container">
+  <div class="crane c1"><div class="crane-body">🦢</div></div>
+  <div class="crane c2"><div class="crane-body">🦢</div></div>
+  <div class="crane c3"><div class="crane-body">🐦</div></div>
+  <div class="crane c4"><div class="crane-body">🦢</div></div>
+  <div class="crane c5"><div class="crane-body">🐦</div></div>
+  <div class="crane c6"><div class="crane-body">🦢</div></div>
+  <div class="crane c7"><div class="crane-body">🐦</div></div>
+  <div class="crane c8"><div class="crane-body">🦢</div></div>
+</div>
 
+<!-- 爱心 -->
+<div class="hearts-layer">
+  <div class="heart h1">💗</div>
+  <div class="heart h2">💕</div>
+  <div class="heart h3">💖</div>
+  <div class="heart h4">💕</div>
+  <div class="heart h5">💗</div>
+  <div class="heart h6">💖</div>
+  <div class="heart h7">💕</div>
+  <div class="heart h8">💗</div>
+</div>
+
+<!-- 星星 -->
+<div class="stars-layer" id="starsLayer"></div>
+
+<!-- 卡片 -->
 <div class="card-wrap">
   <div class="card">
-    <div class="corner-fold tl"></div>
-    <div class="corner-fold tr"></div>
-    <div class="corner-fold bl"></div>
-    <div class="corner-fold br"></div>
-    <div class="icon" id="iconEl">🦢</div>
+    <div class="corner-ribbon cr-tl">🎀</div>
+    <div class="corner-ribbon cr-tr">🎀</div>
+    <div class="corner-ribbon cr-bl">🎀</div>
+    <div class="corner-ribbon cr-br">🎀</div>
+    <div class="crane-icon">🦢</div>
     <div class="name" id="nameEl"></div>
-    <div class="date" id="dateEl"></div>
     <div class="blessing" id="blessingEl"></div>
+    <div class="date" id="dateEl"></div>
     <div class="from" id="fromEl"></div>
   </div>
 </div>
 
 <script>
-(function(){
-  // 纸鹤和折纸装饰
-  var deco=document.getElementById('decorations');
-  var cranes=['🦢','📄','🐦','🪭'];
-  for(var i=0;i<6;i++){
-    var c=document.createElement('div');
-    c.className='crane';
-    c.textContent=cranes[i% cranes.length];
-    c.style.cssText='left:'+(Math.random()*88+2)+'%;top:'+(Math.random()*85+5)+'%;--d:'+(Math.random()*5+6)+'s;animation-delay:'+(Math.random()*4)+'s;font-size:'+(Math.random()*10+22)+'px';
-    deco.appendChild(c);
-  }
-  for(var j=0;j<8;j++){
-    var p=document.createElement('div');
-    p.className='paper';
-    p.textContent=['📝','📄','🗒️','折纸'][j%4];
-    p.style.cssText='left:'+(Math.random()*92+2)+'%;animation-duration:'+(Math.random()*6+8)+'s;animation-delay:'+(Math.random()*8)+'s;font-size:'+(Math.random()*8+14)+'px';
-    deco.appendChild(p);
-  }
-  // 参数
-  var p2=new URLSearchParams(location.search);
-  document.getElementById('nameEl').textContent=p2.get('n')||'亲爱的';
-  document.getElementById('dateEl').textContent=p2.get('d')||'';
-  document.getElementById('blessingEl').textContent=p2.get('b')||'愿你如纸鹤般轻盈，飞向想去的地方';
-  var from=p2.get('f');
-  if(from) document.getElementById('fromEl').textContent='— '+from;
-  var icon=p2.get('i');
-  if(icon) document.getElementById('iconEl').textContent=icon;
-})();
+const p = new URLSearchParams(location.search);
+document.getElementById('nameEl').textContent = p.get('n') || '亲爱的你';
+document.getElementById('blessingEl').textContent = p.get('b') || '愿你像纸鹤一样，轻盈地飞向想去的地方';
+document.getElementById('dateEl').textContent = p.get('d') || '';
+document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
+
+// 星星生成
+const starsLayer = document.getElementById('starsLayer');
+for (let i = 0; i < 35; i++) {
+  const star = document.createElement('div');
+  star.className = 'star';
+  star.style.left = Math.random() * 100 + '%';
+  star.style.top = Math.random() * 70 + '%';
+  star.style.animationDelay = Math.random() * 3 + 's';
+  star.style.animationDuration = (2 + Math.random() * 2) + 's';
+  starsLayer.appendChild(star);
+}
 </script>
 </body>
 </html>

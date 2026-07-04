@@ -3,234 +3,383 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>冰霜祝福</title>
-<meta property="og:title" content="💌 收到一份专属贺卡">
+<title>极光冰晶</title>
+<meta property="og:title" content="❄️ 收到一份专属贺卡">
 <meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
 <meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-  min-height:100vh;
-  background:linear-gradient(180deg,#1a2a4a 0%,#1e3a5f 30%,#2a4a6a 60%,#1a2a4a 100%);
-  display:flex;align-items:center;justify-content:center;
-  overflow:hidden;
-  font-family:'Microsoft YaHei',sans-serif;
-  position:relative;
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --sky-deep: #0a0a1a;
+  --sky-mid: #0d1b2a;
+  --aurora-green: #00ff88;
+  --aurora-cyan: #00ddff;
+  --aurora-purple: #aa66ff;
+  --aurora-pink: #ff66aa;
+  --ice-blue: #a0e8ff;
+  --ice-white: #e8f8ff;
+  --frost-glow: rgba(0, 221, 255, 0.5);
+  --text-light: #e0f4ff;
+  --text-cream: #c8e8ff;
+  --card-bg: rgba(10, 20, 40, 0.85);
+  --card-border: rgba(0, 221, 255, 0.3);
 }
-/* 霜花背景 */
-.frost-bg{
-  position:fixed;inset:0;pointer-events:none;
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg,
+    #050510 0%,
+    #0a0a1a 20%,
+    #0d1b2a 40%,
+    #1a2a4a 60%,
+    #0d1b2a 80%,
+    #0a0a1a 100%);
+  font-family: 'Georgia', 'PingFang SC', 'Microsoft YaHei', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
 }
-/* 雪花 */
-.snowflake{
-  position:absolute;
-  color:rgba(255,255,255,0.85);
-  animation:snowFall var(--d,10s) linear infinite;
-  opacity:0;
+
+/* 极光效果 */
+.aurora {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
 }
-@keyframes snowFall{
-  0%{transform:translateY(-5vh) rotate(0deg);opacity:0}
-  10%{opacity:0.9}
-  90%{opacity:0.7}
-  100%{transform:translateY(105vh) rotate(360deg);opacity:0}
+
+.aurora::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -20%;
+  right: -20%;
+  height: 60%;
+  background: linear-gradient(180deg,
+    transparent 0%,
+    rgba(0, 255, 136, 0.15) 20%,
+    rgba(0, 221, 255, 0.2) 40%,
+    rgba(170, 102, 255, 0.15) 60%,
+    rgba(255, 102, 170, 0.1) 80%,
+    transparent 100%);
+  animation: auroraWave 8s ease-in-out infinite;
+  filter: blur(30px);
 }
+
+.aurora::after {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: -10%;
+  right: -10%;
+  height: 50%;
+  background: linear-gradient(180deg,
+    transparent 0%,
+    rgba(0, 221, 255, 0.1) 30%,
+    rgba(0, 255, 136, 0.15) 50%,
+    rgba(170, 102, 255, 0.1) 70%,
+    transparent 100%);
+  animation: auroraWave 10s ease-in-out infinite reverse;
+  filter: blur(40px);
+}
+
+@keyframes auroraWave {
+  0%, 100% { transform: translateX(-5%) skewX(-2deg); }
+  25% { transform: translateX(3%) skewX(1deg); }
+  50% { transform: translateX(-2%) skewX(-3deg); }
+  75% { transform: translateX(4%) skewX(2deg); }
+}
+
+/* 星星背景 */
+.stars {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: starTwinkle 3s ease-in-out infinite;
+}
+
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.1; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* 冰晶 */
+.crystals {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.crystal {
+  position: absolute;
+  opacity: 0;
+  animation: crystalFloat linear infinite;
+  color: var(--ice-blue);
+  text-shadow: 0 0 10px var(--frost-glow), 0 0 20px var(--frost-glow);
+}
+
+.c1 { left: 5%; animation-duration: 12s; animation-delay: 0s; font-size: 24px; }
+.c2 { left: 15%; animation-duration: 15s; animation-delay: 1s; font-size: 18px; }
+.c3 { left: 25%; animation-duration: 11s; animation-delay: 2s; font-size: 22px; }
+.c4 { left: 38%; animation-duration: 14s; animation-delay: 0.5s; font-size: 20px; }
+.c5 { left: 52%; animation-duration: 13s; animation-delay: 1.5s; font-size: 26px; }
+.c6 { left: 65%; animation-duration: 16s; animation-delay: 3s; font-size: 16px; }
+.c7 { left: 78%; animation-duration: 10s; animation-delay: 0.8s; font-size: 24px; }
+.c8 { left: 88%; animation-duration: 14s; animation-delay: 2.5s; font-size: 20px; }
+
+@keyframes crystalFloat {
+  0% { top: -10%; opacity: 0; transform: rotate(0deg) scale(0.5); }
+  10% { opacity: 0.8; transform: rotate(15deg) scale(1); }
+  50% { transform: rotate(-10deg) scale(1.1); }
+  90% { opacity: 0.8; transform: rotate(20deg) scale(1); }
+  100% { top: 105%; opacity: 0; transform: rotate(-15deg) scale(0.6); }
+}
+
+/* 月亮 */
+.moon {
+  position: fixed;
+  top: 10%;
+  right: 15%;
+  width: 70px;
+  height: 70px;
+  background: radial-gradient(circle at 35% 35%, #e8f4ff, #a0d0ff);
+  border-radius: 50%;
+  box-shadow: 0 0 40px rgba(160, 208, 255, 0.6), 0 0 80px rgba(160, 208, 255, 0.3);
+  z-index: 1;
+  animation: moonGlow 5s ease-in-out infinite;
+}
+
+@keyframes moonGlow {
+  0%, 100% { box-shadow: 0 0 40px rgba(160, 208, 255, 0.6), 0 0 80px rgba(160, 208, 255, 0.3); }
+  50% { box-shadow: 0 0 60px rgba(160, 208, 255, 0.8), 0 0 100px rgba(160, 208, 255, 0.4); }
+}
+
+/* 卡片包装 */
+.card-wrap {
+  position: relative;
+  z-index: 10;
+  padding: 3px;
+  background: linear-gradient(135deg, #00ddff, #aa66ff, #ff66aa, #00ff88, #00ddff);
+  background-size: 400% 400%;
+  border-radius: 24px;
+  animation: borderFlow 5s ease infinite;
+  box-shadow: 0 8px 40px rgba(0, 221, 255, 0.4), 0 0 60px rgba(170, 102, 255, 0.2);
+}
+
+@keyframes borderFlow {
+  0%, 100% { background-position: 0% 50%; box-shadow: 0 8px 40px rgba(0, 221, 255, 0.4); }
+  50% { background-position: 100% 50%; box-shadow: 0 12px 60px rgba(0, 221, 255, 0.6), 0 0 80px rgba(170, 102, 255, 0.3); }
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: 22px;
+  padding: 50px 55px;
+  text-align: center;
+  min-width: 300px;
+  max-width: 90vw;
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--card-border);
+  position: relative;
+  overflow: hidden;
+}
+
 /* 冰晶装饰 */
-.crystal{
-  position:absolute;
-  color:rgba(200,230,255,0.6);
-  animation:crystalGlow 4s ease-in-out infinite alternate;
+.card::before {
+  content: '❄️';
+  position: absolute;
+  top: 12px;
+  left: 18px;
+  font-size: 28px;
+  opacity: 0.6;
+  animation: sparkle 3s ease-in-out infinite;
 }
-@keyframes crystalGlow{
-  0%{opacity:0.3;filter:drop-shadow(0 0 4px rgba(200,230,255,0.4))}
-  100%{opacity:0.8;filter:drop-shadow(0 0 12px rgba(200,230,255,0.8))}
+
+.card::after {
+  content: '✦';
+  position: absolute;
+  top: 15px;
+  right: 22px;
+  font-size: 22px;
+  color: var(--ice-blue);
+  opacity: 0.5;
+  animation: sparkle 2.5s ease-in-out infinite;
 }
-/* 霜雾感 */
-.frost-overlay{
-  position:fixed;inset:0;pointer-events:none;
-  background:
-    radial-gradient(ellipse 80% 60% at 15% 20%,rgba(200,230,255,0.08) 0%,transparent 60%),
-    radial-gradient(ellipse 60% 70% at 85% 75%,rgba(180,220,255,0.06) 0%,transparent 60%);
-  animation:frostBreath 8s ease-in-out infinite alternate;
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0.4; transform: scale(0.9) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
 }
-@keyframes frostBreath{
-  0%{opacity:0.6}
-  100%{opacity:1}
+
+/* 顶部图标 */
+.top-icon {
+  font-size: 55px;
+  margin-bottom: 18px;
+  animation: iconDrop 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+  filter: drop-shadow(0 0 15px var(--frost-glow));
 }
-/* 窗框 */
-.window-frame{
-  position:fixed;inset:0;pointer-events:none;
-  border:12px solid rgba(180,210,240,0.18);
-  border-radius:8px;
-  margin:20px;
+
+@keyframes iconDrop {
+  from { opacity: 0; transform: translateY(-40px) scale(0.5); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
-/* 卡片外框 */
-.card-wrap{
-  position:relative;
-  padding:2px;
-  background:linear-gradient(135deg,#a8d4f0,#d0e8f8,#ffffff,#a8d4f0);
-  background-size:400% 400%;
-  border-radius:20px;
-  animation:borderFlow 7s ease infinite;
-  box-shadow:0 0 35px rgba(160,210,250,0.45),0 0 60px rgba(160,210,250,0.2),0 15px 45px rgba(0,0,0,0.25);
-  z-index:10;
+
+.name {
+  font-size: clamp(30px, 7vw, 48px);
+  font-weight: bold;
+  background: linear-gradient(135deg, #00ddff, #aa66ff, #ff66aa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 15px;
+  animation: slideUp 1.2s ease-out 0.3s both;
+  text-shadow: none;
 }
-@keyframes borderFlow{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
+
+.date {
+  font-size: clamp(14px, 3vw, 17px);
+  color: rgba(160, 208, 255, 0.7);
+  margin-bottom: 25px;
+  animation: slideUp 1.2s ease-out 0.5s both;
+  letter-spacing: 2px;
 }
-/* 卡片主体 */
-.card{
-  background:linear-gradient(180deg,rgba(220,240,255,0.95) 0%,rgba(240,250,255,0.97) 100%);
-  border-radius:18px;
-  padding:clamp(34px,9vw,56px) clamp(26px,7vw,48px);
-  text-align:center;
-  max-width:min(520px,94vw);
-  min-height:min(400px,75vh);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  position:relative;
-  overflow:hidden;
-  animation:cardFloat 6s ease-in-out infinite alternate;
-  border:1px solid rgba(200,230,255,0.5);
-  /* 霜花玻璃效果 */
-  backdrop-filter:blur(2px);
+
+.blessing {
+  font-size: clamp(17px, 4vw, 24px);
+  color: var(--text-cream);
+  line-height: 1.9;
+  margin-bottom: 25px;
+  animation: slideUp 1.2s ease-out 0.7s both;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
-@keyframes cardFloat{
-  0%{transform:translateY(0)}
-  100%{transform:translateY(-6px)}
+
+.from {
+  font-size: clamp(14px, 3vw, 17px);
+  color: rgba(160, 200, 220, 0.65);
+  animation: slideUp 1.2s ease-out 0.9s both;
+  font-style: italic;
 }
-/* 卡片霜花纹理 */
-.card::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(255,255,255,0.5),transparent 70%);
-  pointer-events:none;
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-/* 冰晶角 */
-.ice-corner{
-  position:absolute;
-  font-size:20px;
-  opacity:0.5;
+
+/* 底部装饰 */
+.bottom-stars {
+  margin-top: 22px;
+  font-size: 22px;
+  opacity: 0.7;
+  animation: slideUp 1.2s ease-out 1.1s both;
 }
-.ice-corner:nth-child(1){top:10px;left:14px}
-.ice-corner:nth-child(2){top:10px;right:14px;transform:scaleX(-1)}
-.ice-corner:nth-child(3){bottom:10px;left:14px;transform:scaleY(-1)}
-.ice-corner:nth-child(4){bottom:10px;right:14px;transform:scale(-1)}
-/* 图标 */
-.icon{
-  font-size:clamp(44px,11vw,64px);
-  margin-bottom:16px;
-  animation:iconDrop 0.9s cubic-bezier(0.34,1.56,0.64,1) 0.2s both;
-  filter:drop-shadow(0 2px 8px rgba(140,190,240,0.4));
+
+.bottom-stars span {
+  margin: 0 8px;
+  display: inline-block;
+  animation: starBounce 2s ease-in-out infinite;
 }
-@keyframes iconDrop{
-  from{transform:translateY(-35px) scale(0.5);opacity:0}
-  to{transform:translateY(0) scale(1);opacity:1}
+
+.bottom-stars span:nth-child(1) { animation-delay: 0s; }
+.bottom-stars span:nth-child(2) { animation-delay: 0.3s; }
+.bottom-stars span:nth-child(3) { animation-delay: 0.6s; }
+.bottom-stars span:nth-child(4) { animation-delay: 0.9s; }
+.bottom-stars span:nth-child(5) { animation-delay: 1.2s; }
+
+@keyframes starBounce {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(-6px); opacity: 1; }
 }
-/* 姓名 */
-.name{
-  font-size:clamp(25px,6vw,40px);
-  font-weight:700;
-  color:#2a5a8a;
-  margin-bottom:12px;
-  animation:slideUp 1.2s ease-out 0.4s both;
-  opacity:1;
-  text-shadow:0 1px 4px rgba(140,190,240,0.4);
-}
-@keyframes slideUp{
-  from{opacity:0;transform:translateY(16px)}
-  to{opacity:1;transform:translateY(0)}
-}
-/* 日期 */
-.date{
-  font-size:clamp(13px,3vw,16px);
-  color:rgba(100,150,200,0.65);
-  margin-bottom:18px;
-  letter-spacing:2px;
-  animation:slideUp 1.2s ease-out 0.7s both;
-  opacity:1;
-}
-/* 祝福语 */
-.blessing{
-  font-size:clamp(15px,4vw,20px);
-  line-height:1.9;
-  color:#3a6a9a;
-  margin-bottom:22px;
-  animation:slideUp 1.2s ease-out 1s both;
-  opacity:1;
-}
-/* 署名 */
-.from{
-  font-size:clamp(13px,3vw,15px);
-  color:rgba(100,150,200,0.5);
-  animation:slideUp 1.2s ease-out 1.3s both;
-  opacity:1;
-}
-@media(prefers-reduced-motion:reduce){
-  .card,.card-wrap,.snowflake,.crystal,.frost-overlay{animation:none!important}
+
+/* 响应式 */
+@media (max-width: 480px) {
+  .card { padding: 40px 30px; }
+  .moon { width: 50px; height: 50px; top: 8%; right: 10%; }
+  .crystal { font-size: 18px; }
 }
 </style>
 </head>
 <body>
 
-<div class="frost-bg" id="frostBg"></div>
-<div class="frost-overlay"></div>
-<div class="window-frame"></div>
+<!-- 极光背景 -->
+<div class="aurora"></div>
 
+<!-- 星星 -->
+<div class="stars" id="stars"></div>
+
+<!-- 月亮 -->
+<div class="moon"></div>
+
+<!-- 冰晶飘落 -->
+<div class="crystals">
+  <div class="crystal c1">❄️</div>
+  <div class="crystal c2">✨</div>
+  <div class="crystal c3">❅</div>
+  <div class="crystal c4">✦</div>
+  <div class="crystal c5">❄️</div>
+  <div class="crystal c6">✨</div>
+  <div class="crystal c7">❅</div>
+  <div class="crystal c8">✦</div>
+</div>
+
+<!-- 卡片 -->
 <div class="card-wrap">
   <div class="card">
-    <div class="ice-corner">❄️</div>
-    <div class="ice-corner">❄️</div>
-    <div class="ice-corner">❄️</div>
-    <div class="ice-corner">❄️</div>
-    <div class="icon" id="iconEl">❄️</div>
-    <div class="name" id="nameEl"></div>
+    <div class="top-icon" id="iconEl">❄️</div>
+    <div class="name" id="nameEl">亲爱的朋友</div>
     <div class="date" id="dateEl"></div>
-    <div class="blessing" id="blessingEl"></div>
+    <div class="blessing" id="blessingEl">愿你如极光般璀璨<br>如冰晶般纯净而坚强</div>
     <div class="from" id="fromEl"></div>
+    <div class="bottom-stars">
+      <span>❄️</span><span>✨</span><span>❅</span><span>✦</span><span>❄️</span>
+    </div>
   </div>
 </div>
 
 <script>
-(function(){
-  var bg=document.getElementById('frostBg');
-  var snowEmojis=['❄️','❅','❆','✦','✧'];
-  // 雪花
-  for(var i=0;i<18;i++){
-    var s=document.createElement('div');
-    s.className='snowflake';
-    s.textContent=snowEmojis[i%snowEmojis.length];
-    var sz=Math.random()*12+10;
-    s.style.cssText='left:'+(Math.random()*92+3)+'%;font-size:'+sz+'px;animation-duration:'+(Math.random()*8+8)+'s;animation-delay:'+(Math.random()*10)+'s';
-    bg.appendChild(s);
-  }
-  // 冰晶装饰
-  var crystalPos=[
-    {t:'5%',l:'5%',s:'28px'},{t:'12%',r:'8%',s:'22px'},{b:'8%',l:'5%',s:'24px'},{b:'15%',r:'6%',s:'20px'},
-    {t:'30%',l:'2%',s:'18px'},{t:'25%',r:'3%',s:'16px'},{b:'30%',l:'3%',s:'20px'},{b:'25%',r:'2%',s:'18px'}
-  ];
-  crystalPos.forEach(function(pos,i){
-    var c=document.createElement('div');
-    c.className='crystal';
-    c.textContent='❄️';
-    var style='position:absolute;';
-    if(pos.t) style+='top:'+pos.t+';';
-    if(pos.b) style+='bottom:'+pos.b+';';
-    if(pos.l) style+='left:'+pos.l+';';
-    if(pos.r) style+='right:'+pos.r+';';
-    style+='font-size:'+pos.s+';animation-delay:'+(i*0.5)+'s';
-    c.style.cssText=style;
-    bg.appendChild(c);
+// 生成星星
+const starsContainer = document.getElementById('stars');
+for (let i = 0; i < 50; i++) {
+  const star = document.createElement('div');
+  star.className = 'star';
+  star.style.left = Math.random() * 100 + '%';
+  star.style.top = Math.random() * 60 + '%';
+  star.style.width = (Math.random() * 3 + 1) + 'px';
+  star.style.height = star.style.width;
+  star.style.animationDelay = Math.random() * 3 + 's';
+  star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+  starsContainer.appendChild(star);
+}
+
+// 参数读取
+const p = new URLSearchParams(location.search);
+document.getElementById('nameEl').textContent = p.get('n') || '亲爱的朋友';
+document.getElementById('dateEl').textContent = p.get('d') || '';
+document.getElementById('blessingEl').innerHTML = (p.get('b') || '愿你如极光般璀璨\n如冰晶般纯净而坚强').replace(/\n/g, '<br>');
+document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
+if (p.get('i')) document.getElementById('iconEl').textContent = p.get('i');
+
+// 减少动效
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (reducedMotion) {
+  document.querySelectorAll('.crystal, .star, .aurora').forEach(el => {
+    el.style.animation = 'none';
   });
-  // 参数
-  var p=new URLSearchParams(location.search);
-  document.getElementById('nameEl').textContent=p.get('n')||'亲爱的';
-  document.getElementById('dateEl').textContent=p.get('d')||'';
-  document.getElementById('blessingEl').textContent=p.get('b')||'愿你如冰雪般纯净，永远保持内心的澄澈与明亮';
-  var from=p.get('f');
-  if(from) document.getElementById('fromEl').textContent='— '+from;
-  var icon=p.get('i');
-  if(icon) document.getElementById('iconEl').textContent=icon;
-})();
+}
 </script>
 </body>
 </html>

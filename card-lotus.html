@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>荷花祝福</title>
+<meta property="og:title" content="🪷 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --lotus-pink: #f0a0b8;
+  --lotus-deep: #e87088;
+  --lotus-soft: #fad0dc;
+  --leaf-green: #4a7c59;
+  --leaf-dark: #2d5a3d;
+  --water-blue: #7ec8d8;
+  --water-deep: #4a90a4;
+  --text-dark: #3a2a28;
+  --card-bg: rgba(255, 252, 250, 0.88);
+  --glow-pink: rgba(240, 160, 184, 0.4);
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg,
+    #d4eeed 0%,
+    #b8e0e0 20%,
+    #7ec8d8 45%,
+    #5ba8c0 60%,
+    #4a90a4 80%,
+    #3a7a94 100%
+  );
+  font-family: 'PingFang SC', 'Microsoft YaHei', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 水波纹 */
+.water-ripple {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ripple-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px solid rgba(126, 200, 216, 0.3);
+  animation: rippleExpand 6s ease-out infinite;
+}
+
+.ripple-ring:nth-child(1) { width: 60px; height: 60px; left: 10%; top: 70%; animation-delay: 0s; }
+.ripple-ring:nth-child(2) { width: 60px; height: 60px; left: 80%; top: 75%; animation-delay: 1.5s; }
+.ripple-ring:nth-child(3) { width: 60px; height: 60px; left: 50%; top: 85%; animation-delay: 3s; }
+.ripple-ring:nth-child(4) { width: 60px; height: 60px; left: 25%; top: 80%; animation-delay: 4.5s; }
+
+@keyframes rippleExpand {
+  0% { transform: scale(0.8); opacity: 0.6; }
+  100% { transform: scale(3); opacity: 0; }
+}
+
+/* 浮萍 */
+.lily-pad {
+  position: fixed;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.pad {
+  position: absolute;
+  width: 40px;
+  height: 32px;
+  background: #4a7c59;
+  border-radius: 50%;
+  animation: padFloat 5s ease-in-out infinite;
+}
+
+.pad::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 16px;
+  background: #3a5c45;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.pad:nth-child(1) { left: 8%; top: 82%; animation-delay: 0s; }
+.pad:nth-child(2) { left: 85%; top: 78%; animation-delay: 1s; width: 30px; height: 24px; }
+.pad:nth-child(3) { left: 15%; top: 88%; animation-delay: 2s; width: 36px; height: 28px; }
+.pad:nth-child(4) { left: 78%; top: 86%; animation-delay: 0.5s; }
+
+@keyframes padFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(3deg); }
+}
+
+/* 荷花 */
+.lotus {
+  position: fixed;
+  z-index: 2;
+  pointer-events: none;
+  bottom: 0;
+  font-size: 48px;
+  filter: drop-shadow(0 0 8px rgba(240,160,184,0.3));
+}
+
+.lotus.left { left: 6%; font-size: 52px; animation: lotusSway 6s ease-in-out infinite; }
+.lotus.right { right: 6%; font-size: 40px; animation: lotusSway 7s ease-in-out infinite 1s; }
+
+@keyframes lotusSway {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-10px) rotate(3deg); }
+}
+
+/* 荷叶 */
+.lotus-leaf {
+  position: fixed;
+  z-index: 1;
+  pointer-events: none;
+  font-size: 64px;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
+}
+
+.lotus-leaf:nth-child(1) { left: 2%; bottom: 5%; font-size: 72px; animation: leafFloat 5s ease-in-out infinite; }
+.lotus-leaf:nth-child(2) { right: 4%; bottom: 2%; font-size: 56px; animation: leafFloat 6s ease-in-out infinite 1s; }
+
+@keyframes leafFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(-2deg); }
+}
+
+/* 蜻蜓 */
+.dragonfly {
+  position: fixed;
+  z-index: 3;
+  pointer-events: none;
+  font-size: 20px;
+  animation: dragonfly 8s ease-in-out infinite;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.dragonfly:nth-of-type(1) { top: 20%; left: 15%; animation-delay: 0s; }
+.dragonfly:nth-of-type(2) { top: 30%; right: 20%; animation-delay: 3s; font-size: 16px; }
+
+@keyframes dragonfly {
+  0% { transform: translate(0, 0); opacity: 0; }
+  10% { opacity: 1; }
+  50% { transform: translate(30px, -20px); opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translate(60px, -40px); opacity: 0; }
+}
+
+/* 毛玻璃卡片 */
+.card-wrap {
+  position: relative;
+  z-index: 10;
+}
+
+.card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: clamp(28px, 6vw, 44px) clamp(24px, 5vw, 40px);
+  text-align: center;
+  max-width: 400px;
+  width: 90vw;
+  border: 1.5px solid rgba(240, 160, 184, 0.4);
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.1),
+    0 2px 8px rgba(240, 160, 184, 0.15),
+    inset 0 1px 0 rgba(255,255,255,0.8);
+  animation: cardFloat 5s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 22px;
+  background: linear-gradient(135deg,
+    rgba(240,160,184,0.5) 0%,
+    rgba(126,200,216,0.3) 50%,
+    rgba(240,160,184,0.5) 100%
+  );
+  z-index: -1;
+  animation: borderFlow 4s linear infinite;
+  background-size: 200% 200%;
+}
+
+@keyframes borderFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* 卡片内容 */
+.icon-top {
+  font-size: clamp(36px, 8vw, 52px);
+  margin-bottom: 12px;
+  animation: iconDrop 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+  display: block;
+}
+
+@keyframes iconDrop {
+  from { opacity: 0; transform: translateY(-30px) scale(0.5); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.name {
+  font-size: clamp(22px, 6vw, 32px);
+  color: var(--text-dark);
+  font-weight: 600;
+  margin-bottom: 14px;
+  letter-spacing: 2px;
+  opacity: 1;
+  animation: fadeInUp 1.2s ease-out 0.4s both;
+}
+
+.blessing {
+  font-size: clamp(14px, 4vw, 17px);
+  color: #5a4a48;
+  line-height: 1.8;
+  margin-bottom: 18px;
+  opacity: 1;
+  animation: fadeInUp 1.2s ease-out 0.7s both;
+}
+
+.from {
+  font-size: clamp(12px, 3vw, 14px);
+  color: #8a7a78;
+  opacity: 1;
+  animation: fadeInUp 1.2s ease-out 1s both;
+}
+
+.divider {
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--lotus-pink), transparent);
+  margin: 12px auto;
+  opacity: 1;
+  animation: fadeInUp 1.2s ease-out 0.9s both;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 装饰引号 */
+.quote-mark {
+  font-size: 28px;
+  color: var(--lotus-soft);
+  font-family: Georgia, serif;
+  line-height: 1;
+  opacity: 0.6;
+  margin-bottom: -8px;
+  display: block;
+  opacity: 1;
+}
+</style>
+</head>
+<body>
+
+<div class="water-ripple">
+  <div class="ripple-ring"></div>
+  <div class="ripple-ring"></div>
+  <div class="ripple-ring"></div>
+  <div class="ripple-ring"></div>
+</div>
+
+<div class="lotus-pad-area">
+  <div class="lotus-leaf">🍃</div>
+  <div class="lotus-leaf">🍃</div>
+</div>
+
+<div class="lotus left">🪷</div>
+<div class="lotus right">🪷</div>
+
+<div class="dragonfly">🪰</div>
+<div class="dragonfly">🪰</div>
+
+<div class="card-wrap">
+  <div class="card">
+    <span class="icon-top" id="iconEl">🪷</span>
+    <div class="name" id="nameEl">亲爱的你</div>
+    <span class="quote-mark">"</span>
+    <div class="blessing" id="blessingEl">荷风夏日清，莲香满池盈<br>愿你如荷般高洁，夏日无忧</div>
+    <div class="divider"></div>
+    <div class="from" id="fromEl"></div>
+  </div>
+</div>
+
+<script>
+const p = new URLSearchParams(location.search);
+document.getElementById('nameEl').textContent = p.get('n') || '亲爱的你';
+document.getElementById('blessingEl').innerHTML = (p.get('b') || '荷风夏日清，莲香满池盈<br>愿你如荷般高洁，夏日无忧').replace(/\n/g, '<br>');
+document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
+const icon = p.get('i') || '🪷';
+document.getElementById('iconEl').textContent = icon;
+</script>
+</body>
+</html>

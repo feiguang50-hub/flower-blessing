@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>银河流星</title>
+<meta property="og:title" content="🌌 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --galaxy-deep: #03010a;
+  --galaxy-purple: #1a0a30;
+  --galaxy-violet: #3d1a6d;
+  --galaxy-pink: #c060d0;
+  --galaxy-gold: #f0c060;
+  --star-white: #e8e0ff;
+  --text-glow: #d0b8ff;
+  --card-bg: rgba(10, 5, 20, 0.82);
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg,
+    #020108 0%,
+    #0a0520 20%,
+    #1a0a38 40%,
+    #0d0525 60%,
+    #050110 80%,
+    #020108 100%
+  );
+  font-family: 'PingFang SC', 'Microsoft YaHei', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 银河渐变背景 */
+.galaxy-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 50%,
+      rgba(60, 20, 100, 0.35) 0%,
+      transparent 70%
+    ),
+    radial-gradient(ellipse 50% 30% at 30% 60%,
+      rgba(80, 30, 140, 0.2) 0%,
+      transparent 60%
+    ),
+    radial-gradient(ellipse 40% 25% at 70% 40%,
+      rgba(100, 40, 160, 0.15) 0%,
+      transparent 55%
+    );
+  animation: galaxyBreath 6s ease-in-out infinite alternate;
+}
+
+@keyframes galaxyBreath {
+  0% { opacity: 0.7; filter: brightness(0.9) saturate(0.9); }
+  100% { opacity: 1; filter: brightness(1.1) saturate(1.1); }
+}
+
+/* 星星 */
+.stars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: white;
+  animation: starTwinkle var(--dur, 3s) ease-in-out infinite;
+}
+
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.1; transform: scale(0.5); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* 流星 */
+.meteors {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.meteor {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: white;
+  animation: meteorFall var(--dur, 2s) linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+.meteor::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0.9) 0%,
+    rgba(200,180,255,0.4) 50%,
+    transparent 100%
+  );
+  transform-origin: left center;
+  transform: rotate(var(--angle, -45deg));
+}
+
+@keyframes meteorFall {
+  0% { transform: translate(0, 0); opacity: 0; }
+  5% { opacity: 1; }
+  30% { opacity: 1; }
+  100% { transform: translate(300px, 300px); opacity: 0; }
+}
+
+/* 星云光效 */
+.nebula {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.nebula-cloud {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  animation: nebulaFloat 8s ease-in-out infinite alternate;
+}
+
+.nc1 {
+  width: 300px; height: 150px;
+  top: 15%; left: 20%;
+  background: radial-gradient(ellipse, rgba(100, 40, 180, 0.2), transparent 70%);
+  animation-duration: 10s;
+}
+.nc2 {
+  width: 200px; height: 120px;
+  top: 55%; right: 15%;
+  background: radial-gradient(ellipse, rgba(180, 60, 120, 0.15), transparent 70%);
+  animation-duration: 7s;
+  animation-delay: 2s;
+}
+
+@keyframes nebulaFloat {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+  100% { transform: translate(20px, -15px) scale(1.1); opacity: 0.9; }
+}
+
+/* 卡片外框 */
+.card-wrap {
+  position: relative;
+  z-index: 10;
+  padding: 2px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #6b2fa0, #3d1a6d, #1a0a30, #3d1a6d);
+  background-size: 300% 300%;
+  animation: borderFlow 4s ease infinite;
+  box-shadow:
+    0 0 25px rgba(100, 50, 180, 0.35),
+    0 0 60px rgba(60, 20, 120, 0.2),
+    inset 0 0 25px rgba(100, 50, 180, 0.1);
+}
+
+@keyframes borderFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 玻璃卡片 */
+.card {
+  background: var(--card-bg);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border-radius: 18px;
+  padding: clamp(32px, 7vw, 56px) clamp(28px, 6vw, 52px);
+  max-width: 520px;
+  width: 90vw;
+  text-align: center;
+  border: 1px solid rgba(180, 140, 255, 0.12);
+  animation: cardFloat 3.5s ease-in-out infinite;
+}
+
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+/* 卡片内发光 */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  background: radial-gradient(ellipse 60% 40% at 50% 50%,
+    rgba(100, 60, 180, 0.08) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.name {
+  font-size: clamp(24px, 6vw, 44px);
+  font-weight: 600;
+  color: var(--star-white);
+  margin-bottom: 12px;
+  text-shadow:
+    0 0 20px rgba(200, 160, 255, 0.5),
+    0 0 40px rgba(160, 80, 255, 0.3);
+  letter-spacing: 3px;
+}
+
+.date {
+  font-size: clamp(12px, 3vw, 15px);
+  color: rgba(200, 180, 255, 0.6);
+  margin-bottom: 22px;
+  letter-spacing: 4px;
+}
+
+.blessing {
+  font-size: clamp(15px, 4vw, 21px);
+  color: var(--text-glow);
+  line-height: 1.9;
+  margin-bottom: 24px;
+  opacity: 1;
+  text-shadow: 0 0 15px rgba(180, 130, 255, 0.3);
+}
+
+.from {
+  font-size: clamp(12px, 3vw, 15px);
+  color: rgba(200, 180, 255, 0.5);
+  letter-spacing: 2px;
+}
+
+/* 装饰星星 */
+.deco-star {
+  position: absolute;
+  font-size: 18px;
+  opacity: 0.35;
+  pointer-events: none;
+  animation: starTwinkle 2s ease-in-out infinite;
+}
+
+.ds1 { top: -10px; left: -6px; animation-delay: 0s; }
+.ds2 { top: -10px; right: -6px; animation-delay: 0.5s; }
+.ds3 { bottom: -10px; left: -6px; animation-delay: 1s; }
+.ds4 { bottom: -10px; right: -6px; animation-delay: 1.5s; }
+
+.signature {
+  margin-top: 18px;
+  font-size: 12px;
+  color: rgba(180, 150, 255, 0.4);
+  letter-spacing: 4px;
+}
+</style>
+</head>
+<body>
+
+<!-- 银河背景 -->
+<div class="galaxy-bg"></div>
+
+<!-- 星云 -->
+<div class="nebula">
+  <div class="nebula-cloud nc1"></div>
+  <div class="nebula-cloud nc2"></div>
+</div>
+
+<!-- 星星（用JS生成） -->
+<div class="stars" id="stars"></div>
+
+<!-- 流星 -->
+<div class="meteors" id="meteors"></div>
+
+<!-- 卡片 -->
+<div class="card-wrap">
+  <div class="card">
+    <div class="deco-star ds1">✦</div>
+    <div class="deco-star ds2">✦</div>
+    <div class="deco-star ds3">✦</div>
+    <div class="deco-star ds4">✦</div>
+    <div class="name" id="nameEl">星河为你</div>
+    <div class="date" id="dateEl"></div>
+    <div class="blessing" id="blessingEl">银河倾泻，流星划过<br>愿所有美好，如约而至</div>
+    <div class="from" id="fromEl"></div>
+  </div>
+</div>
+
+<script>
+// 生成星星
+const starsEl = document.getElementById('stars');
+for (let i = 0; i < 80; i++) {
+  const star = document.createElement('div');
+  star.className = 'star';
+  star.style.cssText = `
+    left: ${Math.random() * 100}%;
+    top: ${Math.random() * 100}%;
+    width: ${1 + Math.random() * 2}px;
+    height: ${1 + Math.random() * 2}px;
+    --dur: ${2 + Math.random() * 4}s;
+    animation-delay: ${Math.random() * 4}s;
+  `;
+  starsEl.appendChild(star);
+}
+
+// 生成流星
+const meteorsEl = document.getElementById('meteors');
+const meteorAngles = [-35, -50, -40, -55, -45];
+const meteorDelays = [0, 3, 7, 12, 18];
+for (let i = 0; i < 5; i++) {
+  const m = document.createElement('div');
+  m.className = 'meteor';
+  m.style.cssText = `
+    top: ${5 + Math.random() * 30}%;
+    left: ${60 + Math.random() * 35}%;
+    --dur: ${1.5 + Math.random() * 1.5}s;
+    --delay: ${meteorDelays[i]}s;
+    --angle: ${meteorAngles[i]}deg;
+  `;
+  meteorsEl.appendChild(m);
+}
+
+// URL参数
+const p = new URLSearchParams(location.search);
+document.getElementById('nameEl').textContent = p.get('n') || '星河为你';
+document.getElementById('dateEl').textContent = p.get('d') || '';
+document.getElementById('blessingEl').innerHTML = (p.get('b') || '银河倾泻，流星划过<br>愿所有美好，如约而至').replace(/\n/g, '<br>');
+document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
+</script>
+</body>
+</html>

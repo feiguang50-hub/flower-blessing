@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>星座密语</title>
+<title>星座夜空</title>
 <meta property="og:title" content="✨ 收到一份专属贺卡">
 <meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
 <meta property="og:type" content="website">
@@ -12,10 +12,26 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+:root {
+  --cs-deep: #030714;
+  --cs-navy: #0a1628;
+  --cs-indigo: #1a2d5a;
+  --cs-teal: #1a4a5a;
+  --cs-gold: #c9a84c;
+  --cs-silver: #a8c8e0;
+  --cs-glow: rgba(200, 180, 255, 0.5);
+  --cs-gold-glow: rgba(255, 215, 100, 0.6);
+}
+
 body {
   min-height: 100vh;
-  background: linear-gradient(180deg, #03060f 0%, #060d1f 30%, #0a1230 60%, #03060f 100%);
-  font-family: 'Georgia', 'PingFang SC', serif;
+  background: linear-gradient(180deg,
+    #030714 0%,
+    #0a1628 30%,
+    #1a2d5a 50%,
+    #1a3a4a 70%,
+    #0d2030 100%);
+  font-family: 'Georgia', 'PingFang SC', 'Microsoft YaHei', serif;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,186 +39,383 @@ body {
   position: relative;
 }
 
-/* 夜空光晕 */
-body::before {
-  content: '';
+/* 星空背景 */
+.stars-bg {
   position: fixed; inset: 0;
-  background:
-    radial-gradient(ellipse at 50% 10%, rgba(160,120,255,0.07) 0%, transparent 45%),
-    radial-gradient(ellipse at 20% 80%, rgba(80,60,180,0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 60%, rgba(120,80,200,0.05) 0%, transparent 40%);
-  animation: cosmicShift 10s ease-in-out infinite;
-  z-index: 0;
-  pointer-events: none;
-}
-@keyframes cosmicShift {
-  0%, 100% { opacity: 0.8; }
-  50% { opacity: 1; }
+  pointer-events: none; z-index: 0;
 }
 
-/* 星星 */
 .star {
-  position: fixed;
-  background: #fff;
+  position: absolute;
   border-radius: 50%;
-  animation: twinkle ease-in-out infinite;
-  z-index: 2;
-  pointer-events: none;
-}
-@keyframes twinkle {
-  0%, 100% { opacity: 0.15; transform: scale(0.8); }
-  50% { opacity: 1; transform: scale(1.3); }
+  background: rgba(255,255,255,0.9);
+  animation: starTwinkle var(--dur, 3s) ease-in-out infinite;
 }
 
-/* 边框 */
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.15; transform: scale(0.4); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+/* 星座连线 */
+.constellation-lines {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 1;
+  opacity: 0.25;
+}
+
+/* 流星 */
+.shooting-star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: linear-gradient(135deg, #fff, transparent);
+  border-radius: 50%;
+  animation: shoot 1.2s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes shoot {
+  0% { opacity: 1; transform: translate(0, 0); }
+  70% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-120px, 80px); }
+}
+
+/* 行星装饰 */
+.planet {
+  position: absolute;
+  border-radius: 50%;
+  animation: planetGlow 4s ease-in-out infinite;
+}
+
+.planet-1 {
+  width: 28px; height: 28px;
+  top: 12%; right: 18%;
+  background: radial-gradient(circle at 35% 35%, #e8d090, #c9a84c, #8a6a2a);
+  box-shadow: 0 0 12px rgba(200, 170, 80, 0.5);
+  animation-delay: 0s;
+}
+
+.planet-2 {
+  width: 18px; height: 18px;
+  top: 22%; left: 15%;
+  background: radial-gradient(circle at 35% 35%, #a8c8e0, #6090b0, #305080);
+  box-shadow: 0 0 8px rgba(100, 160, 200, 0.5);
+  animation-delay: 1.5s;
+}
+
+@keyframes planetGlow {
+  0%, 100% { box-shadow: 0 0 12px rgba(200, 170, 80, 0.4); }
+  50% { box-shadow: 0 0 20px rgba(200, 170, 80, 0.7); }
+}
+
+/* 卡片外框呼吸光效 */
 .card-wrap {
   position: relative;
+  z-index: 10;
   padding: 2px;
   border-radius: 20px;
-  background: linear-gradient(135deg, rgba(180,150,255,0.5), rgba(100,80,200,0.3), rgba(200,160,255,0.5));
-  animation: constellationGlow 3s ease-in-out infinite;
-  z-index: 10;
+  background: linear-gradient(135deg, #4a3a8a, #6a5aaa, #8a7aca, #6a5aaa, #4a3a8a);
+  background-size: 300% 300%;
+  animation: borderFlow 5s ease infinite;
+  box-shadow:
+    0 0 20px rgba(100, 80, 200, 0.3),
+    0 0 40px rgba(100, 80, 200, 0.15),
+    inset 0 0 20px rgba(100, 80, 200, 0.1);
 }
-@keyframes constellationGlow {
-  0%, 100% { box-shadow: 0 0 12px 2px rgba(160,130,255,0.3), 0 0 30px 6px rgba(100,80,200,0.15); }
-  50% { box-shadow: 0 0 22px 4px rgba(180,150,255,0.5), 0 0 50px 10px rgba(120,100,220,0.22); }
+
+@keyframes borderFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .card {
-  background: linear-gradient(160deg, rgba(6,10,24,0.94) 0%, rgba(10,16,36,0.96) 100%);
+  background: linear-gradient(180deg,
+    rgba(10, 22, 40, 0.95) 0%,
+    rgba(20, 35, 60, 0.92) 50%,
+    rgba(15, 28, 50, 0.95) 100%);
   border-radius: 18px;
-  padding: clamp(32px, 8vw, 54px) clamp(24px, 6vw, 44px);
+  padding: clamp(28px, 6vw, 48px) clamp(24px, 5vw, 42px);
   text-align: center;
-  max-width: 500px;
-  width: 90vw;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(160,130,255,0.12);
+  min-width: 300px;
+  max-width: 480px;
 }
 
 .card::before {
   content: '';
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(160,120,255,0.05) 0%, transparent 55%);
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(100, 80, 200, 0.15), transparent 60%);
   pointer-events: none;
 }
 
-/* 星座图标 */
-.constellation-icon {
-  font-size: clamp(28px, 6vw, 40px);
-  margin-bottom: 8px;
-  opacity: 1;
-  animation: fadeIn 1s ease-out both;
+/* 星尘粒子效果 */
+.dust {
+  position: absolute;
+  width: 2px; height: 2px;
+  border-radius: 50%;
+  background: rgba(200, 180, 255, 0.6);
+  animation: dustFloat 6s ease-in-out infinite;
+}
+
+@keyframes dustFloat {
+  0%, 100% { opacity: 0.2; transform: translateY(0); }
+  50% { opacity: 0.8; transform: translateY(-15px); }
+}
+
+.icon {
+  font-size: clamp(40px, 10vw, 64px);
+  display: block;
+  margin-bottom: clamp(12px, 3vw, 20px);
+  animation: iconDrop 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+  filter: drop-shadow(0 0 8px rgba(200, 180, 255, 0.5));
+}
+
+@keyframes iconDrop {
+  from { opacity: 0; transform: translateY(-30px) scale(0.5); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .name {
   font-size: clamp(26px, 7vw, 48px);
-  font-weight: bold;
-  background: linear-gradient(135deg, #d4c8ff, #e8e0ff, #fff8ff);
+  font-weight: 600;
+  background: linear-gradient(135deg, #c9a84c, #e8d8a0, #c9a84c, #a08030);
+  background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 14px;
+  animation: shimmer 3s ease-in-out infinite;
+  margin-bottom: clamp(10px, 2.5vw, 18px);
   opacity: 1;
-  animation: fadeIn 1.2s ease-out 0.1s both;
+}
+
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .date {
-  font-size: clamp(11px, 2.8vw, 15px);
-  color: rgba(180,160,255,0.5);
-  margin-bottom: 24px;
+  font-size: clamp(13px, 3vw, 16px);
+  color: rgba(168, 200, 224, 0.7);
   letter-spacing: 3px;
+  margin-bottom: clamp(16px, 4vw, 28px);
   opacity: 1;
-  animation: fadeIn 1.2s ease-out 0.2s both;
 }
 
 .blessing {
-  font-size: clamp(15px, 4vw, 22px);
-  color: rgba(220,210,255,0.88);
-  line-height: 1.9;
-  margin-bottom: 26px;
+  font-size: clamp(16px, 4vw, 22px);
+  color: rgba(200, 220, 240, 0.9);
+  line-height: 1.8;
+  margin-bottom: clamp(20px, 5vw, 36px);
   opacity: 1;
-  animation: fadeIn 1.2s ease-out 0.35s both;
+  animation: fadeSlideIn 1.2s ease-out 0.4s both;
 }
 
-/* 星座连线装饰 */
-.constellation-line {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 22px;
-  opacity: 1;
-  animation: fadeIn 1s ease-out 0.45s both;
-}
-.constellation-dot {
-  width: 5px; height: 5px;
-  background: rgba(200,180,255,0.6);
-  border-radius: 50%;
-  animation: twinkle 2s ease-in-out infinite;
-}
-.constellation-dot:nth-child(2) { animation-delay: 0.3s; }
-.constellation-dot:nth-child(3) { animation-delay: 0.6s; }
-.constellation-dot:nth-child(4) { animation-delay: 0.9s; }
-.constellation-dot:nth-child(5) { animation-delay: 1.2s; }
-
-.from {
-  font-size: clamp(12px, 3vw, 16px);
-  color: rgba(180,160,255,0.55);
-  opacity: 1;
-  animation: fadeIn 1.2s ease-out 0.55s both;
-}
-
-@keyframes fadeIn {
+@keyframes fadeSlideIn {
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+.from {
+  font-size: clamp(13px, 3vw, 16px);
+  color: rgba(168, 200, 224, 0.6);
+  font-style: italic;
+  opacity: 1;
+  animation: fadeSlideIn 1.2s ease-out 0.6s both;
+}
+
+/* 背面 */
+.back-content {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+  backface-visibility: hidden;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(28px, 6vw, 48px) clamp(24px, 5vw, 42px);
+  border-radius: 18px;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(180deg,
+    rgba(15, 10, 30, 0.97) 0%,
+    rgba(25, 15, 45, 0.95) 100%);
+}
+
+.back-content {
+  text-align: center;
+}
+
+.back-title {
+  font-size: clamp(18px, 4.5vw, 26px);
+  background: linear-gradient(135deg, #a8c8e0, #c8e0f0, #a8c8e0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: clamp(12px, 3vw, 20px);
+  opacity: 1;
+}
+
+.back-text {
+  font-size: clamp(14px, 3.5vw, 18px);
+  color: rgba(200, 210, 230, 0.8);
+  line-height: 1.9;
+  opacity: 1;
+  animation: fadeSlideIn 1.2s ease-out 0.3s both;
+}
+
+.back-text em {
+  color: rgba(200, 180, 255, 0.9);
+  font-style: normal;
+}
+
+/* 底部星座装饰文字 */
+.zodiac-hint {
+  position: absolute;
+  bottom: 12px;
+  font-size: 11px;
+  color: rgba(168, 200, 224, 0.3);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  opacity: 1;
+}
+
+/* 无障碍 */
+@media (prefers-reduced-motion: reduce) {
+  .star, .planet, .dust, .icon, .name, .blessing, .from {
+    animation: none !important;
+  }
+  .card-wrap {
+    animation: none !important;
+  }
 }
 </style>
 </head>
 <body>
 
-<script>
-const p = new URLSearchParams(location.search);
-const name = p.get('n') || '亲爱的你';
-const date = p.get('d') || '';
-const blessing = p.get('b') || '你是夜空中最亮的那颗星';
-const from = p.get('f') || '';
+<div class="stars-bg" id="starsBg"></div>
 
-document.getElementById('nameEl').textContent = name;
-document.getElementById('dateEl').textContent = date;
-document.getElementById('blessingEl').textContent = blessing;
-document.getElementById('fromEl').textContent = from ? '— ' + from : '';
+<!-- 行星 -->
+<div class="planet planet-1"></div>
+<div class="planet planet-2"></div>
 
-// 生成背景星星
-for (let i = 0; i < 60; i++) {
-  const star = document.createElement('div');
-  star.className = 'star';
-  star.style.left = Math.random() * 100 + 'vw';
-  star.style.top = Math.random() * 100 + 'vh';
-  const size = 1 + Math.random() * 2.5;
-  star.style.width = size + 'px';
-  star.style.height = size + 'px';
-  star.style.animationDuration = (1.5 + Math.random() * 3) + 's';
-  star.style.animationDelay = (-Math.random() * 5) + 's';
-  document.body.appendChild(star);
-}
-</script>
-
-<div class="card-wrap">
-  <div class="card">
-    <div class="constellation-icon">✦</div>
-    <div class="name" id="nameEl"></div>
-    <div class="date" id="dateEl"></div>
-    <div class="blessing" id="blessingEl"></div>
-    <div class="constellation-line">
-      <div class="constellation-dot"></div>
-      <div class="constellation-dot"></div>
-      <div class="constellation-dot"></div>
-      <div class="constellation-dot"></div>
-      <div class="constellation-dot"></div>
+<!-- 卡片 -->
+<div class="card-wrap" id="cardWrap">
+  <div class="card" id="card">
+    <div class="card-front">
+      <span class="icon" id="iconEl">✨</span>
+      <div class="name" id="nameEl"></div>
+      <div class="date" id="dateEl"></div>
+      <div class="blessing" id="blessingEl"></div>
+      <div class="from" id="fromEl"></div>
+      <div class="zodiac-hint">constellation</div>
     </div>
-    <div class="from" id="fromEl"></div>
+    <div class="card-back">
+      <div class="back-content">
+        <div class="back-title" id="backTitle">星座密语</div>
+        <div class="back-text" id="backEl"></div>
+      </div>
+    </div>
   </div>
 </div>
 
+<script>
+// URL参数
+const p = new URLSearchParams(location.search);
+document.getElementById('nameEl').textContent = p.get('n') || '亲爱的你';
+document.getElementById('dateEl').textContent = p.get('d') || '';
+document.getElementById('blessingEl').textContent = p.get('b') || '愿星辰指引你的方向，愿银河温暖你的夜晚';
+document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
+
+const icon = p.get('i') || '✨';
+document.getElementById('iconEl').textContent = icon;
+
+if (p.get('back')) {
+  document.getElementById('backEl').innerHTML = p.get('back').replace(/\\n/g, '<br>');
+  document.getElementById('backTitle').textContent = p.get('backTitle') || '星座密语';
+}
+
+// 生成星空背景
+(function initStars() {
+  const bg = document.getElementById('starsBg');
+  const count = Math.min(80, Math.floor(window.innerWidth * window.innerHeight / 12000));
+  for (let i = 0; i < count; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.cssText = `
+      left: ${Math.random() * 100}%;
+      top: ${Math.random() * 100}%;
+      width: ${1 + Math.random() * 2.5}px;
+      height: ${1 + Math.random() * 2.5}px;
+      --dur: ${2 + Math.random() * 4}s;
+      animation-delay: ${Math.random() * 3}s;
+    `;
+    bg.appendChild(star);
+  }
+
+  // 生成星尘粒子
+  for (let i = 0; i < 20; i++) {
+    const dust = document.createElement('div');
+    dust.className = 'dust';
+    dust.style.cssText = `
+      left: ${10 + Math.random() * 80}%;
+      top: ${20 + Math.random() * 60}%;
+      animation-delay: ${Math.random() * 6}s;
+      animation-duration: ${4 + Math.random() * 4}s;
+    `;
+    bg.appendChild(dust);
+  }
+
+  // 流星定时器
+  function createShootingStar() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const star = document.createElement('div');
+    star.className = 'shooting-star';
+    star.style.cssText = `
+      left: ${20 + Math.random() * 60}%;
+      top: ${5 + Math.random() * 30}%;
+    `;
+    bg.appendChild(star);
+    setTimeout(() => star.remove(), 1500);
+  }
+
+  // 每4-8秒出现一颗流星
+  function scheduleShootingStar() {
+    createShootingStar();
+    setTimeout(scheduleShootingStar, 4000 + Math.random() * 4000);
+  }
+  setTimeout(scheduleShootingStar, 2000);
+})();
+
+// 3D翻转
+const card = document.getElementById('card');
+const cardWrap = document.getElementById('cardWrap');
+
+card.addEventListener('click', function() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  card.classList.toggle('flipped');
+});
+</script>
 </body>
 </html>

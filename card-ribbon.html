@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>丝带礼盒</title>
+<meta property="og:title" content="🎁 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --ribbon-pink: #ff6b9d;
+  --ribbon-rose: #e84a7a;
+  --ribbon-gold: #ffd700;
+  --ribbon-mint: #7fded5;
+  --ribbon-lavender: #b794f6;
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --text-wine: #8b2252;
+  --glow-pink: rgba(255, 107, 157, 0.5);
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg,
+    #fff0f5 0%,
+    #ffe4ec 15%,
+    #ffd6e7 30%,
+    #ffc8da 45%,
+    #ffbcd0 60%,
+    #ffb0c8 75%,
+    #ffa4c0 100%);
+  font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 丝带光泽 */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse at 25% 25%, rgba(255, 255, 255, 0.6) 0%, transparent 40%),
+    radial-gradient(ellipse at 75% 75%, rgba(255, 200, 220, 0.4) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 丝带飘动 */
+@keyframes ribbonFlow {
+  0% { transform: translateY(-30px) rotate(0deg) translateX(0); opacity: 0; }
+  10% { opacity: 0.9; }
+  90% { opacity: 0.9; }
+  100% { transform: translateY(105vh) rotate(360deg) translateX(var(--dx)); opacity: 0; }
+}
+
+.ribbon-strip {
+  position: fixed;
+  top: -40px;
+  width: 8px;
+  height: 50px;
+  border-radius: 4px;
+  z-index: 1;
+  pointer-events: none;
+  animation: ribbonFlow var(--dur) var(--ease) var(--delay) infinite;
+  opacity: 0.7;
+}
+
+/* 礼花爆炸 */
+@keyframes confettiPop {
+  0% { transform: translateY(0) rotate(0deg) scale(0); opacity: 0; }
+  20% { opacity: 1; transform: scale(1.2); }
+  100% { transform: translateY(80px) rotate(var(--rot)) scale(0.8); opacity: 0; }
+}
+
+.confetti {
+  position: fixed;
+  top: 40%;
+  z-index: 2;
+  pointer-events: none;
+  animation: confettiPop var(--dur) ease-out var(--delay) infinite;
+}
+
+/* 爱心飘 */
+@keyframes heartPop {
+  0%, 100% { transform: scale(1) translateY(0); opacity: 0.7; }
+  50% { transform: scale(1.15) translateY(-8px); opacity: 1; }
+}
+
+.heart-pop {
+  position: fixed;
+  font-size: clamp(10px, 2.5vw, 16px);
+  z-index: 2;
+  pointer-events: none;
+  animation: heartPop var(--dur) ease-in-out var(--d) infinite;
+}
+
+/* 星星闪烁 */
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.3; transform: scale(0.8) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.3) rotate(180deg); }
+}
+
+.star-spark {
+  position: fixed;
+  font-size: clamp(8px, 2vw, 12px);
+  z-index: 2;
+  pointer-events: none;
+  animation: starTwinkle var(--dur) ease-in-out var(--d) infinite;
+}
+
+/* 缎带蝴蝶结装饰 */
+@keyframes bowBob {
+  0%, 100% { transform: rotate(var(--rot)) scale(1); }
+  50% { transform: rotate(calc(var(--rot) + 8deg)) scale(1.05); }
+}
+
+.bow-deco {
+  position: fixed;
+  font-size: clamp(16px, 4vw, 28px);
+  z-index: 3;
+  pointer-events: none;
+  animation: bowBob var(--dur) ease-in-out var(--d) infinite;
+}
+
+/* 卡片外框 - 缎带粉边框 */
+.card-wrap {
+  position: relative;
+  z-index: 10;
+  padding: 3px;
+  border-radius: 24px;
+  background: linear-gradient(135deg,
+    var(--ribbon-pink) 0%,
+    var(--ribbon-gold) 25%,
+    var(--ribbon-mint) 50%,
+    var(--ribbon-rose) 75%,
+    var(--ribbon-lavender) 100%);
+  background-size: 400% 400%;
+  animation: ribbonBorder 4s ease-in-out infinite;
+  box-shadow:
+    0 0 28px rgba(255, 107, 157, 0.55),
+    0 0 56px rgba(232, 74, 122, 0.3),
+    0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes ribbonBorder {
+  0%, 100% { background-position: 0% 50%; box-shadow: 0 0 28px rgba(255, 107, 157, 0.55), 0 8px 32px rgba(0,0,0,0.2); }
+  50% { background-position: 100% 50%; box-shadow: 0 0 40px rgba(183, 148, 246, 0.65), 0 8px 32px rgba(0,0,0,0.2); }
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: 22px;
+  padding: clamp(28px, 7vw, 48px) clamp(24px, 6vw, 48px);
+  text-align: center;
+  max-width: 90vw;
+  width: 420px;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* 丝带光泽 */
+.card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg,
+    rgba(255,255,255,0.6) 0%,
+    rgba(255,200,220,0.25) 30%,
+    rgba(255,255,255,0.4) 100%);
+  pointer-events: none;
+  border-radius: 22px;
+}
+
+.icon-emoji {
+  font-size: clamp(40px, 10vw, 60px);
+  display: block;
+  margin-bottom: 12px;
+  animation: iconDrop 0.9s cubic-bezier(0.34,1.56,0.64,1) 0.1s both;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.12));
+}
+
+@keyframes iconDrop {
+  from { transform: translateY(-40px) scale(0.5); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.name {
+  font-size: clamp(22px, 6vw, 36px);
+  font-weight: 700;
+  color: var(--text-wine);
+  margin-bottom: 12px;
+  letter-spacing: 2px;
+  opacity: 1;
+  animation: textIn 1.2s ease-out 0.3s both;
+  text-shadow: 0 2px 8px rgba(139, 34, 82, 0.12);
+}
+
+.blessing {
+  font-size: clamp(14px, 4vw, 18px);
+  color: var(--text-wine);
+  line-height: 1.8;
+  margin-bottom: 14px;
+  opacity: 1;
+  animation: textIn 1.2s ease-out 0.5s both;
+}
+
+.date {
+  font-size: clamp(11px, 3vw, 14px);
+  color: rgba(139, 34, 82, 0.55);
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+  opacity: 1;
+  animation: textIn 1.2s ease-out 0.8s both;
+}
+
+.from {
+  font-size: clamp(11px, 3vw, 14px);
+  color: rgba(139, 34, 82, 0.5);
+  font-style: italic;
+  opacity: 1;
+  animation: textIn 1.2s ease-out 1.0s both;
+}
+
+@keyframes textIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ribbon-strip, .confetti, .heart-pop, .star-spark, .bow-deco, .card-wrap, .name, .blessing, .date, .from, .icon-emoji {
+    animation: none !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<script>
+// 丝带飘落
+function createRibbons() {
+  const colors = ['#ff6b9d', '#ffd700', '#7fded5', '#b794f6', '#ff6b9d', '#e84a7a'];
+  for (let i = 0; i < 12; i++) {
+    const r = document.createElement('div');
+    r.className = 'ribbon-strip';
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    r.style.cssText = `
+      left: ${Math.random() * 100}%;
+      background: linear-gradient(180deg, ${color}, ${color}88);
+      --dur: ${7 + Math.random() * 6}s;
+      --delay: ${Math.random() * 8}s;
+      --ease: ${Math.random() > 0.5 ? 'ease-in-out' : 'linear'};
+      --dx: ${(Math.random() - 0.5) * 80}px;
+    `;
+    document.body.appendChild(r);
+  }
+}
+
+// 礼花
+function createConfetti() {
+  const items = ['🎊', '🎉', '🎈', '✨', '💫', '🎀', '🌟'];
+  for (let i = 0; i < 12; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.textContent = items[Math.floor(Math.random() * items.length)];
+    c.style.cssText = `
+      left: ${5 + Math.random() * 90}%;
+      --dur: ${3 + Math.random() * 3}s;
+      --delay: ${Math.random() * 5}s;
+      --rot: ${(Math.random() - 0.5) * 360}deg;
+      font-size: ${12 + Math.random() * 16}px;
+    `;
+    document.body.appendChild(c);
+  }
+}
+
+// 爱心
+function createHearts() {
+  const hearts = ['💖', '💕', '💗', '💓', '💝', '✨'];
+  for (let i = 0; i < 10; i++) {
+    const h = document.createElement('div');
+    h.className = 'heart-pop';
+    h.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+    h.style.cssText = `
+      left: ${5 + Math.random() * 88}%;
+      top: ${8 + Math.random() * 82}%;
+      --dur: ${2.5 + Math.random() * 2}s;
+      --d: ${Math.random() * 3}s;
+    `;
+    document.body.appendChild(h);
+  }
+}
+
+// 星星
+function createStars() {
+  for (let i = 0; i < 10; i++) {
+    const s = document.createElement('div');
+    s.className = 'star-spark';
+    s.textContent = '✦';
+    s.style.cssText = `
+      left: ${Math.random() * 95}%;
+      top: ${Math.random() * 90}%;
+      --dur: ${1.5 + Math.random() * 2}s;
+      --d: ${Math.random() * 2}s;
+      color: rgba(255, 215, 0, ${0.4 + Math.random() * 0.5});
+    `;
+    document.body.appendChild(s);
+  }
+}
+
+// 蝴蝶结装饰
+function createBows() {
+  const bows = ['🎀', '💝', '🎀'];
+  const positions = [
+    {l: 5, t: 8}, {l: 88, t: 12}, {l: 8, t: 78},
+    {l: 85, t: 75}, {l: 50, t: 5}, {l: 3, t: 45},
+  ];
+  positions.forEach((pos, i) => {
+    const b = document.createElement('div');
+    b.className = 'bow-deco';
+    b.textContent = bows[i % bows.length];
+    b.style.cssText = `
+      left: ${pos.l}%;
+      top: ${pos.t}%;
+      --dur: ${3 + Math.random() * 2}s;
+      --d: ${Math.random() * 2}s;
+      --rot: ${(Math.random() - 0.5) * 15}deg;
+    `;
+    document.body.appendChild(b);
+  });
+}
+
+// URL参数
+const p = new URLSearchParams(location.search);
+const nameEl = document.getElementById('nameEl');
+const dateEl = document.getElementById('dateEl');
+const blessingEl = document.getElementById('blessingEl');
+const fromEl = document.getElementById('fromEl');
+if (nameEl) nameEl.textContent = p.get('n') || '亲爱的你';
+if (dateEl) dateEl.textContent = p.get('d') || '';
+if (blessingEl) blessingEl.textContent = p.get('b') || '拆开礼物，收获专属惊喜，愿你天天开心';
+if (fromEl) fromEl.textContent = p.get('f') ? '— ' + p.get('f') : '';
+
+createRibbons();
+createConfetti();
+createHearts();
+createStars();
+createBows();
+</script>
+
+<div class="card-wrap">
+  <div class="card">
+    <span class="icon-emoji">🎁</span>
+    <div class="name" id="nameEl"></div>
+    <div class="blessing" id="blessingEl"></div>
+    <div class="date" id="dateEl"></div>
+    <div class="from" id="fromEl"></div>
+  </div>
+</div>
+</body>
+</html>

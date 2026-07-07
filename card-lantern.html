@@ -3,18 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>元宵节祝福</title>
-<meta property="og:title" content="💌 收到一份专属贺卡">
+<title>灯笼之夜</title>
+<meta property="og:title" content="🏮 收到一份专属贺卡">
 <meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary">
 
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --night-dark: #0a0518;
+  --night-mid: #1a0a2e;
+  --lantern-red: #e83000;
+  --lantern-gold: #f5c518;
+  --lantern-orange: #f0883e;
+  --glow-warm: rgba(255,150,50,0.6);
+  --text-cream: #f5e6d0;
+  --card-bg: rgba(30,10,10,0.85);
+  --border-red: #c42020;
+}
+
 body {
   min-height: 100vh;
-  background: linear-gradient(180deg, #0a1628 0%, #0d1f3c 40%, #1a3a6e 100%);
-  font-family: 'Georgia', serif;
+  background: linear-gradient(180deg,
+    var(--night-dark) 0%,
+    #120828 40%,
+    var(--night-mid) 70%,
+    #2a1040 100%);
+  font-family: 'PingFang SC', 'Microsoft YaHei', 'STKaiti', serif;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,242 +39,230 @@ body {
   position: relative;
 }
 
-/* === 月亮 === */
+/* 夜空星光 */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(1px 1px at 15% 12%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 35% 8%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 55% 18%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 75% 6%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 88% 22%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 92% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 8% 25%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 45% 4%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 65% 14%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 25% 20%, rgba(255,255,255,0.3) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 月亮 */
 .moon {
   position: fixed;
-  top: 6%;
+  top: 8%;
   right: 12%;
-  width: clamp(60px, 12vw, 110px);
-  height: clamp(60px, 12vw, 110px);
+  width: 70px;
+  height: 70px;
+  background: radial-gradient(circle at 35% 35%, #fffde8, #ffe566 50%, #f5c518 100%);
   border-radius: 50%;
-  background: radial-gradient(circle at 40% 40%, #fffde7, #ffd54f, #ffb300);
-  box-shadow: 0 0 30px rgba(255,220,100,0.6), 0 0 80px rgba(255,200,80,0.3), 0 0 120px rgba(255,180,60,0.15);
+  box-shadow: 0 0 40px rgba(255,238,100,0.4), 0 0 80px rgba(255,220,50,0.2);
+  pointer-events: none;
+  z-index: 1;
   animation: moonGlow 4s ease-in-out infinite;
-  z-index: 1;
 }
+
 @keyframes moonGlow {
-  0%, 100% { box-shadow: 0 0 30px rgba(255,220,100,0.6), 0 0 80px rgba(255,200,80,0.3); }
-  50% { box-shadow: 0 0 45px rgba(255,225,110,0.8), 0 0 100px rgba(255,210,90,0.4); }
+  0%, 100% { box-shadow: 0 0 40px rgba(255,238,100,0.4), 0 0 80px rgba(255,220,50,0.2); }
+  50% { box-shadow: 0 0 55px rgba(255,238,100,0.55), 0 0 100px rgba(255,220,50,0.3); }
 }
 
-/* === 星星 === */
-.star {
-  position: fixed;
-  background: radial-gradient(circle, #fff9c4, #ffe082);
-  border-radius: 50%;
-  animation: starTwinkle ease-in-out infinite;
-  z-index: 1;
-}
-@keyframes starTwinkle {
-  0%, 100% { opacity: 0.15; transform: scale(0.7); }
-  50% { opacity: 1; transform: scale(1.1); }
-}
+/* 灯笼 */
+.lanterns { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
 
-/* === 孔明灯上升 === */
 .lantern {
-  position: fixed;
-  z-index: 2;
-  animation: lanternRise ease-in-out infinite;
+  position: absolute;
+  animation: lanternFloat ease-in-out infinite;
+  filter: drop-shadow(0 0 10px var(--glow-warm));
 }
+
+@keyframes lanternFloat {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-18px) rotate(2deg); }
+}
+
 .lantern-body {
-  width: clamp(22px, 4vw, 36px);
-  height: clamp(28px, 5vw, 46px);
-  background: radial-gradient(ellipse at 50% 60%, #ff6b35, #c62828, #b71c1c);
-  border-radius: 50% 50% 45% 45% / 55% 55% 45% 45%;
+  width: 44px;
+  height: 58px;
+  background: radial-gradient(ellipse at 40% 30%, #ff6040, var(--lantern-red) 60%, #a01010 100%);
+  border-radius: 50% / 45%;
   position: relative;
-  box-shadow: 0 0 12px rgba(255,100,50,0.5), inset 0 0 8px rgba(255,200,100,0.2);
+  border: 2px solid rgba(200,160,40,0.5);
+  box-shadow: inset 0 -10px 20px rgba(0,0,0,0.3), 0 0 20px rgba(255,100,50,0.3);
 }
+
 .lantern-body::before {
   content: '';
   position: absolute;
-  top: -4px; left: 50%;
+  top: -10px;
+  left: 50%;
   transform: translateX(-50%);
-  width: 55%; height: 6px;
-  background: linear-gradient(90deg, #8b0000, #cc0000, #8b0000);
-  border-radius: 3px;
+  width: 18px;
+  height: 10px;
+  background: linear-gradient(to bottom, #d4956a, #8b6914);
+  border-radius: 3px 3px 0 0;
+  border: 1px solid rgba(180,140,40,0.4);
 }
+
 .lantern-body::after {
   content: '';
   position: absolute;
-  bottom: -8px; left: 50%;
+  bottom: -10px;
+  left: 50%;
   transform: translateX(-50%);
-  width: 2px;
-  height: 10px;
-  background: linear-gradient(180deg, #ffd700, transparent);
+  width: 6px;
+  height: 12px;
+  background: linear-gradient(to bottom, #8b6914, #5a4010);
+  border-radius: 0 0 3px 3px;
 }
+
+/* 灯笼发光核心 */
 .lantern-glow {
   position: absolute;
-  top: 50%; left: 50%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  width: 60%; height: 50%;
-  background: radial-gradient(ellipse, rgba(255,200,100,0.5), transparent);
+  width: 20px;
+  height: 28px;
+  background: radial-gradient(ellipse, rgba(255,220,100,0.8) 0%, transparent 70%);
   border-radius: 50%;
-  animation: lanternFlicker 1.5s ease-in-out infinite alternate;
-}
-@keyframes lanternFlicker {
-  0% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
-  100% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-}
-@keyframes lanternRise {
-  0% { transform: translateY(0) translateX(0) rotate(-3deg); opacity: 0; }
-  8% { opacity: 0.85; }
-  90% { opacity: 0.75; }
-  100% { transform: translateY(-110vh) translateX(30px) rotate(3deg); opacity: 0; }
+  animation: glowPulse 2s ease-in-out infinite;
 }
 
-/* === 烟花火星 === */
-.spark {
-  position: fixed;
-  width: 3px; height: 3px;
-  border-radius: 50%;
-  animation: sparkFloat ease-out infinite;
-  z-index: 1;
-}
-@keyframes sparkFloat {
-  0% { transform: translateY(0) scale(1); opacity: 0; }
-  10% { opacity: 1; }
-  80% { opacity: 0.5; }
-  100% { transform: translateY(-80px) scale(0.3); opacity: 0; }
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
 }
 
-/* === 雪花飘落 === */
-.snow {
-  position: fixed;
-  color: rgba(255,255,255,0.7);
-  animation: snowFall linear infinite;
-  z-index: 1;
-  pointer-events: none;
-}
-@keyframes snowFall {
-  0% { transform: translateY(-10px) rotate(0deg); opacity: 0; }
-  10% { opacity: 0.8; }
-  90% { opacity: 0.6; }
-  100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+/* 挂绳 */
+.lantern-string {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 50px;
+  background: rgba(180,140,60,0.4);
 }
 
-/* === 卡片外框 === */
+/* 卡片 */
 .card-wrap {
   position: relative;
   z-index: 10;
   padding: 3px;
-  border-radius: 24px;
-  background: linear-gradient(135deg, #ffd700, #ff6b35, #ffd700);
+  border-radius: 22px;
+  background: linear-gradient(135deg, var(--lantern-red), var(--lantern-gold), var(--lantern-orange), var(--lantern-red));
   background-size: 300% 300%;
-  animation: lanternBorder 4s ease-in-out infinite;
-  box-shadow: 0 0 30px rgba(255,150,50,0.5), 0 0 60px rgba(255,100,50,0.25);
-}
-@keyframes lanternBorder {
-  0%, 100% { background-position: 0% 50%; box-shadow: 0 0 30px rgba(255,150,50,0.5), 0 0 60px rgba(255,100,50,0.25); }
-  50% { background-position: 100% 50%; box-shadow: 0 0 45px rgba(255,180,80,0.7), 0 0 80px rgba(255,130,60,0.35); }
+  animation: borderFlow 4s ease infinite;
+  box-shadow: 0 0 30px rgba(232,48,0,0.5), 0 0 60px rgba(245,197,24,0.25);
 }
 
-/* === 卡片主体 === */
+@keyframes borderFlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
 .card {
-  background: linear-gradient(160deg, rgba(5,15,35,0.97), rgba(10,25,55,0.97));
-  border-radius: 22px;
-  padding: clamp(32px, 6vw, 56px) clamp(28px, 5vw, 50px);
+  background: var(--card-bg);
+  border-radius: 19px;
+  padding: 40px 36px;
   text-align: center;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  max-width: 380px;
+  width: 88vw;
+  border: 1px solid rgba(200,100,50,0.2);
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(255,200,100,0.25);
 }
 
-/* 温暖光晕 */
+/* 卡片四个角的灯笼装饰 */
 .card::before {
-  content: '';
+  content: '🏮';
   position: absolute;
-  top: -50%; left: -50%;
-  width: 200%; height: 200%;
-  background: radial-gradient(ellipse at 50% 50%, rgba(255,180,80,0.08) 0%, transparent 65%);
-  animation: warmPulse 4s ease-in-out infinite;
-  z-index: 0;
-}
-@keyframes warmPulse {
-  0%, 100% { opacity: 0.7; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.08); }
+  top: 10px;
+  left: 12px;
+  font-size: 18px;
+  opacity: 0.6;
 }
 
-.icon-top {
-  font-size: clamp(32px, 8vw, 56px);
-  opacity: 1;
+.card::after {
+  content: '🏮';
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-size: 18px;
+  opacity: 0.6;
+}
+
+.icon-emoji {
+  font-size: clamp(40px, 10vw, 60px);
+  display: block;
+  margin-bottom: 14px;
   animation: iconDrop 0.9s cubic-bezier(0.34,1.56,0.64,1) 0.2s both;
-  filter: drop-shadow(0 0 10px rgba(255,180,80,0.7));
-  position: relative;
-  z-index: 1;
-}
-@keyframes iconDrop {
-  from { transform: translateY(-30px) scale(0.5); opacity: 0; }
-  to { transform: translateY(0) scale(1); opacity: 1; }
+  filter: drop-shadow(0 3px 8px rgba(255,100,50,0.4));
 }
 
-.title {
-  font-size: clamp(20px, 5vw, 36px);
-  color: #ffd54f;
-  letter-spacing: 0.25em;
-  margin: 10px 0 6px;
-  text-shadow: 0 0 20px rgba(255,200,80,0.6), 0 0 40px rgba(255,160,50,0.3);
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.3s both;
-  position: relative;
-  z-index: 1;
+@keyframes iconDrop {
+  from { opacity: 0; transform: translateY(-30px) scale(0.6); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
+
+.name {
+  font-size: clamp(22px, 6vw, 32px);
+  font-weight: 700;
+  color: var(--text-cream);
+  margin-bottom: 14px;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.4s both;
+  letter-spacing: 3px;
+  text-shadow: 0 2px 10px rgba(255,150,50,0.3);
+}
+
+.blessing {
+  font-size: clamp(15px, 4vw, 18px);
+  color: #e8d0b0;
+  line-height: 1.9;
+  margin-bottom: 18px;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.65s both;
+}
+
+.date {
+  font-size: clamp(12px, 3vw, 14px);
+  color: #c0a090;
+  margin-bottom: 6px;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 0.85s both;
+}
+
+.from {
+  font-size: clamp(12px, 3vw, 14px);
+  color: #d0b0a0;
+  opacity: 1;
+  animation: slideUp 1.2s ease-out 1s both;
+  font-style: italic;
+}
+
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.name {
-  font-size: clamp(26px, 7vw, 52px);
-  color: #ffffff;
-  font-weight: bold;
-  margin: 8px 0;
-  text-shadow: 0 0 20px rgba(255,200,80,0.5);
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.45s both;
-  position: relative;
-  z-index: 1;
-}
-
-.date {
-  font-size: clamp(12px, 3vw, 16px);
-  color: rgba(255,220,150,0.75);
-  letter-spacing: 0.2em;
-  margin-bottom: 16px;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.6s both;
-  position: relative;
-  z-index: 1;
-}
-
-.blessing {
-  font-size: clamp(15px, 4vw, 22px);
-  color: rgba(255,255,255,0.92);
-  line-height: 1.7;
-  margin: 14px 0;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.75s both;
-  position: relative;
-  z-index: 1;
-}
-
-.from {
-  font-size: clamp(12px, 3vw, 16px);
-  color: rgba(255,200,100,0.8);
-  margin-top: 12px;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.9s both;
-  position: relative;
-  z-index: 1;
-}
-
-.footer-deco {
-  font-size: clamp(22px, 5vw, 36px);
-  opacity: 0.7;
-  margin-top: 14px;
-  animation: slideUp 1.2s ease-out 1s both;
-  position: relative;
-  z-index: 1;
-  filter: drop-shadow(0 0 6px rgba(255,180,80,0.5));
+@media (prefers-reduced-motion: reduce) {
+  .lantern, .moon { animation: none; }
+  .card-wrap { animation: none; background: linear-gradient(135deg, var(--lantern-red), var(--lantern-gold)); }
 }
 </style>
 </head>
@@ -265,86 +270,59 @@ body {
 
 <div class="moon"></div>
 
+<div class="lanterns" id="lanterns"></div>
+
+<script>
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (!reducedMotion) {
+  const lanterns = document.getElementById('lanterns');
+
+  // 创建灯笼
+  const positions = [
+    { left: 8, top: 15, size: 1, delay: 0 },
+    { left: 22, top: 25, size: 0.8, delay: 1.2 },
+    { left: 78, top: 18, size: 0.9, delay: 0.5 },
+    { left: 88, top: 30, size: 0.75, delay: 2 },
+    { left: 50, top: 10, size: 1.1, delay: 1.8 },
+  ];
+
+  positions.forEach((pos, i) => {
+    const lantern = document.createElement('div');
+    lantern.className = 'lantern';
+    lantern.innerHTML = `
+      <div class="lantern-string"></div>
+      <div class="lantern-body">
+        <div class="lantern-glow"></div>
+      </div>
+    `;
+    lantern.style.cssText = `
+      left: ${pos.left}%;
+      top: ${pos.top}%;
+      transform: scale(${pos.size});
+      animation-duration: ${4 + Math.random() * 2}s;
+      animation-delay: ${pos.delay}s;
+    `;
+    lanterns.appendChild(lantern);
+  });
+}
+
+// URL参数
+const p = new URLSearchParams(location.search);
+document.getElementById('nameEl').textContent = p.get('n') || '亲爱的你';
+document.getElementById('blessingEl').textContent = p.get('b') || '愿这盏灯笼为你照亮前路，愿你被岁月温柔以待';
+document.getElementById('dateEl').textContent = p.get('d') || '';
+document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
+</script>
+
 <div class="card-wrap">
   <div class="card">
-    <div class="icon-top">🏮</div>
-    <div class="title">元 宵 节 快 乐</div>
-    <div class="name" id="nameEl"></div>
+    <span class="icon-emoji" id="iconEl">🏮</span>
+    <div class="name" id="nameEl">亲爱的你</div>
+    <div class="blessing" id="blessingEl">愿这盏灯笼为你照亮前路，愿你被岁月温柔以待</div>
     <div class="date" id="dateEl"></div>
-    <div class="blessing" id="blessingEl"></div>
     <div class="from" id="fromEl"></div>
-    <div class="footer-deco">🏮🏮🏮</div>
   </div>
 </div>
 
-<script>
-const p = new URLSearchParams(location.search);
-document.getElementById('nameEl').textContent = p.get('n') || '';
-document.getElementById('dateEl').textContent = p.get('d') || '';
-document.getElementById('blessingEl').textContent = p.get('b') || '月圆人团圆，元宵节快乐';
-document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
-
-// 孔明灯
-function createLantern() {
-  const l = document.createElement('div');
-  l.className = 'lantern';
-  const lBody = document.createElement('div');
-  lBody.className = 'lantern-body';
-  const glow = document.createElement('div');
-  glow.className = 'lantern-glow';
-  lBody.appendChild(glow);
-  l.appendChild(lBody);
-  l.style.left = (5 + Math.random() * 85) + 'vw';
-  l.style.bottom = '-60px';
-  l.style.animationDuration = (10 + Math.random() * 10) + 's';
-  document.body.appendChild(l);
-  setTimeout(() => l.remove(), 20000);
-}
-for (let i = 0; i < 6; i++) {
-  setTimeout(createLantern, i * 3000);
-}
-setInterval(createLantern, 4000);
-
-// 星星
-for (let i = 0; i < 30; i++) {
-  const s = document.createElement('div');
-  s.className = 'star';
-  s.style.left = Math.random() * 100 + 'vw';
-  s.style.top = Math.random() * 70 + 'vh';
-  const sz = 1 + Math.random() * 2.5;
-  s.style.width = s.style.height = sz + 'px';
-  s.style.animationDuration = (1.5 + Math.random() * 3) + 's';
-  s.style.animationDelay = Math.random() * 6 + 's';
-  document.body.appendChild(s);
-}
-
-// 烟花火星
-const sparkColors = ['#ffd700','#ff6b35','#ff9800','#ffe082','#ff5722','#ffeb3b'];
-function createSpark() {
-  const s = document.createElement('div');
-  s.className = 'spark';
-  s.style.left = Math.random() * 100 + 'vw';
-  s.style.bottom = (10 + Math.random() * 30) + 'vh';
-  s.style.background = sparkColors[Math.floor(Math.random() * sparkColors.length)];
-  s.style.boxShadow = `0 0 4px ${s.style.background}`;
-  s.style.animationDuration = (1.5 + Math.random() * 2) + 's';
-  document.body.appendChild(s);
-  setTimeout(() => s.remove(), 4000);
-}
-setInterval(createSpark, 800);
-for (let i = 0; i < 8; i++) setTimeout(createSpark, i * 300);
-
-// 雪花（营造氛围）
-for (let i = 0; i < 10; i++) {
-  const s = document.createElement('div');
-  s.className = 'snow';
-  s.textContent = '❄';
-  s.style.left = Math.random() * 100 + 'vw';
-  s.style.fontSize = (6 + Math.random() * 8) + 'px';
-  s.style.animationDuration = (8 + Math.random() * 8) + 's';
-  s.style.animationDelay = Math.random() * 12 + 's';
-  document.body.appendChild(s);
-}
-</script>
 </body>
 </html>

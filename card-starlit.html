@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>星光物语</title>
+<meta property="og:title" content="✨ 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --deep-night: #08091a;
+  --night-blue: #0d1438;
+  --star-gold: #ffd97d;
+  --star-warm: #ffe4a0;
+  --line-gold: rgba(255, 215, 130, 0.6);
+  --text-gold: #ffe4a0;
+  --text-muted: rgba(255, 228, 160, 0.65);
+  --card-bg: rgba(10, 14, 40, 0.88);
+  --card-border: rgba(255, 215, 130, 0.35);
+  --glow-gold: rgba(255, 215, 130, 0.4);
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg,
+    #040610 0%,
+    #08091a 30%,
+    #0d1438 55%,
+    #0a1230 75%,
+    #060d20 100%);
+  font-family: 'Georgia', 'PingFang SC', 'Microsoft YaHei', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 背景星群 */
+.stars-bg {
+  position: fixed; inset: 0;
+  z-index: 0; pointer-events: none;
+}
+.star-bg {
+  position: absolute;
+  width: 1.2px; height: 1.2px;
+  background: #fff;
+  border-radius: 50%;
+  animation: twinkleSlow 4s ease-in-out infinite;
+}
+@keyframes twinkleSlow {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.9; }
+}
+
+/* 星座连线 */
+.constellation {
+  position: fixed; inset: 0;
+  z-index: 1; pointer-events: none;
+  opacity: 0.35;
+}
+.constellation svg {
+  width: 100%; height: 100%;
+}
+
+/* 金色边框装饰线 */
+.corner-deco {
+  position: fixed;
+  width: 120px; height: 120px;
+  z-index: 2; pointer-events: none;
+  opacity: 0.55;
+}
+.corner-deco.top-left { top: 20px; left: 20px; }
+.corner-deco.top-right { top: 20px; right: 20px; transform: scaleX(-1); }
+.corner-deco.bottom-left { bottom: 20px; left: 20px; transform: scaleY(-1); }
+.corner-deco.bottom-right { bottom: 20px; right: 20px; transform: scale(-1, -1); }
+
+/* 卡片外框发光 */
+.card-wrap {
+  position: relative;
+  padding: 3px;
+  background: linear-gradient(135deg,
+    var(--star-gold) 0%,
+    var(--star-warm) 25%,
+    var(--star-gold) 50%,
+    var(--star-warm) 75%,
+    var(--star-gold) 100%);
+  background-size: 300% 300%;
+  animation: borderFlow 5s ease-in-out infinite;
+  border-radius: 16px;
+  z-index: 10;
+  box-shadow:
+    0 0 30px rgba(255, 215, 130, 0.25),
+    0 0 60px rgba(255, 215, 130, 0.12);
+}
+@keyframes borderFlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: clamp(36px, 8vw, 64px) clamp(28px, 6vw, 52px);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  min-width: min(360px, 90vw);
+}
+
+/* 顶部装饰 */
+.card::before {
+  content: '✦  ✦  ✦';
+  display: block;
+  color: var(--star-gold);
+  font-size: clamp(8px, 2vw, 12px);
+  letter-spacing: 10px;
+  margin-bottom: 20px;
+  opacity: 0.7;
+  animation: fadeIn 1.5s ease-out both;
+}
+
+/* 名字 */
+.name {
+  color: var(--text-gold);
+  font-size: clamp(28px, 7vw, 48px);
+  font-weight: normal;
+  letter-spacing: 4px;
+  margin-bottom: 8px;
+  opacity: 1;
+  animation: nameReveal 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
+  text-shadow: 0 0 20px var(--glow-gold);
+}
+@keyframes nameReveal {
+  from { opacity: 0; transform: translateY(20px) scale(0.9); letter-spacing: 12px; }
+  to { opacity: 1; transform: translateY(0) scale(1); letter-spacing: 4px; }
+}
+
+/* 装饰分隔线 */
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 18px 0;
+  opacity: 0;
+  animation: fadeIn 1s ease-out 0.6s both;
+}
+.divider-line {
+  height: 1px;
+  width: 50px;
+  background: linear-gradient(90deg, transparent, var(--line-gold), transparent);
+}
+.divider-star {
+  color: var(--star-gold);
+  font-size: 10px;
+}
+
+/* 日期 */
+.date {
+  color: var(--text-muted);
+  font-size: clamp(12px, 3vw, 15px);
+  letter-spacing: 3px;
+  margin-bottom: 20px;
+  opacity: 1;
+  animation: fadeIn 1.2s ease-out 0.8s both;
+}
+
+/* 祝福语 */
+.blessing {
+  color: #fff;
+  font-size: clamp(16px, 4vw, 22px);
+  line-height: 1.9;
+  margin-bottom: 28px;
+  opacity: 1;
+  animation: fadeIn 1.4s ease-out 1s both;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+/* 署名 */
+.from {
+  color: var(--text-muted);
+  font-size: clamp(12px, 3vw, 15px);
+  letter-spacing: 2px;
+  font-style: italic;
+  opacity: 1;
+  animation: fadeIn 1.6s ease-out 1.2s both;
+}
+
+/* 底部装饰 */
+.card::after {
+  content: '✦  ✦  ✦';
+  display: block;
+  color: var(--star-gold);
+  font-size: clamp(8px, 2vw, 12px);
+  letter-spacing: 10px;
+  margin-top: 20px;
+  opacity: 0.7;
+  animation: fadeIn 1.8s ease-out 1.4s both;
+}
+
+/* 浮动光点 */
+.sparkle {
+  position: fixed;
+  width: 3px; height: 3px;
+  background: var(--star-gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 5;
+  animation: sparkleRise linear infinite;
+  box-shadow: 0 0 6px var(--star-gold);
+}
+@keyframes sparkleRise {
+  0% { transform: translateY(100vh) scale(0); opacity: 0; }
+  20% { opacity: 1; transform: scale(1); }
+  90% { opacity: 0.8; }
+  100% { transform: translateY(-10vh) scale(0.3); opacity: 0; }
+}
+
+/* 流星 */
+.shooting-star {
+  position: fixed;
+  width: 2px; height: 2px;
+  background: linear-gradient(90deg, var(--star-gold), transparent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 3;
+  animation: shoot linear infinite;
+  box-shadow: 0 0 8px var(--star-gold), 0 0 16px var(--star-warm);
+}
+@keyframes shoot {
+  0% { transform: translateX(0) translateY(0); opacity: 1; }
+  70% { opacity: 1; }
+  100% { transform: translateX(300px) translateY(200px); opacity: 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 减少动画 */
+@media (prefers-reduced-motion: reduce) {
+  .star-bg, .sparkle, .shooting-star, .card-wrap { animation: none; }
+  .name, .date, .blessing, .from, .divider, .card::before, .card::after { animation: none; opacity: 1; }
+}
+</style>
+</head>
+<body>
+
+<!-- 背景星群 -->
+<div class="stars-bg" id="starsBg"></div>
+
+<!-- 星座装饰 SVG -->
+<div class="constellation">
+  <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" fill="none">
+    <!-- 北斗七星连线 -->
+    <g stroke="rgba(255,215,130,0.5)" stroke-width="0.8">
+      <line x1="200" y1="120" x2="280" y2="100"/>
+      <line x1="280" y1="100" x2="350" y2="115"/>
+      <line x1="350" y1="115" x2="400" y2="160"/>
+      <line x1="400" y1="160" x2="420" y2="230"/>
+      <line x1="420" y1="230" x2="480" y2="270"/>
+      <line x1="480" y1="270" x2="530" y2="265"/>
+    </g>
+    <!-- 射手座样式的星 -->
+    <g fill="rgba(255,215,130,0.6)">
+      <circle cx="200" cy="120" r="2"/>
+      <circle cx="280" cy="100" r="2.5"/>
+      <circle cx="350" cy="115" r="2"/>
+      <circle cx="400" cy="160" r="2.5"/>
+      <circle cx="420" cy="230" r="2"/>
+      <circle cx="480" cy="270" r="2.5"/>
+      <circle cx="530" cy="265" r="2"/>
+    </g>
+    <!-- 右侧星群 -->
+    <g stroke="rgba(255,215,130,0.4)" stroke-width="0.7">
+      <line x1="1100" y1="80" x2="1150" y2="110"/>
+      <line x1="1150" y1="110" x2="1200" y2="95"/>
+      <line x1="1200" y1="95" x2="1230" y2="140"/>
+      <line x1="1230" y1="140" x2="1190" y2="170"/>
+      <line x1="1190" y1="170" x2="1140" y2="165"/>
+    </g>
+    <g fill="rgba(255,215,130,0.55)">
+      <circle cx="1100" cy="80" r="2"/>
+      <circle cx="1150" cy="110" r="2.5"/>
+      <circle cx="1200" cy="95" r="2"/>
+      <circle cx="1230" cy="140" r="2.5"/>
+      <circle cx="1190" cy="170" r="2"/>
+      <circle cx="1140" cy="165" r="2"/>
+    </g>
+    <!-- 底部星群 -->
+    <g stroke="rgba(255,215,130,0.35)" stroke-width="0.6">
+      <line x1="600" y1="750" x2="660" y2="720"/>
+      <line x1="660" y1="720" x2="730" y2="730"/>
+      <line x1="730" y1="730" x2="780" y2="780"/>
+    </g>
+    <g fill="rgba(255,215,130,0.45)">
+      <circle cx="600" cy="750" r="2"/>
+      <circle cx="660" cy="720" r="2"/>
+      <circle cx="730" cy="730" r="2"/>
+      <circle cx="780" cy="780" r="2"/>
+    </g>
+  </svg>
+</div>
+
+<!-- 四角装饰 -->
+<svg class="corner-deco top-left" viewBox="0 0 120 120" fill="none">
+  <path d="M5 5 L5 40 M5 5 L40 5" stroke="rgba(255,215,130,0.7)" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M5 5 L25 5 L5 25 Z" fill="rgba(255,215,130,0.15)"/>
+  <circle cx="5" cy="5" r="3" fill="rgba(255,215,130,0.8)"/>
+  <circle cx="20" cy="5" r="1.5" fill="rgba(255,215,130,0.5)"/>
+  <circle cx="5" cy="20" r="1.5" fill="rgba(255,215,130,0.5)"/>
+  <path d="M12 12 L18 18 M18 12 L12 18" stroke="rgba(255,215,130,0.4)" stroke-width="0.8"/>
+</svg>
+<svg class="corner-deco top-right" viewBox="0 0 120 120" fill="none">
+  <path d="M5 5 L5 40 M5 5 L40 5" stroke="rgba(255,215,130,0.7)" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M5 5 L25 5 L5 25 Z" fill="rgba(255,215,130,0.15)"/>
+  <circle cx="5" cy="5" r="3" fill="rgba(255,215,130,0.8)"/>
+  <circle cx="20" cy="5" r="1.5" fill="rgba(255,215,130,0.5)"/>
+  <circle cx="5" cy="20" r="1.5" fill="rgba(255,215,130,0.5)"/>
+  <path d="M12 12 L18 18 M18 12 L12 18" stroke="rgba(255,215,130,0.4)" stroke-width="0.8"/>
+</svg>
+<svg class="corner-deco bottom-left" viewBox="0 0 120 120" fill="none">
+  <path d="M5 5 L5 40 M5 5 L40 5" stroke="rgba(255,215,130,0.7)" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M5 5 L25 5 L5 25 Z" fill="rgba(255,215,130,0.15)"/>
+  <circle cx="5" cy="5" r="3" fill="rgba(255,215,130,0.8)"/>
+  <circle cx="20" cy="5" r="1.5" fill="rgba(255,215,130,0.5)"/>
+  <circle cx="5" cy="20" r="1.5" fill="rgba(255,215,130,0.5)"/>
+  <path d="M12 12 L18 18 M18 12 L12 18" stroke="rgba(255,215,130,0.4)" stroke-width="0.8"/>
+</svg>
+<svg class="corner-deco bottom-right" viewBox="0 0 120 120" fill="none">
+  <path d="M5 5 L5 40 M5 5 L40 5" stroke="rgba(255,215,130,0.7)" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M5 5 L25 5 L5 25 Z" fill="rgba(255,215,130,0.15)"/>
+  <circle cx="5" cy="5" r="3" fill="rgba(255,215,130,0.8)"/>
+  <circle cx="20" cy="5" r="1.5" fill="rgba(255,215,130,0.5)"/>
+  <circle cx="5" cy="20" r="1.5" fill="rgba(255,215,130,0.5)"/>
+  <path d="M12 12 L18 18 M18 12 L12 18" stroke="rgba(255,215,130,0.4)" stroke-width="0.8"/>
+</svg>
+
+<!-- 主卡片 -->
+<div class="card-wrap">
+  <div class="card">
+    <div class="name" id="nameEl"></div>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <span class="divider-star">✦</span>
+      <div class="divider-line"></div>
+    </div>
+    <div class="date" id="dateEl"></div>
+    <div class="blessing" id="blessingEl"></div>
+    <div class="from" id="fromEl"></div>
+  </div>
+</div>
+
+<script>
+// 背景星群
+const starsBg = document.getElementById('starsBg');
+for (let i = 0; i < 80; i++) {
+  const s = document.createElement('div');
+  s.className = 'star-bg';
+  s.style.left = Math.random() * 100 + '%';
+  s.style.top = Math.random() * 100 + '%';
+  s.style.animationDelay = Math.random() * 5 + 's';
+  s.style.animationDuration = (3 + Math.random() * 3) + 's';
+  starsBg.appendChild(s);
+}
+
+// 浮动光点
+for (let i = 0; i < 12; i++) {
+  const sp = document.createElement('div');
+  sp.className = 'sparkle';
+  sp.style.left = Math.random() * 100 + '%';
+  sp.style.animationDuration = (6 + Math.random() * 8) + 's';
+  sp.style.animationDelay = Math.random() * 10 + 's';
+  sp.style.width = (2 + Math.random() * 2) + 'px';
+  sp.style.height = sp.style.width;
+  document.body.appendChild(sp);
+}
+
+// 流星
+for (let i = 0; i < 3; i++) {
+  const star = document.createElement('div');
+  star.className = 'shooting-star';
+  star.style.left = (20 + Math.random() * 60) + '%';
+  star.style.top = (5 + Math.random() * 30) + '%';
+  star.style.animationDuration = (2 + Math.random() * 2) + 's';
+  star.style.animationDelay = (3 + i * 4) + 's';
+  star.style.width = (1 + Math.random()) + 'px';
+  star.style.height = '60px';
+  document.body.appendChild(star);
+}
+
+// URL参数
+const p = new URLSearchParams(location.search);
+document.getElementById('nameEl').textContent = p.get('n') || '亲爱的你';
+document.getElementById('dateEl').textContent = p.get('d') || '';
+document.getElementById('blessingEl').textContent = p.get('b') || '愿每一颗星星都为你闪耀，愿每一个夜晚都有温柔相伴';
+document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
+</script>
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>巴黎浪漫</title>
+<meta property="og:title" content="💕 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --paris-night: #1a1040;
+  --paris-purple: #2d1b5e;
+  --paris-pink: #8b4570;
+  --paris-gold: #f5c842;
+  --paris-rose: #e87fa0;
+  --paris-cream: #fff5e8;
+  --card-bg: rgba(255, 248, 252, 0.92);
+  --text-wine: #7a3055;
+  --glow-gold: rgba(245, 200, 66, 0.5);
+  --glow-pink: rgba(232, 127, 160, 0.4);
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg,
+    #0d0820 0%,
+    #1a1040 15%,
+    #2d1b5e 35%,
+    #4a2870 50%,
+    #8b4570 65%,
+    #c4688a 80%,
+    #e8a0b0 100%);
+  font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  perspective: 1200px;
+}
+
+/* 星空 */
+.stars {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+  animation: twinkle var(--dur) ease-in-out var(--delay) infinite;
+}
+
+/* 铁塔剪影 */
+.eiffel {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* 玫瑰金光 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 85%, rgba(245, 200, 66, 0.15) 0%, transparent 40%),
+    radial-gradient(ellipse at 30% 20%, rgba(232, 127, 160, 0.1) 0%, transparent 35%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===== 3D翻转卡片 ===== */
+.card-wrap {
+  position: relative;
+  width: clamp(300px, 85vw, 420px);
+  height: clamp(400px, 80vh, 540px);
+  z-index: 10;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1s cubic-bezier(0.4, 0.2, 0.2, 1);
+  border-radius: 20px;
+}
+
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+}
+
+/* 正面 */
+.card-front {
+  background: var(--card-bg);
+  border: 2px solid rgba(245, 200, 66, 0.6);
+  box-shadow:
+    0 0 30px var(--glow-gold),
+    0 20px 60px rgba(0,0,0,0.4),
+    inset 0 0 60px rgba(245, 200, 66, 0.08);
+  animation: borderGold 3s ease-in-out infinite;
+}
+
+@keyframes borderGold {
+  0%, 100% { box-shadow: 0 0 20px var(--glow-gold), 0 20px 60px rgba(0,0,0,0.4), inset 0 0 40px rgba(245, 200, 66, 0.05); }
+  50% { box-shadow: 0 0 40px var(--glow-gold), 0 20px 60px rgba(0,0,0,0.4), inset 0 0 80px rgba(245, 200, 66, 0.12); }
+}
+
+/* 背面 */
+.card-back {
+  background: linear-gradient(135deg, #2d1b5e 0%, #4a2870 50%, #8b4570 100%);
+  border: 2px solid rgba(232, 127, 160, 0.6);
+  transform: rotateY(180deg);
+  box-shadow: 0 0 30px var(--glow-pink), 0 20px 60px rgba(0,0,0,0.4);
+}
+
+.icon {
+  font-size: clamp(48px, 12vw, 72px);
+  margin-bottom: 20px;
+  animation: iconDrop 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+  filter: drop-shadow(0 4px 12px var(--glow-gold));
+}
+
+.title {
+  font-size: clamp(20px, 5vw, 28px);
+  color: var(--text-wine);
+  font-weight: 600;
+  margin-bottom: 8px;
+  animation: fadeInUp 1s ease-out 0.4s both;
+  letter-spacing: 4px;
+}
+
+.hint {
+  font-size: clamp(11px, 2.5vw, 13px);
+  color: #b08090;
+  margin-top: 16px;
+  animation: fadeInUp 1s ease-out 0.8s both;
+  letter-spacing: 1px;
+}
+
+.name {
+  font-size: clamp(28px, 8vw, 48px);
+  color: var(--text-wine);
+  font-weight: 700;
+  text-align: center;
+  margin: 16px 0;
+  animation: fadeInUp 1.2s ease-out 0.3s both;
+  text-shadow: 0 2px 12px var(--glow-gold);
+}
+
+.date {
+  font-size: clamp(13px, 3vw, 16px);
+  color: #9a6080;
+  margin-bottom: 20px;
+  animation: fadeInUp 1s ease-out 0.5s both;
+  letter-spacing: 2px;
+}
+
+.blessing {
+  font-size: clamp(14px, 3.5vw, 18px);
+  color: #5a2040;
+  text-align: center;
+  line-height: 1.8;
+  max-width: 90%;
+  animation: fadeInUp 1s ease-out 0.7s both;
+}
+
+.from {
+  font-size: clamp(12px, 2.8vw, 15px);
+  color: #9a7090;
+  margin-top: 24px;
+  animation: fadeInUp 1s ease-out 0.9s both;
+  letter-spacing: 1px;
+}
+
+/* 背面内容 */
+.back-icon {
+  font-size: clamp(36px, 9vw, 52px);
+  margin-bottom: 16px;
+  animation: iconDrop 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+  filter: drop-shadow(0 4px 16px var(--glow-pink));
+}
+
+.back-title {
+  font-size: clamp(18px, 4.5vw, 24px);
+  color: #f5c842;
+  font-weight: 600;
+  margin-bottom: 20px;
+  animation: fadeInUp 1s ease-out 0.4s both;
+  letter-spacing: 4px;
+  text-shadow: 0 0 20px var(--glow-gold);
+}
+
+.back-text {
+  font-size: clamp(13px, 3vw, 16px);
+  color: rgba(255, 240, 248, 0.9);
+  text-align: center;
+  line-height: 2;
+  max-width: 85%;
+  animation: fadeInUp 1s ease-out 0.6s both;
+}
+
+.back-from {
+  font-size: clamp(12px, 2.8vw, 14px);
+  color: rgba(232, 127, 160, 0.8);
+  margin-top: 24px;
+  animation: fadeInUp 1s ease-out 0.8s both;
+}
+
+/* 动画 */
+@keyframes iconDrop {
+  from { opacity: 0; transform: translateY(-40px) scale(0.5); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 装饰爱心 */
+.hearts {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+@keyframes heartFloat {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+}
+
+.heart {
+  position: absolute;
+  font-size: clamp(10px, 2.5vw, 16px);
+  animation: heartFloat var(--dur) ease-in-out var(--delay) infinite;
+  bottom: -20px;
+}
+</style>
+</head>
+<body>
+
+<!-- 星空 -->
+<div class="stars" id="stars"></div>
+
+<!-- 铁塔剪影 SVG -->
+<div class="eiffel">
+  <svg width="clamp(200px, 55vw, 320px)" height="clamp(280px, 65vh, 420px)" viewBox="0 0 320 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- 塔尖 -->
+    <polygon points="160,0 165,60 155,60" fill="#1a1040" opacity="0.9"/>
+    <!-- 上层拱 -->
+    <path d="M120,60 Q160,30 200,60 L195,75 Q160,50 125,75 Z" fill="#1a1040" opacity="0.9"/>
+    <!-- 塔身主结构 -->
+    <path d="M125,75 L80,200 L100,200 L140,100 L160,100 L200,200 L220,200 L195,75 Z" fill="#1a1040" opacity="0.85"/>
+    <!-- 下层拱 -->
+    <path d="M80,200 Q160,160 240,200 L235,220 Q160,185 85,220 Z" fill="#1a1040" opacity="0.9"/>
+    <!-- 底部 -->
+    <rect x="60" y="220" width="200" height="8" rx="2" fill="#1a1040" opacity="0.9"/>
+    <rect x="50" y="228" width="220" height="8" rx="2" fill="#1a1040" opacity="0.9"/>
+    <rect x="40" y="236" width="240" height="12" rx="3" fill="#1a1040" opacity="0.9"/>
+    <!-- 横梁装饰 -->
+    <rect x="70" y="260" width="180" height="5" rx="2" fill="#2d1b5e" opacity="0.6"/>
+    <rect x="55" y="290" width="210" height="5" rx="2" fill="#2d1b5e" opacity="0.6"/>
+    <rect x="40" y="330" width="240" height="5" rx="2" fill="#2d1b5e" opacity="0.6"/>
+    <rect x="30" y="370" width="260" height="5" rx="2" fill="#2d1b5e" opacity="0.6"/>
+    <!-- 观景台 -->
+    <rect x="115" y="140" width="90" height="6" rx="2" fill="#1a1040" opacity="0.9"/>
+  </svg>
+</div>
+
+<!-- 漂浮爱心 -->
+<div class="hearts" id="hearts"></div>
+
+<!-- 3D翻转卡片 -->
+<div class="card-wrap" id="cardWrap">
+  <div class="card" id="card">
+    <!-- 正面 -->
+    <div class="card-front">
+      <div class="icon" id="iconEl">🗼</div>
+      <div class="title">PARIS</div>
+      <div class="name" id="nameEl"></div>
+      <div class="date" id="dateEl"></div>
+      <div class="blessing" id="blessingEl"></div>
+      <div class="from" id="fromEl"></div>
+      <div class="hint">点击卡片打开惊喜</div>
+    </div>
+    <!-- 背面 -->
+    <div class="card-back">
+      <div class="back-icon">💕</div>
+      <div class="back-title"> LOVE</div>
+      <div class="back-text" id="backEl"></div>
+      <div class="back-from" id="backFromEl"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const p = new URLSearchParams(location.search);
+document.getElementById('nameEl').textContent = p.get('n') || '亲爱的';
+document.getElementById('dateEl').textContent = p.get('d') || '';
+document.getElementById('blessingEl').textContent = p.get('b') || '愿你的生活像巴黎的夜空一样浪漫';
+document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
+document.getElementById('backEl').innerHTML = p.get('back')
+  ? p.get('back').replace(/\\n/g, '<br>')
+  : '在这座浪漫之城的星空下<br>愿所有美好与你相遇<br>愿你所爱之人也深爱着你';
+document.getElementById('backFromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
+
+// 3D翻转
+document.getElementById('cardWrap').addEventListener('click', () => {
+  document.getElementById('card').classList.toggle('flipped');
+});
+
+// 星星
+const starsEl = document.getElementById('stars');
+for (let i = 0; i < 60; i++) {
+  const star = document.createElement('div');
+  star.className = 'star';
+  star.style.cssText = `
+    left: ${Math.random() * 100}%;
+    top: ${Math.random() * 60}%;
+    width: ${Math.random() * 3 + 1}px;
+    height: ${Math.random() * 3 + 1}px;
+    --dur: ${Math.random() * 2 + 1.5}s;
+    --delay: ${Math.random() * 3}s;
+  `;
+  starsEl.appendChild(star);
+}
+
+// 爱心
+const heartsEl = document.getElementById('hearts');
+const heartEmojis = ['💕', '💗', '💖', '✨', '🌹'];
+for (let i = 0; i < 12; i++) {
+  const h = document.createElement('div');
+  h.className = 'heart';
+  h.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+  h.style.cssText = `
+    left: ${Math.random() * 100}%;
+    --dur: ${Math.random() * 6 + 8}s;
+    --delay: ${Math.random() * 8}s;
+    font-size: ${Math.random() * 10 + 10}px;
+  `;
+  heartsEl.appendChild(h);
+}
+
+// 减少动效
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.star, .heart').forEach(el => el.remove());
+}
+</script>
+</body>
+</html>

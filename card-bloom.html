@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>繁花盛开</title>
+<meta property="og:title" content="🌸 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bloom-pink: #ff9ec4;
+  --bloom-rose: #e87090;
+  --bloom-gold: #ffd700;
+  --bloom-lavender: #c4a0d8;
+  --bloom-peach: #ffb896;
+  --bloom-mint: #7fded5;
+  --sun-warm: rgba(255, 230, 150, 0.6);
+  --card-bg: rgba(255, 252, 250, 0.88);
+  --text-rose: #8a3a5a;
+  --glow-petal: rgba(255, 150, 180, 0.4);
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg,
+    #fff5f7 0%,
+    #ffe8f0 15%,
+    #ffd8e8 30%,
+    #ffe0c8 55%,
+    #fff8e0 75%,
+    #fffaf5 100%);
+  font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 温暖阳光 */
+body::before {
+  content: '';
+  position: fixed;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle,
+    rgba(255, 235, 150, 0.35) 0%,
+    rgba(255, 220, 130, 0.2) 40%,
+    transparent 65%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  animation: sunShine 5s ease-in-out infinite;
+}
+
+@keyframes sunShine {
+  0%, 100% { opacity: 0.8; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+}
+
+/* 花瓣飘落 */
+@keyframes petalFall {
+  0% { transform: translateY(-40px) rotate(0deg) translateX(0); opacity: 0; }
+  8% { opacity: 0.9; }
+  90% { opacity: 0.8; }
+  100% { transform: translateY(105vh) rotate(var(--rot)) translateX(var(--dx)); opacity: 0; }
+}
+
+.petal {
+  position: fixed;
+  top: -40px;
+  z-index: 2;
+  pointer-events: none;
+  animation: petalFall var(--dur) var(--ease) var(--delay) infinite;
+  filter: drop-shadow(0 2px 4px rgba(200, 100, 120, 0.2));
+}
+
+/* 蝴蝶飞舞 */
+@keyframes butterflyFloat {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  20% { transform: translate(calc(var(--x1)), calc(var(--y1))) rotate(10deg); }
+  40% { transform: translate(calc(var(--x2)), calc(var(--y2))) rotate(-5deg); }
+  60% { transform: translate(calc(var(--x3)), calc(var(--y3))) rotate(8deg); }
+  80% { transform: translate(calc(var(--x4)), calc(var(--y4))) rotate(-3deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+.butterfly {
+  position: fixed;
+  z-index: 4;
+  font-size: clamp(14px, 3vw, 22px);
+  pointer-events: none;
+  animation: butterflyFloat var(--dur) ease-in-out infinite;
+  filter: drop-shadow(0 2px 6px rgba(150, 80, 100, 0.25));
+}
+
+/* 花朵摇摆 */
+@keyframes flowerSway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+/* 浮动花精灵 */
+@keyframes fairyFloat {
+  0%, 100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0.7; }
+  50% { transform: translateY(-12px) scale(1.15) rotate(10deg); opacity: 1; }
+}
+
+.fairy {
+  position: fixed;
+  z-index: 5;
+  font-size: clamp(10px, 2vw, 16px);
+  pointer-events: none;
+  animation: fairyFloat var(--dur) ease-in-out var(--delay) infinite;
+}
+
+/* 卡片外框光效 */
+.card-wrap {
+  position: relative;
+  z-index: 10;
+  perspective: 1000px;
+}
+
+.card {
+  width: clamp(280px, 85vw, 420px);
+  min-height: clamp(320px, 70vh, 500px);
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: clamp(28px, 5.5vw, 44px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow:
+    0 12px 40px rgba(200, 80, 120, 0.15),
+    0 4px 12px rgba(200, 80, 120, 0.1);
+}
+
+/* 边框流光 */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 22px;
+  background: linear-gradient(135deg,
+    #ff9ec4, #c4a0d8, #7fded5, #ffb896, #ff9ec4);
+  background-size: 300% 300%;
+  animation: borderBloom 4s ease infinite;
+  z-index: -1;
+  opacity: 0.7;
+}
+
+@keyframes borderBloom {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 角上花朵装饰 */
+.corner-flower {
+  position: absolute;
+  font-size: clamp(16px, 3vw, 24px);
+  animation: flowerSway var(--dur) ease-in-out infinite;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 4px rgba(200,80,120,0.2));
+}
+
+.corner-flower.tl { top: 10px; left: 12px; --dur: 3s; }
+.corner-flower.tr { top: 10px; right: 12px; --dur: 3.5s; animation-delay: -1s; }
+.corner-flower.bl { bottom: 10px; left: 12px; --dur: 2.8s; animation-delay: -0.5s; }
+.corner-flower.br { bottom: 10px; right: 12px; --dur: 3.2s; animation-delay: -1.5s; }
+
+/* 内容 */
+.name {
+  font-size: clamp(22px, 6vw, 38px);
+  font-weight: 700;
+  color: var(--text-rose);
+  margin-bottom: clamp(8px, 2vw, 14px);
+  opacity: 0;
+  animation: fadeSlideIn 1.2s ease-out 0.3s both;
+  letter-spacing: 3px;
+  text-shadow: 0 2px 8px rgba(200, 80, 120, 0.15);
+}
+
+.date {
+  font-size: clamp(11px, 2vw, 14px);
+  color: rgba(138, 58, 90, 0.6);
+  margin-bottom: clamp(16px, 3.5vw, 28px);
+  opacity: 0;
+  animation: fadeSlideIn 1.2s ease-out 0.6s both;
+  letter-spacing: 1px;
+}
+
+.blessing {
+  font-size: clamp(14px, 3.5vw, 20px);
+  color: var(--text-rose);
+  line-height: 1.9;
+  opacity: 0;
+  animation: fadeSlideIn 1.4s ease-out 0.9s both;
+  margin-bottom: clamp(14px, 3vw, 22px);
+}
+
+.from {
+  font-size: clamp(11px, 2.2vw, 15px);
+  color: rgba(138, 58, 90, 0.55);
+  font-style: italic;
+  opacity: 0;
+  animation: fadeSlideIn 1.2s ease-out 1.2s both;
+}
+
+/* 背面 */
+.back-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(20px, 4vw, 36px);
+  font-size: clamp(13px, 3vw, 17px);
+  color: var(--text-rose);
+  line-height: 2;
+  text-align: center;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+  background: linear-gradient(135deg, rgba(255,252,250,0.95) 0%, rgba(255,230,240,0.95) 100%);
+  border-radius: 20px;
+}
+
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 花瓣粒子（从CSS生成） */
+.sparkle {
+  position: fixed;
+  z-index: 3;
+  pointer-events: none;
+  font-size: clamp(8px, 1.8vw, 12px);
+  animation: fairyFloat var(--dur) ease-in-out var(--delay) infinite;
+  opacity: 0.7;
+}
+
+/* 响应式 */
+@media (max-width: 400px) {
+  .card { border-radius: 14px; }
+  .card::before { border-radius: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- 花瓣 -->
+<script>
+const petals = ['🌸', '💮', '🏵️', '🌺', '🌷', '🌹'];
+const petalCount = 18;
+for (let i = 0; i < petalCount; i++) {
+  const p = document.createElement('div');
+  p.className = 'petal';
+  p.textContent = petals[i % petals.length];
+  p.style.cssText = `
+    left: ${Math.random() * 100}%;
+    --dur: ${5 + Math.random() * 5}s;
+    --delay: ${-Math.random() * 8}s;
+    --ease: ${Math.random() > 0.5 ? 'ease-in-out' : 'linear'};
+    --rot: ${(Math.random() - 0.5) * 720}deg;
+    --dx: ${(Math.random() - 0.5) * 100}px;
+    font-size: ${8 + Math.random() * 10}px;
+  `;
+  document.body.appendChild(p);
+}
+
+// 蝴蝶
+const butterflies = ['🦋', '🦋', '✨'];
+const bflyData = [
+  {x1:'30px', y1:'-20px', x2:'-15px', y2:'-35px', x3:'25px', y3:'-15px', x4:'-5px', y4:'-40px'},
+  {x1:'-20px', y1:'-30px', x2:'20px', y2:'-10px', x3:'-25px', y3:'-25px', x4:'15px', y4:'-45px'},
+  {x1:'10px', y1:'-15px', x2:'-10px', y2:'-30px', x3:'20px', y3:'-10px', x4:'-15px', y4:'-35px'},
+];
+for (let i = 0; i < 3; i++) {
+  const b = document.createElement('div');
+  b.className = 'butterfly';
+  b.textContent = butterflies[i % butterflies.length];
+  const d = bflyData[i];
+  b.style.cssText = `
+    top: ${15 + Math.random() * 50}%;
+    left: ${10 + Math.random() * 75}%;
+    --dur: ${4 + Math.random() * 3}s;
+    --x1: ${d.x1}; --y1: ${d.y1};
+    --x2: ${d.x2}; --y2: ${d.y2};
+    --x3: ${d.x3}; --y3: ${d.y3};
+    --x4: ${d.x4}; --y4: ${d.y4};
+  `;
+  document.body.appendChild(b);
+}
+
+// 精灵光点
+const sparkles = ['✨', '💫', '🌟'];
+for (let i = 0; i < 8; i++) {
+  const s = document.createElement('div');
+  s.className = 'sparkle';
+  s.textContent = sparkles[i % sparkles.length];
+  s.style.cssText = `
+    top: ${Math.random() * 85}%;
+    left: ${Math.random() * 90}%;
+    --dur: ${2.5 + Math.random() * 2}s;
+    --delay: ${-Math.random() * 4}s;
+    font-size: ${6 + Math.random() * 8}px;
+  `;
+  document.body.appendChild(s);
+}
+</script>
+
+<!-- 卡片 -->
+<div class="card-wrap">
+  <div class="card" id="card" onclick="this.classList.toggle('flipped')">
+    <div class="corner-flower tl">🌸</div>
+    <div class="corner-flower tr">🌷</div>
+    <div class="corner-flower bl">🌺</div>
+    <div class="corner-flower br">🌹</div>
+
+    <div class="name" id="nameEl"></div>
+    <div class="date" id="dateEl"></div>
+    <div class="blessing" id="blessingEl"></div>
+    <div class="from" id="fromEl"></div>
+  </div>
+</div>
+
+<script>
+const p = new URLSearchParams(location.search);
+document.getElementById('nameEl').textContent = p.get('n') || '亲爱的你';
+document.getElementById('dateEl').textContent = p.get('d') || '';
+document.getElementById('blessingEl').textContent = p.get('b') || '愿你如春风一般温柔，被岁月永远善待';
+document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
+
+if (p.get('back')) {
+  const backDiv = document.createElement('div');
+  backDiv.className = 'back-text';
+  backDiv.innerHTML = p.get('back').replace(/\\n/g, '<br>');
+  document.getElementById('card').appendChild(backDiv);
+}
+</script>
+</body>
+</html>

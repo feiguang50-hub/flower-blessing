@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>时光之礼</title>
+<meta property="og:title" content="⌚ 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --watch-bronze: #8b6914;
+  --watch-gold: #c9a84c;
+  --watch-dark: #3d2a0a;
+  --watch-cream: #f5e6c8;
+  --watch-face: #faf3e3;
+  --watch-ring: #b8860b;
+  --text-dark: #3d2a0a;
+  --glow-warm: rgba(201, 168, 76, 0.5);
+  --card-bg: rgba(245, 230, 200, 0.92);
+  --border-gold: rgba(184, 134, 11, 0.5);
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(139, 105, 20, 0.2) 0%, transparent 50%),
+    linear-gradient(180deg,
+      #1a1005 0%,
+      #2a1a08 15%,
+      #3d2a0a 30%,
+      #4a3310 45%,
+      #3d2a0a 60%,
+      #2a1a08 75%,
+      #1a1005 100%);
+  font-family: 'Georgia', 'PingFang SC', 'Microsoft YaHei', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 背景齿轮装饰 */
+.gear {
+  position: fixed;
+  border-radius: 50%;
+  border: 3px solid rgba(201, 168, 76, 0.15);
+  z-index: 0;
+  pointer-events: none;
+}
+.gear::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  border: 2px solid rgba(201, 168, 76, 0.1);
+}
+.gear-1 { width: 200px; height: 200px; top: -60px; right: -40px; animation: gearRotate 20s linear infinite; }
+.gear-2 { width: 140px; height: 140px; bottom: -30px; left: -30px; animation: gearRotate 14s linear infinite reverse; }
+.gear-3 { width: 80px; height: 80px; top: 40%; left: 5%; animation: gearRotate 8s linear infinite; }
+
+@keyframes gearRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 金色尘埃粒子 */
+.dust {
+  position: fixed;
+  width: 2px;
+  height: 2px;
+  background: rgba(245, 200, 100, 0.7);
+  border-radius: 50%;
+  z-index: 1;
+  pointer-events: none;
+  animation: dustFloat 6s ease-in-out infinite;
+}
+@keyframes dustFloat {
+  0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.3; }
+  50% { transform: translateY(-30px) translateX(10px); opacity: 0.9; }
+}
+
+/* ===== 怀表主体 ===== */
+.watch-body {
+  position: relative;
+  width: clamp(260px, 75vw, 340px);
+  height: clamp(260px, 75vw, 340px);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 表链左右延伸 */
+.chain {
+  position: absolute;
+  top: 50%;
+  height: 14px;
+  width: 80px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--watch-bronze) 0px,
+    var(--watch-bronze) 8px,
+    var(--watch-gold) 8px,
+    var(--watch-gold) 10px,
+    var(--watch-bronze) 10px,
+    var(--watch-bronze) 18px
+  );
+  transform: translateY(-50%);
+  border-radius: 3px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+.chain-left { left: -75px; }
+.chain-right { right: -75px; }
+
+/* 表圈外环 */
+.watch-bezel {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    #c9a84c 0deg,
+    #8b6914 60deg,
+    #c9a84c 120deg,
+    #8b6914 180deg,
+    #c9a84c 240deg,
+    #8b6914 300deg,
+    #c9a84c 360deg
+  );
+  box-shadow:
+    0 0 30px rgba(201, 168, 76, 0.4),
+    0 0 60px rgba(201, 168, 76, 0.2),
+    inset 0 0 20px rgba(0,0,0,0.3);
+  animation: bezelGlow 3s ease-in-out infinite;
+}
+
+@keyframes bezelGlow {
+  0%, 100% { box-shadow: 0 0 30px rgba(201, 168, 76, 0.4), 0 0 60px rgba(201, 168, 76, 0.2), inset 0 0 20px rgba(0,0,0,0.3); }
+  50% { box-shadow: 0 0 50px rgba(201, 168, 76, 0.6), 0 0 80px rgba(201, 168, 76, 0.3), inset 0 0 20px rgba(0,0,0,0.3); }
+}
+
+/* 表盘 */
+.watch-face {
+  position: absolute;
+  width: 82%;
+  height: 82%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #fffdf5 0%, var(--watch-face) 40%, #e8dcc0 100%);
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* 罗马数字表盘 */
+.roman-numerals {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  font-family: 'Georgia', serif;
+  font-size: clamp(9px, 2.8vw, 13px);
+  color: var(--text-dark);
+}
+.roman-num {
+  position: absolute;
+  font-weight: bold;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+.roman-num:nth-child(1) { top: 8%; left: 50%; transform: translateX(-50%); content: 'XII'; }
+.roman-num:nth-child(2) { top: 18%; right: 15%; content: 'I'; }
+.roman-num:nth-child(3) { top: 35%; right: 7%; content: 'II'; }
+.roman-num:nth-child(4) { top: 50%; right: 5%; transform: translateY(-50%); content: 'III'; }
+.roman-num:nth-child(5) { bottom: 18%; right: 12%; content: 'IV'; }
+.roman-num:nth-child(6) { bottom: 8%; left: 50%; transform: translateX(-50%); content: 'VI'; }
+.roman-num:nth-child(7) { bottom: 18%; left: 12%; content: 'VII'; }
+.roman-num:nth-child(8) { top: 50%; left: 5%; transform: translateY(-50%); content: 'IX'; }
+.roman-num:nth-child(9) { top: 35%; left: 7%; content: 'VIII'; }
+.roman-num:nth-child(10) { top: 18%; left: 15%; content: 'XI'; }
+
+/* 表盘刻度线 */
+.minute-marks {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.minute-mark {
+  position: absolute;
+  width: 1px;
+  height: 6px;
+  background: rgba(61, 42, 10, 0.4);
+  top: 5%;
+  left: 50%;
+  transform-origin: 0 calc(95% / 2);
+}
+
+/* 时针 */
+.hour-hand {
+  position: absolute;
+  width: 4px;
+  height: 22%;
+  background: linear-gradient(to top, var(--text-dark), #5a4020);
+  border-radius: 2px;
+  bottom: 50%;
+  left: 50%;
+  transform: translateX(-50%) rotate(0deg);
+  transform-origin: bottom center;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+  animation: hourRotate 43200s linear infinite;
+  animation-delay: -18000s;
+}
+
+/* 分针 */
+.minute-hand {
+  position: absolute;
+  width: 3px;
+  height: 30%;
+  background: linear-gradient(to top, var(--text-dark), #4a3520);
+  border-radius: 2px;
+  bottom: 50%;
+  left: 50%;
+  transform: translateX(-50%) rotate(0deg);
+  transform-origin: bottom center;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+  animation: minuteRotate 3600s linear infinite;
+  animation-delay: -600s;
+}
+
+/* 秒针 */
+.second-hand {
+  position: absolute;
+  width: 1.5px;
+  height: 34%;
+  background: #c0392b;
+  border-radius: 1px;
+  bottom: 50%;
+  left: 50%;
+  transform: translateX(-50%) rotate(0deg);
+  transform-origin: bottom center;
+  animation: secondRotate 60s linear infinite;
+}
+
+/* 中心圆点 */
+.center-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle at 30% 30%, #c9a84c, #8b6914);
+  border-radius: 50%;
+  z-index: 5;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+@keyframes hourRotate {
+  from { transform: translateX(-50%) rotate(0deg); }
+  to { transform: translateX(-50%) rotate(360deg); }
+}
+@keyframes minuteRotate {
+  from { transform: translateX(-50%) rotate(0deg); }
+  to { transform: translateX(-50%) rotate(360deg); }
+}
+@keyframes secondRotate {
+  from { transform: translateX(-50%) rotate(0deg); }
+  to { transform: translateX(-50%) rotate(360deg); }
+}
+
+/* 贺卡文字 */
+.blessing-text {
+  position: absolute;
+  width: 72%;
+  text-align: center;
+  z-index: 6;
+  pointer-events: none;
+}
+
+.card-name {
+  font-size: clamp(14px, 4vw, 20px);
+  color: var(--text-dark);
+  letter-spacing: 3px;
+  margin-bottom: 6px;
+  opacity: 1;
+  animation: textFadeIn 1.2s ease-out 0.5s both;
+}
+
+.card-date {
+  font-size: clamp(9px, 2.5vw, 12px);
+  color: rgba(61, 42, 10, 0.6);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+  opacity: 1;
+  animation: textFadeIn 1.2s ease-out 0.8s both;
+}
+
+.card-blessing {
+  font-size: clamp(10px, 3vw, 14px);
+  color: var(--text-dark);
+  line-height: 1.8;
+  opacity: 1;
+  animation: textFadeIn 1.2s ease-out 1.1s both;
+}
+
+.card-from {
+  font-size: clamp(9px, 2.5vw, 12px);
+  color: rgba(61, 42, 10, 0.55);
+  letter-spacing: 1px;
+  margin-top: 10px;
+  opacity: 1;
+  animation: textFadeIn 1.2s ease-out 1.4s both;
+}
+
+@keyframes textFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 表冠（表侧调节器） */
+.crown {
+  position: absolute;
+  right: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 24px;
+  background: linear-gradient(to right, #c9a84c, #8b6914, #c9a84c);
+  border-radius: 3px;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+  z-index: 8;
+}
+
+/* 底部装饰文字 */
+.bottom-tag {
+  position: fixed;
+  bottom: 20px;
+  font-size: 10px;
+  color: rgba(201, 168, 76, 0.5);
+  letter-spacing: 3px;
+  z-index: 10;
+  opacity: 1;
+  animation: textFadeIn 1.5s ease-out 2s both;
+}
+</style>
+</head>
+<body>
+
+<!-- 齿轮背景装饰 -->
+<div class="gear gear-1"></div>
+<div class="gear gear-2"></div>
+<div class="gear gear-3"></div>
+
+<script>
+const dustCount = 20;
+for (let i = 0; i < dustCount; i++) {
+  const dust = document.createElement('div');
+  dust.className = 'dust';
+  dust.style.left = Math.random() * 100 + '%';
+  dust.style.top = Math.random() * 100 + '%';
+  dust.style.animationDelay = Math.random() * 6 + 's';
+  dust.style.animationDuration = (4 + Math.random() * 4) + 's';
+  document.body.appendChild(dust);
+}
+
+// 表盘刻度
+const face = document.querySelector('.watch-face');
+const marksContainer = document.createElement('div');
+marksContainer.className = 'minute-marks';
+
+for (let i = 0; i < 60; i++) {
+  const mark = document.createElement('div');
+  mark.className = 'minute-mark';
+  const angle = i * 6;
+  mark.style.transform = `rotate(${angle}deg)`;
+  if (i % 5 === 0) {
+    mark.style.height = '9px';
+    mark.style.background = 'rgba(61, 42, 10, 0.6)';
+  }
+  marksContainer.appendChild(mark);
+}
+face.appendChild(marksContainer);
+
+// 罗马数字
+const romans = ['XII','I','II','III','IV','V','VI','VII','VIII','IX','X','XI'];
+const romanContainer = document.createElement('div');
+romanContainer.className = 'roman-numerals';
+
+romans.forEach((r, i) => {
+  const el = document.createElement('div');
+  el.className = 'roman-num';
+  el.textContent = r;
+  const angle = i * 30;
+  const radius = 40;
+  const rad = (angle - 90) * Math.PI / 180;
+  const x = 50 + radius * Math.cos(rad);
+  const y = 50 + radius * Math.sin(rad);
+  el.style.left = x + '%';
+  el.style.top = y + '%';
+  el.style.transform = 'translate(-50%, -50%)';
+  romanContainer.appendChild(el);
+});
+face.appendChild(romanContainer);
+
+// URL参数
+const p = new URLSearchParams(location.search);
+document.querySelector('.card-name').textContent = p.get('n') || '亲爱的';
+document.querySelector('.card-date').textContent = p.get('d') || '';
+document.querySelector('.card-blessing').innerHTML = (p.get('b') || '时光缓缓，愿你被岁月温柔以待').replace(/\n/g, '<br>');
+const fromEl = document.querySelector('.card-from');
+if (p.get('f')) {
+  fromEl.textContent = '— ' + p.get('f');
+} else {
+  fromEl.style.display = 'none';
+}
+</script>
+
+<!-- 怀表 -->
+<div class="watch-body">
+  <div class="chain chain-left"></div>
+  <div class="chain chain-right"></div>
+  <div class="watch-bezel"></div>
+  <div class="watch-face">
+    <div class="hour-hand"></div>
+    <div class="minute-hand"></div>
+    <div class="second-hand"></div>
+    <div class="center-dot"></div>
+    <div class="blessing-text">
+      <div class="card-name"></div>
+      <div class="card-date"></div>
+      <div class="card-blessing"></div>
+      <div class="card-from"></div>
+    </div>
+  </div>
+  <div class="crown"></div>
+</div>
+
+<div class="bottom-tag">⌚ TIMELESS</div>
+
+</body>
+</html>

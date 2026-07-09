@@ -13,23 +13,32 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --cb-deep: #0a0618;
-  --cb-purple: #3d1a6d;
-  --cb-violet: #6b2fa0;
-  --cb-pink: #c060d0;
-  --cb-gold: #f0c060;
-  --cb-silver: #d0d0ff;
-  --cb-glow: rgba(180, 100, 255, 0.5);
+  --crystal-purple: #6b3fa0;
+  --crystal-deep: #1a0a2e;
+  --crystal-violet: #8b5cf6;
+  --crystal-pink: #c084fc;
+  --crystal-blue: #818cf8;
+  --crystal-cyan: #22d3ee;
+  --crystal-glow: rgba(139, 92, 246, 0.6);
+  --card-bg: rgba(15, 5, 30, 0.88);
+  --border-purple: rgba(139, 92, 246, 0.5);
+  --text-light: #e9d5ff;
+  --text-gold: #c4a7ff;
 }
 
 body {
   min-height: 100vh;
-  background: linear-gradient(180deg,
-    #050310 0%,
-    #0a0618 30%,
-    #1a0a30 60%,
-    #0d0520 100%);
-  font-family: 'Georgia', 'PingFang SC', serif;
+  background:
+    radial-gradient(ellipse at 50% 45%, rgba(107, 63, 160, 0.35) 0%, transparent 55%),
+    radial-gradient(ellipse at 20% 80%, rgba(129, 140, 248, 0.2) 0%, transparent 40%),
+    radial-gradient(ellipse at 80% 20%, rgba(192, 132, 252, 0.2) 0%, transparent 40%),
+    linear-gradient(180deg,
+      #0a0515 0%,
+      #12082a 25%,
+      #1a0a35 45%,
+      #12082a 65%,
+      #0a0515 100%);
+  font-family: 'Georgia', 'PingFang SC', 'Microsoft YaHei', serif;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,394 +46,314 @@ body {
   position: relative;
 }
 
-/* 神秘星空背景 */
-.stars-bg {
-  position: fixed; inset: 0;
-  pointer-events: none;
+/* 星光背景 */
+.star {
+  position: fixed;
+  width: 3px;
+  height: 3px;
+  background: #fff;
+  border-radius: 50%;
   z-index: 0;
-}
-
-.star-dot {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.7);
-  animation: starTwinkle var(--dur, 3s) ease-in-out infinite;
-}
-
-@keyframes starTwinkle {
-  0%, 100% { opacity: 0.1; transform: scale(0.5); }
-  50% { opacity: 1; transform: scale(1.2); }
-}
-
-/* 魔法光芒 */
-.magic-glow {
-  position: fixed; inset: 0;
   pointer-events: none;
+  animation: twinkle ease-in-out infinite;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.4); }
+}
+
+/* 浮动符文 */
+.rune {
+  position: fixed;
+  font-size: 18px;
   z-index: 1;
-  background:
-    radial-gradient(ellipse 60% 60% at 50% 55%,
-      rgba(160, 80, 255, 0.12) 0%, transparent 65%),
-    radial-gradient(ellipse 40% 40% at 50% 55%,
-      rgba(200, 120, 255, 0.08) 0%, transparent 60%);
-  animation: glowPulse 4s ease-in-out infinite;
+  pointer-events: none;
+  opacity: 0;
+  animation: runeFloat linear infinite;
+  color: var(--crystal-violet);
+  text-shadow: 0 0 8px var(--crystal-glow);
+}
+@keyframes runeFloat {
+  0% { opacity: 0; transform: translateY(10px) rotate(0deg); }
+  20% { opacity: 0.7; }
+  80% { opacity: 0.5; }
+  100% { opacity: 0; transform: translateY(-80px) rotate(20deg); }
 }
 
-@keyframes glowPulse {
-  0%, 100% { opacity: 0.6; filter: brightness(0.9); }
-  50% { opacity: 1; filter: brightness(1.2); }
-}
-
-/* 水晶球底座 */
-.stand {
-  position: absolute;
-  bottom: calc(50% - 130px);
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 3;
-}
-
-.stand-top {
-  width: 120px;
-  height: 18px;
-  background: linear-gradient(180deg, #8a6a30 0%, #c09040 40%, #f0c860 100%);
-  border-radius: 50%;
-  box-shadow: 0 4px 20px rgba(200, 160, 60, 0.6), 0 0 40px rgba(200, 160, 60, 0.3);
-}
-
-.stand-pillar {
-  width: 36px;
-  height: 28px;
-  background: linear-gradient(180deg, #c09040 0%, #8a6a30 100%);
-  margin: 0 auto;
-  border-radius: 0 0 6px 6px;
-}
-
-.stand-base {
-  width: 80px;
-  height: 12px;
-  background: linear-gradient(180deg, #f0c860 0%, #8a6a30 100%);
-  margin: 0 auto;
-  border-radius: 4px;
-  box-shadow: 0 4px 16px rgba(200, 160, 60, 0.5);
-}
-
-/* 水晶球 */
-.orb {
-  position: absolute;
-  bottom: calc(50% - 110px);
-  left: 50%;
-  transform: translateX(-50%);
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 35% 30%,
-      rgba(255,255,255,0.35) 0%,
-      rgba(180,120,255,0.1) 30%,
-      rgba(100,60,180,0.3) 60%,
-      rgba(60,20,120,0.6) 100%);
-  box-shadow:
-    inset 0 0 40px rgba(200, 160, 255, 0.3),
-    inset -20px -20px 60px rgba(60, 20, 120, 0.5),
-    inset 10px 10px 30px rgba(255, 255, 255, 0.1),
-    0 0 30px rgba(160, 80, 255, 0.4),
-    0 0 80px rgba(160, 80, 255, 0.2),
-    0 0 120px rgba(120, 60, 200, 0.15);
+/* 边框 */
+.border-frame {
+  position: fixed;
+  inset: 18px;
+  border: 1px solid var(--border-purple);
+  border-radius: 8px;
   z-index: 2;
-  animation: orbFloat 5s ease-in-out infinite;
-  overflow: hidden;
-}
-
-@keyframes orbFloat {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(-8px); }
-}
-
-/* 球内星星 */
-.orb-stars {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.orb-star {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.9);
-  animation: orbStarPulse var(--dur, 2s) ease-in-out infinite;
-}
-
-@keyframes orbStarPulse {
-  0%, 100% { opacity: 0.2; transform: scale(0.5); }
-  50% { opacity: 1; transform: scale(1.5); }
-}
-
-/* 球面高光 */
-.orb::before {
-  content: '';
-  position: absolute;
-  top: 15%;
-  left: 20%;
-  width: 35%;
-  height: 25%;
-  background: radial-gradient(ellipse,
-    rgba(255,255,255,0.6) 0%,
-    rgba(255,255,255,0.2) 40%,
-    transparent 70%);
-  border-radius: 50%;
-  filter: blur(4px);
-}
-
-.orb::after {
-  content: '';
-  position: absolute;
-  bottom: 20%;
-  right: 15%;
-  width: 20%;
-  height: 15%;
-  background: radial-gradient(ellipse,
-    rgba(255,255,255,0.3) 0%,
-    transparent 70%);
-  border-radius: 50%;
-  filter: blur(3px);
-}
-
-/* 魔法光环 */
-.aura-ring {
-  position: absolute;
-  bottom: calc(50% - 20px);
-  left: 50%;
-  transform: translateX(-50%);
-  width: 220px;
-  height: 220px;
-  border-radius: 50%;
-  border: 2px solid rgba(200, 160, 255, 0.3);
+  pointer-events: none;
   box-shadow:
-    0 0 20px rgba(160, 80, 255, 0.2),
-    inset 0 0 20px rgba(160, 80, 255, 0.1);
-  z-index: 1;
-  animation: auraRing 3s ease-in-out infinite;
+    inset 0 0 20px rgba(139, 92, 246, 0.15),
+    0 0 15px rgba(139, 92, 246, 0.2);
+  animation: borderPulse 4s ease-in-out infinite;
 }
-
-.aura-ring:nth-child(2) {
-  width: 260px;
-  height: 260px;
-  border-color: rgba(160, 80, 255, 0.15);
-  animation-delay: 0.5s;
-  bottom: calc(50% - 40px);
-}
-
-@keyframes auraRing {
-  0%, 100% { opacity: 0.4; transform: translateX(-50%) scale(1); }
-  50% { opacity: 0.8; transform: translateX(-50%) scale(1.05); }
+@keyframes borderPulse {
+  0%, 100% { border-color: rgba(139,92,246,0.4); box-shadow: inset 0 0 20px rgba(139,92,246,0.15), 0 0 15px rgba(139,92,246,0.2); }
+  50% { border-color: rgba(139,92,246,0.7); box-shadow: inset 0 0 30px rgba(139,92,246,0.25), 0 0 25px rgba(139,92,246,0.35); }
 }
 
 /* 卡片容器 */
 .card-wrap {
   position: relative;
   z-index: 10;
-  perspective: 1000px;
-  margin-top: 80px;
+  padding: 3px;
+  background: linear-gradient(135deg,
+    var(--crystal-purple) 0%,
+    var(--crystal-violet) 25%,
+    var(--crystal-pink) 50%,
+    var(--crystal-blue) 75%,
+    var(--crystal-purple) 100%);
+  background-size: 400% 400%;
+  border-radius: 16px;
+  animation: borderGlow 6s ease-in-out infinite;
+  box-shadow:
+    0 0 30px rgba(139, 92, 246, 0.5),
+    0 0 60px rgba(139, 92, 246, 0.25),
+    0 0 90px rgba(139, 92, 246, 0.1);
+}
+@keyframes borderGlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 .card {
-  background: rgba(15, 8, 35, 0.82);
-  border: 1px solid rgba(180, 120, 255, 0.5);
-  border-radius: 20px;
-  padding: clamp(24px, 6vw, 40px) clamp(28px, 7vw, 52px);
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: clamp(28px, 7vw, 52px) clamp(24px, 6vw, 48px);
   text-align: center;
-  cursor: pointer;
-  transform-style: preserve-3d;
-  transition: transform 0.9s cubic-bezier(0.34,1.56,0.64,1);
-  box-shadow:
-    0 0 30px rgba(160, 80, 255, 0.25),
-    0 8px 40px rgba(0,0,0,0.5),
-    inset 0 1px 0 rgba(255,255,255,0.1);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  animation: borderPulse 4s ease-in-out infinite, cardFloat 4s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+  min-width: min(340px, 88vw);
+  backdrop-filter: blur(4px);
 }
 
-@keyframes borderPulse {
-  0%, 100% { border-color: rgba(180,120,255,0.4); box-shadow: 0 0 20px rgba(160,80,255,0.2), 0 8px 40px rgba(0,0,0,0.5); }
-  50% { border-color: rgba(200,160,255,0.7); box-shadow: 0 0 40px rgba(160,80,255,0.4), 0 8px 40px rgba(0,0,0,0.5); }
-}
-
-@keyframes cardFloat {
-  0%, 100% { margin-top: 0; }
-  50% { margin-top: -6px; }
-}
-
-.card.flipped {
-  transform: rotateY(180deg);
-}
-
-.card-face {
-  backface-visibility: hidden;
-}
-
-.card-front {}
-
-.card-back {
+/* 卡片内光效 */
+.card::before {
+  content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
-  transform: rotateY(180deg);
-  display: none;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg, transparent, rgba(139,92,246,0.08), transparent, rgba(192,132,252,0.06), transparent);
+  animation: shimmerRotate 12s linear infinite;
+  z-index: 0;
+}
+@keyframes shimmerRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
-.card.flipped .card-front { display: none; }
-.card.flipped .card-back { display: block; }
+/* 水晶球装饰 */
+.crystal-orb {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 50px;
+  z-index: 1;
+  filter: drop-shadow(0 0 15px var(--crystal-glow));
+  animation: orbFloat 5s ease-in-out infinite;
+}
+@keyframes orbFloat {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-8px); }
+}
 
-/* 文字样式 */
+/* 标题 */
 .name {
-  font-size: clamp(28px, 8vw, 54px);
+  font-size: clamp(28px, 7vw, 52px);
   font-weight: bold;
-  background: linear-gradient(135deg, #e0c0ff 0%, #f0d080 50%, #e0c0ff 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: shimmer 3s linear infinite;
+  color: var(--text-gold);
+  text-shadow:
+    0 0 12px rgba(196, 167, 255, 0.8),
+    0 0 24px rgba(139, 92, 246, 0.6),
+    0 0 40px rgba(139, 92, 246, 0.3);
   margin-bottom: 12px;
+  opacity: 1;
+  animation: nameAppear 1.2s cubic-bezier(0.34,1.56,0.64,1) 0.3s both;
+  letter-spacing: 4px;
+  position: relative;
+  z-index: 2;
+}
+@keyframes nameAppear {
+  from { opacity: 0; transform: scale(0.6) translateY(-10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-@keyframes shimmer {
-  0% { background-position: 0% center; }
-  100% { background-position: 200% center; }
-}
-
+/* 日期 */
 .date {
-  font-size: clamp(13px, 3vw, 17px);
-  color: rgba(200,180,255,0.6);
+  font-size: clamp(13px, 3.5vw, 17px);
+  color: var(--crystal-cyan);
+  opacity: 0.85;
   margin-bottom: 18px;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
+  opacity: 1;
+  animation: fadeUp 1s ease-out 0.6s both;
+  position: relative;
+  z-index: 2;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
+/* 分隔 */
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 16px 0;
+  opacity: 1;
+  animation: fadeUp 1s ease-out 1s both;
+  position: relative;
+  z-index: 2;
+}
+.divider-line {
+  height: 1px;
+  width: 50px;
+  background: linear-gradient(90deg, transparent, var(--crystal-violet), transparent);
+}
+.divider-star {
+  font-size: 12px;
+  color: var(--crystal-pink);
+  text-shadow: 0 0 6px var(--crystal-glow);
+}
+
+/* 祝福语 */
 .blessing {
-  font-size: clamp(15px, 4vw, 22px);
-  color: rgba(230, 210, 255, 0.9);
-  line-height: 1.7;
-  margin-bottom: 20px;
-}
-
-.from {
-  font-size: clamp(12px, 3vw, 16px);
-  color: rgba(180,160,220,0.55);
-  letter-spacing: 1px;
-}
-
-.back-text {
-  font-size: clamp(14px, 3.5vw, 20px);
-  color: rgba(220, 200, 255, 0.85);
+  font-size: clamp(16px, 4.5vw, 22px);
+  color: var(--text-light);
   line-height: 1.8;
-  white-space: pre-line;
+  margin-bottom: 22px;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  opacity: 1;
+  animation: fadeUp 1.2s ease-out 1.2s both;
+  position: relative;
+  z-index: 2;
 }
 
-.flip-hint {
-  font-size: clamp(11px, 2.5vw, 14px);
-  color: rgba(160, 130, 200, 0.4);
-  margin-top: 14px;
-  letter-spacing: 1px;
+/* 署名 */
+.from {
+  font-size: clamp(13px, 3.5vw, 17px);
+  color: var(--crystal-pink);
+  opacity: 0.9;
+  opacity: 1;
+  animation: fadeUp 1s ease-out 1.4s both;
+  letter-spacing: 2px;
+  position: relative;
+  z-index: 2;
 }
 
-/* 减少动效 */
-@media (prefers-reduced-motion: reduce) {
-  .orb, .aura-ring, .card, .magic-glow { animation: none; }
-  .star-dot, .orb-star { animation: none; opacity: 0.5; }
+/* 装饰星星 */
+.star-deco {
+  position: absolute;
+  color: var(--crystal-violet);
+  opacity: 0.3;
+  font-size: 16px;
+  z-index: 1;
+  animation: twinkle 3s ease-in-out infinite;
 }
+.star-deco-1 { top: 12%; left: 8%; animation-delay: 0s; }
+.star-deco-2 { top: 20%; right: 10%; animation-delay: 1s; font-size: 12px; }
+.star-deco-3 { bottom: 18%; left: 12%; animation-delay: 2s; }
+.star-deco-4 { bottom: 12%; right: 8%; animation-delay: 0.5s; font-size: 14px; }
+.star-deco-5 { top: 35%; left: 5%; animation-delay: 1.5s; font-size: 10px; }
+.star-deco-6 { top: 40%; right: 6%; animation-delay: 2.5s; }
+
+/* 神秘符文装饰 */
+.mystic-rune {
+  position: absolute;
+  font-size: 24px;
+  color: var(--crystal-violet);
+  opacity: 0.15;
+  z-index: 1;
+  animation: runeGlow 4s ease-in-out infinite;
+}
+@keyframes runeGlow {
+  0%, 100% { opacity: 0.1; text-shadow: none; }
+  50% { opacity: 0.25; text-shadow: 0 0 10px var(--crystal-glow); }
+}
+.mystic-rune-1 { top: 10%; right: 12%; }
+.mystic-rune-2 { bottom: 15%; left: 10%; font-size: 20px; }
 </style>
 </head>
 <body>
 
-<div class="stars-bg" id="starsBg"></div>
-<div class="magic-glow"></div>
-<div class="aura-ring"></div>
-<div class="aura-ring"></div>
-<div class="orb" id="orb">
-  <div class="orb-stars" id="orbStars"></div>
-</div>
-<div class="stand">
-  <div class="stand-top"></div>
-  <div class="stand-pillar"></div>
-  <div class="stand-base"></div>
-</div>
+<!-- 边框 -->
+<div class="border-frame"></div>
 
+<!-- 卡片 -->
 <div class="card-wrap">
-  <div class="card" id="card">
-    <div class="card-face card-front">
-      <div class="name" id="nameEl"></div>
-      <div class="date" id="dateEl"></div>
-      <div class="blessing" id="blessingEl"></div>
-      <div class="from" id="fromEl"></div>
-      <div class="flip-hint">点击卡片 · 翻开背面</div>
+  <div class="card">
+    <div class="crystal-orb">🔮</div>
+    <div class="star-deco star-deco-1">✦</div>
+    <div class="star-deco star-deco-2">✦</div>
+    <div class="star-deco star-deco-3">✦</div>
+    <div class="star-deco star-deco-4">✦</div>
+    <div class="star-deco star-deco-5">✦</div>
+    <div class="star-deco star-deco-6">✦</div>
+    <div class="mystic-rune mystic-rune-1">✧</div>
+    <div class="mystic-rune mystic-rune-2">⚝</div>
+
+    <div class="name" id="nameEl"></div>
+    <div class="date" id="dateEl"></div>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <span class="divider-star">✦</span>
+      <div class="divider-line"></div>
     </div>
-    <div class="card-face card-back">
-      <div class="back-text" id="backEl"></div>
-    </div>
+    <div class="blessing" id="blessingEl"></div>
+    <div class="from" id="fromEl"></div>
   </div>
 </div>
 
 <script>
-// URL参数读取
 const p = new URLSearchParams(location.search);
-document.getElementById('nameEl').textContent = p.get('n') || '神秘嘉宾';
+document.getElementById('nameEl').textContent = p.get('n') || '亲爱的';
 document.getElementById('dateEl').textContent = p.get('d') || '';
-document.getElementById('blessingEl').textContent = p.get('b') || '愿星光指引你前行的方向\n愿愿望在水晶球中闪烁';
+document.getElementById('blessingEl').textContent = p.get('b') || '愿命运为你揭开迷雾，指引你找到心中的答案';
 document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
-if (p.get('back')) {
-  document.getElementById('backEl').innerHTML = p.get('back').replace(/\\n/g,'<br>');
-} else {
-  document.getElementById('backEl').innerHTML = '✨ 愿你的愿望\n如星光般璀璨 ✨';
-}
 
 // 背景星星
-const starsBg = document.getElementById('starsBg');
-for (let i = 0; i < 50; i++) {
-  const s = document.createElement('div');
-  s.className = 'star-dot';
-  s.style.cssText = `
-    left:${Math.random()*100}%;
-    top:${Math.random()*100}%;
-    width:${2+Math.random()*3}px;
-    height:${2+Math.random()*3}px;
-    --dur:${2+Math.random()*3}s;
-    animation-delay:${Math.random()*3}s;
-  `;
-  starsBg.appendChild(s);
+function createStar() {
+  const star = document.createElement('div');
+  star.className = 'star';
+  star.style.left = Math.random() * 100 + 'vw';
+  star.style.top = Math.random() * 100 + 'vh';
+  star.style.animationDuration = (2 + Math.random() * 4) + 's';
+  star.style.animationDelay = Math.random() * 4 + 's';
+  document.body.appendChild(star);
+  setTimeout(() => star.remove(), 10000);
 }
+for (let i = 0; i < 50; i++) createStar();
 
-// 水晶球内星星
-const orbStars = document.getElementById('orbStars');
-for (let i = 0; i < 12; i++) {
-  const s = document.createElement('div');
-  s.className = 'orb-star';
-  const size = 2 + Math.random() * 3;
-  s.style.cssText = `
-    left:${15+Math.random()*70}%;
-    top:${15+Math.random()*70}%;
-    width:${size}px;
-    height:${size}px;
-    --dur:${1.5+Math.random()*2}s;
-    animation-delay:${Math.random()*2}s;
-  `;
-  orbStars.appendChild(s);
+// 浮动符文
+function createRune() {
+  const runes = ['☽', '✧', '⚝', '✦', '☾', '⚹', '✶'];
+  const rune = document.createElement('div');
+  rune.className = 'rune';
+  rune.textContent = runes[Math.floor(Math.random() * runes.length)];
+  rune.style.left = (10 + Math.random() * 80) + 'vw';
+  rune.style.bottom = (10 + Math.random() * 30) + 'vh';
+  rune.style.animationDuration = (5 + Math.random() * 6) + 's';
+  document.body.appendChild(rune);
+  setTimeout(() => rune.remove(), 14000);
 }
+setInterval(createRune, 1200);
+for (let i = 0; i < 6; i++) createRune();
 
-// 3D翻转
-const card = document.getElementById('card');
-card.addEventListener('click', () => {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  card.classList.toggle('flipped');
-});
-
-// reducedMotion
-const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-if (rm) {
-  document.querySelectorAll('.star-dot, .orb-star').forEach(el => {
-    el.style.animation = 'none';
-    el.style.opacity = '0.6';
-  });
+// 减少动画
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.star, .rune, .star-deco, .mystic-rune').forEach(el => el.style.animation = 'none');
+  document.querySelectorAll('.card-wrap').forEach(el => el.style.animation = 'none');
 }
 </script>
 </body>

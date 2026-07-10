@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>仲夏夜之梦</title>
+<meta property="og:title" content="🧚 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --deep-night: #0a0618;
+  --night-purple: #1a0d2e;
+  --aurora-green: #4ecca3;
+  --aurora-pink: #e891b8;
+  --aurora-blue: #7eb8ff;
+  --moon-glow: rgba(255, 240, 200, 0.8);
+  --glow-green: rgba(78, 204, 163, 0.6);
+  --glow-pink: rgba(232, 145, 184, 0.5);
+  --card-bg: rgba(15, 8, 30, 0.88);
+  --card-border: rgba(126, 184, 255, 0.3);
+  --text-light: rgba(200, 220, 255, 0.85);
+  --text-muted: rgba(180, 200, 240, 0.55);
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(78, 204, 163, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 30%, rgba(232, 145, 184, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(126, 184, 255, 0.06) 0%, transparent 45%),
+    linear-gradient(180deg,
+      #040210 0%,
+      #0a0618 25%,
+      #1a0d2e 55%,
+      #0d0820 80%,
+      #060310 100%
+    );
+  font-family: 'Georgia', 'PingFang SC', 'Microsoft YaHei', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 极光波浪背景 */
+.aurora {
+  position: fixed; inset: 0;
+  z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse at 30% 0%, rgba(78, 204, 163, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 10%, rgba(232, 145, 184, 0.10) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 5%, rgba(126, 184, 255, 0.08) 0%, transparent 50%);
+  animation: auroraPulse 8s ease-in-out infinite;
+}
+@keyframes auroraPulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.02); }
+}
+
+/* 月亮 */
+.moon {
+  position: fixed;
+  top: 8%; right: 12%;
+  width: 70px; height: 70px;
+  background: radial-gradient(circle at 35% 35%,
+    #fffef0 0%, #fff8d0 40%, #f0e8a0 100%);
+  border-radius: 50%;
+  box-shadow:
+    0 0 20px rgba(255, 240, 200, 0.5),
+    0 0 50px rgba(255, 240, 200, 0.3),
+    0 0 80px rgba(255, 240, 200, 0.15);
+  z-index: 1;
+  pointer-events: none;
+  animation: moonGlow 4s ease-in-out infinite;
+}
+@keyframes moonGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(255,240,200,0.5), 0 0 50px rgba(255,240,200,0.3), 0 0 80px rgba(255,240,200,0.15); }
+  50% { box-shadow: 0 0 30px rgba(255,240,200,0.6), 0 0 60px rgba(255,240,200,0.35), 0 0 100px rgba(255,240,200,0.2); }
+}
+
+/* 萤火虫 */
+.firefly {
+  position: fixed;
+  width: 4px; height: 4px;
+  background: radial-gradient(circle, #c8ff80, #80ff40);
+  border-radius: 50%;
+  box-shadow: 0 0 6px 2px rgba(150, 255, 80, 0.7);
+  z-index: 3;
+  pointer-events: none;
+  animation: fireflyFloat var(--d, 8s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+@keyframes fireflyFloat {
+  0%, 100% { transform: translate(0, 0); opacity: 0.2; }
+  25% { transform: translate(15px, -20px); opacity: 1; }
+  50% { transform: translate(-10px, -35px); opacity: 0.6; }
+  75% { transform: translate(20px, -15px); opacity: 1; }
+}
+
+/* 蘑菇 */
+.mushroom {
+  position: fixed;
+  z-index: 2;
+  pointer-events: none;
+  font-size: 28px;
+  animation: mushroomBob 4s ease-in-out infinite;
+}
+.mushroom-1 { bottom: 12%; left: 6%; animation-delay: 0s; }
+.mushroom-2 { bottom: 18%; left: 14%; font-size: 22px; animation-delay: 1.2s; }
+.mushroom-3 { bottom: 10%; right: 8%; font-size: 32px; animation-delay: 0.6s; }
+.mushroom-4 { bottom: 20%; right: 16%; font-size: 18px; animation-delay: 1.8s; }
+@keyframes mushroomBob {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-6px) scale(1.03); }
+}
+
+/* 星星背景 */
+.stars {
+  position: fixed; inset: 0;
+  z-index: 1; pointer-events: none;
+}
+.star {
+  position: absolute;
+  width: 1.5px; height: 1.5px;
+  background: #fff;
+  border-radius: 50%;
+  animation: starTwinkle var(--dur, 3s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.1; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.3); }
+}
+
+/* 精灵翅膀光点 */
+.wing-sparkle {
+  position: fixed;
+  width: 3px; height: 3px;
+  background: rgba(200, 255, 200, 0.8);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(150, 255, 150, 0.6);
+  z-index: 4;
+  pointer-events: none;
+  animation: wingFloat linear infinite;
+}
+@keyframes wingFloat {
+  0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+  15% { opacity: 0.9; }
+  85% { opacity: 0.7; }
+  100% { transform: translateY(-15vh) rotate(360deg); opacity: 0; }
+}
+
+/* 花瓣飘落 */
+.petal {
+  position: fixed;
+  font-size: 14px;
+  z-index: 2;
+  pointer-events: none;
+  animation: petalFall var(--d, 8s) linear infinite;
+  animation-delay: var(--delay, 0s);
+  opacity: 0.75;
+}
+@keyframes petalFall {
+  0% { transform: translateY(-20px) translateX(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.75; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(105vh) translateX(var(--drift, 40px)) rotate(var(--rot, 360deg)); opacity: 0; }
+}
+
+/* 卡片外框 */
+.card-wrap {
+  position: relative;
+  padding: 3px;
+  background: linear-gradient(135deg,
+    var(--aurora-green) 0%,
+    var(--aurora-blue) 30%,
+    var(--aurora-pink) 60%,
+    var(--aurora-green) 100%
+  );
+  background-size: 400% 400%;
+  animation: fairyBorder 6s ease-in-out infinite;
+  border-radius: 20px;
+  z-index: 10;
+  box-shadow:
+    0 0 30px rgba(78, 204, 163, 0.25),
+    0 0 60px rgba(232, 145, 184, 0.15),
+    0 8px 40px rgba(0, 0, 0, 0.4);
+}
+@keyframes fairyBorder {
+  0%, 100% { background-position: 0% 50%; }
+  33% { background-position: 100% 0%; }
+  66% { background-position: 50% 100%; }
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: 17px;
+  padding: clamp(36px, 8vw, 56px) clamp(28px, 6vw, 48px);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  min-width: min(360px, 90vw);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: cardFloat 5s ease-in-out infinite;
+}
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* 顶部精灵装饰 */
+.card::before {
+  content: '✨ 🧚 ✨';
+  display: block;
+  font-size: clamp(10px, 2.5vw, 14px);
+  letter-spacing: 8px;
+  margin-bottom: 18px;
+  opacity: 0.7;
+  animation: fadeIn 1.5s ease-out both;
+}
+
+/* 名字 */
+.name {
+  color: #e8f8ff;
+  font-size: clamp(26px, 7vw, 46px);
+  font-weight: normal;
+  letter-spacing: 5px;
+  margin-bottom: 10px;
+  opacity: 1;
+  animation: nameReveal 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+  text-shadow:
+    0 0 20px rgba(126, 184, 255, 0.6),
+    0 0 40px rgba(78, 204, 163, 0.3);
+}
+@keyframes nameReveal {
+  from { opacity: 0; transform: translateY(18px) scale(0.9); letter-spacing: 14px; }
+  to { opacity: 1; transform: translateY(0) scale(1); letter-spacing: 5px; }
+}
+
+/* 分隔线 */
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 16px auto;
+  opacity: 0;
+  animation: fadeIn 1s ease-out 0.5s both;
+}
+.divider-line {
+  height: 1px;
+  width: 55px;
+  background: linear-gradient(90deg, transparent, var(--aurora-green), transparent);
+}
+.divider-star {
+  color: var(--aurora-green);
+  font-size: 10px;
+  animation: starPulse 2s ease-in-out infinite;
+}
+@keyframes starPulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+/* 日期 */
+.date {
+  color: var(--text-muted);
+  font-size: clamp(11px, 3vw, 14px);
+  letter-spacing: 3px;
+  margin-bottom: 18px;
+  opacity: 1;
+  animation: fadeIn 1.2s ease-out 0.7s both;
+}
+
+/* 祝福语 */
+.blessing {
+  color: rgba(220, 240, 255, 0.92);
+  font-size: clamp(15px, 4vw, 20px);
+  line-height: 1.9;
+  margin-bottom: 24px;
+  opacity: 1;
+  animation: fadeIn 1.4s ease-out 0.9s both;
+  text-shadow: 0 0 12px rgba(126, 184, 255, 0.25);
+}
+
+/* 署名 */
+.from {
+  color: var(--text-muted);
+  font-size: clamp(12px, 3vw, 15px);
+  letter-spacing: 2px;
+  font-style: italic;
+  opacity: 1;
+  animation: fadeIn 1.6s ease-out 1.1s both;
+}
+
+/* 底部装饰 */
+.card::after {
+  content: '🧚 🤍 ✨';
+  display: block;
+  font-size: clamp(10px, 2.5vw, 14px);
+  letter-spacing: 8px;
+  margin-top: 18px;
+  opacity: 0.7;
+  animation: fadeIn 1.8s ease-out 1.3s both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 减少动效 */
+@media (prefers-reduced-motion: reduce) {
+  .card, .card-wrap { animation: none; }
+  .firefly, .wing-sparkle, .petal, .star, .mushroom { animation: none; }
+  .name, .date, .blessing, .from, .divider,
+  .card::before, .card::after { animation: none; opacity: 1; }
+}
+</style>
+</head>
+<body>
+
+<!-- 极光背景 -->
+<div class="aurora"></div>
+
+<!-- 月亮 -->
+<div class="moon"></div>
+
+<!-- 背景星星 -->
+<div class="stars" id="stars"></div>
+
+<!-- 萤火虫 -->
+<div id="fireflies"></div>
+
+<!-- 精灵光点 -->
+<div id="wingSparkles"></div>
+
+<!-- 花瓣 -->
+<div id="petals"></div>
+
+<!-- 蘑菇装饰 -->
+<div class="mushroom mushroom-1">🍄</div>
+<div class="mushroom mushroom-2">🍄</div>
+<div class="mushroom mushroom-3">🍄</div>
+<div class="mushroom mushroom-4">🍄</div>
+
+<!-- 主卡片 -->
+<div class="card-wrap">
+  <div class="card">
+    <div class="name" id="nameEl"></div>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <span class="divider-star">✦</span>
+      <div class="divider-line"></div>
+    </div>
+    <div class="date" id="dateEl"></div>
+    <div class="blessing" id="blessingEl"></div>
+    <div class="from" id="fromEl"></div>
+  </div>
+</div>
+
+<script>
+// 背景星星
+const stars = document.getElementById('stars');
+for (let i = 0; i < 60; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  s.style.left = Math.random() * 100 + '%';
+  s.style.top = Math.random() * 70 + '%';
+  s.style.setProperty('--dur', (2 + Math.random() * 4) + 's');
+  s.style.setProperty('--delay', (Math.random() * 6) + 's');
+  stars.appendChild(s);
+}
+
+// 萤火虫
+const fireflies = document.getElementById('fireflies');
+for (let i = 0; i < 10; i++) {
+  const f = document.createElement('div');
+  f.className = 'firefly';
+  f.style.left = (5 + Math.random() * 90) + '%';
+  f.style.top = (20 + Math.random() * 65) + '%';
+  f.style.setProperty('--d', (6 + Math.random() * 8) + 's');
+  f.style.setProperty('--delay', (Math.random() * 10) + 's');
+  f.style.width = (3 + Math.random() * 3) + 'px';
+  f.style.height = f.style.width;
+  fireflies.appendChild(f);
+}
+
+// 精灵光点
+const wingSparkles = document.getElementById('wingSparkles');
+for (let i = 0; i < 12; i++) {
+  const w = document.createElement('div');
+  w.className = 'wing-sparkle';
+  w.style.left = Math.random() * 100 + '%';
+  w.style.animationDuration = (8 + Math.random() * 8) + 's';
+  w.style.animationDelay = (Math.random() * 12) + 's';
+  document.body.appendChild(w);
+}
+
+// 花瓣飘落
+const petals = document.getElementById('petals');
+const petalEmojis = ['🌸', '💮', '🪷', '🌺'];
+for (let i = 0; i < 10; i++) {
+  const p = document.createElement('div');
+  p.className = 'petal';
+  p.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+  p.style.left = Math.random() * 100 + '%';
+  p.style.setProperty('--d', (7 + Math.random() * 6) + 's');
+  p.style.setProperty('--delay', (Math.random() * 8) + 's');
+  p.style.setProperty('--drift', ((Math.random() - 0.5) * 80) + 'px');
+  p.style.setProperty('--rot', (300 + Math.random() * 300) + 'deg');
+  p.style.fontSize = (10 + Math.random() * 8) + 'px';
+  petals.appendChild(p);
+}
+
+// URL参数
+const p = new URLSearchParams(location.search);
+document.getElementById('nameEl').textContent = p.get('n') || '亲爱的你';
+document.getElementById('dateEl').textContent = p.get('d') || '';
+document.getElementById('blessingEl').textContent = p.get('b') || '愿你每一个夜晚都有星光相伴\n愿每一个梦境都如童话般美好';
+document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
+</script>
+
+</body>
+</html>

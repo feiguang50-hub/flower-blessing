@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>旋转木马贺卡</title>
+<meta property="og:title" content="🎠 收到一份专属贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #1a0a2e 0%, #2d1b4e 35%, #4a2c6a 65%, #7b4397 100%);
+  font-family: 'Quicksand', 'Segoe UI', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 极光背景 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(255,100,180,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(120,80,255,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(255,180,220,0.08) 0%, transparent 60%);
+  animation: auroraShift 8s ease-in-out infinite alternate;
+  z-index: 0;
+  pointer-events: none;
+}
+@keyframes auroraShift {
+  0% { transform: scale(1) translateY(0); opacity: 0.7; }
+  100% { transform: scale(1.1) translateY(-10px); opacity: 1; }
+}
+
+/* 星星 */
+.star {
+  position: fixed;
+  width: 3px; height: 3px;
+  background: #fff;
+  border-radius: 50%;
+  animation: twinkle ease-in-out infinite;
+  z-index: 1;
+  pointer-events: none;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* 彩带飘带 */
+.ribbon {
+  position: fixed;
+  font-size: 18px;
+  animation: ribbonFly linear infinite;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.7;
+}
+@keyframes ribbonFly {
+  0% { transform: translateY(-5vh) rotate(0deg) translateX(0); opacity: 0; }
+  10% { opacity: 0.7; }
+  90% { opacity: 0.5; }
+  100% { transform: translateY(105vh) rotate(360deg) translateX(60px); opacity: 0; }
+}
+
+/* 旋转木马中心装饰 */
+.carousel-deco {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,200,240,0.1);
+  animation: carouselSpin 20s linear infinite;
+  z-index: 1;
+  pointer-events: none;
+}
+.carousel-deco::before {
+  content: '';
+  position: absolute;
+  inset: 10px;
+  border-radius: 50%;
+  border: 1px dashed rgba(255,200,240,0.08);
+}
+@keyframes carouselSpin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* 卡片包装 */
+.card-wrap {
+  position: relative;
+  z-index: 10;
+  padding: 3px;
+  border-radius: 28px;
+  background: linear-gradient(135deg,
+    #ff9ec8,
+    #ffb6d9,
+    #d8aaff,
+    #b4a0ff,
+    #ff9ec8);
+  background-size: 300% 300%;
+  animation: pinkBorder 4s ease infinite;
+  box-shadow:
+    0 0 30px rgba(255,150,200,0.5),
+    0 0 70px rgba(200,120,255,0.25),
+    inset 0 0 20px rgba(255,255,255,0.1);
+}
+@keyframes pinkBorder {
+  0% { background-position: 0% 50%; box-shadow: 0 0 30px rgba(255,150,200,0.5), 0 0 70px rgba(200,120,255,0.25); }
+  50% { background-position: 100% 50%; box-shadow: 0 0 45px rgba(255,180,220,0.7), 0 0 90px rgba(200,120,255,0.35); }
+  100% { background-position: 0% 50%; box-shadow: 0 0 30px rgba(255,150,200,0.5), 0 0 70px rgba(200,120,255,0.25); }
+}
+
+/* 卡片本体 */
+.card {
+  background: linear-gradient(160deg, rgba(255,240,250,0.92) 0%, rgba(245,225,248,0.95) 100%);
+  border-radius: 26px;
+  padding: clamp(32px, 6vw, 56px) clamp(28px, 5vw, 48px);
+  max-width: min(520px, 92vw);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.5);
+  box-shadow: inset 0 0 40px rgba(255,200,240,0.1);
+  animation: cardFloat 6s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0) rotate(0.5deg); }
+  50% { transform: translateY(-8px) rotate(-0.5deg); }
+}
+
+/* 顶部旋转木马装饰 */
+.carousel-top {
+  text-align: center;
+  font-size: clamp(28px, 6vw, 44px);
+  margin-bottom: 20px;
+  animation: carouselBounce 3s ease-in-out infinite;
+  filter: drop-shadow(0 4px 12px rgba(255,150,200,0.4));
+}
+@keyframes carouselBounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-6px) scale(1.05); }
+}
+
+/* 标题 */
+.occasion {
+  font-size: clamp(10px, 2.2vw, 13px);
+  color: rgba(180,80,160,0.7);
+  letter-spacing: 8px;
+  text-align: center;
+  margin-bottom: 18px;
+  opacity: 1;
+  animation: fadeUp 1s ease-out 0.3s both;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 名字 */
+.name {
+  font-size: clamp(28px, 7vw, 52px);
+  color: #6a2080;
+  text-align: center;
+  margin-bottom: 16px;
+  letter-spacing: 4px;
+  opacity: 1;
+  animation: namePop 1.2s cubic-bezier(0.34,1.56,0.64,1) 0.5s both;
+  text-shadow: 0 0 20px rgba(255,150,220,0.3);
+}
+@keyframes namePop {
+  from { opacity: 0; transform: translateY(20px) scale(0.7); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* 日期 */
+.date-line {
+  font-size: clamp(11px, 2.5vw, 14px);
+  color: rgba(160,80,140,0.6);
+  text-align: center;
+  letter-spacing: 4px;
+  margin-bottom: 28px;
+  opacity: 1;
+  animation: fadeUp 1s ease-out 0.8s both;
+}
+
+/* 分隔线装饰 */
+.deco-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 28px;
+  animation: fadeUp 1s ease-out 1s both;
+}
+.deco-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: rgba(200,100,180,0.4);
+}
+.deco-line-main {
+  flex: 1;
+  max-width: 80px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(200,100,180,0.4), transparent);
+}
+
+/* 祝福语 */
+.blessing {
+  font-size: clamp(14px, 3.5vw, 18px);
+  color: #4a1860;
+  text-align: center;
+  line-height: 2.2;
+  letter-spacing: 1px;
+  opacity: 1;
+  animation: fadeUp 1s ease-out 1.2s both;
+}
+
+/* 署名 */
+.from {
+  font-size: clamp(12px, 3vw, 15px);
+  color: rgba(160,80,140,0.65);
+  text-align: right;
+  margin-top: 28px;
+  letter-spacing: 3px;
+  opacity: 1;
+  animation: fadeUp 1s ease-out 1.5s both;
+}
+
+/* 底部彩灯装饰 */
+.lights {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 32px;
+  animation: fadeUp 1s ease-out 1.8s both;
+}
+.light {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  animation: lightGlow 1.5s ease-in-out infinite;
+}
+.light:nth-child(1) { background: #ff6b9d; animation-delay: 0s; }
+.light:nth-child(2) { background: #c44dff; animation-delay: 0.2s; }
+.light:nth-child(3) { background: #4d9fff; animation-delay: 0.4s; }
+.light:nth-child(4) { background: #4dffb8; animation-delay: 0.6s; }
+.light:nth-child(5) { background: #ffde4d; animation-delay: 0.8s; }
+.light:nth-child(6) { background: #ff9ec8; animation-delay: 1s; }
+.light:nth-child(7) { background: #b4a0ff; animation-delay: 1.2s; }
+@keyframes lightGlow {
+  0%, 100% { transform: scale(1); opacity: 0.6; box-shadow: 0 0 6px currentColor; }
+  50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 14px currentColor; }
+}
+
+/* 底部旋转木马图标 */
+.carousel-bottom {
+  text-align: center;
+  font-size: 20px;
+  margin-top: 24px;
+  animation: carouselSpinSlow 8s linear infinite;
+  opacity: 0.5;
+}
+@keyframes carouselSpinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+</style>
+</head>
+<body>
+
+<script>
+// 星星
+for (let i = 0; i < 40; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  s.style.left = Math.random() * 100 + 'vw';
+  s.style.top = Math.random() * 100 + 'vh';
+  s.style.animationDuration = (2 + Math.random() * 3) + 's';
+  s.style.animationDelay = Math.random() * 5 + 's';
+  document.body.appendChild(s);
+}
+
+// 彩带
+const ribbonColors = ['🎀', '🎗️', '💫', '✨', '🎪'];
+for (let i = 0; i < 12; i++) {
+  const r = document.createElement('div');
+  r.className = 'ribbon';
+  r.textContent = ribbonColors[i % ribbonColors.length];
+  r.style.left = Math.random() * 100 + 'vw';
+  r.style.fontSize = (12 + Math.random() * 10) + 'px';
+  r.style.animationDuration = (8 + Math.random() * 6) + 's';
+  r.style.animationDelay = Math.random() * 10 + 's';
+  document.body.appendChild(r);
+}
+</script>
+
+<!-- 旋转木马装饰圆 -->
+<div class="carousel-deco"></div>
+
+<!-- 贺卡 -->
+<div class="card-wrap">
+  <div class="card">
+    <div class="carousel-top">🎠</div>
+    <div class="occasion" id="occasionEl">旋转木马纪念</div>
+    <div class="name" id="nameEl"></div>
+    <div class="date-line" id="dateEl"></div>
+    <div class="deco-line">
+      <div class="deco-line-main"></div>
+      <div class="deco-dot"></div>
+      <div class="deco-dot"></div>
+      <div class="deco-dot"></div>
+      <div class="deco-line-main"></div>
+    </div>
+    <div class="blessing" id="blessingEl"></div>
+    <div class="from" id="fromEl"></div>
+    <div class="lights">
+      <div class="light"></div>
+      <div class="light"></div>
+      <div class="light"></div>
+      <div class="light"></div>
+      <div class="light"></div>
+      <div class="light"></div>
+      <div class="light"></div>
+    </div>
+    <div class="carousel-bottom">✦ 🎠 ✦</div>
+  </div>
+</div>
+
+<script>
+const p = new URLSearchParams(location.search);
+const name = p.get('n') || '亲爱的';
+const date = p.get('d') || '';
+const blessing = p.get('b') || '愿你的生活像旋转木马一样，\n永远保持童真，永远充满欢乐。';
+const from = p.get('f') || '';
+const occasion = p.get('o') || '旋转木马纪念';
+
+document.getElementById('nameEl').textContent = name;
+document.getElementById('dateEl').textContent = date;
+document.getElementById('occasionEl').textContent = occasion;
+document.getElementById('blessingEl').textContent = blessing;
+document.getElementById('fromEl').textContent = from ? '— ' + from : '';
+</script>
+</body>
+</html>

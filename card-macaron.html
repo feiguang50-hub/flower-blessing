@@ -3,213 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="💌 马卡龙祝福">
+<meta name="twitter:title" content="💌 马卡龙祝福">
 <title>马卡龙祝福</title>
-<meta property="og:title" content="💌 收到一份专属贺卡">
-<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
-<meta property="og:type" content="website">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-  min-height:100vh;
-  background:linear-gradient(160deg,#fff5f8 0%,#fff0f5 25%,#f5f0ff 50%,#f0f8ff 75%,#fff5f0 100%);
-  display:flex;align-items:center;justify-content:center;
-  overflow:hidden;
-  font-family:'Microsoft YaHei',sans-serif;
-  position:relative;
-}
-/* 背景装饰 */
-.bg-bubble{
-  position:fixed;inset:0;pointer-events:none;
-}
-.bubble{
-  position:absolute;border-radius:50%;
-  animation:riseBub var(--d,12s) ease-in infinite;
-  opacity:0;
-}
-@keyframes riseBub{
-  0%{transform:translateY(110vh) scale(0.6);opacity:0}
-  15%{opacity:0.7}
-  85%{opacity:0.5}
-  100%{transform:translateY(-15vh) scale(1);opacity:0}
-}
-/* 纸屑 */
-.confetti{
-  position:absolute;
-  width:8px;height:8px;
-  animation:confettiFall var(--d,8s) linear infinite;
-  opacity:0;
-}
-@keyframes confettiFall{
-  0%{transform:translateY(-5vh) rotate(0deg);opacity:0}
-  10%{opacity:0.8}
-  90%{opacity:0.8}
-  100%{transform:translateY(105vh) rotate(540deg);opacity:0}
-}
-/* 卡片外框 */
-.card-wrap{
-  position:relative;
-  padding:3px;
-  background:linear-gradient(135deg,#f8bbd9,#c5a3ff,#a8d8f0,#f8bbd9);
-  background-size:400% 400%;
-  border-radius:22px;
-  animation:borderFlow 6s ease infinite;
-  box-shadow:0 0 30px rgba(245,140,200,0.35),0 12px 40px rgba(0,0,0,0.1);
-  z-index:10;
-}
-@keyframes borderFlow{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
-/* 卡片主体 */
-.card{
-  background:linear-gradient(160deg,rgba(255,252,255,0.96) 0%,rgba(255,248,252,0.98) 100%);
-  border-radius:20px;
-  padding:clamp(34px,9vw,56px) clamp(26px,7vw,48px);
-  text-align:center;
-  max-width:min(520px,94vw);
-  min-height:min(400px,75vh);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  position:relative;
-  overflow:hidden;
-  animation:cardFloat 5s ease-in-out infinite alternate;
-  border:1px solid rgba(255,180,220,0.25);
-}
-@keyframes cardFloat{
-  0%{transform:translateY(0)}
-  100%{transform:translateY(-7px)}
-}
-/* 内发光 */
-.card::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse 70% 50% at 50% 30%,rgba(255,200,230,0.12),transparent 70%);
-  pointer-events:none;
-}
-/* 缎带角 */
-.ribbon{
-  position:absolute;
-  width:36px;height:36px;
-  border-radius:50%;
-  animation:ribbonSpin 8s linear infinite;
-}
-.ribbon::before,.ribbon::after{
-  content:'';position:absolute;border-radius:50%;
-}
-.ribbon.tl{top:14px;left:14px;background:radial-gradient(circle,#f8bbd9 40%,transparent 70%);animation-delay:0s}
-.ribbon.tr{top:14px;right:14px;background:radial-gradient(circle,#c5a3ff 40%,transparent 70%);animation-delay:2s}
-.ribbon.bl{bottom:14px;left:14px;background:radial-gradient(circle,#a8d8f0 40%,transparent 70%);animation-delay:4s}
-.ribbon.br{bottom:14px;right:14px;background:radial-gradient(circle,#fce4a8 40%,transparent 70%);animation-delay:6s}
-@keyframes ribbonSpin{
-  0%{transform:scale(1) rotate(0deg)}
-  50%{transform:scale(1.15) rotate(180deg)}
-  100%{transform:scale(1) rotate(360deg)}
-}
-/* 图标 */
-.icon{
-  font-size:clamp(44px,11vw,66px);
-  margin-bottom:16px;
-  animation:iconDrop 0.9s cubic-bezier(0.34,1.56,0.64,1) 0.2s both;
-  filter:drop-shadow(0 3px 8px rgba(245,140,200,0.3));
-}
-@keyframes iconDrop{
-  from{transform:translateY(-35px) scale(0.5);opacity:0}
-  to{transform:translateY(0) scale(1);opacity:1}
-}
-/* 姓名 */
-.name{
-  font-size:clamp(25px,6vw,40px);
-  font-weight:700;
-  background:linear-gradient(135deg,#e87ab5,#b57edc,#7eb8e8);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
-  margin-bottom:12px;
-  animation:slideUp 1.2s ease-out 0.4s both;
-  opacity:1;
-}
-@keyframes slideUp{
-  from{opacity:0;transform:translateY(16px)}
-  to{opacity:1;transform:translateY(0)}
-}
-/* 日期 */
-.date{
-  font-size:clamp(13px,3vw,16px);
-  color:rgba(180,120,160,0.6);
-  margin-bottom:18px;
-  letter-spacing:2px;
-  animation:slideUp 1.2s ease-out 0.7s both;
-  opacity:1;
-}
-/* 祝福语 */
-.blessing{
-  font-size:clamp(15px,4vw,20px);
-  line-height:1.9;
-  color:#7a5570;
-  margin-bottom:22px;
-  animation:slideUp 1.2s ease-out 1s both;
-  opacity:1;
-}
-/* 署名 */
-.from{
-  font-size:clamp(13px,3vw,15px);
-  color:rgba(180,120,160,0.5);
-  animation:slideUp 1.2s ease-out 1.3s both;
-  opacity:1;
-}
-@media(prefers-reduced-motion:reduce){
-  .card,.card-wrap,.bubble,.confetti,.ribbon{animation:none!important}
-}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+       background:linear-gradient(160deg,#1a1a2e,#16213e);color:#fff;
+       font-family:'Georgia','PingFang SC',serif;text-align:center}
+  .box{padding:24px;border-radius:16px;background:rgba(255,255,255,.05)}
+  .spin{font-size:40px;animation:s 1.4s ease-in-out infinite}
+  @keyframes s{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
 </style>
 </head>
 <body>
-
-<div class="bg-bubble" id="bgBub"></div>
-
-<div class="card-wrap">
-  <div class="card">
-    <div class="ribbon tl"></div>
-    <div class="ribbon tr"></div>
-    <div class="ribbon bl"></div>
-    <div class="ribbon br"></div>
-    <div class="icon" id="iconEl">🧁</div>
-    <div class="name" id="nameEl"></div>
-    <div class="date" id="dateEl"></div>
-    <div class="blessing" id="blessingEl"></div>
-    <div class="from" id="fromEl"></div>
-  </div>
+<div class="box">
+  <div class="spin">💌</div>
+  <p>正在打开贺卡…</p>
 </div>
-
 <script>
+// 兼容：保留所有 URL 参数，把旧路径重定向到统一的 card.html?scene=
 (function(){
-  var bg=document.getElementById('bgBub');
-  var bubColors=['#f8bbd9','#c5a3ff','#a8d8f0','#fce4a8','#b5e8d5','#f9c6d0'];
-  var confEmojis=['💖','⭐','🌸','💜','🩷','✨','💕'];
-  // 泡泡
-  for(var i=0;i<14;i++){
-    var b=document.createElement('div');
-    b.className='bubble';
-    var c=bubColors[i%bubColors.length];
-    var sz=Math.random()*18+10;
-    b.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+(Math.random()*90+5)+'%;background:radial-gradient(circle at 35% 35%,'+c+',rgba(255,255,255,0.6));animation-duration:'+(Math.random()*8+10)+'s;animation-delay:'+(Math.random()*10)+'s';
-    bg.appendChild(b);
-  }
-  // 纸屑
-  for(var j=0;j<12;j++){
-    var c2=document.createElement('div');
-    c2.className='confetti';
-    c2.textContent=confEmojis[j%confEmojis.length];
-    c2.style.cssText='left:'+(Math.random()*92+3)+'%;animation-duration:'+(Math.random()*5+7)+'s;animation-delay:'+(Math.random()*8)+'s;font-size:'+(Math.random()*8+12)+'px';
-    bg.appendChild(c2);
-  }
-  // 参数
-  var p=new URLSearchParams(location.search);
-  document.getElementById('nameEl').textContent=p.get('n')||'亲爱的';
-  document.getElementById('dateEl').textContent=p.get('d')||'';
-  document.getElementById('blessingEl').textContent=p.get('b')||'愿你的生活像马卡龙一样甜美，每一天都值得细细品味';
-  var from=p.get('f');
-  if(from) document.getElementById('fromEl').textContent='— '+from;
-  var icon=p.get('i');
-  if(icon) document.getElementById('iconEl').textContent=icon;
+  var p = new URLSearchParams(location.search);
+  // 移除旧的 scene 参数（如果有），强制用文件名里的 scene
+  var q = new URLSearchParams();
+  p.forEach(function(v,k){ if (k !== 'scene') q.set(k, v); });
+  q.set('scene', 'macaron');
+  // location.replace 不会留下历史记录，体验更好
+  location.replace('card.html?' + q.toString());
 })();
 </script>
 </body>

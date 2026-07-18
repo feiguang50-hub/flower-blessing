@@ -3,270 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="🎋 竹林清风">
+<meta name="twitter:title" content="🎋 竹林清风">
 <title>竹林清风</title>
-<meta property="og:title" content="🎋 收到一份专属贺卡">
-<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">
-
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-:root {
-  --bamboo-light: #7ecf5c;
-  --bamboo-mid: #4caf50;
-  --bamboo-dark: #2e7d32;
-  --bamboo-shadow: #1b5e20;
-  --sky-light: #b8d4a8;
-  --sky-warm: #d4e8c0;
-  --text-deep: #1a3a1a;
-  --card-bg: rgba(245, 255, 240, 0.88);
-  --card-border: rgba(100, 180, 80, 0.4);
-}
-
-body {
-  min-height: 100vh;
-  background: linear-gradient(180deg, #87ce8f 0%, #66bb6a 25%, #4caf50 50%, #2e7d32 75%, #1b5e20 100%);
-  font-family: 'Georgia', 'PingFang SC', serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
-}
-
-/* 阳光斑驳 */
-.sunlight {
-  position: fixed; inset: 0;
-  z-index: 0; pointer-events: none;
-  background:
-    radial-gradient(ellipse at 30% 20%, rgba(255,255,200,0.18) 0%, transparent 40%),
-    radial-gradient(ellipse at 70% 15%, rgba(255,255,200,0.12) 0%, transparent 35%),
-    radial-gradient(ellipse at 50% 30%, rgba(255,255,200,0.1) 0%, transparent 45%);
-  animation: sunShift 8s ease-in-out infinite;
-}
-@keyframes sunShift {
-  0%, 100% { opacity: 0.8; }
-  50% { opacity: 1; }
-}
-
-/* 竹影投在地面 */
-.ground-shadow {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  height: 60px;
-  background: linear-gradient(transparent, rgba(20,60,20,0.3));
-  z-index: 1;
-}
-
-/* 竹竿 */
-.bamboo-stalk {
-  position: fixed;
-  bottom: 0;
-  width: 18px;
-  background: linear-gradient(90deg, #5a8a3a 0%, #7ecf5c 35%, #6ab552 65%, #4a7a2a 100%);
-  border-radius: 4px;
-  z-index: 2;
-  transform-origin: bottom center;
-}
-.bamboo-segment {
-  position: absolute;
-  left: 0; right: 0;
-  height: 8px;
-  background: rgba(30,80,20,0.3);
-  border-radius: 2px;
-}
-
-/* 竹叶 */
-.bamboo-leaf {
-  position: absolute;
-  width: 30px; height: 10px;
-  background: linear-gradient(90deg, #4caf50 0%, #81c784 50%, #4caf50 100%);
-  border-radius: 50% 50% 50% 50% / 80% 80% 20% 20%;
-  transform-origin: left center;
-  animation: leafSway var(--d, 4s) ease-in-out infinite;
-  animation-delay: var(--delay, 0s);
-}
-@keyframes leafSway {
-  0%, 100% { transform: rotate(calc(var(--base, 0deg) - 12deg)); }
-  50% { transform: rotate(calc(var(--base, 0deg) + 12deg)); }
-}
-
-/* 飘落竹叶 */
-.falling-leaf {
-  position: absolute;
-  width: 14px; height: 6px;
-  background: linear-gradient(90deg, #66bb6a, #81c784);
-  border-radius: 50%;
-  animation: fallLeaf var(--d, 8s) linear infinite;
-  animation-delay: var(--delay, 0s);
-  opacity: 0.7;
-}
-@keyframes fallLeaf {
-  0% { transform: translate(0, 0) rotate(0deg); opacity: 0.7; }
-  25% { transform: translate(calc(var(--dx, 20px) * 0.25), calc(25vh * 0.25)) rotate(90deg); }
-  50% { transform: translate(calc(var(--dx, 20px) * 0.5), calc(25vh * 0.5)) rotate(180deg); }
-  75% { transform: translate(calc(var(--dx, 20px) * 0.75), calc(25vh * 0.75)) rotate(270deg); }
-  100% { transform: translate(var(--dx, 20px), 25vh) rotate(360deg); opacity: 0; }
-}
-
-/* 贺卡主体 */
-.card-wrap {
-  position: relative;
-  z-index: 10;
-  padding: 2px;
-  background: linear-gradient(135deg, rgba(100, 200, 80, 0.6), rgba(60, 160, 40, 0.4), rgba(100, 200, 80, 0.6));
-  border-radius: 20px;
-  animation: borderGlow 3s ease-in-out infinite;
-}
-@keyframes borderGlow {
-  0%, 100% { box-shadow: 0 0 12px rgba(80, 180, 60, 0.3), 0 0 30px rgba(60, 160, 40, 0.15); }
-  50% { box-shadow: 0 0 22px rgba(80, 180, 60, 0.5), 0 0 50px rgba(60, 160, 40, 0.25); }
-}
-.card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 18px;
-  padding: clamp(28px, 8vw, 50px) clamp(28px, 10vw, 60px);
-  text-align: center;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  max-width: 90vw;
-  width: 420px;
-  animation: cardFloat 4s ease-in-out infinite;
-}
-@keyframes cardFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-.name {
-  color: var(--bamboo-dark);
-  font-size: clamp(24px, 6vw, 38px);
-  font-weight: normal;
-  letter-spacing: 4px;
-  margin-bottom: 18px;
-  text-shadow: 0 0 16px rgba(100, 180, 80, 0.4);
-  opacity: 1;
-  animation: fadeDown 1.2s ease-out both;
-}
-
-.date {
-  color: rgba(50, 120, 40, 0.6);
-  font-size: clamp(12px, 3vw, 15px);
-  letter-spacing: 3px;
-  margin-bottom: 22px;
-  opacity: 1;
-  animation: fadeDown 1.2s ease-out 0.2s both;
-}
-
-.blessing {
-  color: var(--text-deep);
-  font-size: clamp(15px, 4vw, 19px);
-  line-height: 1.9;
-  margin-bottom: 24px;
-  opacity: 1;
-  animation: fadeDown 1.2s ease-out 0.4s both;
-}
-
-.from {
-  color: rgba(50, 120, 40, 0.55);
-  font-size: clamp(12px, 3vw, 15px);
-  letter-spacing: 2px;
-  opacity: 1;
-  animation: fadeDown 1.2s ease-out 0.6s both;
-}
-
-@keyframes fadeDown {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .bamboo-leaf, .falling-leaf, .card, .sunlight { animation: none; }
-}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+       background:linear-gradient(160deg,#1a1a2e,#16213e);color:#fff;
+       font-family:'Georgia','PingFang SC',serif;text-align:center}
+  .box{padding:24px;border-radius:16px;background:rgba(255,255,255,.05)}
+  .spin{font-size:40px;animation:s 1.4s ease-in-out infinite}
+  @keyframes s{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
 </style>
 </head>
 <body>
-
-<!-- 阳光 -->
-<div class="sunlight"></div>
-
-<!-- 地面 -->
-<div class="ground-shadow"></div>
-
-<!-- 竹竿（左右分布） -->
-<div id="bambooStalks"></div>
-
-<!-- 飘落竹叶 -->
-<div id="fallingLeaves"></div>
-
-<!-- 贺卡 -->
-<div class="card-wrap">
-  <div class="card">
-    <div class="name" id="nameEl"></div>
-    <div class="date" id="dateEl"></div>
-    <div class="blessing" id="blessingEl"></div>
-    <div class="from" id="fromEl"></div>
-  </div>
+<div class="box">
+  <div class="spin">🎋</div>
+  <p>正在打开贺卡…</p>
 </div>
-
 <script>
-const p = new URLSearchParams(location.search);
-document.getElementById('nameEl').textContent = p.get('n') || '亲爱的';
-document.getElementById('dateEl').textContent = p.get('d') || '';
-document.getElementById('blessingEl').textContent = p.get('b') || '愿你如竹，清风自来';
-document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
-
-// 竹竿
-const stalkData = [
-  {left: 5, height: 480, leaves: [[0.15, -30], [0.35, 20], [0.55, -25], [0.72, 15], [0.88, -20]]},
-  {left: 13, height: 420, leaves: [[0.1, 25], [0.28, -35], [0.5, 30], [0.68, -15], [0.85, 20]]},
-  {left: 22, height: 500, leaves: [[0.12, -20], [0.3, 35], [0.52, -30], [0.7, 25], [0.9, -15]]},
-  {left: 72, height: 460, leaves: [[0.1, 30], [0.3, -25], [0.48, 20], [0.7, -35], [0.88, 15]]},
-  {left: 80, height: 490, leaves: [[0.14, -35], [0.32, 25], [0.55, -20], [0.74, 30], [0.92, -25]]},
-  {left: 89, height: 440, leaves: [[0.1, 20], [0.28, -30], [0.5, 35], [0.72, -20], [0.9, 25]]},
-];
-const stalkContainer = document.getElementById('bambooStalks');
-stalkData.forEach(s => {
-  const stalk = document.createElement('div');
-  stalk.className = 'bamboo-stalk';
-  stalk.style.left = s.left + '%';
-  stalk.style.height = s.height + 'px';
-  // 竹节
-  const segCount = Math.floor(s.height / 60);
-  for (let i = 1; i <= segCount; i++) {
-    const seg = document.createElement('div');
-    seg.className = 'bamboo-segment';
-    seg.style.top = (i * 60) + 'px';
-    stalk.appendChild(seg);
-  }
-  // 竹叶
-  s.leaves.forEach((l, i) => {
-    const leaf = document.createElement('div');
-    leaf.className = 'bamboo-leaf';
-    leaf.style.top = (l[0] * s.height) + 'px';
-    leaf.style.left = '8px';
-    leaf.style.setProperty('--base', l[1] + 'deg');
-    leaf.style.setProperty('--d', (3.5 + Math.random() * 1.5) + 's');
-    leaf.style.setProperty('--delay', (i * 0.3) + 's');
-    stalk.appendChild(leaf);
-  });
-  stalkContainer.appendChild(stalk);
-});
-
-// 飘落竹叶
-const leafContainer = document.getElementById('fallingLeaves');
-for (let i = 0; i < 12; i++) {
-  const leaf = document.createElement('div');
-  leaf.className = 'falling-leaf';
-  leaf.style.left = (10 + Math.random() * 80) + '%';
-  leaf.style.top = -20 + 'px';
-  leaf.style.setProperty('--dx', (Math.random() * 60 - 30) + 'px');
-  leaf.style.setProperty('--d', (6 + Math.random() * 5) + 's');
-  leaf.style.setProperty('--delay', (Math.random() * 6) + 's');
-  leafContainer.appendChild(leaf);
-}
+// 兼容：保留所有 URL 参数，把旧路径重定向到统一的 card.html?scene=
+(function(){
+  var p = new URLSearchParams(location.search);
+  // 移除旧的 scene 参数（如果有），强制用文件名里的 scene
+  var q = new URLSearchParams();
+  p.forEach(function(v,k){ if (k !== 'scene') q.set(k, v); });
+  q.set('scene', 'bamboo');
+  // location.replace 不会留下历史记录，体验更好
+  location.replace('card.html?' + q.toString());
+})();
 </script>
 </body>
 </html>

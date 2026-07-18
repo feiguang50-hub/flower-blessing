@@ -3,301 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="💌 好运祝福">
+<meta name="twitter:title" content="💌 好运祝福">
 <title>好运祝福</title>
-<meta property="og:title" content="💌 收到一份专属贺卡">
-<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">
-
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  min-height: 100vh;
-  background: linear-gradient(160deg, #1a0505 0%, #3d0a0a 40%, #7a1a1a 100%);
-  font-family: 'Georgia', serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
-}
-
-/* === 红金光晕漏光 === */
-body::before {
-  content: '';
-  position: fixed;
-  top: -50%; left: -50%;
-  width: 200%; height: 200%;
-  background: radial-gradient(ellipse at 50% 30%, rgba(255,180,50,0.25) 0%, transparent 55%),
-              radial-gradient(ellipse at 20% 80%, rgba(255,80,50,0.12) 0%, transparent 45%),
-              radial-gradient(ellipse at 80% 70%, rgba(255,200,50,0.1) 0%, transparent 40%);
-  animation: redFlare 5s ease-in-out infinite;
-  z-index: 0;
-  pointer-events: none;
-}
-@keyframes redFlare {
-  0%, 100% { transform: scale(1) translate(0,0); opacity: 0.8; }
-  50% { transform: scale(1.05) translate(1%, -1%); opacity: 1; }
-}
-
-/* === 四叶草飘浮 === */
-.clover {
-  position: fixed;
-  font-size: 14px;
-  opacity: 0.5;
-  animation: cloverFloat linear infinite;
-  z-index: 1;
-  filter: drop-shadow(0 0 3px rgba(100,255,100,0.4));
-}
-@keyframes cloverFloat {
-  0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-  10% { opacity: 0.55; }
-  90% { opacity: 0.55; }
-  100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
-}
-
-/* === 金币上升 === */
-.coin {
-  position: fixed;
-  bottom: -30px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #ffe066, #cc9900, #996600);
-  box-shadow: 0 0 6px rgba(255,200,0,0.6), inset 0 0 4px rgba(255,255,200,0.3);
-  animation: coinRise ease-out infinite;
-  z-index: 1;
-}
-@keyframes coinRise {
-  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-  5% { opacity: 0.9; }
-  95% { opacity: 0.7; }
-  100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
-}
-
-/* === 速度线 === */
-.speed-line {
-  position: fixed;
-  width: 60px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(255,215,0,0.8), rgba(255,255,200,1), transparent);
-  border-radius: 2px;
-  animation: speedDash linear infinite;
-  z-index: 1;
-}
-@keyframes speedDash {
-  0% { transform: translateX(-100px); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 0.6; }
-  100% { transform: translateX(110vw); opacity: 0; }
-}
-
-/* === 星星闪烁 === */
-.star {
-  position: fixed;
-  background: radial-gradient(circle, #fff9c4, #ffd700);
-  border-radius: 50%;
-  animation: starFlicker ease-in-out infinite;
-  z-index: 1;
-}
-@keyframes starFlicker {
-  0%, 100% { opacity: 0.2; transform: scale(0.8); }
-  50% { opacity: 1; transform: scale(1.2); }
-}
-
-/* === 卡片外框呼吸光 === */
-.card-wrap {
-  position: relative;
-  z-index: 10;
-  padding: 3px;
-  border-radius: 24px;
-  background: linear-gradient(135deg, #ff6b6b, #ffd700, #ff8c00, #ff6b6b);
-  background-size: 300% 300%;
-  animation: borderGlow 3s ease-in-out infinite;
-  box-shadow: 0 0 30px rgba(255,100,50,0.4), 0 0 60px rgba(255,200,0,0.2);
-}
-@keyframes borderGlow {
-  0%, 100% { background-position: 0% 50%; box-shadow: 0 0 30px rgba(255,100,50,0.4), 0 0 60px rgba(255,200,0,0.2); }
-  50% { background-position: 100% 50%; box-shadow: 0 0 45px rgba(255,150,50,0.6), 0 0 80px rgba(255,220,0,0.35); }
-}
-
-/* === 卡片主体 === */
-.card {
-  background: linear-gradient(160deg, rgba(60,10,10,0.95), rgba(30,5,5,0.98));
-  border-radius: 22px;
-  padding: clamp(32px, 6vw, 56px) clamp(28px, 5vw, 50px);
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  border: 1px solid rgba(255,200,100,0.3);
-}
-
-/* 卡片内光效流动 */
-.card::before {
-  content: '';
-  position: absolute;
-  top: -50%; left: -50%;
-  width: 200%; height: 200%;
-  background: linear-gradient(45deg, transparent 40%, rgba(255,200,100,0.06) 50%, transparent 60%);
-  animation: shimmer 3s linear infinite;
-  z-index: 0;
-}
-@keyframes shimmer {
-  0% { transform: translateX(-50%) translateY(-50%) rotate(0deg); }
-  100% { transform: translateX(50%) translateY(50%) rotate(360deg); }
-}
-
-.icon-top {
-  font-size: clamp(32px, 8vw, 56px);
-  opacity: 1;
-  animation: iconDrop 0.9s cubic-bezier(0.34,1.56,0.64,1) 0.2s both;
-  filter: drop-shadow(0 0 12px rgba(255,200,0,0.7));
-  position: relative;
-  z-index: 1;
-}
-@keyframes iconDrop {
-  from { transform: translateY(-30px) scale(0.5); opacity: 0; }
-  to { transform: translateY(0) scale(1); opacity: 1; }
-}
-
-.title {
-  font-size: clamp(20px, 5vw, 38px);
-  color: #ffd700;
-  letter-spacing: 0.3em;
-  margin: 12px 0 6px;
-  text-shadow: 0 0 20px rgba(255,200,0,0.6), 0 0 40px rgba(255,150,0,0.4);
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.3s both;
-  position: relative;
-  z-index: 1;
-}
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.name {
-  font-size: clamp(26px, 7vw, 52px);
-  color: #ffffff;
-  font-weight: bold;
-  margin: 8px 0;
-  text-shadow: 0 0 20px rgba(255,200,0,0.5);
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.45s both;
-  position: relative;
-  z-index: 1;
-}
-
-.date {
-  font-size: clamp(12px, 3vw, 16px);
-  color: rgba(255,220,150,0.75);
-  letter-spacing: 0.2em;
-  margin-bottom: 16px;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.6s both;
-  position: relative;
-  z-index: 1;
-}
-
-.blessing {
-  font-size: clamp(15px, 4vw, 22px);
-  color: rgba(255,255,255,0.92);
-  line-height: 1.7;
-  margin: 14px 0;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.75s both;
-  position: relative;
-  z-index: 1;
-}
-
-.from {
-  font-size: clamp(12px, 3vw, 16px);
-  color: rgba(255,200,100,0.8);
-  margin-top: 12px;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.9s both;
-  position: relative;
-  z-index: 1;
-}
-
-/* === 底部装饰 === */
-.footer-deco {
-  font-size: clamp(22px, 5vw, 36px);
-  opacity: 0.7;
-  margin-top: 14px;
-  animation: slideUp 1.2s ease-out 1s both;
-  position: relative;
-  z-index: 1;
-  filter: drop-shadow(0 0 6px rgba(255,200,0,0.5));
-}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+       background:linear-gradient(160deg,#1a1a2e,#16213e);color:#fff;
+       font-family:'Georgia','PingFang SC',serif;text-align:center}
+  .box{padding:24px;border-radius:16px;background:rgba(255,255,255,.05)}
+  .spin{font-size:40px;animation:s 1.4s ease-in-out infinite}
+  @keyframes s{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
 </style>
 </head>
 <body>
-
-<div class="card-wrap">
-  <div class="card">
-    <div class="icon-top">🍀</div>
-    <div class="title">好 运 连 连</div>
-    <div class="name" id="nameEl"></div>
-    <div class="date" id="dateEl"></div>
-    <div class="blessing" id="blessingEl"></div>
-    <div class="from" id="fromEl"></div>
-    <div class="footer-deco">✨🍀✨</div>
-  </div>
+<div class="box">
+  <div class="spin">💌</div>
+  <p>正在打开贺卡…</p>
 </div>
-
 <script>
-const p = new URLSearchParams(location.search);
-document.getElementById('nameEl').textContent = p.get('n') || '';
-document.getElementById('dateEl').textContent = p.get('d') || '';
-document.getElementById('blessingEl').textContent = p.get('b') || '愿所有美好如期而至';
-document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
-
-// 四叶草
-const cloverChars = ['🍀','🍀','✨','⭐','💫'];
-for (let i = 0; i < 12; i++) {
-  const c = document.createElement('div');
-  c.className = 'clover';
-  c.textContent = cloverChars[i % cloverChars.length];
-  c.style.left = Math.random() * 100 + 'vw';
-  c.style.fontSize = (10 + Math.random() * 10) + 'px';
-  c.style.animationDuration = (8 + Math.random() * 8) + 's';
-  c.style.animationDelay = Math.random() * 12 + 's';
-  document.body.appendChild(c);
-}
-
-// 金币
-for (let i = 0; i < 10; i++) {
-  const c = document.createElement('div');
-  c.className = 'coin';
-  c.style.left = Math.random() * 100 + 'vw';
-  const size = 8 + Math.random() * 14;
-  c.style.width = c.style.height = size + 'px';
-  c.style.animationDuration = (5 + Math.random() * 5) + 's';
-  c.style.animationDelay = Math.random() * 10 + 's';
-  document.body.appendChild(c);
-}
-
-// 速度线
-for (let i = 0; i < 6; i++) {
-  const l = document.createElement('div');
-  l.className = 'speed-line';
-  l.style.top = (5 + Math.random() * 90) + 'vh';
-  l.style.animationDuration = (2 + Math.random() * 2.5) + 's';
-  l.style.animationDelay = Math.random() * 8 + 's';
-  document.body.appendChild(l);
-}
-
-// 星星
-for (let i = 0; i < 20; i++) {
-  const s = document.createElement('div');
-  s.className = 'star';
-  s.style.left = Math.random() * 100 + 'vw';
-  s.style.top = Math.random() * 100 + 'vh';
-  const sz = 1.5 + Math.random() * 3;
-  s.style.width = s.style.height = sz + 'px';
-  s.style.animationDuration = (1.5 + Math.random() * 2) + 's';
-  s.style.animationDelay = Math.random() * 5 + 's';
-  document.body.appendChild(s);
-}
+// 兼容：保留所有 URL 参数，把旧路径重定向到统一的 card.html?scene=
+(function(){
+  var p = new URLSearchParams(location.search);
+  // 移除旧的 scene 参数（如果有），强制用文件名里的 scene
+  var q = new URLSearchParams();
+  p.forEach(function(v,k){ if (k !== 'scene') q.set(k, v); });
+  q.set('scene', 'goodluck');
+  // location.replace 不会留下历史记录，体验更好
+  location.replace('card.html?' + q.toString());
+})();
 </script>
 </body>
 </html>

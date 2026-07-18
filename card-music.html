@@ -3,257 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="💌 音乐时光">
+<meta name="twitter:title" content="💌 音乐时光">
 <title>音乐时光</title>
-<meta property="og:title" content="💌 收到一份专属贺卡">
-<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">
-
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  min-height: 100vh;
-  background: linear-gradient(180deg, #0d0a1e 0%, #1a1040 40%, #2a1560 100%);
-  font-family: 'Georgia', serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
-}
-
-/* 紫粉极光背景 */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 20% 80%, rgba(180,80,200,0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(120,60,200,0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(200,100,160,0.08) 0%, transparent 60%);
-  animation: auroraShift 8s ease-in-out infinite alternate;
-  z-index: 0;
-  pointer-events: none;
-}
-@keyframes auroraShift {
-  0% { opacity: 0.7; transform: translateX(-2%) scale(1); }
-  100% { opacity: 1; transform: translateX(2%) scale(1.05); }
-}
-
-/* 琴键底部装饰 */
-body::after {
-  content: '';
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  height: 50px;
-  background: repeating-linear-gradient(
-    90deg,
-    rgba(255,255,255,0.9) 0px, rgba(255,255,255,0.9) 24px,
-    rgba(30,20,50,0.8) 24px, rgba(30,20,50,0.8) 50px
-  );
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* 音符 */
-.note {
-  position: fixed;
-  font-size: 18px;
-  animation: noteFloat ease-in-out infinite;
-  z-index: 2;
-  pointer-events: none;
-  opacity: 0;
-}
-@keyframes noteFloat {
-  0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
-  15% { opacity: 0.9; }
-  85% { opacity: 0.8; }
-  100% { transform: translateY(-90vh) rotate(25deg) scale(1.1); opacity: 0; }
-}
-
-/* 跳动的光点 */
-.spark {
-  position: fixed;
-  width: 4px; height: 4px;
-  background: #fff;
-  border-radius: 50%;
-  animation: sparkle linear infinite;
-  z-index: 2;
-}
-@keyframes sparkle {
-  0%, 100% { opacity: 0; transform: scale(0); }
-  50% { opacity: 1; transform: scale(1.5); }
-}
-
-/* 卡片 */
-.card-wrap {
-  position: relative;
-  z-index: 10;
-  padding: 3px;
-  background: linear-gradient(135deg, #c080e0, #9060d0, #c080e0);
-  border-radius: 18px;
-  animation: borderPulse 3s ease-in-out infinite;
-  box-shadow:
-    0 0 20px rgba(160,80,220,0.4),
-    0 0 50px rgba(140,60,200,0.2);
-}
-@keyframes borderPulse {
-  0%, 100% { box-shadow: 0 0 20px rgba(160,80,220,0.4), 0 0 50px rgba(140,60,200,0.2); }
-  50% { box-shadow: 0 0 35px rgba(180,100,240,0.6), 0 0 70px rgba(160,80,220,0.35); }
-}
-
-.glass-card {
-  background: rgba(20,10,40,0.82);
-  border-radius: 16px;
-  padding: clamp(28px, 6vw, 52px) clamp(24px, 5vw, 48px);
-  text-align: center;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(180,120,240,0.25);
-  min-width: 280px;
-  max-width: 480px;
-}
-
-.icon {
-  font-size: clamp(38px, 9vw, 62px);
-  display: block;
-  margin-bottom: 14px;
-  animation: musicBounce 1.4s ease-in-out infinite;
-  filter: drop-shadow(0 0 14px rgba(200,120,255,0.7));
-}
-@keyframes musicBounce {
-  0%, 100% { transform: scale(1) rotate(-3deg); }
-  25% { transform: scale(1.08) rotate(3deg); }
-  50% { transform: scale(0.96) rotate(-2deg); }
-  75% { transform: scale(1.04) rotate(2deg); }
-}
-
-.name {
-  font-size: clamp(22px, 6vw, 38px);
-  color: #e0c8ff;
-  margin-bottom: 10px;
-  font-weight: normal;
-  letter-spacing: 0.08em;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out both;
-  text-shadow: 0 0 20px rgba(180,120,255,0.6);
-}
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.blessing {
-  font-size: clamp(14px, 3.5vw, 18px);
-  color: #c8a8e8;
-  line-height: 1.8;
-  margin: 14px 0;
-  font-style: italic;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.3s both;
-}
-
-.date {
-  font-size: clamp(11px, 2.5vw, 14px);
-  color: rgba(200,160,240,0.6);
-  letter-spacing: 0.12em;
-  margin-bottom: 6px;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.5s both;
-}
-
-.from {
-  font-size: clamp(11px, 2.5vw, 14px);
-  color: rgba(200,160,240,0.5);
-  letter-spacing: 0.08em;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.7s both;
-}
-
-/* 五线谱线条 */
-.staff {
-  position: fixed;
-  width: 100%;
-  height: 1px;
-  background: rgba(160,100,220,0.2);
-  z-index: 1;
-  pointer-events: none;
-}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+       background:linear-gradient(160deg,#1a1a2e,#16213e);color:#fff;
+       font-family:'Georgia','PingFang SC',serif;text-align:center}
+  .box{padding:24px;border-radius:16px;background:rgba(255,255,255,.05)}
+  .spin{font-size:40px;animation:s 1.4s ease-in-out infinite}
+  @keyframes s{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
 </style>
 </head>
 <body>
-
-<!-- 五线谱 -->
-<div class="staff" style="top: 18%"></div>
-<div class="staff" style="top: 25%"></div>
-<div class="staff" style="top: 32%"></div>
-<div class="staff" style="top: 39%"></div>
-<div class="staff" style="top: 46%"></div>
-
-<div class="card-wrap">
-  <div class="glass-card">
-    <span class="icon" id="iconEl">🎵</span>
-    <div class="name" id="nameEl"></div>
-    <div class="blessing" id="blessingEl"></div>
-    <div class="date" id="dateEl"></div>
-    <div class="from" id="fromEl"></div>
-  </div>
+<div class="box">
+  <div class="spin">💌</div>
+  <p>正在打开贺卡…</p>
 </div>
-
 <script>
-const p = new URLSearchParams(location.search);
-document.getElementById('nameEl').textContent = p.get('n') || '音乐相伴的你';
-document.getElementById('dateEl').textContent = p.get('d') || '';
-document.getElementById('blessingEl').textContent = p.get('b') || '愿每一个音符都跳动着美好的旋律';
-document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
-
-// 音符飘起
-const notes = ['♪', '♫', '♬', '♩', '🎵', '🎶'];
-const noteCount = 18;
-for (let i = 0; i < noteCount; i++) {
-  const note = document.createElement('div');
-  note.className = 'note';
-  note.textContent = notes[Math.floor(Math.random() * notes.length)];
-  const x = 5 + Math.random() * 90;
-  const dur = 4 + Math.random() * 5;
-  const delay = Math.random() * 6;
-  const size = 14 + Math.random() * 16;
-  note.style.cssText = `
-    left: ${x}%;
-    bottom: 5%;
-    font-size: ${size}px;
-    animation-duration: ${dur}s;
-    animation-delay: ${delay}s;
-    color: hsl(${260 + Math.random() * 40}, 80%, ${65 + Math.random() * 25}%);
-  `;
-  document.body.appendChild(note);
-}
-
-// 闪烁光点
-const sparkCount = 30;
-for (let i = 0; i < sparkCount; i++) {
-  const spark = document.createElement('div');
-  spark.className = 'spark';
-  const x = Math.random() * 100;
-  const y = Math.random() * 100;
-  const dur = 1 + Math.random() * 2.5;
-  const delay = Math.random() * 4;
-  spark.style.cssText = `
-    left: ${x}%;
-    top: ${y}%;
-    animation-duration: ${dur}s;
-    animation-delay: ${delay}s;
-    box-shadow: 0 0 6px 2px rgba(200,150,255,${0.4 + Math.random() * 0.4});
-  `;
-  document.body.appendChild(spark);
-}
-
-// 无障碍
-if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  document.querySelectorAll('.note, .spark, .icon, .name, .blessing, .date, .from').forEach(el => {
-    el.style.animation = 'none';
-  });
-}
+// 兼容：保留所有 URL 参数，把旧路径重定向到统一的 card.html?scene=
+(function(){
+  var p = new URLSearchParams(location.search);
+  // 移除旧的 scene 参数（如果有），强制用文件名里的 scene
+  var q = new URLSearchParams();
+  p.forEach(function(v,k){ if (k !== 'scene') q.set(k, v); });
+  q.set('scene', 'music');
+  // location.replace 不会留下历史记录，体验更好
+  location.replace('card.html?' + q.toString());
+})();
 </script>
 </body>
 </html>

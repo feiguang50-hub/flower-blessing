@@ -3,324 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="💌 福寿安康">
+<meta name="twitter:title" content="💌 福寿安康">
 <title>福寿安康</title>
-<meta property="og:title" content="💌 收到一份专属贺卡">
-<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">
-
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  min-height: 100vh;
-  background: linear-gradient(160deg, #6b1a1a 0%, #8b2525 40%, #5c1515 100%);
-  font-family: 'Georgia', 'Songti SC', 'SimSun', serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
-}
-
-/* 寿纹光晕背景 */
-body::before {
-  content: '';
-  position: fixed;
-  top: -50%; left: -50%;
-  width: 200%; height: 200%;
-  background:
-    radial-gradient(ellipse at 50% 10%, rgba(255,220,100,0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 15% 85%, rgba(255,180,80,0.08) 0%, transparent 40%),
-    radial-gradient(ellipse at 85% 70%, rgba(255,200,100,0.07) 0%, transparent 35%);
-  animation: longevityGlow 10s ease-in-out infinite;
-  z-index: 0;
-  pointer-events: none;
-}
-@keyframes longevityGlow {
-  0%, 100% { opacity: 0.75; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.03); }
-}
-
-/* 梅花瓣飘落 */
-.plum-petal {
-  position: fixed;
-  font-size: 12px;
-  animation: plumFall linear infinite;
-  z-index: 1;
-  pointer-events: none;
-  filter: drop-shadow(0 0 4px rgba(255,150,150,0.3));
-}
-@keyframes plumFall {
-  0% { transform: translateY(-10vh) rotate(0deg) translateX(0); opacity: 0; }
-  8% { opacity: 0.8; }
-  90% { opacity: 0.4; }
-  100% { transform: translateY(105vh) rotate(360deg) translateX(50px); opacity: 0; }
-}
-
-/* 仙鹤飘过 */
-.crane {
-  position: fixed;
-  font-size: 18px;
-  animation: craneFly linear infinite;
-  z-index: 1;
-  pointer-events: none;
-  filter: drop-shadow(0 0 8px rgba(255,240,180,0.4));
-}
-@keyframes craneFly {
-  0% { transform: translateX(-15vw) translateY(0) rotate(-5deg); opacity: 0; }
-  5% { opacity: 0.9; }
-  90% { opacity: 0.7; }
-  100% { transform: translateX(115vw) translateY(-30vh) rotate(10deg); opacity: 0; }
-}
-
-/* 金色光点上升 */
-.longevity-dot {
-  position: fixed;
-  width: 4px; height: 4px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #ffd700, #ffb347);
-  animation: dotRise linear infinite;
-  z-index: 1;
-  pointer-events: none;
-  filter: blur(0.5px);
-}
-@keyframes dotRise {
-  0% { transform: translateY(105vh) scale(0); opacity: 0; }
-  15% { opacity: 1; transform: scale(1); }
-  85% { opacity: 0.7; }
-  100% { transform: translateY(-10vh) scale(0.3); opacity: 0; }
-}
-
-/* 边框容器 */
-.card-wrap {
-  position: relative;
-  z-index: 10;
-  padding: 3px;
-  background: linear-gradient(135deg, #ffd700, #ff8c00, #ffd700, #ffb347, #ffd700);
-  background-size: 300% 300%;
-  animation: borderShine 4s ease infinite;
-  border-radius: 20px;
-  box-shadow: 0 0 25px rgba(255,200,50,0.35), 0 0 60px rgba(255,150,50,0.15);
-}
-@keyframes borderShine {
-  0% { background-position: 0% 50%; box-shadow: 0 0 25px rgba(255,200,50,0.35); }
-  50% { background-position: 100% 50%; box-shadow: 0 0 40px rgba(255,200,50,0.55); }
-  100% { background-position: 0% 50%; box-shadow: 0 0 25px rgba(255,200,50,0.35); }
-}
-
-.card {
-  background: linear-gradient(165deg, #fdf0dc 0%, #f5deb3 50%, #f0c98a 100%);
-  border-radius: 18px;
-  padding: clamp(32px, 7vw, 60px) clamp(24px, 6vw, 50px);
-  text-align: center;
-  max-width: min(520px, 92vw);
-  min-height: 380px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  position: relative;
-  overflow: hidden;
-}
-
-/* 内边框装饰线 */
-.card::before {
-  content: '';
-  position: absolute;
-  inset: 10px;
-  border: 1.5px solid rgba(180, 90, 30, 0.25);
-  border-radius: 12px;
-  pointer-events: none;
-}
-
-/* 寿字装饰 */
-.longevity-char {
-  font-size: clamp(40px, 10vw, 72px);
-  color: #c0392b;
-  text-shadow: 0 0 20px rgba(192,57,43,0.3), 0 2px 4px rgba(0,0,0,0.1);
-  animation: charPulse 3s ease-in-out infinite;
-  line-height: 1;
-  opacity: 1;
-}
-@keyframes charPulse {
-  0%, 100% { transform: scale(1); filter: brightness(1); }
-  50% { transform: scale(1.05); filter: brightness(1.1); }
-}
-
-.longevity-sub {
-  font-size: clamp(13px, 3.5vw, 17px);
-  color: #8b4513;
-  letter-spacing: 6px;
-  opacity: 0.75;
-  animation: fadeSlideUp 1.2s ease-out 0.3s both;
-  font-family: 'SimSun', serif;
-}
-@keyframes fadeSlideUp {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 0.75; transform: translateY(0); }
-}
-
-.divider {
-  width: clamp(60px, 18vw, 100px);
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #c0392b, transparent);
-  opacity: 0.5;
-  animation: fadeSlideUp 1.2s ease-out 0.5s both;
-}
-
-.name {
-  font-size: clamp(24px, 6vw, 42px);
-  color: #6b1a1a;
-  font-weight: bold;
-  letter-spacing: 4px;
-  animation: fadeSlideUp 1.2s ease-out 0.6s both;
-  opacity: 1;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.08);
-}
-
-.blessing {
-  font-size: clamp(14px, 3.8vw, 20px);
-  color: #5c1515;
-  line-height: 1.8;
-  max-width: 380px;
-  animation: fadeSlideUp 1.2s ease-out 0.9s both;
-  opacity: 1;
-  letter-spacing: 1px;
-}
-
-.date {
-  font-size: clamp(11px, 3vw, 14px);
-  color: #a0522d;
-  letter-spacing: 3px;
-  animation: fadeSlideUp 1.2s ease-out 1.2s both;
-  opacity: 1;
-  margin-top: 4px;
-}
-
-.from {
-  font-size: clamp(12px, 3vw, 15px);
-  color: #8b4513;
-  letter-spacing: 2px;
-  animation: fadeSlideUp 1.2s ease-out 1.5s both;
-  opacity: 1;
-  font-style: italic;
-}
-
-.badge {
-  position: absolute;
-  top: 18px; right: 20px;
-  font-size: clamp(18px, 4vw, 26px);
-  opacity: 0.2;
-  animation: badgeFloat 4s ease-in-out infinite;
-}
-@keyframes badgeFloat {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-6px) rotate(5deg); }
-}
-
-.bottom-badge {
-  position: absolute;
-  bottom: 16px; left: 50%;
-  transform: translateX(-50%);
-  font-size: clamp(14px, 3vw, 18px);
-  opacity: 0.18;
-  white-space: nowrap;
-  letter-spacing: 4px;
-}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+       background:linear-gradient(160deg,#1a1a2e,#16213e);color:#fff;
+       font-family:'Georgia','PingFang SC',serif;text-align:center}
+  .box{padding:24px;border-radius:16px;background:rgba(255,255,255,.05)}
+  .spin{font-size:40px;animation:s 1.4s ease-in-out infinite}
+  @keyframes s{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
 </style>
 </head>
 <body>
-
+<div class="box">
+  <div class="spin">💌</div>
+  <p>正在打开贺卡…</p>
+</div>
 <script>
-// === 梅花瓣 ===
-(function spawnPetals() {
-  const symbols = ['✿', '❀', '✾', '❁'];
-  const count = 14;
-  for (let i = 0; i < count; i++) {
-    const el = document.createElement('div');
-    el.className = 'plum-petal';
-    el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-    el.style.left = Math.random() * 100 + 'vw';
-    el.style.animationDuration = (7 + Math.random() * 8) + 's';
-    el.style.animationDelay = (Math.random() * 12) + 's';
-    el.style.fontSize = (9 + Math.random() * 7) + 'px';
-    el.style.color = `hsl(${340 + Math.random() * 30}, ${70 + Math.random() * 30}%, ${65 + Math.random() * 20}%)`;
-    document.body.appendChild(el);
-  }
-})();
-
-// === 仙鹤 ===
-(function spawnCranes() {
-  const count = 3;
-  for (let i = 0; i < count; i++) {
-    const el = document.createElement('div');
-    el.className = 'crane';
-    el.textContent = '🦢';
-    el.style.top = (10 + Math.random() * 50) + 'vh';
-    el.style.animationDuration = (18 + Math.random() * 14) + 's';
-    el.style.animationDelay = (i * 7 + Math.random() * 5) + 's';
-    el.style.fontSize = (14 + Math.random() * 10) + 'px';
-    document.body.appendChild(el);
-  }
-})();
-
-// === 金色光点 ===
-(function spawnDots() {
-  const count = 18;
-  for (let i = 0; i < count; i++) {
-    const el = document.createElement('div');
-    el.className = 'longevity-dot';
-    el.style.left = Math.random() * 100 + 'vw';
-    el.style.animationDuration = (5 + Math.random() * 7) + 's';
-    el.style.animationDelay = (Math.random() * 10) + 's';
-    el.style.width = (2 + Math.random() * 4) + 'px';
-    el.style.height = el.style.width;
-    document.body.appendChild(el);
-  }
-})();
-
-// === 参数读取 ===
-(function() {
-  const p = new URLSearchParams(location.search);
-  const nameEl = document.getElementById('nameEl');
-  const dateEl = document.getElementById('dateEl');
-  const blessingEl = document.getElementById('blessingEl');
-  const fromEl = document.getElementById('fromEl');
-
-  if (nameEl) nameEl.textContent = p.get('n') || '寿星';
-  if (dateEl) dateEl.textContent = p.get('d') || '';
-  if (blessingEl) blessingEl.textContent = p.get('b') || '福如东海深，寿比南山高';
-  if (fromEl) fromEl.textContent = p.get('f') ? '— ' + p.get('f') : '';
+// 兼容：保留所有 URL 参数，把旧路径重定向到统一的 card.html?scene=
+(function(){
+  var p = new URLSearchParams(location.search);
+  // 移除旧的 scene 参数（如果有），强制用文件名里的 scene
+  var q = new URLSearchParams();
+  p.forEach(function(v,k){ if (k !== 'scene') q.set(k, v); });
+  q.set('scene', 'longevity');
+  // location.replace 不会留下历史记录，体验更好
+  location.replace('card.html?' + q.toString());
 })();
 </script>
-
-<!-- 寿纹边框卡片 -->
-<div class="card-wrap">
-  <div class="card">
-    <div class="badge">🏮</div>
-
-    <!-- 寿字 -->
-    <div class="longevity-char">寿</div>
-    <div class="longevity-sub">福 寿 安 康</div>
-
-    <div class="divider"></div>
-
-    <!-- 收礼人 -->
-    <div class="name" id="nameEl"></div>
-
-    <!-- 祝福语 -->
-    <div class="blessing" id="blessingEl"></div>
-
-    <!-- 日期 -->
-    <div class="date" id="dateEl"></div>
-
-    <!-- 署名 -->
-    <div class="from" id="fromEl"></div>
-
-    <div class="bottom-badge">松鹤延年 · 福寿双全</div>
-  </div>
-</div>
-
 </body>
 </html>

@@ -3,258 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="💡 霓虹灯牌">
+<meta name="twitter:title" content="💡 霓虹灯牌">
 <title>霓虹灯牌</title>
-<meta property="og:title" content="💡 收到一份专属贺卡">
-<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">
-
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-  min-height: 100vh;
-  background: #0a0010;
-  background-image:
-    radial-gradient(ellipse at 20% 50%, rgba(255,20,150,0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 50%, rgba(0,200,255,0.08) 0%, transparent 50%),
-    linear-gradient(180deg, #0a0010 0%, #12002a 50%, #0a0010 100%);
-  font-family: 'Georgia', 'PingFang SC', sans-serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
-}
-
-/* 背景城市灯光 */
-.city-light {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  height: 80px;
-  background: linear-gradient(0deg, rgba(255,30,120,0.12) 0%, transparent 100%);
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* 霓虹光晕背景 */
-.neon-glow {
-  position: fixed;
-  width: 200px; height: 200px;
-  border-radius: 50%;
-  filter: blur(60px);
-  opacity: 0.15;
-  pointer-events: none;
-  z-index: 0;
-  animation: glowBreathe 5s ease-in-out infinite alternate;
-}
-@keyframes glowBreathe {
-  0% { opacity: 0.1; transform: scale(0.9); }
-  100% { opacity: 0.25; transform: scale(1.1); }
-}
-
-/* 霓虹边框装饰线 */
-.neon-line {
-  position: fixed;
-  background: linear-gradient(90deg, transparent, rgba(255,20,150,0.4), rgba(0,200,255,0.4), transparent);
-  height: 1px;
-  width: 60%;
-  left: 20%;
-  pointer-events: none;
-  z-index: 2;
-  animation: lineGlow 3s ease-in-out infinite alternate;
-}
-.neon-line.top { top: 8%; animation-delay: 0s; }
-.neon-line.bottom { bottom: 8%; animation-delay: 1.5s; }
-@keyframes lineGlow {
-  0% { opacity: 0.2; }
-  100% { opacity: 0.7; }
-}
-
-/* 卡片霓虹外框 */
-.card-wrap {
-  position: relative;
-  z-index: 20;
-  padding: 3px;
-  background: linear-gradient(135deg, #ff1493, #00e5ff, #b300ff, #ff1493);
-  background-size: 400% 400%;
-  animation: neonBorder 4s ease infinite, cardFloat 5s ease-in-out infinite;
-  border-radius: 16px;
-  box-shadow:
-    0 0 20px rgba(255,20,150,0.5),
-    0 0 40px rgba(0,229,255,0.3),
-    0 0 80px rgba(179,0,255,0.2),
-    inset 0 0 20px rgba(255,20,150,0.1);
-}
-@keyframes neonBorder {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-@keyframes cardFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-/* 霓虹闪烁效果 */
-.card-wrap::after {
-  content: '';
-  position: absolute;
-  inset: -3px;
-  border-radius: 18px;
-  background: transparent;
-  animation: neonFlicker 0.15s infinite;
-  pointer-events: none;
-  z-index: -1;
-}
-@keyframes neonFlicker {
-  0%, 100% { opacity: 1; }
-  41% { opacity: 1; }
-  42% { opacity: 0.8; }
-  43% { opacity: 1; }
-  44% { opacity: 0.9; }
-  45% { opacity: 1; }
-}
-
-.glass-card {
-  background: rgba(8,0,16,0.88);
-  border-radius: 13px;
-  padding: clamp(28px, 6vw, 48px) clamp(24px, 5vw, 44px);
-  text-align: center;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,20,150,0.2);
-  min-width: 280px;
-  max-width: 460px;
-  position: relative;
-}
-
-/* 卡片内霓虹光晕 */
-.glass-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 13px;
-  background:
-    radial-gradient(ellipse at 50% 0%, rgba(255,20,150,0.12) 0%, transparent 60%),
-    radial-gradient(ellipse at 50% 100%, rgba(0,200,255,0.08) 0%, transparent 50%);
-  pointer-events: none;
-}
-
-/* 霓虹装饰边框线 */
-.glass-card::after {
-  content: '';
-  position: absolute;
-  inset: 8px;
-  border: 1px solid rgba(255,20,150,0.15);
-  border-radius: 8px;
-  pointer-events: none;
-}
-
-.icon {
-  font-size: clamp(40px, 10vw, 64px);
-  display: block;
-  margin-bottom: 14px;
-  animation: neonPulse 2s ease-in-out infinite;
-  filter: drop-shadow(0 0 16px rgba(255,20,150,0.8)) drop-shadow(0 0 30px rgba(0,200,255,0.5));
-}
-@keyframes neonPulse {
-  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 16px rgba(255,20,150,0.8)) drop-shadow(0 0 30px rgba(0,200,255,0.5)); }
-  50% { transform: scale(1.05); filter: drop-shadow(0 0 24px rgba(255,20,150,1)) drop-shadow(0 0 45px rgba(0,200,255,0.8)); }
-}
-
-.name {
-  font-size: clamp(22px, 6vw, 40px);
-  color: #ff80c0;
-  margin-bottom: 12px;
-  font-weight: normal;
-  letter-spacing: 0.12em;
-  opacity: 1;
-  animation: neonSlideUp 1.2s ease-out 0.2s both;
-  text-shadow:
-    0 0 10px rgba(255,20,150,0.9),
-    0 0 20px rgba(255,20,150,0.6),
-    0 0 40px rgba(255,20,150,0.3);
-}
-@keyframes neonSlideUp {
-  from { opacity: 0; transform: translateY(20px); filter: blur(4px); }
-  to { opacity: 1; transform: translateY(0); filter: blur(0); }
-}
-
-.blessing {
-  font-size: clamp(14px, 3.5vw, 18px);
-  color: rgba(200,240,255,0.88);
-  line-height: 1.9;
-  margin-bottom: 16px;
-  opacity: 1;
-  animation: neonSlideUp 1.2s ease-out 0.5s both;
-  text-shadow: 0 0 12px rgba(0,200,255,0.5);
-}
-
-.date {
-  font-size: clamp(12px, 2.8vw, 15px);
-  color: rgba(255,100,180,0.6);
-  letter-spacing: 0.14em;
-  margin-bottom: 6px;
-  opacity: 1;
-  animation: neonSlideUp 1.2s ease-out 0.7s both;
-  text-shadow: 0 0 8px rgba(255,20,150,0.4);
-}
-
-.from {
-  font-size: clamp(12px, 2.8vw, 15px);
-  color: rgba(255,100,180,0.5);
-  opacity: 1;
-  animation: neonSlideUp 1.2s ease-out 0.85s both;
-  text-shadow: 0 0 8px rgba(255,20,150,0.4);
-}
-
-/* 角落霓虹装饰 */
-.corner {
-  position: absolute;
-  width: 16px; height: 16px;
-}
-.corner.tl { top: 8px; left: 8px; border-top: 2px solid rgba(255,20,150,0.7); border-left: 2px solid rgba(255,20,150,0.7); }
-.corner.tr { top: 8px; right: 8px; border-top: 2px solid rgba(0,229,255,0.7); border-right: 2px solid rgba(0,229,255,0.7); }
-.corner.bl { bottom: 8px; left: 8px; border-bottom: 2px solid rgba(0,229,255,0.7); border-left: 2px solid rgba(0,229,255,0.7); }
-.corner.br { bottom: 8px; right: 8px; border-bottom: 2px solid rgba(255,20,150,0.7); border-right: 2px solid rgba(255,20,150,0.7); }
-
-@media (prefers-reduced-motion: reduce) {
-  .shooting-star, .card-wrap, .icon, .name, .blessing, .date, .from {
-    animation: none !important;
-  }
-}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+       background:linear-gradient(160deg,#1a1a2e,#16213e);color:#fff;
+       font-family:'Georgia','PingFang SC',serif;text-align:center}
+  .box{padding:24px;border-radius:16px;background:rgba(255,255,255,.05)}
+  .spin{font-size:40px;animation:s 1.4s ease-in-out infinite}
+  @keyframes s{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
 </style>
 </head>
 <body>
-  <!-- 霓虹背景光 -->
-  <div class="neon-glow" style="left:5%;top:30%;background:#ff1493;"></div>
-  <div class="neon-glow" style="right:5%;top:20%;background:#00e5ff;animation-delay:-2s;"></div>
-  <div class="neon-glow" style="left:40%;bottom:10%;background:#b300ff;animation-delay:-3.5s;"></div>
-  <div class="neon-line top"></div>
-  <div class="neon-line bottom"></div>
-  <div class="city-light"></div>
-
-  <div class="card-wrap">
-    <div class="glass-card">
-      <div class="corner tl"></div>
-      <div class="corner tr"></div>
-      <div class="corner bl"></div>
-      <div class="corner br"></div>
-      <span class="icon" id="iconEl">💡</span>
-      <div class="name" id="nameEl"></div>
-      <div class="blessing" id="blessingEl"></div>
-      <div class="date" id="dateEl"></div>
-      <div class="from" id="fromEl"></div>
-    </div>
-  </div>
-
-  <script>
-    const p = new URLSearchParams(location.search);
-    document.getElementById('nameEl').textContent = p.get('n') || '亲爱的你';
-    document.getElementById('blessingEl').textContent = p.get('b') || '愿你的生活如霓虹般绚烂，每一天都闪闪发光';
-    document.getElementById('dateEl').textContent = p.get('d') || '';
-    document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
-    if (p.get('i')) document.getElementById('iconEl').textContent = p.get('i');
-  </script>
+<div class="box">
+  <div class="spin">💡</div>
+  <p>正在打开贺卡…</p>
+</div>
+<script>
+// 兼容：保留所有 URL 参数，把旧路径重定向到统一的 card.html?scene=
+(function(){
+  var p = new URLSearchParams(location.search);
+  // 移除旧的 scene 参数（如果有），强制用文件名里的 scene
+  var q = new URLSearchParams();
+  p.forEach(function(v,k){ if (k !== 'scene') q.set(k, v); });
+  q.set('scene', 'neon');
+  // location.replace 不会留下历史记录，体验更好
+  location.replace('card.html?' + q.toString());
+})();
+</script>
 </body>
 </html>

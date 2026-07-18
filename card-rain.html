@@ -3,256 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="💌 雨季絮语">
+<meta name="twitter:title" content="💌 雨季絮语">
 <title>雨季絮语</title>
-<meta property="og:title" content="💌 收到一份专属贺卡">
-<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">
-
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  min-height: 100vh;
-  background: linear-gradient(180deg, #1a2030 0%, #232d42 40%, #2a3a50 100%);
-  font-family: 'Georgia', serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
-}
-
-/* 窗框效果 */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background:
-    linear-gradient(90deg, rgba(80,100,130,0.12) 1px, transparent 1px),
-    linear-gradient(rgba(80,100,130,0.12) 1px, transparent 1px);
-  background-size: 60px 60px;
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* 玻璃暗角 */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(ellipse at center, transparent 50%, rgba(10,15,25,0.55) 100%);
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* 雨滴 */
-.rain-drop {
-  position: fixed;
-  width: 2px;
-  background: linear-gradient(to bottom, transparent, rgba(180,210,255,0.7));
-  border-radius: 0 0 2px 2px;
-  animation: rainFall linear infinite;
-  z-index: 2;
-}
-@keyframes rainFall {
-  0% { transform: translateY(-20px); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 0.8; }
-  100% { transform: translateY(105vh); opacity: 0; }
-}
-
-/* 水波纹 */
-.ripple {
-  position: fixed;
-  width: 20px;
-  height: 8px;
-  border: 1px solid rgba(150,190,230,0.5);
-  border-radius: 50%;
-  animation: rippleExpand 2.5s ease-out infinite;
-  z-index: 3;
-}
-@keyframes rippleExpand {
-  0% { transform: scale(0.5); opacity: 0.8; }
-  100% { transform: scale(3.5); opacity: 0; }
-}
-
-/* 窗户雾气 */
-.fog {
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(ellipse at 50% 30%, rgba(120,150,190,0.08) 0%, transparent 60%);
-  animation: fogDrift 10s ease-in-out infinite alternate;
-  z-index: 4;
-  pointer-events: none;
-}
-@keyframes fogDrift {
-  0% { opacity: 0.5; transform: translateX(-2%); }
-  100% { opacity: 1; transform: translateX(2%); }
-}
-
-/* 卡片玻璃框 */
-.card-wrap {
-  position: relative;
-  z-index: 10;
-  padding: 3px;
-  background: linear-gradient(135deg, rgba(120,160,200,0.6), rgba(80,110,160,0.4), rgba(120,160,200,0.6));
-  border-radius: 18px;
-  animation: borderGlow 4s ease-in-out infinite;
-  box-shadow:
-    0 0 20px rgba(100,150,200,0.3),
-    0 0 40px rgba(80,120,180,0.15),
-    inset 0 0 20px rgba(100,150,200,0.1);
-}
-@keyframes borderGlow {
-  0%, 100% { box-shadow: 0 0 20px rgba(100,150,200,0.3), 0 0 40px rgba(80,120,180,0.15); }
-  50% { box-shadow: 0 0 30px rgba(100,150,200,0.5), 0 0 60px rgba(80,120,180,0.25); }
-}
-
-.glass-card {
-  background: rgba(20,30,50,0.72);
-  border-radius: 16px;
-  padding: clamp(28px, 6vw, 48px) clamp(24px, 5vw, 48px);
-  text-align: center;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(120,160,200,0.25);
-  min-width: 280px;
-  max-width: 480px;
-}
-
-.icon {
-  font-size: clamp(36px, 9vw, 60px);
-  display: block;
-  margin-bottom: 14px;
-  animation: iconFloat 3s ease-in-out infinite;
-  filter: drop-shadow(0 0 12px rgba(150,200,255,0.6));
-}
-@keyframes iconFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-.name {
-  font-size: clamp(22px, 6vw, 38px);
-  color: #d0e4ff;
-  margin-bottom: 10px;
-  font-weight: normal;
-  letter-spacing: 0.08em;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out both;
-  text-shadow: 0 0 20px rgba(150,200,255,0.5);
-}
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.blessing {
-  font-size: clamp(14px, 3.5vw, 18px);
-  color: #a8c8e8;
-  line-height: 1.8;
-  margin: 14px 0;
-  font-style: italic;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.3s both;
-}
-
-.date {
-  font-size: clamp(11px, 2.5vw, 14px);
-  color: rgba(160,195,225,0.6);
-  letter-spacing: 0.12em;
-  margin-bottom: 6px;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.5s both;
-}
-
-.from {
-  font-size: clamp(11px, 2.5vw, 14px);
-  color: rgba(160,195,225,0.5);
-  letter-spacing: 0.08em;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.7s both;
-}
-
-/* 底部雾气 */
-.bottom-fog {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  height: 120px;
-  background: linear-gradient(to top, rgba(30,45,65,0.8), transparent);
-  z-index: 5;
-  pointer-events: none;
-}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+       background:linear-gradient(160deg,#1a1a2e,#16213e);color:#fff;
+       font-family:'Georgia','PingFang SC',serif;text-align:center}
+  .box{padding:24px;border-radius:16px;background:rgba(255,255,255,.05)}
+  .spin{font-size:40px;animation:s 1.4s ease-in-out infinite}
+  @keyframes s{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
 </style>
 </head>
 <body>
-
-<div class="fog"></div>
-<div class="bottom-fog"></div>
-
-<div class="card-wrap">
-  <div class="glass-card">
-    <span class="icon" id="iconEl">🌧️</span>
-    <div class="name" id="nameEl"></div>
-    <div class="blessing" id="blessingEl"></div>
-    <div class="date" id="dateEl"></div>
-    <div class="from" id="fromEl"></div>
-  </div>
+<div class="box">
+  <div class="spin">💌</div>
+  <p>正在打开贺卡…</p>
 </div>
-
 <script>
-// 参数读取
-const p = new URLSearchParams(location.search);
-document.getElementById('nameEl').textContent = p.get('n') || '想念的你';
-document.getElementById('dateEl').textContent = p.get('d') || '';
-document.getElementById('blessingEl').textContent = p.get('b') || '愿你在每一个有雨的日子里，都有人牵挂';
-document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
-
-// 雨滴
-const dropCount = 40;
-for (let i = 0; i < dropCount; i++) {
-  const drop = document.createElement('div');
-  drop.className = 'rain-drop';
-  const x = Math.random() * 100;
-  const dur = 0.8 + Math.random() * 1.2;
-  const delay = Math.random() * 3;
-  const height = 14 + Math.random() * 22;
-  drop.style.cssText = `
-    left: ${x}vw;
-    height: ${height}px;
-    animation-duration: ${dur}s;
-    animation-delay: ${delay}s;
-    opacity: ${0.4 + Math.random() * 0.5};
-  `;
-  document.body.appendChild(drop);
-}
-
-// 水波纹（窗台雨滴溅起）
-const rippleCount = 8;
-const ripplePositions = [
-  {x: 15, y: 78}, {x: 72, y: 82}, {x: 38, y: 85},
-  {x: 85, y: 80}, {x: 55, y: 88}, {x: 25, y: 90},
-  {x: 68, y: 76}, {x: 42, y: 92}
-];
-for (let i = 0; i < rippleCount; i++) {
-  const r = document.createElement('div');
-  r.className = 'ripple';
-  const pos = ripplePositions[i];
-  r.style.cssText = `
-    left: ${pos.x}%;
-    top: ${pos.y}%;
-    animation-delay: ${i * 0.7}s;
-    animation-duration: ${2 + i * 0.3}s;
-  `;
-  document.body.appendChild(r);
-}
-
-// 减少动画（无障碍）
-if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  document.querySelectorAll('.rain-drop, .ripple, .fog, .icon, .name, .blessing, .date, .from, .bottom-fog').forEach(el => {
-    el.style.animation = 'none';
-  });
-}
+// 兼容：保留所有 URL 参数，把旧路径重定向到统一的 card.html?scene=
+(function(){
+  var p = new URLSearchParams(location.search);
+  // 移除旧的 scene 参数（如果有），强制用文件名里的 scene
+  var q = new URLSearchParams();
+  p.forEach(function(v,k){ if (k !== 'scene') q.set(k, v); });
+  q.set('scene', 'rain');
+  // location.replace 不会留下历史记录，体验更好
+  location.replace('card.html?' + q.toString());
+})();
 </script>
 </body>
 </html>

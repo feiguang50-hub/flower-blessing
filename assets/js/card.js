@@ -62,7 +62,8 @@
     setText('ageEl', computeAge(dateInput) || '');
     setText('dateEl', dateInput || scene.defaultDate || '');
     setText('blessingEl', blessingInput || scene.defaultBlessing || '');
-    setText('fromEl', fromInput ? '— ' + fromInput : '');
+    const from = fromInput || scene.defaultFrom || '';
+    setText('fromEl', from ? '— ' + from : '');
     setText('trailing', scene.trailing || '');
     setText('backEl', backInput || scene.defaultBack || '点击卡片\n翻开惊喜');
 
@@ -102,7 +103,9 @@
       const wrap = document.getElementById('cardWrap');
       wrap.classList.add('flippable');
       wrap.addEventListener('click', () => {
-        document.getElementById('flipBack').classList.add('shown');
+        const flipBack = document.getElementById('flipBack');
+        flipBack.removeAttribute('hidden');
+        flipBack.classList.add('shown');
       });
     }
   }
@@ -115,7 +118,8 @@
 
   // === Helpers ===
   function setText(id, text) {
-    const el = document.getElementById(id);
+    const el = document.getElementById(id) ||
+      document.querySelector('[data-bind="' + id + '"]');
     if (el) el.textContent = text || '';
   }
 
@@ -126,7 +130,8 @@
   }
 
   function toggleVisible(bind, visible) {
-    const el = document.querySelector('[data-bind="' + bind + '"]');
+    const el = document.querySelector('[data-bind="' + bind + '"]') ||
+      document.getElementById(bind);
     if (el) {
       if (visible) el.removeAttribute('hidden');
       else el.setAttribute('hidden', '');

@@ -50,10 +50,18 @@ canvas { display: block; position: fixed; top: 0; left: 0; }
 </div>
 
 <script type="importmap">
-{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}
+{
+  "imports": {
+    "three": "./lib/three.module.js",
+    "three/addons/": "./lib/"
+  }
+}
 </script>
 
 <script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
 // ============================================================
 // 背景 Canvas — Perlin Noise 丝带粒子
 // ============================================================

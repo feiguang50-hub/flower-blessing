@@ -3,293 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="🍵 抹茶时光">
+<meta name="twitter:title" content="🍵 抹茶时光">
 <title>抹茶时光</title>
-<meta property="og:title" content="🍵 收到一份专属贺卡">
-<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">
-
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-:root {
-  --matcha-deep: #4a7c59;
-  --matcha-mid: #7ab893;
-  --matcha-light: #c4d4a5;
-  --cream: #f5f0e6;
-  --cream-dark: #e8dfc8;
-  --bamboo-green: #2d5a27;
-  --text-dark: #3a5a40;
-  --card-bg: rgba(245, 240, 230, 0.82);
-  --card-border: rgba(74, 124, 89, 0.4);
-}
-
-body {
-  min-height: 100vh;
-  background:
-    radial-gradient(ellipse at 20% 10%, rgba(122, 184, 147, 0.15) 0%, transparent 45%),
-    radial-gradient(ellipse at 80% 20%, rgba(196, 212, 165, 0.2) 0%, transparent 40%),
-    radial-gradient(ellipse at 50% 100%, rgba(74, 124, 89, 0.12) 0%, transparent 50%),
-    linear-gradient(160deg, #e8f0e4 0%, #d4e4c8 25%, #c8d8b0 50%, #b8cc98 75%, #a8c088 100%);
-  font-family: 'PingFang SC', 'Microsoft YaHei', serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
-}
-
-/* 竹林背景 */
-.bamboo-bg {
-  position: fixed; inset: 0;
-  z-index: 0; pointer-events: none;
-  overflow: hidden;
-}
-.bamboo-stem {
-  position: absolute;
-  bottom: 0;
-  width: 10px;
-  background: linear-gradient(to top, #2d5a27, #5a8a4a);
-  border-radius: 5px;
-  transform-origin: bottom center;
-  animation: bambooSway 6s ease-in-out infinite;
-}
-@keyframes bambooSway {
-  0%, 100% { transform: rotate(-1.5deg); }
-  50% { transform: rotate(1.5deg); }
-}
-
-/* 飘落竹叶 */
-.bamboo-leaf {
-  position: absolute;
-  font-size: 18px;
-  opacity: 0.75;
-  animation: leafFall linear infinite;
-  z-index: 1;
-}
-@keyframes leafFall {
-  0% { transform: translateY(-30px) translateX(0) rotate(0deg); opacity: 0; }
-  10% { opacity: 0.8; }
-  90% { opacity: 0.7; }
-  100% { transform: translateY(105vh) translateX(var(--drift, 30px)) rotate(var(--rot, 360deg)); opacity: 0; }
-}
-
-/* 茶蒸汽 */
-.steam {
-  position: absolute;
-  width: 6px; height: 20px;
-  background: rgba(255,255,255,0.35);
-  border-radius: 3px;
-  animation: steamRise 3s ease-out infinite;
-  filter: blur(2px);
-}
-@keyframes steamRise {
-  0% { transform: translateY(0) scaleX(1); opacity: 0.6; }
-  100% { transform: translateY(-60px) scaleX(1.8); opacity: 0; }
-}
-
-/* 抹茶拿铁光点 */
-.bubble {
-  position: absolute;
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.5);
-  animation: bubbleFloat 5s ease-in-out infinite;
-}
-@keyframes bubbleFloat {
-  0%, 100% { transform: translateY(0) scale(1); opacity: 0.4; }
-  50% { transform: translateY(-20px) scale(1.2); opacity: 0.8; }
-}
-
-/* 卡片容器 */
-.card-wrap {
-  position: relative;
-  z-index: 10;
-  padding: 2px;
-  border-radius: 24px;
-  background: linear-gradient(135deg, var(--matcha-deep), var(--matcha-light), var(--matcha-mid), var(--matcha-deep));
-  background-size: 300% 300%;
-  animation: matchaBorder 5s ease-in-out infinite;
-  box-shadow: 0 0 24px rgba(74, 124, 89, 0.25), 0 0 48px rgba(74, 124, 89, 0.1);
-}
-@keyframes matchaBorder {
-  0%, 100% { background-position: 0% 50%; box-shadow: 0 0 24px rgba(74, 124, 89, 0.25), 0 0 48px rgba(74, 124, 89, 0.1); }
-  50% { background-position: 100% 50%; box-shadow: 0 0 36px rgba(122, 184, 147, 0.4), 0 0 60px rgba(74, 124, 89, 0.2); }
-}
-
-.card {
-  background: var(--card-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 22px;
-  padding: clamp(32px, 8vw, 56px) clamp(28px, 7vw, 52px);
-  text-align: center;
-  max-width: min(520px, 92vw);
-  animation: cardFloat 5s ease-in-out infinite;
-  border: 1px solid rgba(255,255,255,0.5);
-}
-@keyframes cardFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-.icon {
-  font-size: clamp(40px, 10vw, 64px);
-  display: block;
-  margin-bottom: 12px;
-  animation: iconDrop 0.8s cubic-bezier(0.34,1.56,0.64,1) 0.2s both;
-}
-@keyframes iconDrop {
-  from { transform: translateY(-24px) scale(0.7); opacity: 0; }
-  to { transform: translateY(0) scale(1); opacity: 1; }
-}
-
-.name {
-  font-size: clamp(24px, 6vw, 40px);
-  font-weight: 600;
-  color: var(--text-dark);
-  letter-spacing: 0.06em;
-  margin-bottom: 10px;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.4s both;
-}
-
-.date {
-  font-size: clamp(12px, 3vw, 15px);
-  color: var(--matcha-deep);
-  letter-spacing: 0.15em;
-  margin-bottom: 18px;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.6s both;
-  opacity: 0.75;
-}
-
-.blessing {
-  font-size: clamp(15px, 4vw, 21px);
-  color: var(--text-dark);
-  line-height: 1.9;
-  margin-bottom: 22px;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.8s both;
-}
-
-.from {
-  font-size: clamp(12px, 3vw, 16px);
-  color: var(--matcha-deep);
-  letter-spacing: 0.08em;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 1.0s both;
-}
-.from::before { content: '— '; }
-
-.divider {
-  display: block;
-  width: 48px; height: 2px;
-  background: linear-gradient(to right, transparent, var(--matcha-mid), transparent);
-  margin: 16px auto;
-  animation: slideUp 1.2s ease-out 0.9s both;
-  opacity: 1;
-}
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(18px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* 减少动效 */
-@media (prefers-reduced-motion: reduce) {
-  .bamboo-leaf, .steam, .bubble, .card-wrap, .card { animation: none; }
-  .name, .date, .blessing, .from, .divider, .icon { animation: none; opacity: 1; }
-}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+       background:linear-gradient(160deg,#1a1a2e,#16213e);color:#fff;
+       font-family:'Georgia','PingFang SC',serif;text-align:center}
+  .box{padding:24px;border-radius:16px;background:rgba(255,255,255,.05)}
+  .spin{font-size:40px;animation:s 1.4s ease-in-out infinite}
+  @keyframes s{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
 </style>
 </head>
 <body>
-
-<!-- 竹林背景 -->
-<div class="bamboo-bg" id="bg"></div>
-
-<!-- 卡片 -->
-<div class="card-wrap">
-  <div class="card">
-    <span class="icon" id="iconEl">🍵</span>
-    <div class="name" id="nameEl"></div>
-    <div class="date" id="dateEl"></div>
-    <span class="divider"></span>
-    <div class="blessing" id="blessingEl"></div>
-    <div class="from" id="fromEl"></div>
-  </div>
+<div class="box">
+  <div class="spin">🍵</div>
+  <p>正在打开贺卡…</p>
 </div>
-
 <script>
-// 读取参数
-const p = new URLSearchParams(location.search);
-const name = p.get('n') || '亲爱的';
-const blessing = p.get('b') || '愿你的生活如抹茶般清雅甘甜';
-const date = p.get('d') || '';
-const from = p.get('f') || '';
-const icon = p.get('i') || '🍵';
-
-document.getElementById('nameEl').textContent = name;
-document.getElementById('blessingEl').textContent = blessing;
-document.getElementById('dateEl').textContent = date;
-if (from) document.getElementById('fromEl').textContent = from;
-else document.getElementById('fromEl').style.display = 'none';
-document.getElementById('iconEl').textContent = icon;
-
-// 竹林
-const bg = document.getElementById('bg');
-const stems = [
-  { left: 5, height: 55, delay: 0 },
-  { left: 12, height: 70, delay: 0.8 },
-  { left: 18, height: 45, delay: 1.5 },
-  { left: 75, height: 60, delay: 0.3 },
-  { left: 82, height: 50, delay: 1.2 },
-  { left: 88, height: 65, delay: 2.0 },
-];
-stems.forEach(s => {
-  const el = document.createElement('div');
-  el.className = 'bamboo-stem';
-  el.style.cssText = `left:${s.left}%;height:${s.height}vh;animation-delay:${s.delay}s`;
-  bg.appendChild(el);
-});
-
-// 飘落竹叶
-const leafEmoji = ['🎋', '🍃', '竹'];
-const leafCount = 12;
-for (let i = 0; i < leafCount; i++) {
-  const leaf = document.createElement('div');
-  leaf.className = 'bamboo-leaf';
-  leaf.textContent = leafEmoji[i % leafEmoji.length];
-  const drift = (Math.random() - 0.5) * 80;
-  const rot = (Math.random() - 0.5) * 720;
-  const dur = 7 + Math.random() * 6;
-  const delay = Math.random() * 8;
-  const startX = Math.random() * 100;
-  leaf.style.cssText = `left:${startX}%;top:-30px;--drift:${drift}px;--rot:${rot}deg;animation-duration:${dur}s;animation-delay:${delay}s;font-size:${14 + Math.random() * 10}px`;
-  bg.appendChild(leaf);
-}
-
-// 茶蒸汽（卡片上方）
-const card = document.querySelector('.card');
-for (let i = 0; i < 5; i++) {
-  const steam = document.createElement('div');
-  steam.className = 'steam';
-  steam.style.cssText = `left:${30 + i * 10}%;top:-10px;animation-delay:${i * 0.6}s;animation-duration:${2.5 + Math.random() * 1.5}s`;
-  card.appendChild(steam);
-}
-
-// 抹茶光点
-for (let i = 0; i < 8; i++) {
-  const b = document.createElement('div');
-  b.className = 'bubble';
-  b.style.cssText = `left:${10 + Math.random() * 80}%;top:${20 + Math.random() * 60}%;animation-delay:${Math.random() * 5}s;animation-duration:${4 + Math.random() * 3}s`;
-  bg.appendChild(b);
-}
-
-// 减少动效
-if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  document.querySelectorAll('.bamboo-leaf, .steam, .bubble').forEach(el => el.remove());
-}
+// 兼容：保留所有 URL 参数，把旧路径重定向到统一的 card.html?scene=
+(function(){
+  var p = new URLSearchParams(location.search);
+  // 移除旧的 scene 参数（如果有），强制用文件名里的 scene
+  var q = new URLSearchParams();
+  p.forEach(function(v,k){ if (k !== 'scene') q.set(k, v); });
+  q.set('scene', 'matcha');
+  // location.replace 不会留下历史记录，体验更好
+  location.replace('card.html?' + q.toString());
+})();
 </script>
 </body>
 </html>

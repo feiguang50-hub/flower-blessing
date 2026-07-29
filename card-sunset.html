@@ -3,297 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="💌 日落暖心">
+<meta name="twitter:title" content="💌 日落暖心">
 <title>日落暖心</title>
-<meta property="og:title" content="💌 收到一份专属贺卡">
-<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">
-
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  min-height: 100vh;
-  background: linear-gradient(180deg, #1a0a2e 0%, #2d1b4e 20%, #c04030 50%, #e87040 65%, #f4a460 80%, #fcd080 100%);
-  font-family: 'Georgia', serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
-}
-
-/* 太阳 */
-.sun {
-  position: fixed;
-  bottom: 28%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 80px;
-  background: radial-gradient(circle, #fff9c4 0%, #ffee58 30%, #ffb300 70%, transparent 100%);
-  border-radius: 50%;
-  box-shadow: 0 0 60px 20px rgba(255,200,50,0.5), 0 0 120px 40px rgba(255,120,30,0.25);
-  z-index: 2;
-  animation: sunPulse 4s ease-in-out infinite;
-}
-@keyframes sunPulse {
-  0%, 100% { box-shadow: 0 0 60px 20px rgba(255,200,50,0.5), 0 0 120px 40px rgba(255,120,30,0.25); }
-  50% { box-shadow: 0 0 80px 30px rgba(255,200,50,0.6), 0 0 150px 50px rgba(255,120,30,0.35); }
-}
-
-/* 太阳光芒 */
-.sun-rays {
-  position: fixed;
-  bottom: 28%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 300px;
-  height: 300px;
-  z-index: 1;
-  animation: raysRotate 30s linear infinite;
-}
-@keyframes raysRotate {
-  from { transform: translateX(-50%) rotate(0deg); }
-  to { transform: translateX(-50%) rotate(360deg); }
-}
-.sun-ray {
-  position: absolute;
-  top: 50%; left: 50%;
-  width: 2px; height: 140px;
-  background: linear-gradient(to bottom, rgba(255,220,100,0.5), transparent);
-  transform-origin: top center;
-}
-
-/* 海面波光 */
-.sea {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  height: 30%;
-  background: linear-gradient(180deg, rgba(255,100,50,0.3) 0%, rgba(20,10,40,0.8) 100%);
-  z-index: 3;
-}
-.sea::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, rgba(255,200,100,0.6), transparent);
-  animation: shimmerLine 3s ease-in-out infinite;
-}
-@keyframes shimmerLine {
-  0%, 100% { opacity: 0.4; transform: scaleX(0.8); }
-  50% { opacity: 1; transform: scaleX(1); }
-}
-
-/* 帆船 */
-.sailboat {
-  position: fixed;
-  bottom: 30%;
-  z-index: 4;
-  animation: boatFloat 5s ease-in-out infinite;
-}
-@keyframes boatFloat {
-  0%, 100% { transform: translateY(0) rotate(-2deg); }
-  50% { transform: translateY(-8px) rotate(2deg); }
-}
-
-/* 飞鸟 */
-.bird {
-  position: fixed;
-  font-size: 12px;
-  z-index: 5;
-  color: rgba(50,20,10,0.7);
-  animation: birdFly linear infinite;
-}
-@keyframes birdFly {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(-120vw, -40px); }
-}
-
-/* 橙红光点漂浮 */
-.ember {
-  position: fixed;
-  border-radius: 50%;
-  z-index: 6;
-  pointer-events: none;
-  animation: emberRise ease-out infinite;
-}
-@keyframes emberRise {
-  0% { transform: translateY(0) scale(1); opacity: 0.8; }
-  100% { transform: translateY(-60vh) scale(0.3); opacity: 0; }
-}
-
-/* === 贺卡主体 === */
-.card-wrap {
-  position: relative;
-  z-index: 10;
-  perspective: 1000px;
-}
-.card {
-  position: relative;
-  background: rgba(255, 245, 230, 0.92);
-  border-radius: 16px;
-  padding: clamp(28px, 6vw, 52px) clamp(24px, 5vw, 48px);
-  max-width: min(520px, 92vw);
-  box-shadow:
-    0 0 0 2px rgba(200,100,50,0.3),
-    0 20px 60px rgba(100,30,10,0.25),
-    0 0 40px rgba(255,150,50,0.15);
-  animation: cardFloat 6s ease-in-out infinite;
-  border: 2px solid rgba(200,100,50,0.4);
-}
-@keyframes cardFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-/* 装饰边线 */
-.card::before {
-  content: '';
-  position: absolute;
-  inset: 8px;
-  border: 1px solid rgba(200,80,40,0.25);
-  border-radius: 10px;
-  pointer-events: none;
-}
-
-.name {
-  font-size: clamp(22px, 6vw, 42px);
-  font-weight: normal;
-  color: #c04030;
-  text-align: center;
-  margin-bottom: 12px;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out both;
-  letter-spacing: 2px;
-}
-.date {
-  font-size: clamp(12px, 3vw, 16px);
-  color: #b07050;
-  text-align: center;
-  margin-bottom: 20px;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.2s both;
-}
-.blessing {
-  font-size: clamp(15px, 4vw, 22px);
-  color: #4a2a1a;
-  text-align: center;
-  line-height: 1.9;
-  margin-bottom: 24px;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.4s both;
-}
-.from {
-  font-size: clamp(13px, 3vw, 17px);
-  color: #a06040;
-  text-align: right;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.6s both;
-}
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(18px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* 底部装饰文字 */
-.footer-deco {
-  position: fixed;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 11px;
-  color: rgba(255,220,150,0.5);
-  z-index: 20;
-  letter-spacing: 3px;
-  white-space: nowrap;
-}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+       background:linear-gradient(160deg,#1a1a2e,#16213e);color:#fff;
+       font-family:'Georgia','PingFang SC',serif;text-align:center}
+  .box{padding:24px;border-radius:16px;background:rgba(255,255,255,.05)}
+  .spin{font-size:40px;animation:s 1.4s ease-in-out infinite}
+  @keyframes s{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
 </style>
 </head>
 <body>
-
-<!-- 太阳 -->
-<div class="sun"></div>
-
-<!-- 光芒射线 -->
-<div class="sun-rays">
-  <div class="sun-ray" style="transform: rotate(0deg) translateY(-50%);"></div>
-  <div class="sun-ray" style="transform: rotate(30deg) translateY(-50%);"></div>
-  <div class="sun-ray" style="transform: rotate(60deg) translateY(-50%);"></div>
-  <div class="sun-ray" style="transform: rotate(90deg) translateY(-50%);"></div>
-  <div class="sun-ray" style="transform: rotate(120deg) translateY(-50%);"></div>
-  <div class="sun-ray" style="transform: rotate(150deg) translateY(-50%);"></div>
-  <div class="sun-ray" style="transform: rotate(180deg) translateY(-50%);"></div>
-  <div class="sun-ray" style="transform: rotate(210deg) translateY(-50%);"></div>
-  <div class="sun-ray" style="transform: rotate(240deg) translateY(-50%);"></div>
-  <div class="sun-ray" style="transform: rotate(270deg) translateY(-50%);"></div>
-  <div class="sun-ray" style="transform: rotate(300deg) translateY(-50%);"></div>
-  <div class="sun-ray" style="transform: rotate(330deg) translateY(-50%);"></div>
+<div class="box">
+  <div class="spin">💌</div>
+  <p>正在打开贺卡…</p>
 </div>
-
-<!-- 海面 -->
-<div class="sea"></div>
-
-<!-- 帆船 -->
-<div class="sailboat" style="left: 15%;">
-  <svg width="50" height="40" viewBox="0 0 50 40" fill="none">
-    <path d="M5 35 L25 35 L25 10 L5 35Z" fill="rgba(180,80,40,0.7)"/>
-    <path d="M25 35 L45 35 L45 15 L25 10Z" fill="rgba(220,120,60,0.8)"/>
-    <path d="M3 35 L47 35 L25 38Z" fill="rgba(100,50,20,0.6)"/>
-  </svg>
-</div>
-
-<!-- 飞鸟 -->
 <script>
-const birds = ['✦', '✦'];
-birds.forEach((b, i) => {
-  const el = document.createElement('div');
-  el.className = 'bird';
-  el.textContent = b;
-  el.style.top = (15 + i * 12) + '%';
-  el.style.left = (70 + i * 5) + '%';
-  el.style.fontSize = (10 + i * 2) + 'px';
-  el.style.animationDuration = (12 + i * 4) + 's';
-  el.style.animationDelay = (i * 3) + 's';
-  document.body.appendChild(el);
-});
-
-// 橙红光点
-for (let i = 0; i < 18; i++) {
-  const e = document.createElement('div');
-  e.className = 'ember';
-  const size = 4 + Math.random() * 8;
-  e.style.cssText = `
-    width:${size}px; height:${size}px;
-    left:${Math.random() * 100}%;
-    bottom:${10 + Math.random() * 20}%;
-    background: radial-gradient(circle, rgba(255,${120+Math.random()*80},30,0.8), transparent);
-    animation-duration:${4 + Math.random() * 6}s;
-    animation-delay:${Math.random() * 8}s;
-  `;
-  document.body.appendChild(e);
-}
-</script>
-
-<!-- 贺卡 -->
-<div class="card-wrap">
-  <div class="card">
-    <div class="name" id="nameEl"></div>
-    <div class="date" id="dateEl"></div>
-    <div class="blessing" id="blessingEl"></div>
-    <div class="from" id="fromEl"></div>
-  </div>
-</div>
-
-<div class="footer-deco">— 日落暖心 —</div>
-
-<script>
-const p = new URLSearchParams(location.search);
-document.getElementById('nameEl').textContent = p.get('n') || '亲爱的你';
-document.getElementById('dateEl').textContent = p.get('d') || '';
-document.getElementById('blessingEl').textContent = p.get('b') || '愿你如日落般从容，愿每一段离别都通向新的相遇';
-document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
+// 兼容：保留所有 URL 参数，把旧路径重定向到统一的 card.html?scene=
+(function(){
+  var p = new URLSearchParams(location.search);
+  // 移除旧的 scene 参数（如果有），强制用文件名里的 scene
+  var q = new URLSearchParams();
+  p.forEach(function(v,k){ if (k !== 'scene') q.set(k, v); });
+  q.set('scene', 'sunset');
+  // location.replace 不会留下历史记录，体验更好
+  location.replace('card.html?' + q.toString());
+})();
 </script>
 </body>
 </html>

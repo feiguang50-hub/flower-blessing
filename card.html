@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1a1a2e">
+<title data-bind="title">贺卡</title>
+<meta property="og:title" data-bind="og-title" content="贺卡">
+<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" data-bind="og-title" content="贺卡">
+<meta name="twitter:description" content="点击打开，你们的专属回忆在里面哦">
+
+<link rel="stylesheet" href="assets/css/card-base.css">
+
+<style data-bind="theme-css"></style>
+</head>
+<body data-bind="body-class">
+
+<div class="bg-layer" data-bind="bg-layer"></div>
+<div class="particle-layer" data-bind="particle-layer"></div>
+
+<div class="card-wrap" id="cardWrap">
+  <div class="card" id="card">
+    <span class="card-icon" data-bind="icon"></span>
+    <div class="happy-label" data-bind="happy-label" hidden></div>
+    <div class="title" data-bind="title-el" hidden></div>
+    <div class="name" id="nameEl"></div>
+    <div class="age-row" data-bind="age-row" hidden>
+      <div class="age" id="ageEl"></div>
+      <div class="age-label">周岁了</div>
+    </div>
+    <div class="date" id="dateEl" hidden></div>
+    <div class="blessing" id="blessingEl"></div>
+    <div class="from" id="fromEl" hidden></div>
+    <div class="card-trailing" data-bind="trailing" hidden></div>
+  </div>
+</div>
+
+<!-- Flip-back card (used by flip-card scenes like valentine) -->
+<div class="flip-back-overlay" id="flipBack" hidden>
+  <div class="flip-back-card">
+    <div class="flip-back-text" id="backEl">点击卡片<br>翻开惊喜</div>
+  </div>
+</div>
+
+<script src="assets/js/particles.js"></script>
+<script src="assets/js/card.js"></script>
+</body>
+</html>

@@ -3,275 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="💌 许愿星">
+<meta name="twitter:title" content="💌 许愿星">
 <title>许愿星</title>
-<meta property="og:title" content="💌 收到一份专属贺卡">
-<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">
-
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  min-height: 100vh;
-  background: linear-gradient(160deg, #030912 0%, #0a1635 50%, #05102a 100%);
-  font-family: 'Georgia', serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
-}
-
-/* 夜空渐变 */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 50% 0%, rgba(120,100,255,0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 80%, rgba(180,100,255,0.08) 0%, transparent 40%),
-    radial-gradient(ellipse at 20% 60%, rgba(100,150,255,0.07) 0%, transparent 35%);
-  z-index: 0;
-  pointer-events: none;
-  animation: nightFade 6s ease-in-out infinite;
-}
-@keyframes nightFade {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 1; }
-}
-
-/* 星星 */
-.star {
-  position: fixed;
-  background: #fff;
-  border-radius: 50%;
-  animation: starTwinkle ease-in-out infinite;
-  z-index: 1;
-}
-@keyframes starTwinkle {
-  0%, 100% { opacity: 0.1; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.6); }
-}
-
-/* 流星 */
-.shooting-star {
-  position: fixed;
-  width: 80px; height: 2px;
-  background: linear-gradient(90deg, rgba(255,255,255,0.9), rgba(200,220,255,0.3), transparent);
-  border-radius: 2px;
-  animation: shoot linear forwards;
-  z-index: 2;
-  opacity: 0;
-  transform: rotate(-35deg);
-}
-.shooting-star::after {
-  content: '';
-  position: absolute;
-  right: 0; top: -2px;
-  width: 6px; height: 6px;
-  background: radial-gradient(circle, #fff 0%, transparent 70%);
-  border-radius: 50%;
-}
-@keyframes shoot {
-  0% { opacity: 0; transform: translateX(0) translateY(0) rotate(-35deg); }
-  5% { opacity: 1; }
-  30% { opacity: 1; }
-  100% { opacity: 0; transform: translateX(250px) translateY(180px) rotate(-35deg); }
-}
-
-/* 星星光晕 */
-.glow-star {
-  position: fixed;
-  z-index: 2;
-  animation: glowPulse ease-in-out infinite;
-  pointer-events: none;
-}
-@keyframes glowPulse {
-  0%, 100% { filter: drop-shadow(0 0 4px rgba(255,255,200,0.4)); transform: scale(1); }
-  50% { filter: drop-shadow(0 0 12px rgba(255,255,200,0.9)); transform: scale(1.1); }
-}
-
-/* 卡片 */
-.card-wrap {
-  position: relative;
-  z-index: 10;
-  padding: 3px;
-  border-radius: 22px;
-  background: linear-gradient(135deg, #c8a8ff, #9b6fdf, #c8a8ff, #b090f0, #c8a8ff);
-  background-size: 400% 400%;
-  animation: wishBorder 4s ease infinite;
-  box-shadow:
-    0 0 28px rgba(180,150,255,0.4),
-    0 0 60px rgba(150,100,255,0.15);
-}
-@keyframes wishBorder {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.card {
-  background: linear-gradient(160deg, #060d25 0%, #0d1545 50%, #080c30 100%);
-  border-radius: 20px;
-  padding: clamp(28px, 7vw, 52px) clamp(24px, 6vw, 48px);
-  text-align: center;
-  max-width: 90vw;
-  width: 460px;
-  position: relative;
-  overflow: hidden;
-}
-
-/* 顶部图标 */
-.wish-icon {
-  font-size: clamp(36px, 10vw, 58px);
-  display: block;
-  margin-bottom: 10px;
-  animation: iconPop 0.9s cubic-bezier(0.34,1.56,0.64,1) 0.2s both;
-  filter: drop-shadow(0 4px 14px rgba(200,180,255,0.5));
-}
-@keyframes iconPop {
-  from { opacity: 0; transform: scale(0.3) translateY(20px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
-}
-
-.tag {
-  display: inline-block;
-  background: linear-gradient(135deg, #a080ff, #c8a8ff);
-  color: #fff;
-  font-size: clamp(11px, 2.5vw, 13px);
-  font-weight: bold;
-  padding: 4px 16px;
-  border-radius: 20px;
-  margin-bottom: 14px;
-  letter-spacing: 2px;
-  font-family: 'Arial', sans-serif;
-  opacity: 1;
-  animation: slideUp 1s ease-out 0.3s both;
-}
-
-.name {
-  font-size: clamp(28px, 8vw, 54px);
-  font-weight: bold;
-  background: linear-gradient(135deg, #e0d0ff, #ffffff, #c8b0ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 12px;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out both;
-  line-height: 1.2;
-}
-.blessing {
-  font-size: clamp(14px, 3.8vw, 21px);
-  color: rgba(220,210,255,0.9);
-  line-height: 1.7;
-  margin-bottom: 16px;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.15s both;
-}
-.date {
-  font-size: clamp(12px, 3vw, 15px);
-  color: rgba(180,170,220,0.65);
-  margin-bottom: 8px;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.3s both;
-  letter-spacing: 1px;
-}
-.from {
-  font-size: clamp(12px, 3vw, 15px);
-  color: rgba(180,170,220,0.6);
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.4s both;
-  font-style: italic;
-}
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(18px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+       background:linear-gradient(160deg,#1a1a2e,#16213e);color:#fff;
+       font-family:'Georgia','PingFang SC',serif;text-align:center}
+  .box{padding:24px;border-radius:16px;background:rgba(255,255,255,.05)}
+  .spin{font-size:40px;animation:s 1.4s ease-in-out infinite}
+  @keyframes s{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
 </style>
 </head>
 <body>
-
-<script>
-const p = new URLSearchParams(location.search);
-const name = p.get('n') || '亲爱的';
-const blessing = p.get('b') || '愿你的愿望都能成真\n愿星光照亮你前行的路';
-const date = p.get('d') || '';
-const from = p.get('f') || '';
-
-document.getElementById('nameEl').textContent = name;
-document.getElementById('blessingEl').innerHTML = blessing.replace(/\n/g, '<br>');
-document.getElementById('dateEl').textContent = date;
-document.getElementById('fromEl').textContent = from ? '— ' + from : '';
-
-// 星星
-for (let i = 0; i < 50; i++) {
-  const s = document.createElement('div');
-  s.className = 'star';
-  s.style.cssText = `
-    left: ${Math.random()*100}vw;
-    top: ${Math.random()*100}vh;
-    width: ${1+Math.random()*3}px;
-    height: ${1+Math.random()*3}px;
-    animation-duration: ${1.5+Math.random()*3}s;
-    animation-delay: ${Math.random()*4}s;
-  `;
-  document.body.appendChild(s);
-}
-
-// 流星定时出现
-function launchShootingStar() {
-  const star = document.createElement('div');
-  star.className = 'shooting-star';
-  star.style.cssText = `
-    top: ${5+Math.random()*30}%;
-    left: ${-10 + Math.random()*40}%;
-    width: ${60+Math.random()*80}px;
-  `;
-  document.body.appendChild(star);
-  setTimeout(() => star.remove(), 2000);
-}
-
-// 初始几颗流星
-setTimeout(launchShootingStar, 800);
-setTimeout(launchShootingStar, 2200);
-setTimeout(launchShootingStar, 4000);
-// 循环流星
-setInterval(launchShootingStar, 4500);
-
-// 发光星星装饰
-for (let i = 0; i < 6; i++) {
-  const g = document.createElement('div');
-  g.className = 'glow-star';
-  g.textContent = '✦';
-  g.style.cssText = `
-    left: ${10+Math.random()*80}vw;
-    top: ${5+Math.random()*80}vh;
-    font-size: ${14+Math.random()*18}px;
-    color: rgba(255,240,180,${0.5+Math.random()*0.5});
-    animation-duration: ${2+Math.random()*2}s;
-    animation-delay: ${Math.random()*3}s;
-  `;
-  document.body.appendChild(g);
-}
-
-// 减少动效
-if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  document.querySelectorAll('.star,.shooting-star,.glow-star').forEach(e => e.remove());
-}
-</script>
-
-<div class="card-wrap">
-  <div class="card">
-    <span class="wish-icon">⭐</span>
-    <div class="tag">✨ 许愿星</div>
-    <div class="name" id="nameEl"></div>
-    <div class="blessing" id="blessingEl"></div>
-    <div class="date" id="dateEl"></div>
-    <div class="from" id="fromEl"></div>
-  </div>
+<div class="box">
+  <div class="spin">💌</div>
+  <p>正在打开贺卡…</p>
 </div>
-
+<script>
+// 兼容：保留所有 URL 参数，把旧路径重定向到统一的 card.html?scene=
+(function(){
+  var p = new URLSearchParams(location.search);
+  // 移除旧的 scene 参数（如果有），强制用文件名里的 scene
+  var q = new URLSearchParams();
+  p.forEach(function(v,k){ if (k !== 'scene') q.set(k, v); });
+  q.set('scene', 'wish');
+  // location.replace 不会留下历史记录，体验更好
+  location.replace('card.html?' + q.toString());
+})();
+</script>
 </body>
 </html>

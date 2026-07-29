@@ -3,272 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="💌 生日祝福">
+<meta name="twitter:title" content="💌 生日祝福">
 <title>生日祝福</title>
-<meta property="og:title" content="💌 收到一份专属贺卡">
-<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="💌 收到一份专属贺卡">
-<meta name="twitter:description" content="点击打开，你们的专属回忆在里面哦">
-
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  min-height: 100vh;
-  background: linear-gradient(160deg, #050d1a 0%, #0a1a35 40%, #102550 100%);
-  font-family: 'Georgia', serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
-}
-
-/* === 夜空光晕 === */
-body::before {
-  content: '';
-  position: fixed;
-  top: -50%; left: -50%;
-  width: 200%; height: 200%;
-  background:
-    radial-gradient(ellipse at 50% 100%, rgba(255,180,60,0.2) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 0%, rgba(100,150,255,0.1) 0%, transparent 40%),
-    radial-gradient(ellipse at 20% 50%, rgba(255,160,80,0.07) 0%, transparent 35%),
-    radial-gradient(ellipse at 80% 50%, rgba(255,160,80,0.07) 0%, transparent 35%);
-  animation: nightGlow 4s ease-in-out infinite;
-  z-index: 0;
-  pointer-events: none;
-}
-@keyframes nightGlow {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 1; }
-}
-
-/* === 星星 === */
-.star {
-  position: fixed;
-  background: #fff;
-  border-radius: 50%;
-  animation: starTwinkle ease-in-out infinite;
-  z-index: 1;
-}
-@keyframes starTwinkle {
-  0%, 100% { opacity: 0.2; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.5); }
-}
-
-/* === 气球飘空 === */
-.balloon {
-  position: fixed;
-  font-size: 26px;
-  z-index: 2;
-  animation: balloonRise ease-out forwards;
-  filter: drop-shadow(0 6px 14px rgba(255,100,150,0.4));
-}
-@keyframes balloonRise {
-  0% { transform: translateY(105vh) rotate(-5deg) scale(0.6); opacity: 0; }
-  10% { opacity: 1; transform: translateY(85vh) rotate(0deg) scale(1); }
-  80% { opacity: 1; }
-  100% { transform: translateY(-15vh) rotate(8deg) scale(0.7); opacity: 0; }
-}
-
-/* === 彩带飘落 === */
-.ribbon {
-  position: fixed;
-  width: 8px; height: 16px;
-  border-radius: 3px;
-  animation: ribbonFall linear infinite;
-  z-index: 1;
-}
-@keyframes ribbonFall {
-  0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(110vh) rotate(360deg); opacity: 0.6; }
-}
-
-/* === 卡片 === */
-.card-wrap {
-  position: relative;
-  z-index: 10;
-  padding: 3px;
-  border-radius: 24px;
-  background: linear-gradient(135deg, #ff6b9d, #ffa040, #ff6b9d, #ff8ab5);
-  background-size: 300% 300%;
-  animation: borderFlow 3s ease infinite;
-  box-shadow: 0 0 30px rgba(255,120,160,0.4), 0 0 60px rgba(255,150,100,0.15);
-}
-@keyframes borderFlow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-.card {
-  background: linear-gradient(160deg, #0a1525 0%, #122040 50%, #1a2e60 100%);
-  border-radius: 22px;
-  padding: clamp(28px, 7vw, 52px) clamp(24px, 6vw, 48px);
-  text-align: center;
-  max-width: 90vw;
-  width: 460px;
-  position: relative;
-  overflow: hidden;
-  border: none;
-}
-
-/* 蛋糕装饰 */
-.cake-icon {
-  font-size: clamp(36px, 10vw, 60px);
-  margin-bottom: 12px;
-  display: block;
-  animation: cakeBounce 2s ease-in-out infinite;
-  filter: drop-shadow(0 4px 16px rgba(255,180,80,0.5));
-}
-@keyframes cakeBounce {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-6px) scale(1.05); }
-}
-
-/* 蜡烛火焰 */
-.candle-flame {
-  position: absolute;
-  width: 10px; height: 16px;
-  background: radial-gradient(ellipse at 50% 80%, #fff 0%, #ffdd00 30%, #ff6600 70%, transparent 100%);
-  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-  animation: flicker 0.4s ease-in-out infinite alternate;
-  filter: drop-shadow(0 0 6px #ffaa00);
-}
-@keyframes flicker {
-  0% { transform: scaleY(1) scaleX(1) translateY(0); opacity: 1; }
-  100% { transform: scaleY(1.2) scaleX(0.85) translateY(-2px); opacity: 0.85; }
-}
-
-.tag {
-  display: inline-block;
-  background: linear-gradient(135deg, #ff6b9d, #ffa040);
-  color: #fff;
-  font-size: clamp(11px, 2.5vw, 14px);
-  font-weight: bold;
-  padding: 4px 14px;
-  border-radius: 20px;
-  margin-bottom: 12px;
-  letter-spacing: 2px;
-  font-family: 'Arial', sans-serif;
-}
-
-.name {
-  font-size: clamp(30px, 9vw, 58px);
-  font-weight: bold;
-  background: linear-gradient(135deg, #ffd700, #fff8d0, #ffd700);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 10px;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out both;
-  line-height: 1.2;
-}
-.blessing {
-  font-size: clamp(15px, 4vw, 22px);
-  color: rgba(255,240,190,0.92);
-  line-height: 1.7;
-  margin-bottom: 16px;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.2s both;
-}
-.date {
-  font-size: clamp(12px, 3vw, 15px);
-  color: rgba(200,200,220,0.7);
-  margin-bottom: 8px;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.35s both;
-  font-family: 'Arial', sans-serif;
-  letter-spacing: 1px;
-}
-.from {
-  font-size: clamp(12px, 3vw, 15px);
-  color: rgba(200,200,220,0.65);
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.45s both;
-  font-style: italic;
-}
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(18px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+       background:linear-gradient(160deg,#1a1a2e,#16213e);color:#fff;
+       font-family:'Georgia','PingFang SC',serif;text-align:center}
+  .box{padding:24px;border-radius:16px;background:rgba(255,255,255,.05)}
+  .spin{font-size:40px;animation:s 1.4s ease-in-out infinite}
+  @keyframes s{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
 </style>
 </head>
 <body>
-
-<script>
-const p = new URLSearchParams(location.search);
-document.getElementById('nameEl').textContent = p.get('n') || '寿星';
-document.getElementById('blessingEl').textContent = p.get('b') || '生日快乐！愿每一岁都奔走在热爱里';
-document.getElementById('dateEl').textContent = p.get('d') || '';
-document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
-
-// 星星
-for (let i = 0; i < 40; i++) {
-  const s = document.createElement('div');
-  s.className = 'star';
-  s.style.cssText = `
-    left: ${Math.random()*100}vw;
-    top: ${Math.random()*100}vh;
-    width: ${1+Math.random()*3}px;
-    height: ${1+Math.random()*3}px;
-    animation-duration: ${1.5+Math.random()*3}s;
-    animation-delay: ${Math.random()*3}s;
-  `;
-  document.body.appendChild(s);
-}
-
-// 气球
-const balloonColors = ['🎈','🎈','🎈','🎈','🎈'];
-for (let i = 0; i < 10; i++) {
-  const b = document.createElement('div');
-  b.className = 'balloon';
-  b.textContent = balloonColors[i % balloonColors.length];
-  const x = 5 + Math.random() * 88;
-  const delay = Math.random() * 7;
-  const dur = 5 + Math.random() * 4;
-  b.style.cssText = `
-    left: ${x}%;
-    animation-duration: ${dur}s;
-    animation-delay: ${delay}s;
-  `;
-  document.body.appendChild(b);
-}
-
-// 彩带
-const ribbonColors = ['#ff6b9d','#ffa040','#ffd700','#ff9500','#ff69b4'];
-for (let i = 0; i < 18; i++) {
-  const r = document.createElement('div');
-  r.className = 'ribbon';
-  r.style.cssText = `
-    left: ${Math.random()*100}%;
-    background: ${ribbonColors[i % ribbonColors.length]};
-    animation-duration: ${3+Math.random()*3}s;
-    animation-delay: ${Math.random()*5}s;
-    width: ${6+Math.random()*8}px;
-    height: ${12+Math.random()*10}px;
-  `;
-  document.body.appendChild(r);
-}
-
-// 减少动效
-if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  document.querySelectorAll('.star,.balloon,.ribbon').forEach(e => e.remove());
-}
-</script>
-
-<div class="card-wrap">
-  <div class="card">
-    <span class="cake-icon">🎂</span>
-    <div class="tag">🎉 生日快乐</div>
-    <div class="name" id="nameEl"></div>
-    <div class="blessing" id="blessingEl"></div>
-    <div class="date" id="dateEl"></div>
-    <div class="from" id="fromEl"></div>
-  </div>
+<div class="box">
+  <div class="spin">💌</div>
+  <p>正在打开贺卡…</p>
 </div>
-
+<script>
+// 兼容：保留所有 URL 参数，把旧路径重定向到统一的 card.html?scene=
+(function(){
+  var p = new URLSearchParams(location.search);
+  // 移除旧的 scene 参数（如果有），强制用文件名里的 scene
+  var q = new URLSearchParams();
+  p.forEach(function(v,k){ if (k !== 'scene') q.set(k, v); });
+  q.set('scene', 'cake');
+  // location.replace 不会留下历史记录，体验更好
+  location.replace('card.html?' + q.toString());
+})();
+</script>
 </body>
 </html>

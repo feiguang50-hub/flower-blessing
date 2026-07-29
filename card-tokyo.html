@@ -3,253 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="🌸 樱花东京">
+<meta name="twitter:title" content="🌸 樱花东京">
 <title>樱花东京</title>
-<meta property="og:title" content="🌸 收到一份专属贺卡">
-<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">
-
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-  min-height: 100vh;
-  background: linear-gradient(180deg, #fce4ec 0%, #f8bbd0 30%, #f48fb1 60%, #fce4ec 100%);
-  font-family: 'Georgia', 'PingFang SC', sans-serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
-}
-
-/* 樱花飘落 */
-.petal {
-  position: fixed;
-  font-size: 14px;
-  animation: petalFall linear infinite;
-  pointer-events: none;
-  z-index: 1;
-}
-@keyframes petalFall {
-  0% { transform: translateY(-20px) rotate(0deg) translateX(0); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 0.8; }
-  100% { transform: translateY(105vh) rotate(360deg) translateX(60px); opacity: 0; }
-}
-
-/* 东京塔剪影 */
-.tower {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  pointer-events: none;
-  z-index: 0;
-}
-.tower svg {
-  width: 100%;
-  height: auto;
-}
-
-/* 路灯光晕 */
-.lantern {
-  position: fixed;
-  width: 8px; height: 8px;
-  background: radial-gradient(circle, rgba(255,200,80,0.8), transparent 70%);
-  border-radius: 50%;
-  animation: lanternGlow 2s ease-in-out infinite alternate;
-  pointer-events: none;
-  z-index: 2;
-}
-@keyframes lanternGlow {
-  0% { opacity: 0.5; transform: scale(0.9); }
-  100% { opacity: 1; transform: scale(1.2); }
-}
-
-/* 卡片外框 */
-.card-wrap {
-  position: relative;
-  z-index: 20;
-  padding: 3px;
-  background: linear-gradient(135deg, #f48fb1, #f06292, #ec407a, #f48fb1);
-  background-size: 400% 400%;
-  animation: sakuraBorder 6s ease infinite, cardFloat 5s ease-in-out infinite;
-  border-radius: 20px;
-  box-shadow:
-    0 0 25px rgba(236,64,122,0.4),
-    0 0 55px rgba(244,143,177,0.2);
-}
-@keyframes sakuraBorder {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-@keyframes cardFloat {
-  0%, 100% { transform: translateY(0) rotate(-0.3deg); }
-  50% { transform: translateY(-12px) rotate(0.3deg); }
-}
-
-.glass-card {
-  background: rgba(255,248,250,0.88);
-  border-radius: 17px;
-  padding: clamp(30px, 6vw, 52px) clamp(24px, 5vw, 48px);
-  text-align: center;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(244,143,177,0.4);
-  box-shadow: 0 8px 32px rgba(236,64,122,0.15);
-  min-width: 280px;
-  max-width: 460px;
-  position: relative;
-  overflow: hidden;
-}
-
-/* 樱花内发光 */
-.glass-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 30% 20%, rgba(255,183,197,0.3) 0%, transparent 50%),
-    radial-gradient(ellipse at 70% 80%, rgba(255,143,175,0.2) 0%, transparent 50%);
-  pointer-events: none;
-  border-radius: 17px;
-}
-
-.icon {
-  font-size: clamp(38px, 9vw, 58px);
-  display: block;
-  margin-bottom: 14px;
-  animation: iconBounce 1.2s cubic-bezier(0.34,1.56,0.64,1) 0.15s both;
-  filter: drop-shadow(0 0 10px rgba(236,64,122,0.4));
-}
-@keyframes iconBounce {
-  from { transform: translateY(-30px) scale(0.5); opacity: 0; }
-  to { transform: translateY(0) scale(1); opacity: 1; }
-}
-
-.name {
-  font-size: clamp(22px, 6vw, 38px);
-  color: #880e4f;
-  margin-bottom: 12px;
-  font-weight: normal;
-  letter-spacing: 0.08em;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.3s both;
-  text-shadow: 0 2px 8px rgba(236,64,122,0.2);
-}
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.blessing {
-  font-size: clamp(14px, 3.5vw, 18px);
-  color: #4a0010;
-  line-height: 1.9;
-  margin-bottom: 16px;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.55s both;
-}
-
-.date {
-  font-size: clamp(12px, 2.8vw, 15px);
-  color: rgba(136,14,79,0.55);
-  letter-spacing: 0.12em;
-  margin-bottom: 6px;
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.75s both;
-}
-
-.from {
-  font-size: clamp(12px, 2.8vw, 15px);
-  color: rgba(136,14,79,0.5);
-  opacity: 1;
-  animation: slideUp 1.2s ease-out 0.9s both;
-}
-
-/* 装饰花 */
-.decor {
-  position: absolute;
-  font-size: 11px;
-  color: rgba(236,64,122,0.3);
-  animation: decorSpin 8s linear infinite;
-}
-.decor:nth-child(1) { top: 8px; right: 10px; animation-delay: 0s; }
-.decor:nth-child(2) { top: 8px; left: 10px; animation-delay: 2s; }
-.decor:nth-child(3) { bottom: 8px; right: 10px; animation-delay: 4s; }
-.decor:nth-child(4) { bottom: 8px; left: 10px; animation-delay: 6s; }
-@keyframes decorSpin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .petal, .lantern, .card-wrap, .icon, .name, .blessing, .date, .from {
-    animation: none !important;
-  }
-}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+       background:linear-gradient(160deg,#1a1a2e,#16213e);color:#fff;
+       font-family:'Georgia','PingFang SC',serif;text-align:center}
+  .box{padding:24px;border-radius:16px;background:rgba(255,255,255,.05)}
+  .spin{font-size:40px;animation:s 1.4s ease-in-out infinite}
+  @keyframes s{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
 </style>
 </head>
 <body>
-  <!-- 东京塔剪影SVG -->
-  <div class="tower">
-    <svg viewBox="0 0 400 180" preserveAspectRatio="xMidYMax slice">
-      <polygon points="195,10 205,10 208,170 192,170" fill="rgba(80,20,60,0.15)"/>
-      <polygon points="175,50 225,50 230,60 170,60" fill="rgba(80,20,60,0.1)"/>
-      <polygon points="185,80 215,80 218,88 182,88" fill="rgba(80,20,60,0.08)"/>
-      <polygon points="180,110 220,110 222,118 178,118" fill="rgba(80,20,60,0.07)"/>
-      <!-- 铁塔天线 -->
-      <line x1="200" y1="0" x2="200" y2="10" stroke="rgba(80,20,60,0.2)" stroke-width="2"/>
-    </svg>
-  </div>
-
-  <script>
-    // 樱花花瓣
-    const petals = ['🌸','💮','🏵️','✿','❀'];
-    for (let i = 0; i < 18; i++) {
-      const p = document.createElement('div');
-      p.className = 'petal';
-      p.textContent = petals[Math.floor(Math.random() * petals.length)];
-      p.style.left = Math.random() * 100 + 'vw';
-      p.style.fontSize = (8 + Math.random() * 10) + 'px';
-      p.style.animationDuration = (Math.random() * 4 + 5) + 's';
-      p.style.animationDelay = (Math.random() * 8) + 's';
-      p.style.opacity = 0.5 + Math.random() * 0.5;
-      document.body.appendChild(p);
-    }
-    // 路灯光点
-    const lanternPositions = [8, 25, 42, 60, 78, 92];
-    lanternPositions.forEach((x, i) => {
-      const l = document.createElement('div');
-      l.className = 'lantern';
-      l.style.left = x + 'vw';
-      l.style.top = (55 + Math.random() * 10) + '%';
-      l.style.animationDelay = (i * 0.3) + 's';
-      document.body.appendChild(l);
-    });
-  </script>
-
-  <div class="card-wrap">
-    <div class="glass-card">
-      <span class="decor">❀</span>
-      <span class="decor">✿</span>
-      <span class="decor">❀</span>
-      <span class="decor">✿</span>
-      <span class="icon" id="iconEl">🌸</span>
-      <div class="name" id="nameEl"></div>
-      <div class="blessing" id="blessingEl"></div>
-      <div class="date" id="dateEl"></div>
-      <div class="from" id="fromEl"></div>
-    </div>
-  </div>
-
-  <script>
-    const p = new URLSearchParams(location.search);
-    document.getElementById('nameEl').textContent = p.get('n') || '亲爱的你';
-    document.getElementById('blessingEl').textContent = p.get('b') || '愿你如樱花般绚烂，每一次绽放都温柔了时光';
-    document.getElementById('dateEl').textContent = p.get('d') || '';
-    document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
-    if (p.get('i')) document.getElementById('iconEl').textContent = p.get('i');
-  </script>
+<div class="box">
+  <div class="spin">🌸</div>
+  <p>正在打开贺卡…</p>
+</div>
+<script>
+// 兼容：保留所有 URL 参数，把旧路径重定向到统一的 card.html?scene=
+(function(){
+  var p = new URLSearchParams(location.search);
+  // 移除旧的 scene 参数（如果有），强制用文件名里的 scene
+  var q = new URLSearchParams();
+  p.forEach(function(v,k){ if (k !== 'scene') q.set(k, v); });
+  q.set('scene', 'tokyo');
+  // location.replace 不会留下历史记录，体验更好
+  location.replace('card.html?' + q.toString());
+})();
+</script>
 </body>
 </html>

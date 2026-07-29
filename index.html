@@ -126,13 +126,29 @@ header {
 }
 .theme-icon-wrap { display: flex; align-items: center; justify-content: center; margin-bottom: 4px; }
 .theme-icon { font-size: 32px; line-height: 1; }
-}
 
 .shape-preview { margin-bottom: 6px; display: flex; justify-content: center; }
 .shape-icon { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; }
 .shape-icon svg { width: 100%; height: 100%; }
 
 /* === 按钮 === */
+/* === 输入错误抖动 === */
+.input-error { animation: inputShake 0.4s; border-color: #ef4444 !important; }
+@keyframes inputShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+/* === 错误提示条 === */
+.error-bar {
+  position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-80px);
+  background: #ef4444; color: #fff; padding: 10px 22px; border-radius: 12px;
+  font-size: 14px; z-index: 999; box-shadow: 0 4px 18px rgba(239,68,68,0.4);
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.error-bar.shown { transform: translateX(-50%) translateY(0); }
+
 .btn-primary {
   width: 100%; padding: 16px; border: none; border-radius: 14px;
   background: linear-gradient(135deg, #7c3aed, #5b21b6);
@@ -931,73 +947,6 @@ function selectTheme(val) {
   updatePreview();
 }
 
-// ========== 花材选项（保留，暂未使用） ==========
-function renderMaterialOptions() {
-  const grid = document.getElementById('materialGrid');
-  grid.innerHTML = CONFIG.materials.map(m => `
-    <div class="opt-card${m.value === state.material ? ' selected' : ''}" onclick="selectMaterial('${m.value}')">
-      <div class="material-preview">
-        <div class="material-dot" style="background: linear-gradient(135deg, ${m.color1}, ${m.color2}); color: ${m.glow}"></div>
-        <div class="opt-name">${m.label}</div>
-      </div>
-      <div class="opt-desc">${m.labelEn}</div>
-      <div class="opt-check"></div>
-    </div>
-  `).join('');
-}
-
-function selectMaterial(val) {
-  state.material = val;
-  currentMaterial = val;
-  renderMaterialOptions();
-  updatePreview();
-  startParticles(val);
-}
-
-// ========== 形态选项 ==========
-function getMaterialColor() {
-  const m = CONFIG.materials.find(x => x.value === state.material);
-  return m ? m.glow : '#c084fc';
-}
-
-function renderShapeOptions() {
-  const grid = document.getElementById('shapeGrid');
-  grid.innerHTML = CONFIG.shapes.map(s => `
-    <div class="opt-card${s.value === state.shape ? ' selected' : ''}" onclick="selectShape('${s.value}')">
-      <div class="shape-preview" style="color: ${getMaterialColor()}">
-        ${SHAPE_ICONS[s.value]}
-      </div>
-      <div class="opt-name">${s.label}</div>
-      <div class="opt-desc">${s.desc}</div>
-      <div class="opt-check"></div>
-    </div>
-  `).join('');
-}
-
-function selectShape(val) {
-  state.shape = val;
-  renderShapeOptions();
-  updatePreview();
-}
-
-// ========== 排布选项 ==========
-function renderArrangeOptions() {
-  const grid = document.getElementById('arrangeGrid');
-  grid.innerHTML = CONFIG.arrangements.map(a => `
-    <div class="opt-card${a.value === state.arrangement ? ' selected' : ''}" onclick="selectArrange('${a.value}')">
-      <div class="opt-name">${a.label}</div>
-      <div class="opt-desc">${a.scene}</div>
-      <div class="opt-check"></div>
-    </div>
-  `).join('');
-}
-
-function selectArrange(val) {
-  state.arrangement = val;
-  renderArrangeOptions();
-  updatePreview();
-}
-
 // ========== 更新预览 ==========
 function updatePreview() {
   state.blessing = document.getElementById('blessingInput').value || CONFIG.defaultBlessing;
@@ -1058,7 +1007,14 @@ function goStep(n) {
 // ========== 生成链接 ==========
 function generateLink() {
   updatePreview();
-  if (!state.name || state.name === '收礼人姓名') { alert('请填写收礼人姓名'); return; }
+  if (!state.name || state.name === '收礼人姓名') {
+    const input = document.getElementById('nameInput');
+    input.classList.add('input-error');
+    input.focus();
+    showError('请填写收礼人姓名');
+    setTimeout(() => input.classList.remove('input-error'), 1500);
+    return;
+  }
   const params = new URLSearchParams({
     b: state.blessing, n: state.name, d: state.date, f: state.from,
   });
@@ -1071,11 +1027,45 @@ function generateLink() {
 
 function copyLink() {
   const url = document.getElementById('resultUrl').textContent;
-  navigator.clipboard.writeText(url).then(() => {
-    const btn = document.getElementById('copyBtn');
-    btn.textContent = '已复制 ✓'; btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = '复制'; btn.classList.remove('copied'); }, 2000);
-  });
+  // 优先尝试 Clipboard API；失败则 fallback 到临时 textarea + execCommand
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(url).then(() => flashCopied()).catch(() => fallbackCopy(url));
+  } else {
+    fallbackCopy(url);
+  }
+}
+
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  let ok = false;
+  try { ok = document.execCommand('copy'); } catch (e) {}
+  document.body.removeChild(ta);
+  if (ok) flashCopied();
+  else showError('复制失败，请手动复制链接');
+}
+
+function flashCopied() {
+  const btn = document.getElementById('copyBtn');
+  btn.textContent = '已复制 ✓'; btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = '复制'; btn.classList.remove('copied'); }, 2000);
+}
+
+function showError(msg) {
+  let bar = document.getElementById('errorBar');
+  if (!bar) {
+    bar = document.createElement('div');
+    bar.id = 'errorBar';
+    bar.className = 'error-bar';
+    document.body.appendChild(bar);
+  }
+  bar.textContent = msg;
+  bar.classList.add('shown');
+  clearTimeout(bar._timer);
+  bar._timer = setTimeout(() => bar.classList.remove('shown'), 2500);
 }
 
 function resetForm() {

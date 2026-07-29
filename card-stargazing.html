@@ -3,287 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="🔭 星空望远镜">
+<meta name="twitter:title" content="🔭 星空望远镜">
 <title>星空望远镜</title>
-<meta property="og:title" content="🔭 收到一份专属贺卡">
-<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">
-
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-:root {
-  --deep-night: #050a1a;
-  --star-gold: #ffd700;
-  --star-white: #fffde7;
-  --frame-gold: #c9a84c;
-}
-
-body {
-  min-height: 100vh;
-  background: radial-gradient(ellipse at 50% 30%, #0a1628 0%, #050a1a 60%, #020408 100%);
-  font-family: 'Georgia', serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
-}
-
-/* 满天星背景 */
-.stars-bg {
-  position: fixed; inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-.star-dot {
-  position: absolute;
-  width: 2px; height: 2px;
-  background: var(--star-white);
-  border-radius: 50%;
-  animation: twinkle var(--d, 3s) ease-in-out infinite;
-  animation-delay: var(--delay, 0s);
-}
-@keyframes twinkle {
-  0%, 100% { opacity: 0.2; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.5); }
-}
-
-/* 望远镜框 */
-.telescope-frame {
-  position: relative;
-  width: clamp(280px, 80vw, 420px);
-  height: clamp(320px, 85vw, 480px);
-  z-index: 2;
-}
-
-/* 镜筒外框 */
-.lens-outer {
-  position: absolute;
-  top: 8%; left: 50%;
-  transform: translateX(-50%);
-  width: 75%; height: 65%;
-  border: 6px solid var(--frame-gold);
-  border-radius: 20px 20px 50% 50%;
-  box-shadow:
-    0 0 20px rgba(201,168,76,0.3),
-    inset 0 0 30px rgba(100,140,200,0.1);
-  background: linear-gradient(180deg, #0d1f35 0%, #091525 100%);
-  overflow: hidden;
-}
-
-/* 镜面玻璃 */
-.lens-inner {
-  position: absolute;
-  inset: 8px;
-  border-radius: 14px 14px 44% 44%;
-  background:
-    radial-gradient(ellipse at 30% 30%, rgba(180,210,255,0.15) 0%, transparent 50%),
-    linear-gradient(180deg, #0a1830 0%, #060e20 100%);
-  overflow: hidden;
-}
-
-/* 镜面里的星星 */
-.lens-stars {
-  position: absolute; inset: 0;
-}
-.lens-star {
-  position: absolute;
-  background: var(--star-gold);
-  border-radius: 50%;
-  animation: lensTwinkle var(--d, 2s) ease-in-out infinite;
-  animation-delay: var(--delay, 0s);
-}
-@keyframes lensTwinkle {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 1; box-shadow: 0 0 6px var(--star-gold); }
-}
-
-/* 镜筒装饰环 */
-.lens-ring {
-  position: absolute;
-  top: 28%; left: 50%;
-  transform: translateX(-50%);
-  width: 80%; height: 8px;
-  background: linear-gradient(90deg, transparent, var(--frame-gold), transparent);
-  border-radius: 4px;
-}
-
-/* 镜筒手柄 */
-.handle {
-  position: absolute;
-  bottom: 18%; right: 8%;
-  width: 14px; height: 80px;
-  background: linear-gradient(180deg, #a07830, #c9a84c, #a07830);
-  border-radius: 7px;
-  box-shadow: 2px 4px 10px rgba(0,0,0,0.4);
-}
-.handle::before {
-  content: '';
-  position: absolute;
-  bottom: -10px; left: 50%;
-  transform: translateX(-50%);
-  width: 22px; height: 22px;
-  background: linear-gradient(135deg, #c9a84c, #8b6520);
-  border-radius: 50%;
-  box-shadow: 2px 3px 8px rgba(0,0,0,0.3);
-}
-
-/* 三脚架 */
-.tripod {
-  position: absolute;
-  bottom: 0; left: 50%;
-  transform: translateX(-50%);
-  width: 70%; height: 30%;
-  z-index: 1;
-}
-.leg {
-  position: absolute;
-  bottom: 0;
-  width: 8px; height: 100%;
-  background: linear-gradient(180deg, #8b6520, #a07830);
-  border-radius: 4px;
-}
-.leg:nth-child(1) { left: 20%; transform: rotate(-12deg); transform-origin: bottom center; }
-.leg:nth-child(2) { left: 50%; transform: translateX(-50%); }
-.leg:nth-child(3) { right: 20%; transform: rotate(12deg); transform-origin: bottom center; }
-
-/* 内容区 */
-.card {
-  position: relative;
-  z-index: 10;
-  text-align: center;
-  padding: 0 20px;
-  max-width: 90vw;
-}
-
-.name {
-  font-size: clamp(22px, 6vw, 38px);
-  color: var(--star-gold);
-  text-shadow: 0 0 20px rgba(255,215,0,0.6);
-  margin-bottom: 8px;
-  animation: fadeSlide 1.2s ease-out both;
-}
-
-.date {
-  font-size: clamp(12px, 3vw, 16px);
-  color: rgba(255,253,231,0.6);
-  letter-spacing: 2px;
-  margin-bottom: 16px;
-  animation: fadeSlide 1.2s ease-out 0.3s both;
-}
-
-.blessing {
-  font-size: clamp(14px, 4vw, 20px);
-  color: var(--star-white);
-  line-height: 1.8;
-  max-width: 320px;
-  margin: 0 auto 14px;
-  animation: fadeSlide 1.2s ease-out 0.6s both;
-}
-
-.from {
-  font-size: clamp(12px, 3vw, 16px);
-  color: rgba(201,168,76,0.8);
-  animation: fadeSlide 1.2s ease-out 0.9s both;
-}
-
-@keyframes fadeSlide {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* 流星 */
-.shooting-star {
-  position: fixed;
-  width: 80px; height: 2px;
-  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.9), rgba(255,255,255,0));
-  border-radius: 50%;
-  transform: rotate(-35deg);
-  animation: shoot 3s ease-in infinite;
-  opacity: 0;
-  z-index: 3;
-}
-.shooting-star:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
-.shooting-star:nth-child(2) { top: 25%; right: 15%; animation-delay: 1.5s; }
-.shooting-star:nth-child(3) { top: 5%; right: 30%; animation-delay: 4s; }
-
-@keyframes shoot {
-  0% { opacity: 0; transform: rotate(-35deg) translateX(0); }
-  5% { opacity: 1; }
-  30% { opacity: 0; transform: rotate(-35deg) translateX(200px); }
-  100% { opacity: 0; }
-}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+       background:linear-gradient(160deg,#1a1a2e,#16213e);color:#fff;
+       font-family:'Georgia','PingFang SC',serif;text-align:center}
+  .box{padding:24px;border-radius:16px;background:rgba(255,255,255,.05)}
+  .spin{font-size:40px;animation:s 1.4s ease-in-out infinite}
+  @keyframes s{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
 </style>
 </head>
 <body>
-
-<!-- 背景星空 -->
-<div class="stars-bg" id="starsBg"></div>
-
-<!-- 流星 -->
-<div class="shooting-star"></div>
-<div class="shooting-star"></div>
-<div class="shooting-star"></div>
-
-<!-- 望远镜 -->
-<div class="telescope-frame">
-  <div class="lens-outer">
-    <div class="lens-inner">
-      <div class="lens-stars" id="lensStars"></div>
-    </div>
-    <div class="lens-ring"></div>
-  </div>
-  <div class="handle"></div>
-  <div class="tripod">
-    <div class="leg"></div>
-    <div class="leg"></div>
-    <div class="leg"></div>
-  </div>
+<div class="box">
+  <div class="spin">🔭</div>
+  <p>正在打开贺卡…</p>
 </div>
-
-<!-- 文字 -->
-<div class="card">
-  <div class="name" id="nameEl"></div>
-  <div class="date" id="dateEl"></div>
-  <div class="blessing" id="blessingEl"></div>
-  <div class="from" id="fromEl"></div>
-</div>
-
 <script>
-const p = new URLSearchParams(location.search);
-document.getElementById('nameEl').textContent = p.get('n') || '亲爱的你';
-document.getElementById('dateEl').textContent = p.get('d') || '';
-document.getElementById('blessingEl').textContent = p.get('b') || '愿你的眼眸永远映照星光';
-document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
-
-// 背景星空
-const bg = document.getElementById('starsBg');
-for (let i = 0; i < 60; i++) {
-  const s = document.createElement('div');
-  s.className = 'star-dot';
-  s.style.left = Math.random() * 100 + '%';
-  s.style.top = Math.random() * 100 + '%';
-  s.style.setProperty('--d', (2 + Math.random() * 4) + 's');
-  s.style.setProperty('--delay', Math.random() * 3 + 's');
-  s.style.width = s.style.height = (1 + Math.random() * 2) + 'px';
-  bg.appendChild(s);
-}
-
-// 镜面里的星星
-const lens = document.getElementById('lensStars');
-for (let i = 0; i < 25; i++) {
-  const s = document.createElement('div');
-  s.className = 'lens-star';
-  s.style.left = Math.random() * 100 + '%';
-  s.style.top = Math.random() * 100 + '%';
-  s.style.setProperty('--d', (1.5 + Math.random() * 3) + 's');
-  s.style.setProperty('--delay', Math.random() * 3 + 's');
-  const size = 2 + Math.random() * 3;
-  s.style.width = size + 'px';
-  s.style.height = size + 'px';
-  lens.appendChild(s);
-}
+// 兼容：保留所有 URL 参数，把旧路径重定向到统一的 card.html?scene=
+(function(){
+  var p = new URLSearchParams(location.search);
+  // 移除旧的 scene 参数（如果有），强制用文件名里的 scene
+  var q = new URLSearchParams();
+  p.forEach(function(v,k){ if (k !== 'scene') q.set(k, v); });
+  q.set('scene', 'stargazing');
+  // location.replace 不会留下历史记录，体验更好
+  location.replace('card.html?' + q.toString());
+})();
 </script>
 </body>
 </html>

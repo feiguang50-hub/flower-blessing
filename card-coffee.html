@@ -3,277 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="☕ 咖啡时光">
+<meta name="twitter:title" content="☕ 咖啡时光">
 <title>咖啡时光</title>
-<meta property="og:title" content="☕ 收到一份专属贺卡">
-<meta property="og:description" content="点击打开，你们的专属回忆在里面哦">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">
-
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-:root {
-  --coffee-dark: #3d2a1a;
-  --coffee-mid: #6b4423;
-  --coffee-light: #c8a882;
-  --cream: #f5e6d3;
-  --steam: rgba(255,255,255,0.5);
-}
-
-body {
-  min-height: 100vh;
-  background: linear-gradient(180deg, #1a1008 0%, #2d1f14 35%, #3d2a1a 65%, #1a1008 100%);
-  font-family: 'Georgia', 'PingFang SC', serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
-}
-
-/* 咖啡馆暖光 */
-body::before {
-  content: '';
-  position: fixed; inset: 0;
-  background:
-    radial-gradient(ellipse at 50% 70%, rgba(200,168,130,0.12) 0%, transparent 55%),
-    radial-gradient(ellipse at 20% 20%, rgba(139,105,20,0.06) 0%, transparent 40%),
-    radial-gradient(ellipse at 80% 30%, rgba(139,105,20,0.05) 0%, transparent 40%);
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* 咖啡杯 */
-.cup-scene {
-  position: absolute;
-  bottom: 12%; left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  animation: cupFloat 4s ease-in-out infinite;
-}
-@keyframes cupFloat {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(-6px); }
-}
-
-.cup-body {
-  width: 80px; height: 60px;
-  background: linear-gradient(180deg, #f5f0e8, #e8dcc8);
-  border-radius: 8px 8px 40px 40px;
-  position: relative;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
-}
-
-/* 杯把手 */
-.cup-body::before {
-  content: '';
-  position: absolute;
-  right: -16px; top: 12px;
-  width: 18px; height: 30px;
-  border: 5px solid #e8dcc8;
-  border-left: none;
-  border-radius: 0 18px 18px 0;
-}
-
-/* 咖啡液面 */
-.coffee-surface {
-  position: absolute;
-  top: 6px; left: 6px; right: 6px;
-  height: 14px;
-  background: linear-gradient(180deg, #6b4423, #3d2a1a);
-  border-radius: 50%;
-  box-shadow: inset 0 2px 6px rgba(0,0,0,0.4);
-}
-
-/* 拉花 */
-.coffee-surface::after {
-  content: '';
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 24px; height: 24px;
-  background: radial-gradient(ellipse at 50% 50%, #f5e6d3 0%, #f5e6d3 30%, transparent 70%);
-  border-radius: 50%;
-}
-
-/* 杯碟 */
-.saucer {
-  width: 110px; height: 14px;
-  background: linear-gradient(180deg, #e8dcc8, #d4c4a8);
-  border-radius: 50%;
-  margin: 6px auto 0;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-}
-
-/* 蒸汽 */
-.steam {
-  position: absolute;
-  bottom: 100%; left: 50%;
-  transform: translateX(-50%);
-  width: 60px; height: 50px;
-  pointer-events: none;
-}
-.steam-line {
-  position: absolute;
-  bottom: 0;
-  width: 2px; height: 40px;
-  background: linear-gradient(180deg, transparent, var(--steam), transparent);
-  border-radius: 2px;
-  animation: steamRise var(--d, 2.5s) ease-out infinite;
-  animation-delay: var(--delay, 0s);
-  opacity: 0;
-}
-.steam-line:nth-child(1) { left: 20%; }
-.steam-line:nth-child(2) { left: 50%; }
-.steam-line:nth-child(3) { left: 80%; }
-
-@keyframes steamRise {
-  0% { opacity: 0; transform: translateY(0) scaleX(1); }
-  20% { opacity: 0.6; }
-  80% { opacity: 0.3; }
-  100% { opacity: 0; transform: translateY(-50px) scaleX(1.5); }
-}
-
-/* 咖啡豆装饰 */
-.beans {
-  position: fixed;
-  z-index: 1;
-  pointer-events: none;
-}
-.bean {
-  position: absolute;
-  width: 12px; height: 18px;
-  background: var(--coffee-mid);
-  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-  opacity: 0.3;
-  animation: beanFloat var(--d, 6s) ease-in-out infinite;
-  animation-delay: var(--delay, 0s);
-}
-.bean::before {
-  content: '';
-  position: absolute;
-  top: 30%; left: 50%;
-  transform: translateX(-50%);
-  width: 1.5px; height: 40%;
-  background: rgba(0,0,0,0.3);
-  border-radius: 1px;
-}
-@keyframes beanFloat {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-15px) rotate(20deg); }
-}
-
-/* 卡片文字 */
-.card {
-  position: relative;
-  z-index: 10;
-  text-align: center;
-  padding: 0 20px;
-  max-width: 90vw;
-}
-
-.name {
-  font-size: clamp(22px, 6vw, 38px);
-  color: var(--coffee-light);
-  text-shadow: 0 0 20px rgba(200,168,130,0.5);
-  margin-bottom: 8px;
-  animation: brewFade 1.3s ease-out both;
-}
-
-.date {
-  font-size: clamp(12px, 3vw, 16px);
-  color: rgba(245,230,211,0.55);
-  letter-spacing: 2px;
-  margin-bottom: 14px;
-  animation: brewFade 1.3s ease-out 0.3s both;
-}
-
-.blessing {
-  font-size: clamp(13px, 3.5vw, 19px);
-  color: var(--cream);
-  line-height: 1.8;
-  max-width: 300px;
-  margin: 0 auto 12px;
-  animation: brewFade 1.3s ease-out 0.6s both;
-}
-
-.from {
-  font-size: clamp(12px, 3vw, 16px);
-  color: rgba(200,168,130,0.75);
-  animation: brewFade 1.3s ease-out 0.9s both;
-}
-
-@keyframes brewFade {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* 暖光闪烁 */
-.warmGlow {
-  position: fixed;
-  width: 200px; height: 200px;
-  background: radial-gradient(ellipse, rgba(200,168,130,0.08) 0%, transparent 70%);
-  border-radius: 50%;
-  animation: warmPulse 5s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 0;
-}
-.warmGlow:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
-.warmGlow:nth-child(2) { bottom: 20%; right: 8%; animation-delay: 2s; }
-@keyframes warmPulse {
-  0%, 100% { opacity: 0.5; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.1); }
-}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+       background:linear-gradient(160deg,#1a1a2e,#16213e);color:#fff;
+       font-family:'Georgia','PingFang SC',serif;text-align:center}
+  .box{padding:24px;border-radius:16px;background:rgba(255,255,255,.05)}
+  .spin{font-size:40px;animation:s 1.4s ease-in-out infinite}
+  @keyframes s{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
 </style>
 </head>
 <body>
-
-<!-- 暖光 -->
-<div class="warmGlow"></div>
-<div class="warmGlow"></div>
-
-<!-- 咖啡豆 -->
-<div class="beans">
-  <div class="bean" style="top:15%;left:8%;--d:7s;--delay:0s;--size:10px"></div>
-  <div class="bean" style="top:60%;left:5%;--d:8s;--delay:2s;--size:14px"></div>
-  <div class="bean" style="top:30%;right:6%;--d:6s;--delay:1s;--size:11px"></div>
-  <div class="bean" style="top:75%;right:10%;--d:9s;--delay:3s;--size:13px"></div>
-  <div class="bean" style="top:45%;left:3%;--d:7s;--delay:4s;--size:9px"></div>
+<div class="box">
+  <div class="spin">☕</div>
+  <p>正在打开贺卡…</p>
 </div>
-
-<!-- 咖啡杯 -->
-<div class="cup-scene">
-  <div class="steam">
-    <div class="steam-line" style="--d:2.2s;--delay:0s"></div>
-    <div class="steam-line" style="--d:2.8s;--delay:0.8s"></div>
-    <div class="steam-line" style="--d:2.5s;--delay:1.6s"></div>
-  </div>
-  <div class="cup-body">
-    <div class="coffee-surface"></div>
-  </div>
-  <div class="saucer"></div>
-</div>
-
-<!-- 文字 -->
-<div class="card">
-  <div class="name" id="nameEl"></div>
-  <div class="date" id="dateEl"></div>
-  <div class="blessing" id="blessingEl"></div>
-  <div class="from" id="fromEl"></div>
-</div>
-
 <script>
-const p = new URLSearchParams(location.search);
-document.getElementById('nameEl').textContent = p.get('n') || '亲爱的你';
-document.getElementById('dateEl').textContent = p.get('d') || '';
-document.getElementById('blessingEl').textContent = p.get('b') || '愿每一杯咖啡都温暖你的时光';
-document.getElementById('fromEl').textContent = p.get('f') ? '— ' + p.get('f') : '';
-
-// 咖啡豆动态效果
-document.querySelectorAll('.bean').forEach(b => {
-  b.style.animationDuration = b.style.getPropertyValue('--d');
-  b.style.animationDelay = b.style.getPropertyValue('--delay');
-});
+// 兼容：保留所有 URL 参数，把旧路径重定向到统一的 card.html?scene=
+(function(){
+  var p = new URLSearchParams(location.search);
+  // 移除旧的 scene 参数（如果有），强制用文件名里的 scene
+  var q = new URLSearchParams();
+  p.forEach(function(v,k){ if (k !== 'scene') q.set(k, v); });
+  q.set('scene', 'coffee');
+  // location.replace 不会留下历史记录，体验更好
+  location.replace('card.html?' + q.toString());
+})();
 </script>
 </body>
 </html>

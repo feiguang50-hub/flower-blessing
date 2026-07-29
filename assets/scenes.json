@@ -1,0 +1,5749 @@
+{
+  "version": 1,
+  "scenes": {
+    "520": {
+      "id": "520",
+      "title": "520 我爱你",
+      "ogEmoji": "💌",
+      "icon": "520",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿你永远被温柔以待",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #1a0a18 0%, #3a1028 40%, #6b2040 100%)",
+        "borderGradient": "linear-gradient(135deg, #ff6b9d, #ff8ab5, #ff6b9d, #ff8ab5, #ff6b9d)",
+        "primary": "#ffddee",
+        "textOnCard": "rgba(255,230,240,0.85)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": true,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "achievement": {
+      "id": "achievement",
+      "title": "金榜题名",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "金榜题名",
+      "defaultBlessing": "愿你笔下生花，金榜题名，前程似锦",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #0a1628 0%, #1a3a5c 40%, #2a5a8c 100%)",
+        "borderGradient": "linear-gradient(135deg, #ffd700, #ffaa00, #ffd700, #ffaa00)",
+        "primary": "#ffd700",
+        "textOnCard": "#e8f4ff"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "objects",
+          "count": 6
+        },
+        {
+          "type": "sparkles",
+          "count": 20
+        },
+        {
+          "type": "stars",
+          "count": 40
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "anniversary": {
+      "id": "anniversary",
+      "title": "纪念日祝福",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "",
+      "defaultBlessing": "",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(135deg, #1a0515 0%, #2a0a25 40%, #3a1535 100%)",
+        "borderGradient": "linear-gradient(135deg, rgba(255,150,180,0.7), rgba(200,80,130,0.4), rgba(255,150,180,0.7), rgba(180,60,110,0.4), rgba(255,150,180,0.7))",
+        "primary": "#fff",
+        "textOnCard": "rgba(255,255,255,0.88)"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "hearts",
+          "count": 20
+        },
+        {
+          "type": "petals",
+          "count": 12
+        }
+      ],
+      "hasFlipBack": true,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "apology": {
+      "id": "apology",
+      "title": "道歉贺卡",
+      "ogEmoji": "💌",
+      "icon": "🌸",
+      "defaultName": "",
+      "defaultBlessing": "",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #f3e8ff 0%, #e8d5f7 40%, #f5e1fa 100%)",
+        "borderGradient": "linear-gradient(135deg, #c9a0dc, #e8b0d8, #d8a0d8, #e0b0e0, #d5a0d5)",
+        "primary": "#7b4a8a",
+        "textOnCard": "#9040a0"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "bubbles",
+          "count": 12
+        },
+        {
+          "type": "petals",
+          "count": 20
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "aurora": {
+      "id": "aurora",
+      "title": "梦幻极光",
+      "ogEmoji": "🌌",
+      "icon": "🌌",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你的心愿如星光璀璨，在极光下静静绽放",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #0a0520 0%, #12083a 30%, #1a0a40 60%, #0d1f3c 100%)",
+        "borderGradient": "linear-gradient(135deg, #00cfff, #7b2fff, #ff6ec7, #40ff90, #00cfff)",
+        "primary": "transparent",
+        "textOnCard": "rgba(200,190,255,0.9)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "stars",
+          "count": 61
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "autumn": {
+      "id": "autumn",
+      "title": "秋日暖枫",
+      "ogEmoji": "🍂",
+      "icon": "🍂",
+      "defaultName": "秋日里的你",
+      "defaultBlessing": "愿秋风温柔，愿所有美好如约而至",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #7a6040 0%, #a07848 20%, #c4956a 40%, #d4a574 55%, #b08050 70%, #6b4820 85%, #4a2e10 100%)",
+        "borderGradient": "linear-gradient(135deg, rgba(240,184,53,0.5) 0%, rgba(212,85,58,0.4) 50%, rgba(240,184,53,0.5) 100%)",
+        "primary": "#f0b835",
+        "textOnCard": "#fff0d6"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "leaves",
+          "count": 14
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "balloon": {
+      "id": "balloon",
+      "title": "热气球之旅",
+      "ogEmoji": "🎈",
+      "icon": "🎈",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你的生活像热气球一样，越飞越高，看见更美的风景",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #6ab0e8 0%, #89c4e8 25%, #6ab0e8 55%, #6ab0e8 100%)",
+        "borderGradient": "linear-gradient(135deg, #f5c518, #f0883e, #e84040, #f5c518)",
+        "primary": "#5a3825",
+        "textOnCard": "#7a5040"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "balloons",
+          "count": 5
+        },
+        {
+          "type": "birds",
+          "count": 3
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "bamboo": {
+      "id": "bamboo",
+      "title": "竹林清风",
+      "ogEmoji": "🎋",
+      "icon": "🎋",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿你如竹，清风自来",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #87ce8f 0%, #66bb6a 25%, #4caf50 50%, #2e7d32 75%, #1b5e20 100%)",
+        "borderGradient": "linear-gradient(135deg, rgba(100, 200, 80, 0.6), rgba(60, 160, 40, 0.4), rgba(100, 200, 80, 0.6))",
+        "primary": "#2e7d32",
+        "textOnCard": "#1a3a1a"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "leaves",
+          "count": 12
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "bambooshadow": {
+      "id": "bambooshadow",
+      "title": "竹影清风",
+      "ogEmoji": "🎋",
+      "icon": "🎋",
+      "defaultName": "清风伴你",
+      "defaultBlessing": "竹影摇曳，月光如水<br>愿你心静如水，事事皆安",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #050d08 0%, #0a1a10 25%, #0f2a18 50%, #0a1a10 75%, #050d08 100% )",
+        "borderGradient": "linear-gradient(135deg, #4a8c5a, #2d5a3d, #1a3a20, #2d5a3d)",
+        "primary": "#d4e8d0",
+        "textOnCard": "#c8eac8"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "beach": {
+      "id": "beach",
+      "title": "日落海滩",
+      "ogEmoji": "🌅",
+      "icon": "🌅",
+      "defaultName": "海边的你",
+      "defaultBlessing": "愿你的生活像海风一样自由，像日落一样温暖",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #1a0533 0%, #4a1540 18%, #9b3060 32%, #d4607a 45%, #ff7e5f 55%, #feb47b 62%, #f4d9a0 72%, #e8c880 80%, #d4a860 100%)",
+        "borderGradient": "linear-gradient(135deg, rgba(255,126,95,0.5) 0%, rgba(254,180,123,0.4) 50%, rgba(255,126,95,0.5) 100%)",
+        "primary": "#feb47b",
+        "textOnCard": "#fff8f0"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "birthday": {
+      "id": "birthday",
+      "title": "生日祝福",
+      "ogEmoji": "💌",
+      "icon": "🎂",
+      "defaultName": "",
+      "defaultBlessing": "",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
+        "borderGradient": "linear-gradient(90deg, #ffd700, #ffec8b, #ffd700, #daa520, #ffd700)",
+        "primary": "#fff",
+        "textOnCard": "rgba(255,255,255,0.9)"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "age",
+        "ageLabel",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "balloons",
+          "count": 16
+        },
+        {
+          "type": "stars",
+          "count": 80
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": true,
+      "hasDate": false,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "bloom": {
+      "id": "bloom",
+      "title": "繁花盛开",
+      "ogEmoji": "🌸",
+      "icon": "🌸",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你如春风一般温柔，被岁月永远善待",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #fff5f7 0%, #ffe8f0 15%, #ffd8e8 30%, #ffe0c8 55%, #fff8e0 75%, #fffaf5 100%)",
+        "borderGradient": "",
+        "primary": "#8a3a5a",
+        "textOnCard": "#8a3a5a"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "butterflies",
+          "count": 3
+        },
+        {
+          "type": "petals",
+          "count": 10
+        },
+        {
+          "type": "sparkles",
+          "count": 8
+        }
+      ],
+      "hasFlipBack": true,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "botanical": {
+      "id": "botanical",
+      "title": "自然之礼",
+      "ogEmoji": "🌿",
+      "icon": "🌿",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿你如植物般，向阳生长，岁月静好",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "radial-gradient(ellipse at 20% 15%, rgba(120, 154, 96, 0.12) 0%, transparent 45%)",
+        "borderGradient": "",
+        "primary": "#3a3020",
+        "textOnCard": "#3a3020"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "leaves",
+          "count": 8
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "bubble": {
+      "id": "bubble",
+      "title": "梦幻泡泡祝福",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你的生活如泡泡般轻盈闪耀每一天",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #e8f4fd 0%, #fce4ec 30%, #f3e5f5 60%, #e1f5fe 100%)",
+        "borderGradient": "linear-gradient(135deg, rgba(255,182,217,0.8), rgba(168,216,255,0.8), rgba(212,184,255,0.8), rgba(255,240,179,0.8), rgba(184,240,212,0.8), rgba(255,182,217,0.8))",
+        "primary": "transparent",
+        "textOnCard": "#7b5ea7"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "business": {
+      "id": "business",
+      "title": "商务祝福",
+      "ogEmoji": "🏆",
+      "icon": "🏆",
+      "defaultName": "恭喜您",
+      "defaultBlessing": "事业蒸蒸日上，再创辉煌！",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #0a1628 0%, #1a2d4a 40%, #0d1f3c 100%)",
+        "borderGradient": "linear-gradient(135deg, #ffd700, #b8860b, #ffd700, #daa520)",
+        "primary": "transparent",
+        "textOnCard": "#daa520"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "goldParticles",
+          "count": 20
+        },
+        {
+          "type": "rays",
+          "count": 8
+        },
+        {
+          "type": "stars",
+          "count": 40
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": false,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "butterfly": {
+      "id": "butterfly",
+      "title": "蝴蝶翩翩",
+      "ogEmoji": "🦋",
+      "icon": "🦋",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你像蝴蝶一样，轻盈自在，在花间翩翩起舞",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #87ceeb 0%, #a8d8ea 30%, #b8e0f0 50%, #c8e8c5 70%, #e8f5e9 100%)",
+        "borderGradient": "linear-gradient(135deg, rgba(179, 157, 219, 0.8), rgba(255, 133, 162, 0.6), rgba(255, 224, 130, 0.8), rgba(255, 183, 77, 0.6), rgba(179, 157, 219, 0.8))",
+        "primary": "#ff85a2",
+        "textOnCard": "#4a3728"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "cake": {
+      "id": "cake",
+      "title": "生日祝福",
+      "ogEmoji": "💌",
+      "icon": "🎂",
+      "defaultName": "寿星",
+      "defaultBlessing": "生日快乐！愿每一岁都奔走在热爱里",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #050d1a 0%, #0a1a35 40%, #102550 100%)",
+        "borderGradient": "linear-gradient(135deg, #ff6b9d, #ffa040, #ff6b9d, #ff8ab5)",
+        "primary": "transparent",
+        "textOnCard": "rgba(255,240,190,0.92)"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "balloons",
+          "count": 10
+        },
+        {
+          "type": "ribbons",
+          "count": 18
+        },
+        {
+          "type": "stars",
+          "count": 40
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "campfire": {
+      "id": "campfire",
+      "title": "星空篝火",
+      "ogEmoji": "🔥",
+      "icon": "🔥",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你的夜空永远有星光\\n愿你的心里永远有篝火",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #050f05 0%, #0a1a08 30%, #0d200a 60%, #081508 100%)",
+        "borderGradient": "",
+        "primary": "transparent",
+        "textOnCard": "rgba(255, 225, 170, 0.9)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "fireflies",
+          "count": 8
+        },
+        {
+          "type": "stars",
+          "count": 40
+        }
+      ],
+      "hasFlipBack": true,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "candlelight": {
+      "id": "candlelight",
+      "title": "烛光温暖",
+      "ogEmoji": "💌",
+      "icon": "🕯️",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿你的生活像烛光一样温暖美好",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #1a0a05 0%, #2d1810 30%, #3d2418 60%, #1a0a05 100%)",
+        "borderGradient": "",
+        "primary": "#5a3d2b",
+        "textOnCard": "rgba(90,61,43,0.85)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "candyhouse": {
+      "id": "candyhouse",
+      "title": "糖果屋祝福",
+      "ogEmoji": "🍬",
+      "icon": "🍬",
+      "defaultName": "亲爱的朋友",
+      "defaultBlessing": "愿你的生活像糖果一样甜蜜\\n每一天都充满小小的惊喜",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #a8e6cf 0%, #c8f7dc 30%, #d4f1e4 50%, #f0fafa 75%, #fdffff 100%)",
+        "borderGradient": "linear-gradient(135deg, #ff6b9d, #ffd93d, #6bcfff, #c59cff, #ff6b9d)",
+        "primary": "transparent",
+        "textOnCard": "#555"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "career": {
+      "id": "career",
+      "title": "职场祝福",
+      "ogEmoji": "💌",
+      "icon": "🚀",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "新的舞台，新的精彩\\n愿你一路繁花，万事顺遂",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #030a18 0%, #0a1f40 40%, #081535 100%)",
+        "borderGradient": "linear-gradient(135deg, #00aaff, #0066cc, #00ccff, #0055aa, #00aaff)",
+        "primary": "transparent",
+        "textOnCard": "rgba(200,230,255,0.9)"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "decorations",
+          "count": 8
+        },
+        {
+          "type": "speedLines",
+          "count": 6
+        },
+        {
+          "type": "stars",
+          "count": 35
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "carnival": {
+      "id": "carnival",
+      "title": "嘉年华",
+      "ogEmoji": "🎪",
+      "icon": "🎪",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你的生活像嘉年华一样精彩纷呈",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #6a4fb8 0%, #a855c0 20%, #ff6b9d 45%, #ff8c6b 65%, #ffb347 80%, #ffd54f 100%)",
+        "borderGradient": "linear-gradient(135deg, #ff69b4 0%, #ffd700 25%, #00d4ff 50%, #7ed957 75%, #ff69b4 100%)",
+        "primary": "#ffd700",
+        "textOnCard": "#ffffff"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "balloons",
+          "count": 12
+        },
+        {
+          "type": "stars",
+          "count": 30
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "catcafe": {
+      "id": "catcafe",
+      "title": "猫咪咖啡馆",
+      "ogEmoji": "🐱",
+      "icon": "🐾",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿你的每一天都像猫咪一样慵懒而幸福",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #fef6f0 0%, #fde8d8 20%, #f8d5c0 40%, #f5c8a8 60%, #f0b890 80%, #e8a078 100%)",
+        "borderGradient": "",
+        "primary": "#4a2c17",
+        "textOnCard": "#5a3820"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "celebration": {
+      "id": "celebration",
+      "title": "庆典祝福",
+      "ogEmoji": "🎉",
+      "icon": "🎉",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "恭喜恭喜！\\n愿这份喜悦永远伴随着你",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #1a0a2e 0%, #2d1060 30%, #4a1880 60%, #6b2fa0 100%)",
+        "borderGradient": "linear-gradient(135deg, #ffd700, #ff8c00, #ffd700, #ffe566, #ffd700)",
+        "primary": "transparent",
+        "textOnCard": "rgba(255,240,200,0.92)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "balloons",
+          "count": 8
+        },
+        {
+          "type": "confetti",
+          "count": 15
+        },
+        {
+          "type": "goldParticles",
+          "count": 12
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "cheer": {
+      "id": "cheer",
+      "title": "加油祝福",
+      "ogEmoji": "💌",
+      "icon": "🌟",
+      "defaultName": "",
+      "defaultBlessing": "",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #fff8f0 0%, #ffe8cc 50%, #ffd8a8 100%)",
+        "borderGradient": "linear-gradient(135deg, #f5c842, #e8a820, #f5c842, #f0a830, #f5c842)",
+        "primary": "#8b5e00",
+        "textOnCard": "#c07010"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "bubbles",
+          "count": 8
+        },
+        {
+          "type": "feathers",
+          "count": 18
+        },
+        {
+          "type": "goldParticles",
+          "count": 20
+        },
+        {
+          "type": "speedLines",
+          "count": 5
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "cherry": {
+      "id": "cherry",
+      "title": "樱桃甜蜜",
+      "ogEmoji": "🍒",
+      "icon": "🍒",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿你的生活像樱桃一样甜美，每一天都充满小小的幸福",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(135deg, #fff0f3 0%, #ffe4ea 30%, #ffd6de 60%, #ffc8d0 100%)",
+        "borderGradient": "",
+        "primary": "#6b1a28",
+        "textOnCard": "rgba(100,30,60,0.82)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "children-birthday": {
+      "id": "children-birthday",
+      "title": "生日快乐",
+      "ogEmoji": "💌",
+      "icon": "🎂",
+      "defaultName": "亲爱的宝贝",
+      "defaultBlessing": "生日快乐！愿你天天开心，健康成长！",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #fff5f8 0%, #ffe4f0 40%, #ffd6ec 100%)",
+        "borderGradient": "linear-gradient(135deg, #ff9a9e, #fad0c4, #ffd1ff, #a18cd1, #9af0ff, #ff9a9e)",
+        "primary": "transparent",
+        "textOnCard": "#7a3a6a"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "candy",
+          "count": 18
+        },
+        {
+          "type": "confetti",
+          "count": 14
+        },
+        {
+          "type": "stars",
+          "count": 10
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "chinese-new-year": {
+      "id": "chinese-new-year",
+      "title": "新春祝福",
+      "ogEmoji": "💌",
+      "icon": "🎊",
+      "defaultName": "",
+      "defaultBlessing": "蛇年大吉，万事如意！",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(165deg, #1a0808 0%, #8b0000 40%, #cc1a1a 70%, #ff6600 100%)",
+        "borderGradient": "linear-gradient(135deg, #ffd700, #ff6600, #ffd700, #ff4400, #ffd700)",
+        "primary": "#ffd700",
+        "textOnCard": "#ffe0a0"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "coins",
+          "count": 18
+        },
+        {
+          "type": "lanterns",
+          "count": 10
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "chongyang": {
+      "id": "chongyang",
+      "title": "重阳祝福",
+      "ogEmoji": "💌",
+      "icon": "🌼",
+      "defaultName": "",
+      "defaultBlessing": "",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #fff5e6 0%, #ffe4b5 50%, #ffd89b 100%)",
+        "borderGradient": "linear-gradient(135deg, #e8900a, #ffd700, #e8900a, #f0a020, #ffd700)",
+        "primary": "#8b4500",
+        "textOnCard": "#b06010"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "bubbles",
+          "count": 8
+        },
+        {
+          "type": "goldParticles",
+          "count": 18
+        },
+        {
+          "type": "leaves",
+          "count": 10
+        },
+        {
+          "type": "petals",
+          "count": 16
+        },
+        {
+          "type": "speedLines",
+          "count": 5
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "christmas": {
+      "id": "christmas",
+      "title": "圣诞祝福",
+      "ogEmoji": "💌",
+      "icon": "🎄",
+      "defaultName": "圣诞快乐",
+      "defaultBlessing": "圣诞钟声响起，愿你被温暖包围，幸福如约而至",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #0a1628 0%, #0d2840 40%, #1a3a5c 70%, #0d2840 100%)",
+        "borderGradient": "linear-gradient(135deg, #c41e3a, #228b22, #c41e3a, #228b22)",
+        "primary": "#1a3a5c",
+        "textOnCard": "#2a4a6c"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "snowflakes",
+          "count": 10
+        },
+        {
+          "type": "sparkles",
+          "count": 10
+        },
+        {
+          "type": "stars",
+          "count": 10
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "cinema": {
+      "id": "cinema",
+      "title": "胶片电影风格",
+      "ogEmoji": "🎬",
+      "icon": "🎬",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿光影永存，愿美好常伴",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #0a0a0a 0%, #1a1208 40%, #0d0d0d 100%)",
+        "borderGradient": "linear-gradient(135deg, #d4a853, var(--film-gold-light), #d4a853)",
+        "primary": "#f0d080",
+        "textOnCard": "#f5e6c8"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "stars",
+          "count": 30
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "cocoa": {
+      "id": "cocoa",
+      "title": "暖心可可",
+      "ogEmoji": "☕",
+      "icon": "☕",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "天冷了，喝杯热可可，暖到心里去",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #1a0f0a 0%, #2d1810 15%, #3d2015 30%, #4a2a1a 45%, #5c3820 60%, #6b4025 75%, #7a4828 100%)",
+        "borderGradient": "linear-gradient(135deg, #c4824a 0%, #8b4513 30%, #d4956a 50%, #8b4513 70%, #c4824a 100%)",
+        "primary": "#4a2c17",
+        "textOnCard": "#4a2c17"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "candy",
+          "count": 14
+        },
+        {
+          "type": "snowflakes",
+          "count": 16
+        },
+        {
+          "type": "stars",
+          "count": 14
+        },
+        {
+          "type": "steam",
+          "count": 8
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "coffee": {
+      "id": "coffee",
+      "title": "咖啡时光",
+      "ogEmoji": "☕",
+      "icon": "☕",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿每一杯咖啡都温暖你的时光",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #1a1008 0%, #2d1f14 35%, #3d2a1a 65%, #1a1008 100%)",
+        "borderGradient": "",
+        "primary": "#c8a882",
+        "textOnCard": "#f5e6d3"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "confetti": {
+      "id": "confetti",
+      "title": "派对庆祝祝福",
+      "ogEmoji": "🎉",
+      "icon": "🎉",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "祝你生日快乐，天天开心！",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(135deg, #ff9a9e 0%, #fecfef 25%, #fecfef 50%, #a8edea 75%, #fed6e3 100%)",
+        "borderGradient": "linear-gradient(135deg, #ff6b6b, var(--confetti-yellow), #6bcb77, var(--confetti-blue), #ff85a2)",
+        "primary": "#2d3436",
+        "textOnCard": "#2d3436"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "confetti",
+          "count": 13
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "constellation": {
+      "id": "constellation",
+      "title": "星座夜空",
+      "ogEmoji": "✨",
+      "icon": "✨",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿星辰指引你的方向，愿银河温暖你的夜晚",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #030714 0%, #0a1628 30%, #1a2d5a 50%, #1a3a4a 70%, #0d2030 100%)",
+        "borderGradient": "linear-gradient(135deg, #4a3a8a, #6a5aaa, #8a7aca, #6a5aaa, #4a3a8a)",
+        "primary": "transparent",
+        "textOnCard": "rgba(200, 220, 240, 0.9)"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "decorations",
+          "count": 20
+        },
+        {
+          "type": "stars",
+          "count": 10
+        }
+      ],
+      "hasFlipBack": true,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "cosmic": {
+      "id": "cosmic",
+      "title": "深空宇宙",
+      "ogEmoji": "🚀",
+      "icon": "🚀",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你如星辰般璀璨，探索无限宇宙",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "radial-gradient(ellipse at 50% 80%, #1a0530 0%, #0a0520 40%, #050210 100%)",
+        "borderGradient": "linear-gradient(135deg, #6040c0, #c040a0, #4060e0, #6040c0)",
+        "primary": "#e0d0ff",
+        "textOnCard": "rgba(220,200,255,0.88)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "rockets",
+          "count": 3
+        },
+        {
+          "type": "stars",
+          "count": 44
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "cosmos": {
+      "id": "cosmos",
+      "title": "宇宙星云祝福",
+      "ogEmoji": "💌",
+      "icon": "🌌",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿你像星辰一样闪耀，永不陨落",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg,#000010 0%,#0a0025 30%,#1a0050 60%,#0a0025 100%)",
+        "borderGradient": "linear-gradient(135deg,#6a3d9a,#c084fc,#e040fb,#6a3d9a)",
+        "primary": "transparent",
+        "textOnCard": "rgba(230,210,255,0.92)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "cream": {
+      "id": "cream",
+      "title": "韩系奶油祝福",
+      "ogEmoji": "💌",
+      "icon": "🌸",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿你的每一天都像奶油一样甜蜜美好",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(135deg, #fdf2f8 0%, #fff9fb 30%, #fef3f7 60%, #f8e8f0 100%)",
+        "borderGradient": "",
+        "primary": "#d4727a",
+        "textOnCard": "#7a5c60"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "crepe": {
+      "id": "crepe",
+      "title": "糖果包装纸",
+      "ogEmoji": "🍬",
+      "icon": "🍬",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你的生活甜甜蜜蜜，每一天都像糖果一样美好",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(135deg, #ffe0ee 0%, #e8d0f8 20%, #d0eef8 40%, #d8f8e8 60%, #fff0d8 80%, #ffe0e8 100%)",
+        "borderGradient": "linear-gradient(135deg, #ff9ec4 0%, var(--candy-lavender) 25%, #7fded5 50%, var(--candy-yellow) 75%, #ff7f8a 100%)",
+        "primary": "#6a4a5a",
+        "textOnCard": "#6a4a5a"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "candy",
+          "count": 18
+        },
+        {
+          "type": "hearts",
+          "count": 10
+        },
+        {
+          "type": "ribbons",
+          "count": 6
+        },
+        {
+          "type": "stars",
+          "count": 12
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "crystalball": {
+      "id": "crystalball",
+      "title": "水晶球占卜",
+      "ogEmoji": "🔮",
+      "icon": "🔮",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿命运为你揭开迷雾，指引你找到心中的答案",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "radial-gradient(ellipse at 50% 45%, rgba(107, 63, 160, 0.35) 0%, transparent 55%)",
+        "borderGradient": "linear-gradient(135deg, #6b3fa0 0%, var(--crystal-violet) 25%, #c084fc 50%, var(--crystal-blue) 75%, #6b3fa0 100%)",
+        "primary": "#c4a7ff",
+        "textOnCard": "#e9d5ff"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "decorations",
+          "count": 52
+        },
+        {
+          "type": "stars",
+          "count": 7
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "dating": {
+      "id": "dating",
+      "title": "恋爱纪念",
+      "ogEmoji": "💌",
+      "icon": "💕",
+      "defaultName": "",
+      "defaultBlessing": "遇见你，是最美的意外",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #2d1b3d 0%, #4a2040 40%, #6b3050 100%)",
+        "borderGradient": "linear-gradient(135deg, #ff6b9d, #c44569, #ff6b9d, #e84a7f, #c44569)",
+        "primary": "#ffd0e0",
+        "textOnCard": "#ffc0d0"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "bubbles",
+          "count": 8
+        },
+        {
+          "type": "hearts",
+          "count": 18
+        },
+        {
+          "type": "speedLines",
+          "count": 4
+        },
+        {
+          "type": "stars",
+          "count": 25
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "demo": {
+      "id": "demo",
+      "title": "专属祝福贺卡",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你的世界里永远有光，愿每一天都值得期待",
+      "defaultFrom": "爱你的人",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #1a1a2e 0%, #1a1a2e 100%)",
+        "borderGradient": "linear-gradient(135deg, #ffd700, var(--border-to), #ffd700)",
+        "primary": "#ffd700",
+        "textOnCard": "#fff4cc"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "stars",
+          "count": 70
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "departure": {
+      "id": "departure",
+      "title": "送别祝福",
+      "ogEmoji": "💌",
+      "icon": "🛫",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你前路坦荡，一路平安",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(170deg, #1a0a2e 0%, #2d1b4e 20%, #5c3d6e 45%, #c47c5a 70%, #e8a87c 88%, #f5c49c 100%)",
+        "borderGradient": "linear-gradient(135deg, #e8a87c, #c47c5a, #e8a87c, #d4906a)",
+        "primary": "#7a3826",
+        "textOnCard": "#5a3020"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "feathers",
+          "count": 14
+        },
+        {
+          "type": "lightDots",
+          "count": 12
+        },
+        {
+          "type": "planes",
+          "count": 4
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "dew": {
+      "id": "dew",
+      "title": "晨露花园",
+      "ogEmoji": "🌸",
+      "icon": "🌸",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "晨露晶莹，愿你如花朵般绽放每一天",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #e8f4f0 0%, #d8eee4 20%, #d0e8f0 40%, #c8e0e8 60%, #c0d8e0 80%, #b8d0d8 100%)",
+        "borderGradient": "linear-gradient(135deg, #a8d8b9, #f4c8d0, #b8e8d0, #e8b8c8)",
+        "primary": "#3a6a5a",
+        "textOnCard": "#3a6a5a"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "leaves",
+          "count": 5
+        },
+        {
+          "type": "petals",
+          "count": 20
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "diamond": {
+      "id": "diamond",
+      "title": "金婚钻石婚纪念",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "岁月相伴，与子成说\\n愿你们白头偕老，福寿安康",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #0a0515 0%, #1a0a30 40%, #0d0520 100%)",
+        "borderGradient": "linear-gradient(135deg, #ffd700, #c8a870, #ffd700, #e8c878, #ffd700)",
+        "primary": "transparent",
+        "textOnCard": "rgba(240,220,255,0.9)"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "decorations",
+          "count": 30
+        },
+        {
+          "type": "goldParticles",
+          "count": 5
+        },
+        {
+          "type": "hearts",
+          "count": 10
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "doodle": {
+      "id": "doodle",
+      "title": "童趣涂鸦祝福",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿每一天都像画画一样快乐美好",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "",
+        "borderGradient": "",
+        "primary": "#FF6B9D",
+        "textOnCard": "#444"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "dragon-boat": {
+      "id": "dragon-boat",
+      "title": "端午祝福",
+      "ogEmoji": "💌",
+      "icon": "🥞",
+      "defaultName": "端午节安康",
+      "defaultBlessing": "粽香飘满堂，艾草挂门旁，愿你端午安康，幸福绵长",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(175deg, #0d3b2e 0%, #1a5c3a 30%, #2d7a4e 60%, #3d9460 100%)",
+        "borderGradient": "linear-gradient(135deg, #a8e6cf, #56ab2f, #a8e6cf, #56ab2f)",
+        "primary": "#2d5a30",
+        "textOnCard": "#3d6b40"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "leaves",
+          "count": 10
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "dreambubble": {
+      "id": "dreambubble",
+      "title": "梦幻泡泡",
+      "ogEmoji": "🫧",
+      "icon": "🫧",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿你的生活像泡泡一样轻盈闪耀",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #c9e8f5 0%, #b8dff0 20%, #d8b8e8 50%, #f5c6db 75%, #ffd6e8 100%)",
+        "borderGradient": "",
+        "primary": "#8b4557",
+        "textOnCard": "rgba(140,70,90,0.9)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "bubbles",
+          "count": 9
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "dreamygarden": {
+      "id": "dreamygarden",
+      "title": "梦幻花园",
+      "ogEmoji": "🌸",
+      "icon": "🌸",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你如花园般美好，\\n每一天都充满花香与温柔。",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #0d1a0f 0%, #112218 30%, #1a3025 60%, #0f1a12 100% )",
+        "borderGradient": "linear-gradient(135deg, rgba(180,255,200,0.5), rgba(100,200,150,0.3), rgba(200,255,180,0.4), rgba(100,200,150,0.5) )",
+        "primary": "#c8f0c8",
+        "textOnCard": "rgba(200,240,200,0.85)"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "fireflies",
+          "count": 12
+        },
+        {
+          "type": "petals",
+          "count": 16
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "engagement": {
+      "id": "engagement",
+      "title": "喜结良缘",
+      "ogEmoji": "💌",
+      "icon": "💍",
+      "defaultName": "新郎 & 新娘",
+      "defaultBlessing": "愿你们永结同心，白头偕老",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #1a0a2e 0%, #2d1056 50%, #1a0a2e 100%)",
+        "borderGradient": "",
+        "primary": "#5c1a5c",
+        "textOnCard": "#6b1a6b"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "hearts",
+          "count": 10
+        },
+        {
+          "type": "petals",
+          "count": 10
+        },
+        {
+          "type": "sparkles",
+          "count": 10
+        }
+      ],
+      "hasFlipBack": true,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "fairy": {
+      "id": "fairy",
+      "title": "梦幻仙子",
+      "ogEmoji": "🧚",
+      "icon": "✨",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你被世界温柔以待，愿美好如约而至",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #0f0820 0%, #1a0f30 30%, #251845 60%, #1a1030 100%)",
+        "borderGradient": "linear-gradient(135deg, #d8b0e8, #a0c8e0, #c8e0a0, #f0d080, #e8a0c8)",
+        "primary": "#f8e8ff",
+        "textOnCard": "rgba(248, 232, 255, 0.9)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "petals",
+          "count": 12
+        },
+        {
+          "type": "stars",
+          "count": 35
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "fairydream": {
+      "id": "fairydream",
+      "title": "仲夏夜之梦",
+      "ogEmoji": "🧚",
+      "icon": "🧚",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你每一个夜晚都有星光相伴\\n愿每一个梦境都如童话般美好",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "radial-gradient(ellipse at 20% 20%, rgba(78, 204, 163, 0.08) 0%, transparent 50%)",
+        "borderGradient": "linear-gradient(135deg, #4ecca3 0%, var(--aurora-blue) 30%, #e891b8 60%, var(--aurora-green) 100% )",
+        "primary": "#e8f8ff",
+        "textOnCard": "rgba(220, 240, 255, 0.92)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "fireflies",
+          "count": 10
+        },
+        {
+          "type": "petals",
+          "count": 10
+        },
+        {
+          "type": "sparkles",
+          "count": 12
+        },
+        {
+          "type": "stars",
+          "count": 61
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "fathers-day": {
+      "id": "fathers-day",
+      "title": "爸爸，您是我的骄傲",
+      "ogEmoji": "💌",
+      "icon": "🎩",
+      "defaultName": "爸爸",
+      "defaultBlessing": "爸爸，您是我的骄傲\\n感谢您一直以来的守护与教诲",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #0d1b3e 0%, #1a2f5e 50%, #0f2040 100%)",
+        "borderGradient": "linear-gradient(135deg, #c9a830, #f0d060, #c9a830, #f5e080, #c9a830)",
+        "primary": "#f0d060",
+        "textOnCard": "rgba(240,230,180,0.95)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "feathers",
+          "count": 12
+        },
+        {
+          "type": "lightDots",
+          "count": 15
+        },
+        {
+          "type": "stars",
+          "count": 30
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "feather": {
+      "id": "feather",
+      "title": "羽毛轻飘",
+      "ogEmoji": "🪶",
+      "icon": "🪶",
+      "defaultName": "温暖的你",
+      "defaultBlessing": "愿你被世界温柔以待，愿每一天都充满阳光",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #2a1a08 0%, #3d2810 20%, #5a3a18 40%, #7a5028 60%, #c89060 85%, #e8c090 100%)",
+        "borderGradient": "linear-gradient(135deg, #d4a050, #e8c070, #f0d090, #d4a050)",
+        "primary": "#5a3a20",
+        "textOnCard": "#6a4828"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "feathers",
+          "count": 8
+        },
+        {
+          "type": "goldParticles",
+          "count": 12
+        },
+        {
+          "type": "sparkles",
+          "count": 10
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "firefly": {
+      "id": "firefly",
+      "title": "萤火虫之夜",
+      "ogEmoji": "✨",
+      "icon": "✨",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿你的夜晚，总有微光相伴",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "radial-gradient(ellipse at 50% 0%, #0a2010 0%, #051008 40%, #030805 70%, #020404 100%)",
+        "borderGradient": "linear-gradient(135deg, rgba(150, 230, 100, 0.5), rgba(100, 200, 80, 0.3), rgba(150, 230, 100, 0.5))",
+        "primary": "#b8ff5a",
+        "textOnCard": "#d4f0b0"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "leaves",
+          "count": 60
+        },
+        {
+          "type": "stars",
+          "count": 31
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "first-date": {
+      "id": "first-date",
+      "title": "初次约会纪念",
+      "ogEmoji": "💌",
+      "icon": "🌙",
+      "defaultName": "",
+      "defaultBlessing": "那天的星光，至今还在心里闪烁",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #1a1020 0%, #2d1832 40%, #3d2245 100%)",
+        "borderGradient": "linear-gradient(135deg, #daa520, #f0c060, #daa520, #e8b840, #daa520)",
+        "primary": "#ffeaa7",
+        "textOnCard": "#f5d89a"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "fireflies",
+          "count": 8
+        },
+        {
+          "type": "speedLines",
+          "count": 3
+        },
+        {
+          "type": "stars",
+          "count": 35
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "firstsnow": {
+      "id": "firstsnow",
+      "title": "初雪告白",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "初雪已至，愿与你共白头",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #2d1b4e 0%, #5a3d7a 35%, #8b6aaa 60%, #c8a0d0 100%)",
+        "borderGradient": "",
+        "primary": "#ffffff",
+        "textOnCard": "#fff0f5"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "snowflakes",
+          "count": 40
+        }
+      ],
+      "hasFlipBack": true,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "flipbook": {
+      "id": "flipbook",
+      "title": "回忆相册",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #1a1a2e 0%, #2d1b3d 50%, #1a1a2e 100%)",
+        "borderGradient": "",
+        "primary": "rgba(0,0,0,0.25)",
+        "textOnCard": ""
+      },
+      "layout": [
+        "icon",
+        "name",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "pages",
+          "count": 10
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": false,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "friendship": {
+      "id": "friendship",
+      "title": "友谊祝福",
+      "ogEmoji": "💕",
+      "icon": "💕",
+      "defaultName": "",
+      "defaultBlessing": "友谊长存，愿我们的故事永远继续！",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #fff0f6 0%, #ffe4f0 40%, #ffd6eb 100%)",
+        "borderGradient": "linear-gradient(135deg, #ff9ab0, #ff6b9d, #ffaac8, #ff9ab0, #ff6b9d)",
+        "primary": "#c0306a",
+        "textOnCard": "#a03060"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "butterflies",
+          "count": 6
+        },
+        {
+          "type": "hearts",
+          "count": 16
+        },
+        {
+          "type": "stars",
+          "count": 30
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "frost": {
+      "id": "frost",
+      "title": "极光冰晶",
+      "ogEmoji": "❄️",
+      "icon": "❄️",
+      "defaultName": "亲爱的朋友",
+      "defaultBlessing": "愿你如极光般璀璨\\n如冰晶般纯净而坚强",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #050510 0%, #0a0a1a 20%, #0d1b2a 40%, #1a2a4a 60%, #0d1b2a 80%, #0a0a1a 100%)",
+        "borderGradient": "linear-gradient(135deg, #00ddff, #aa66ff, #ff66aa, #00ff88, #00ddff)",
+        "primary": "transparent",
+        "textOnCard": "#c8e8ff"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "stars",
+          "count": 50
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "full": {
+      "id": "full",
+      "title": "专属贺卡",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你的世界里永远有光\\n愿每一天都值得期待",
+      "defaultFrom": "爱你的人",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #1a1a2e 0%, #1a1a2e 100%)",
+        "borderGradient": "",
+        "primary": "#ffd700",
+        "textOnCard": "#fff4cc"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "stars",
+          "count": 60
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "galaxy": {
+      "id": "galaxy",
+      "title": "银河流星",
+      "ogEmoji": "🌌",
+      "icon": "🌌",
+      "defaultName": "星河为你",
+      "defaultBlessing": "银河倾泻，流星划过<br>愿所有美好，如约而至",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #020108 0%, #0a0520 20%, #1a0a38 40%, #0d0525 60%, #050110 80%, #020108 100% )",
+        "borderGradient": "linear-gradient(135deg, #6b2fa0, #3d1a6d, #1a0a30, #3d1a6d)",
+        "primary": "#e8e0ff",
+        "textOnCard": "#d0b8ff"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "meteors",
+          "count": 5
+        },
+        {
+          "type": "stars",
+          "count": 84
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "gallery": {
+      "id": "gallery",
+      "title": "艺术画廊",
+      "ogEmoji": "🖼️",
+      "icon": "🖼️",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你的生活如艺术品般精彩绝伦",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #1a1418 0%, #2a1f24 40%, #1e1618 70%, #140e10 100%)",
+        "borderGradient": "linear-gradient(135deg, #d4a84b 0%, #ffd700 15%, #f5e6c8 30%, #d4a84b 45%, #b8860b 60%, #ffd700 75%, #d4a84b 100%)",
+        "primary": "#ffd700",
+        "textOnCard": "#f5e6c8"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "sparkles",
+          "count": 15
+        },
+        {
+          "type": "stars",
+          "count": 25
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "gaokao": {
+      "id": "gaokao",
+      "title": "高考加油",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "考生",
+      "defaultBlessing": "愿你笔下生花，金榜题名！",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #060e1e 0%, #0c1f3f 40%, #143060 100%)",
+        "borderGradient": "linear-gradient(135deg, #ffd700, #ff9500, #ffd700, #ffb800)",
+        "primary": "transparent",
+        "textOnCard": "rgba(255,240,180,0.92)"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "objects",
+          "count": 13
+        },
+        {
+          "type": "speedLines",
+          "count": 12
+        },
+        {
+          "type": "stars",
+          "count": 35
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "garden": {
+      "id": "garden",
+      "title": "浪漫花园",
+      "ogEmoji": "🌹",
+      "icon": "🌹",
+      "defaultName": "花园里的你",
+      "defaultBlessing": "愿你的生活像花园一样美好",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #c8e8c0 0%, #a8d8a0 20%, #90c890 35%, #e0f0e8 50%, #ffe8f0 65%, #ffd0e0 80%, #ffb8d0 100%)",
+        "borderGradient": "linear-gradient(135deg, rgba(212,96,122,0.5) 0%, rgba(255,158,181,0.4) 50%, rgba(212,96,122,0.5) 100%)",
+        "primary": "#c04060",
+        "textOnCard": "#c04060"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "petals",
+          "count": 16
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "glass": {
+      "id": "glass",
+      "title": "彩绘玻璃窗",
+      "ogEmoji": "🏰",
+      "icon": "🏰",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿光芒穿透黑暗，照亮你前行的每一步",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #0a0510 0%, #150820 30%, #1a0a20 60%, #0d0515 100%)",
+        "borderGradient": "linear-gradient(135deg, #8a1530, var(--glass-blue), #1a6a6a, var(--glass-gold), #c07020, var(--glass-rose), #2a1040, var(--glass-crimson) )",
+        "primary": "transparent",
+        "textOnCard": "rgba(220, 210, 190, 0.9)"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": true,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "goodluck": {
+      "id": "goodluck",
+      "title": "好运祝福",
+      "ogEmoji": "💌",
+      "icon": "🍀",
+      "defaultName": "",
+      "defaultBlessing": "愿所有美好如期而至",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #1a0505 0%, #3d0a0a 40%, #7a1a1a 100%)",
+        "borderGradient": "linear-gradient(135deg, #ff6b6b, #ffd700, #ff8c00, #ff6b6b)",
+        "primary": "#ffffff",
+        "textOnCard": "rgba(255,255,255,0.92)"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "clovers",
+          "count": 12
+        },
+        {
+          "type": "coins",
+          "count": 10
+        },
+        {
+          "type": "speedLines",
+          "count": 6
+        },
+        {
+          "type": "stars",
+          "count": 20
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "graduation": {
+      "id": "graduation",
+      "title": "毕业快乐",
+      "ogEmoji": "💌",
+      "icon": "🎓",
+      "defaultName": "亲爱的同学",
+      "defaultBlessing": "恭喜毕业！愿你前程似锦，归来仍是少年！",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #e8f5e9 0%, #c8e6c9 40%, #a5d6a7 100%)",
+        "borderGradient": "linear-gradient(135deg, #56ab2f, #a8e063, #56ab2f)",
+        "primary": "transparent",
+        "textOnCard": "#33691e"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "confetti",
+          "count": 15
+        },
+        {
+          "type": "stars",
+          "count": 6
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "halloween": {
+      "id": "halloween",
+      "title": "万圣节祝福",
+      "ogEmoji": "🎃",
+      "icon": "🎃",
+      "defaultName": "万圣节快乐",
+      "defaultBlessing": "不给糖就捣蛋！愿你今晚收获满满的惊喜和糖果",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #0d0018 0%, #1a0a2e 30%, #2d1b4e 60%, #1a0a2e 100%)",
+        "borderGradient": "linear-gradient(135deg, #ff6600, #6a0dad, #ff6600, #6a0dad)",
+        "primary": "#ffaa00",
+        "textOnCard": "#d4aaff"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "bats",
+          "count": 10
+        },
+        {
+          "type": "ghosts",
+          "count": 10
+        },
+        {
+          "type": "lightDots",
+          "count": 10
+        },
+        {
+          "type": "stars",
+          "count": 10
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "housewarming": {
+      "id": "housewarming",
+      "title": "乔迁之喜",
+      "ogEmoji": "🏠",
+      "icon": "🏠",
+      "defaultName": "",
+      "defaultBlessing": "新居落成，福气盈门，愿一切美好如期而至！",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #faf6f0 0%, #f5e8d8 40%, #f0e0c8 100%)",
+        "borderGradient": "linear-gradient(135deg, #d4a853, #c9952c, #e8c060, #d4a853, #c9952c)",
+        "primary": "#7a4a10",
+        "textOnCard": "#8a5a20"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "feathers",
+          "count": 14
+        },
+        {
+          "type": "goldParticles",
+          "count": 18
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "icecream": {
+      "id": "icecream",
+      "title": "夏日冰淇淋",
+      "ogEmoji": "🍦",
+      "icon": "🍦",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿你的每一天\\n都像冰淇淋一样甜蜜美好",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "radial-gradient(ellipse at 30% 10%, rgba(255,200,230,0.6) 0%, transparent 50%)",
+        "borderGradient": "linear-gradient(135deg, #ff9ec8, #ffb8d4, #b8e4ff, #b8f0d4, #ffe4a0, #e4c8ff, #ff9ec8 )",
+        "primary": "#5a3a2a",
+        "textOnCard": "#5a3a2a"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "bubbles",
+          "count": 10
+        },
+        {
+          "type": "candy",
+          "count": 20
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "ink": {
+      "id": "ink",
+      "title": "水墨寄情",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "知己",
+      "defaultBlessing": "淡墨素笺，寄君一语",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "#1a1a1a",
+        "borderGradient": "linear-gradient(135deg, #d4c4a8, #8b7355, #d4c4a8, #c8b898, #d4c4a8)",
+        "primary": "#e8dcc8",
+        "textOnCard": "rgba(220,210,190,0.9)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "inkDrops",
+          "count": 8
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "japanese": {
+      "id": "japanese",
+      "title": "和风祭典",
+      "ogEmoji": "🏮",
+      "icon": "🏮",
+      "defaultName": "祭典的你",
+      "defaultBlessing": "愿你所愿皆如愿，所行皆坦途",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #0a0510 0%, #1a0a28 15%, #2d1040 30%, #1a0a28 45%, #0a0510 60%, #150818 80%, #0a0510 100%)",
+        "borderGradient": "linear-gradient(135deg, rgba(230,57,70,0.5) 0%, rgba(255,209,102,0.35) 50%, rgba(230,57,70,0.5) 100%)",
+        "primary": "#ff6b6b",
+        "textOnCard": "#fff8f0"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "fireworks",
+          "count": 5
+        },
+        {
+          "type": "petals",
+          "count": 12
+        },
+        {
+          "type": "stars",
+          "count": 35
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "jellyfish": {
+      "id": "jellyfish",
+      "title": "水母祝福",
+      "ogEmoji": "🪼",
+      "icon": "🪼",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你像水母一样，自由而轻盈",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #0a0520 0%, #0f0530 15%, #1a0a40 30%, #2a1060 50%, #3a1878 65%, #5a30a0 80%, #8060c0 100%)",
+        "borderGradient": "linear-gradient(135deg, #c080ff, #80c8ff, #c080ff)",
+        "primary": "#e8d0ff",
+        "textOnCard": "rgba(230, 210, 255, 0.92)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "bubbles",
+          "count": 15
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "lantern": {
+      "id": "lantern",
+      "title": "灯笼之夜",
+      "ogEmoji": "🏮",
+      "icon": "🏮",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿这盏灯笼为你照亮前路，愿你被岁月温柔以待",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #0a0518 0%, #120828 40%, #0a0518 70%, #2a1040 100%)",
+        "borderGradient": "linear-gradient(135deg, #e83000, var(--lantern-gold), #f0883e, var(--lantern-red))",
+        "primary": "#f5e6d0",
+        "textOnCard": "#e8d0b0"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "lavender": {
+      "id": "lavender",
+      "title": "薰衣草庄园",
+      "ogEmoji": "💜",
+      "icon": "💜",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿普罗旺斯的微风带去我的思念，愿每一片薰衣草都为你绽放",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #c5b3e8 0%, #8b6fc0 25%, #6b4fa0 50%, #4a2882 75%, #3a1f6e 100%)",
+        "borderGradient": "",
+        "primary": "#3d2466",
+        "textOnCard": "rgba(60,30,100,0.82)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "letter": {
+      "id": "letter",
+      "title": "纸短情长",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "展信佳",
+      "defaultBlessing": "见字如面，纸短情长。愿你一切安好，岁月温柔以待。",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #d4c5a9 0%, #c8b896 30%, #bfae88 50%, #c8b896 70%, #d4c5a9 100%)",
+        "borderGradient": "",
+        "primary": "#2c2416",
+        "textOnCard": "#2c2416"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "feathers",
+          "count": 8
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "lighthouse": {
+      "id": "lighthouse",
+      "title": "灯塔之光",
+      "ogEmoji": "🗼",
+      "icon": "🗼",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你成为自己的光，照亮前行的方向",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #0a1628 0%, #0d2840 25%, #1a4a6a 50%, #0d3a50 65%, #0a2a3a 100%)",
+        "borderGradient": "linear-gradient(135deg, #ffeaa0 0%, #ffd54f 25%, #fff8e7 50%, #ffd54f 75%, #ffeaa0 100%)",
+        "primary": "#ffeaa0",
+        "textOnCard": "#f5e6c8"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "ripples",
+          "count": 12
+        },
+        {
+          "type": "stars",
+          "count": 40
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "longevity": {
+      "id": "longevity",
+      "title": "福寿安康",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "寿星",
+      "defaultBlessing": "福如东海深，寿比南山高",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #6b1a1a 0%, #8b2525 40%, #5c1515 100%)",
+        "borderGradient": "linear-gradient(135deg, #ffd700, #ff8c00, #ffd700, #ffb347, #ffd700)",
+        "primary": "#6b1a1a",
+        "textOnCard": "#5c1515"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "cranes",
+          "count": 10
+        },
+        {
+          "type": "petals",
+          "count": 10
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "lotus": {
+      "id": "lotus",
+      "title": "荷花祝福",
+      "ogEmoji": "🪷",
+      "icon": "🪷",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "荷风夏日清，莲香满池盈<br>愿你如荷般高洁，夏日无忧",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #d4eeed 0%, #b8e0e0 20%, #7ec8d8 45%, #5ba8c0 60%, #4a90a4 80%, #3a7a94 100% )",
+        "borderGradient": "",
+        "primary": "#3a2a28",
+        "textOnCard": "#5a4a48"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": false,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "macaron": {
+      "id": "macaron",
+      "title": "马卡龙祝福",
+      "ogEmoji": "💌",
+      "icon": "🧁",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿你的生活像马卡龙一样甜美，每一天都值得细细品味",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg,#fff5f8 0%,#fff0f5 25%,#f5f0ff 50%,#f0f8ff 75%,#fff5f0 100%)",
+        "borderGradient": "linear-gradient(135deg,#f8bbd9,#c5a3ff,#a8d8f0,#f8bbd9)",
+        "primary": "transparent",
+        "textOnCard": "#7a5570"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "bubbles",
+          "count": 1
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "marshmallow": {
+      "id": "marshmallow",
+      "title": "棉花糖云",
+      "ogEmoji": "💗",
+      "icon": "💗",
+      "defaultName": "甜甜的你",
+      "defaultBlessing": "愿你的每一天都像棉花糖一样甜蜜",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #ffd6e8 0%, #ffe4f0 20%, #f0e4ff 45%, #d4e8ff 70%, #e4f4ff 100%)",
+        "borderGradient": "linear-gradient(135deg, #ffb8d0, #d4b8ff, #b8f0e0, #ffb8d0)",
+        "primary": "#8b4060",
+        "textOnCard": "#6a3555"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "balloons",
+          "count": 6
+        },
+        {
+          "type": "candy",
+          "count": 8
+        },
+        {
+          "type": "hearts",
+          "count": 5
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "matcha": {
+      "id": "matcha",
+      "title": "抹茶时光",
+      "ogEmoji": "🍵",
+      "icon": "🍵",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿你的生活如抹茶般清雅甘甜",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "radial-gradient(ellipse at 20% 10%, rgba(122, 184, 147, 0.15) 0%, transparent 45%)",
+        "borderGradient": "linear-gradient(135deg, #4a7c59, var(--matcha-light), #7ab893, var(--matcha-deep))",
+        "primary": "#3a5a40",
+        "textOnCard": "#3a5a40"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "bubbles",
+          "count": 8
+        },
+        {
+          "type": "leaves",
+          "count": 10
+        },
+        {
+          "type": "steam",
+          "count": 5
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "mermaid": {
+      "id": "mermaid",
+      "title": "人鱼公主祝福",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "人鱼公主",
+      "defaultBlessing": "愿你如海般深邃，如泡般轻盈，每一天都闪闪发光",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #005f73 0%, #0a9396 20%, #00b4d8 40%, #48cae4 55%, #90e0ef 70%, #ade8f4 85%, #caf0f8 100%)",
+        "borderGradient": "linear-gradient(135deg, rgba(0,119,182,0.7), rgba(0,180,216,0.7), rgba(144,224,239,0.7), rgba(255,107,157,0.6), rgba(157,89,182,0.6), rgba(0,119,182,0.7))",
+        "primary": "transparent",
+        "textOnCard": "#005f73"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "merrygoround": {
+      "id": "merrygoround",
+      "title": "旋转木马贺卡",
+      "ogEmoji": "🎠",
+      "icon": "🎠",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿你的生活像旋转木马一样，\\n永远保持童真，永远充满欢乐。",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #1a0a2e 0%, #2d1b4e 35%, #4a2c6a 65%, #7b4397 100%)",
+        "borderGradient": "linear-gradient(135deg, #ff9ec8, #ffb6d9, #d8aaff, #b4a0ff, #ff9ec8)",
+        "primary": "#6a2080",
+        "textOnCard": "#4a1860"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "ribbons",
+          "count": 12
+        },
+        {
+          "type": "stars",
+          "count": 40
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "mid-autumn": {
+      "id": "mid-autumn",
+      "title": "中秋祝福",
+      "ogEmoji": "🌕",
+      "icon": "🌕",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "月圆人团圆，愿你中秋快乐，阖家幸福",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #06061a 0%, #0d0d2b 40%, #1a1040 100%)",
+        "borderGradient": "",
+        "primary": "#ffe89a",
+        "textOnCard": "rgba(255, 250, 235, 0.92)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "clouds",
+          "count": 4
+        },
+        {
+          "type": "stars",
+          "count": 10
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "missyou": {
+      "id": "missyou",
+      "title": "思念",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "想念你",
+      "defaultBlessing": "秋风起，枫叶落，最是想念你",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #f5ede0 0%, #ede0cc 40%, #e8d8be 70%, #f0e4d4 100%)",
+        "borderGradient": "linear-gradient(135deg, #e07830, #c06020, #e07830, #d07030)",
+        "primary": "#8b4513",
+        "textOnCard": "#7a4020"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "feathers",
+          "count": 10
+        },
+        {
+          "type": "lightDots",
+          "count": 10
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "moon": {
+      "id": "moon",
+      "title": "月光",
+      "ogEmoji": "🌙",
+      "icon": "🌙",
+      "defaultName": "月光下的你",
+      "defaultBlessing": "愿月光温柔，岁月静好",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #050a1a 0%, #0a1428 30%, #0f1e3a 55%, #0a1428 75%, #071020 100%)",
+        "borderGradient": "linear-gradient(135deg, rgba(255,249,230,0.4) 0%, rgba(200,180,120,0.3) 50%, rgba(255,249,230,0.4) 100%)",
+        "primary": "#e8d49b",
+        "textOnCard": "#f0e6c8"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "stars",
+          "count": 40
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "mooncake": {
+      "id": "mooncake",
+      "title": "月饼祝福",
+      "ogEmoji": "🥮",
+      "icon": "🥮",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "月圆人团圆，愿你中秋快乐，阖家幸福",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg,#0a0a1e 0%,#1a1040 25%,#2a1850 50%,#1a1040 75%,#0a0a1e 100%)",
+        "borderGradient": "linear-gradient(135deg,#c9a227,#f0d060,#ffd700,#c9a227)",
+        "primary": "transparent",
+        "textOnCard": "rgba(255,220,160,0.92)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "moonlit": {
+      "id": "moonlit",
+      "title": "月华如练",
+      "ogEmoji": "🌙",
+      "icon": "🌙",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿月光常照，愿思念温柔",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #050a18 0%, #0a1628 20%, #0f1e3a 40%, #152a4a 60%, #1a3660 80%, #0f2040 100%)",
+        "borderGradient": "linear-gradient(135deg, #c8d8f0, #a0c0e0, #c8d8f0)",
+        "primary": "#e8f0ff",
+        "textOnCard": "rgba(200, 220, 240, 0.9)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "fireflies",
+          "count": 6
+        },
+        {
+          "type": "stars",
+          "count": 50
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "mothers-day": {
+      "id": "mothers-day",
+      "title": "妈妈，您辛苦了",
+      "ogEmoji": "💌",
+      "icon": "🌷",
+      "defaultName": "妈妈",
+      "defaultBlessing": "妈妈，您辛苦了\\n感谢您一路的付出与陪伴",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #fff5f8 0%, #ffe0ee 50%, #ffd6e8 100%)",
+        "borderGradient": "linear-gradient(135deg, #e87aaa, #f4a0c0, #e87aaa, #f7c0d8, #e87aaa)",
+        "primary": "#b05080",
+        "textOnCard": "#904070"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "petals",
+          "count": 18
+        },
+        {
+          "type": "sparkles",
+          "count": 15
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "music": {
+      "id": "music",
+      "title": "音乐时光",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "音乐相伴的你",
+      "defaultBlessing": "愿每一个音符都跳动着美好的旋律",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #0d0a1e 0%, #1a1040 40%, #2a1560 100%)",
+        "borderGradient": "linear-gradient(135deg, #c080e0, #9060d0, #c080e0)",
+        "primary": "#e0c8ff",
+        "textOnCard": "#c8a8e8"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "neon": {
+      "id": "neon",
+      "title": "霓虹灯牌",
+      "ogEmoji": "💡",
+      "icon": "💡",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你的生活如霓虹般绚烂，每一天都闪闪发光",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "#0a0010",
+        "borderGradient": "linear-gradient(135deg, #ff1493, #00e5ff, #b300ff, #ff1493)",
+        "primary": "#ff80c0",
+        "textOnCard": "rgba(200,240,255,0.88)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "newborn": {
+      "id": "newborn",
+      "title": "喜迎新生",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "小天使",
+      "defaultBlessing": "恭喜你们迎来新生命，愿宝宝健康成长，家庭幸福美满",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #fff0f3 0%, #ffe4ec 40%, #ffd6e0 100%)",
+        "borderGradient": "linear-gradient(135deg, #ff9a9e, #ffb6c1, #ff9a9e, #ffb6c1)",
+        "primary": "#c04070",
+        "textOnCard": "#7a3050"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "sparkles",
+          "count": 30
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "ocean": {
+      "id": "ocean",
+      "title": "海风轻语",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "心向大海的你",
+      "defaultBlessing": "愿你如海般宽广，如风般自由",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #e07030 0%, #f49050 12%, #ffb870 22%, #ffd090 32%, #87ceeb 40%, #4a90c2 55%, #2a6090 72%, #1a4060 100% )",
+        "borderGradient": "linear-gradient(135deg, rgba(255,210,140,0.9), rgba(100,180,220,0.7), rgba(255,210,140,0.9))",
+        "primary": "#ffe8c0",
+        "textOnCard": "#c8dff0"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "origami": {
+      "id": "origami",
+      "title": "纸鹤寄情",
+      "ogEmoji": "🦢",
+      "icon": "🦢",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你像纸鹤一样，轻盈地飞向想去的地方",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #1a1a2e 0%, #2d1b4e 35%, #3d2060 55%, #1a0f2e 100%)",
+        "borderGradient": "linear-gradient(135deg, rgba(255, 184, 198, 0.8), rgba(232, 145, 158, 0.6), rgba(212, 168, 75, 0.8), rgba(240, 230, 211, 0.7), rgba(255, 184, 198, 0.8))",
+        "primary": "#c0406a",
+        "textOnCard": "#5a3a3a"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "stars",
+          "count": 35
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "pampas": {
+      "id": "pampas",
+      "title": "羽毛草甸祝福",
+      "ogEmoji": "🌿",
+      "icon": "🌿",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你如清风般自在，如暖阳般温柔",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #fdf6ee 0%, #f5e8d8 20%, #eedcc8 40%, #e8d4bc 60%, #e0c8a8 80%, #d8bea0 100%)",
+        "borderGradient": "linear-gradient(135deg, #d4a574, #c8beb0, #e8c9a0, #d4a574)",
+        "primary": "#5a4a3a",
+        "textOnCard": "rgba(80, 65, 50, 0.88)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "butterflies",
+          "count": 4
+        },
+        {
+          "type": "leaves",
+          "count": 10
+        },
+        {
+          "type": "lightDots",
+          "count": 6
+        },
+        {
+          "type": "pampas",
+          "count": 30
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "paperplane": {
+      "id": "paperplane",
+      "title": "纸飞机祝福",
+      "ogEmoji": "✈️",
+      "icon": "✈️",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你像纸飞机一样，飞向想去的地方",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #7ab8d8 0%, #9fccd8 15%, #b8d8ec 30%, #cce4f4 50%, #daf0f8 70%, #e8f4f8 100%)",
+        "borderGradient": "linear-gradient(135deg, #b8d8f0, #f0d8b8, #b8d8f0)",
+        "primary": "#2a3a4a",
+        "textOnCard": "rgba(60, 80, 100, 0.88)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "paris": {
+      "id": "paris",
+      "title": "巴黎浪漫",
+      "ogEmoji": "💕",
+      "icon": "🗼",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿你的生活像巴黎的夜空一样浪漫",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #0d0820 0%, #1a1040 15%, #2d1b5e 35%, #4a2870 50%, #8b4570 65%, #c4688a 80%, #e8a0b0 100%)",
+        "borderGradient": "",
+        "primary": "#7a3055",
+        "textOnCard": "#5a2040"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "hearts",
+          "count": 12
+        },
+        {
+          "type": "stars",
+          "count": 60
+        }
+      ],
+      "hasFlipBack": true,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "peach": {
+      "id": "peach",
+      "title": "蜜桃气泡",
+      "ogEmoji": "🍑",
+      "icon": "🍑",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你的生活像蜜桃一样甜",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(145deg, #fff0f0 0%, #ffe5d4 30%, #ffd8c8 60%, #ffc8b8 100%)",
+        "borderGradient": "",
+        "primary": "#e06050",
+        "textOnCard": "#7a4035"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "bubbles",
+          "count": 20
+        }
+      ],
+      "hasFlipBack": true,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "petals": {
+      "id": "petals",
+      "title": "花瓣轻语",
+      "ogEmoji": "💌",
+      "icon": "🌸",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿你的生活如花瓣般轻盈美好，每一天都被温柔以待",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #fff5f8 0%, #ffe4ef 35%, #ffd6e0 65%, #f8c8d8 100%)",
+        "borderGradient": "",
+        "primary": "#8b4a5e",
+        "textOnCard": "rgba(139,74,94,0.82)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "plum": {
+      "id": "plum",
+      "title": "寒梅傲雪",
+      "ogEmoji": "🌸",
+      "icon": "🌸",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "寒梅傲雪，香自苦寒\\n愿你如冬梅绽放，温柔而坚强",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "radial-gradient(ellipse at 20% 80%, rgba(192, 53, 90, 0.08) 0%, transparent 50%)",
+        "borderGradient": "linear-gradient(135deg, #c0355a 0%, var(--plum-pink) 30%, #ffd4e0 50%, var(--plum-pink) 70%, #c0355a 100% )",
+        "primary": "#ffd4e0",
+        "textOnCard": "rgba(255, 220, 230, 0.9)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "petals",
+          "count": 12
+        },
+        {
+          "type": "snowflakes",
+          "count": 25
+        },
+        {
+          "type": "stars",
+          "count": 40
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "pocketwatch": {
+      "id": "pocketwatch",
+      "title": "时光之礼",
+      "ogEmoji": "⌚",
+      "icon": "⌚",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "时光缓缓，愿你被岁月温柔以待",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "radial-gradient(ellipse at 50% 30%, rgba(139, 105, 20, 0.2) 0%, transparent 50%)",
+        "borderGradient": "",
+        "primary": "#3d2a0a",
+        "textOnCard": "#3d2a0a"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "decorations",
+          "count": 70
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "poem": {
+      "id": "poem",
+      "title": "诗词卷轴",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你被岁月温柔以待",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "radial-gradient(ellipse at 50% 0%, rgba(180,140,80,0.15) 0%, transparent 60%)",
+        "borderGradient": "",
+        "primary": "#3a2510",
+        "textOnCard": "#4a3020"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "polaroid": {
+      "id": "polaroid",
+      "title": "宝丽来回忆",
+      "ogEmoji": "📷",
+      "icon": "📷",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿这一刻的温暖，永远留在心间",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "#e8e0d5",
+        "borderGradient": "",
+        "primary": "rgba(0,0,0,0.15)",
+        "textOnCard": ""
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "postcard": {
+      "id": "postcard",
+      "title": "远方来信",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你被岁月温柔以待",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "#e8dcc8",
+        "borderGradient": "linear-gradient(135deg, #c8a870, #a08040, #c8a870, #b09050, #c8a870)",
+        "primary": "#5a3e1b",
+        "textOnCard": "#4a3020"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "promotion": {
+      "id": "promotion",
+      "title": "升职加薪",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "事业腾飞",
+      "defaultBlessing": "恭喜荣升，愿你前程似锦，再创辉煌",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #050d1a 0%, #0a2040 40%, #0d3060 100%)",
+        "borderGradient": "linear-gradient(135deg, #ffd700, #ffaa00, #ffd700, #ff8800)",
+        "primary": "#ffd700",
+        "textOnCard": "#c8e4ff"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "sparkles",
+          "count": 25
+        },
+        {
+          "type": "stars",
+          "count": 50
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "propose": {
+      "id": "propose",
+      "title": "求婚告白",
+      "ogEmoji": "💍",
+      "icon": "💍",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿与你共度余生",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #0a0a1a 0%, #1a1030 40%, #2d1b4e 100%)",
+        "borderGradient": "",
+        "primary": "#ffd700",
+        "textOnCard": "rgba(255,240,200,0.9)"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "stars",
+          "count": 10
+        }
+      ],
+      "hasFlipBack": true,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "qixi": {
+      "id": "qixi",
+      "title": "七夕祝福",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "",
+      "defaultBlessing": "",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #0a0015 0%, #1a0a30 40%, #2a1050 100%)",
+        "borderGradient": "linear-gradient(135deg, rgba(220,150,255,0.8), rgba(180,100,220,0.5), rgba(255,180,230,0.7), rgba(160,80,200,0.5), rgba(220,150,255,0.8))",
+        "primary": "#f0e4ff",
+        "textOnCard": "rgba(240,230,255,0.88)"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "hearts",
+          "count": 18
+        },
+        {
+          "type": "magpies",
+          "count": 2
+        },
+        {
+          "type": "petals",
+          "count": 12
+        },
+        {
+          "type": "stars",
+          "count": 60
+        }
+      ],
+      "hasFlipBack": true,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "rain": {
+      "id": "rain",
+      "title": "雨季絮语",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "想念的你",
+      "defaultBlessing": "愿你在每一个有雨的日子里，都有人牵挂",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #1a2030 0%, #232d42 40%, #2a3a50 100%)",
+        "borderGradient": "linear-gradient(135deg, rgba(120,160,200,0.6), rgba(80,110,160,0.4), rgba(120,160,200,0.6))",
+        "primary": "#d0e4ff",
+        "textOnCard": "#a8c8e8"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "rain",
+          "count": 10
+        },
+        {
+          "type": "ripples",
+          "count": 10
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "rainbow": {
+      "id": "rainbow",
+      "title": "彩虹",
+      "ogEmoji": "🌈",
+      "icon": "🌈",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你的生活像彩虹一样绚烂多彩",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #4a9fd4 0%, #74b9e0 20%, #a8d4f0 45%, #c5e8f8 65%, #e8f4fb 85%, #f0f8ff 100%)",
+        "borderGradient": "linear-gradient(135deg, rgba(255,107,107,0.6), rgba(255,169,77,0.6), rgba(255,212,59,0.6), rgba(105,219,124,0.6), rgba(77,171,247,0.6), rgba(218,119,242,0.6) )",
+        "primary": "#3a5068",
+        "textOnCard": "#3a5068"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "rainycafe": {
+      "id": "rainycafe",
+      "title": "雨天咖啡馆",
+      "ogEmoji": "☕",
+      "icon": "☕",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "窗外有雨，心中有你，这样的时光刚刚好",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #4a5568 0%, #6b7a8a 30%, #8a9aaa 50%, #a8b8c8 70%, #c8d4e0 100%)",
+        "borderGradient": "",
+        "primary": "#6a4840",
+        "textOnCard": ""
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "rain",
+          "count": 60
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "rainynight": {
+      "id": "rainynight",
+      "title": "雨夜絮语",
+      "ogEmoji": "🌧️",
+      "icon": "🌧️",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "无论雨天晴天，愿你心里永远有光",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #0d1117 0%, #161b28 30%, #1c2433 60%, #12171f 100%)",
+        "borderGradient": "linear-gradient(135deg, #ffb347 0%, #ffd54f 30%, #f5e6c8 50%, #ffd54f 70%, #ffb347 100%)",
+        "primary": "#f5e6c8",
+        "textOnCard": "#f5e6c8"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "rain",
+          "count": 78
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "reading": {
+      "id": "reading",
+      "title": "书香时光",
+      "ogEmoji": "📚",
+      "icon": "📚",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你在文字里找到安宁与光",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #2a1f15 0%, #3d2a1a 40%, #2a1f15 100%)",
+        "borderGradient": "",
+        "primary": "#c9a84c",
+        "textOnCard": "#f5e6d0"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "inkDrops",
+          "count": 8
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "recovery": {
+      "id": "recovery",
+      "title": "早日康复",
+      "ogEmoji": "💌",
+      "icon": "🌸",
+      "defaultName": "",
+      "defaultBlessing": "愿你被世界温柔以待，早日康复",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #fff0ec 0%, #ffe4de 50%, #ffd0c4 100%)",
+        "borderGradient": "linear-gradient(135deg, #e8847c, #f4a89a, #e8847c, #f7bfb8, #e8847c)",
+        "primary": "#c06050",
+        "textOnCard": "#a05040"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "hearts",
+          "count": 14
+        },
+        {
+          "type": "lightDots",
+          "count": 28
+        },
+        {
+          "type": "speedLines",
+          "count": 4
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "retirement": {
+      "id": "retirement",
+      "title": "退休快乐",
+      "ogEmoji": "🌅",
+      "icon": "🌅",
+      "defaultName": "尊敬的前辈",
+      "defaultBlessing": "感谢您多年的付出与坚守",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #1a2a3a 0%, #2c4a6a 30%, #3a6090 60%, #4a7ab0 100%)",
+        "borderGradient": "",
+        "primary": "#8b6914",
+        "textOnCard": "#6b5520"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": true,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "ribbon": {
+      "id": "ribbon",
+      "title": "丝带礼盒",
+      "ogEmoji": "🎁",
+      "icon": "🎁",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "拆开礼物，收获专属惊喜，愿你天天开心",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(135deg, #fff0f5 0%, #ffe4ec 15%, #ffd6e7 30%, #ffc8da 45%, #ffbcd0 60%, #ffb0c8 75%, #ffa4c0 100%)",
+        "borderGradient": "linear-gradient(135deg, #ff6b9d 0%, var(--ribbon-gold) 25%, #7fded5 50%, var(--ribbon-rose) 75%, #b794f6 100%)",
+        "primary": "#8b2252",
+        "textOnCard": "#8b2252"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "confetti",
+          "count": 12
+        },
+        {
+          "type": "hearts",
+          "count": 10
+        },
+        {
+          "type": "ribbons",
+          "count": 12
+        },
+        {
+          "type": "stars",
+          "count": 10
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "rose": {
+      "id": "rose",
+      "title": "玫瑰之约",
+      "ogEmoji": "🌹",
+      "icon": "🌹",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿这朵玫瑰诉说我所有未曾说出口的爱意",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #1a0008 0%, #2d000f 25%, #3d0018 45%, #2d000f 65%, #1a0008 100%)",
+        "borderGradient": "linear-gradient(135deg, #c41e3a, #8b0020, #e87090, #c41e3a)",
+        "primary": "#fff0f4",
+        "textOnCard": "#ffc8d8"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "bubbles",
+          "count": 12
+        },
+        {
+          "type": "petals",
+          "count": 18
+        },
+        {
+          "type": "stars",
+          "count": 40
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "rosegarden": {
+      "id": "rosegarden",
+      "title": "玫瑰花园",
+      "ogEmoji": "🌹",
+      "icon": "🌹",
+      "defaultName": "花园里的你",
+      "defaultBlessing": "愿你的生活如花园般绚烂，每天都有花开的声音",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "radial-gradient(ellipse at 20% 0%, rgba(255, 200, 180, 0.3) 0%, transparent 50%)",
+        "borderGradient": "linear-gradient(135deg, rgba(212, 72, 107, 0.5) 0%, rgba(224, 112, 144, 0.3) 50%, rgba(212, 72, 107, 0.5) 100%)",
+        "primary": "#d4486b",
+        "textOnCard": "#4a2a3a"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "petals",
+          "count": 25
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "sakura": {
+      "id": "sakura",
+      "title": "樱花祝福",
+      "ogEmoji": "💌",
+      "icon": "🌸",
+      "defaultName": "",
+      "defaultBlessing": "",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #ffeef2 0%, #ffd6e0 50%, #ffb8c8 100%)",
+        "borderGradient": "linear-gradient(135deg, #ff9a9e, #fad0c4, #ff9a9e, #fbc2eb, #ff9a9e)",
+        "primary": "#8b4557",
+        "textOnCard": "#c0607a"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "bubbles",
+          "count": 10
+        },
+        {
+          "type": "petals",
+          "count": 30
+        },
+        {
+          "type": "speedLines",
+          "count": 6
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "sakurapromise": {
+      "id": "sakurapromise",
+      "title": "樱花树下",
+      "ogEmoji": "💌",
+      "icon": "🌸",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿樱花飘落时，我们的约定也悄悄生根发芽",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #a8d8ea 0%, #d4eeff 20%, #ffe4e8 50%, #ffd4de 75%, #ffc8d5 100%)",
+        "borderGradient": "",
+        "primary": "#5a3040",
+        "textOnCard": "rgba(90,48,64,0.85)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "scrapbook": {
+      "id": "scrapbook",
+      "title": "手账日记本",
+      "ogEmoji": "📔",
+      "icon": "📔",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿你的每一天\\n都如手账般精彩可爱",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "radial-gradient(ellipse at 20% 20%, rgba(255,220,240,0.3) 0%, transparent 50%)",
+        "borderGradient": "linear-gradient(135deg, #ffb6d0, #c8e8ff, #ffe4a0, #c8ffcc, #ffb6d0)",
+        "primary": "#3a3a4a",
+        "textOnCard": "#3a3a4a"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "seaside": {
+      "id": "seaside",
+      "title": "海边明信片",
+      "ogEmoji": "🏖️",
+      "icon": "🏖️",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你的生活像海风一样自由，像阳光一样温暖",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #87ceeb 0%, #5bb5d8 15%, #3a9abf 30%, #2a8ab0 45%, #7ccce0 65%, #e8d5a3 85%, #d4bc8a 100%)",
+        "borderGradient": "",
+        "primary": "#1a4a6a",
+        "textOnCard": "#1a4a6a"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": true,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "silhouette": {
+      "id": "silhouette",
+      "title": "星光剪影",
+      "ogEmoji": "💌",
+      "icon": "🌙",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿星光照亮你的夜晚，愿所有美好如约而至",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #050810 0%, #0a0f1a 40%, #1a2744 100%)",
+        "borderGradient": "",
+        "primary": "#f0e6d3",
+        "textOnCard": "rgba(240,230,211,0.82)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "sky": {
+      "id": "sky",
+      "title": "晴空万里",
+      "ogEmoji": "☁️",
+      "icon": "☁️",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你的天空永远晴朗",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #4a9fd4 0%, #87ceeb 30%, #c5e8f8 60%, #e8f4fb 85%, #f0f8ff 100%)",
+        "borderGradient": "",
+        "primary": "#2a5a80",
+        "textOnCard": "#2a5a80"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "birds",
+          "count": 4
+        },
+        {
+          "type": "rays",
+          "count": 10
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "snow": {
+      "id": "snow",
+      "title": "冬日雪夜",
+      "ogEmoji": "❄️",
+      "icon": "❄️",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你的冬天永远温暖如春",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #0a1628 0%, #1a2d4a 40%, #2a4a6a 70%, #3a5a7a 100%)",
+        "borderGradient": "",
+        "primary": "#ffffff",
+        "textOnCard": "#f0f8ff"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "snowflakes",
+          "count": 35
+        }
+      ],
+      "hasFlipBack": true,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "snowcabin": {
+      "id": "snowcabin",
+      "title": "雪夜小木屋",
+      "ogEmoji": "🏔️",
+      "icon": "🏔️",
+      "defaultName": "雪夜里的你",
+      "defaultBlessing": "愿你在每个寒冷的夜里，都有一盏灯为你亮着",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "radial-gradient(ellipse at 50% 0%, #1a2a4a 0%, transparent 50%)",
+        "borderGradient": "linear-gradient(135deg, rgba(255, 210, 130, 0.5) 0%, rgba(200, 160, 80, 0.3) 50%, rgba(255, 210, 130, 0.5) 100%)",
+        "primary": "#ffd27f",
+        "textOnCard": "#f5e6d0"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "snowflakes",
+          "count": 40
+        },
+        {
+          "type": "stars",
+          "count": 35
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "sports": {
+      "id": "sports",
+      "title": "运动健身祝福",
+      "ogEmoji": "💪",
+      "icon": "💪🏋️‍♂️🔥",
+      "defaultName": "运动达人",
+      "defaultBlessing": "汗水不会辜负你\\n每一次坚持都在靠近更好的自己",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #0a1628 0%, #1a3a6c 40%, #2d5a8c 100%)",
+        "borderGradient": "",
+        "primary": "#ffd700",
+        "textOnCard": "rgba(255,255,255,0.9)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "spring-outing": {
+      "id": "spring-outing",
+      "title": "踏青游春",
+      "ogEmoji": "🌿",
+      "icon": "🌿",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "春光明媚，愿你心情如春日的风一样轻盈",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #e8f5e9 0%, #c8e6c9 30%, #a5d6a7 60%, #81c784 85%, #66bb6a 100%)",
+        "borderGradient": "linear-gradient(135deg, #66bb6a, #43a047, #66bb6a, #4caf50)",
+        "primary": "#2e7d32",
+        "textOnCard": "#33691e"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "butterflies",
+          "count": 5
+        },
+        {
+          "type": "lightDots",
+          "count": 12
+        },
+        {
+          "type": "petals",
+          "count": 14
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "spring": {
+      "id": "spring",
+      "title": "春日祝福",
+      "ogEmoji": "🌸",
+      "icon": "🌸",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "春风十里，不如身边有你。愿这个春天，所有美好如期而至。",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(165deg, #e8f5e9 0%, #c8e6c9 30%, #a5d6a7 60%, #81c784 100%)",
+        "borderGradient": "",
+        "primary": "#2e7d32",
+        "textOnCard": "#388e3c"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "butterflies",
+          "count": 3
+        },
+        {
+          "type": "petals",
+          "count": 14
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "star": {
+      "id": "star",
+      "title": "星空许愿",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "",
+      "defaultBlessing": "",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #050510 0%, #0a0a2a 40%, #1a0a3a 100%)",
+        "borderGradient": "linear-gradient(135deg, rgba(200,180,255,0.6), rgba(100,80,200,0.3), rgba(200,180,255,0.6), rgba(150,100,255,0.4), rgba(200,180,255,0.6))",
+        "primary": "#fff",
+        "textOnCard": "rgba(255,255,255,0.85)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "stars",
+          "count": 163
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": false,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "starcafe": {
+      "id": "starcafe",
+      "title": "星夜咖啡馆",
+      "ogEmoji": "☕",
+      "icon": "☕",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你的生活\\n像这杯咖啡一样\\n温暖而香浓",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "radial-gradient(ellipse at 50% 0%, rgba(30, 40, 60, 0.8) 0%, transparent 60%)",
+        "borderGradient": "linear-gradient(135deg, #b8860b, #daa520, #b8860b, #daa520, #b8860b)",
+        "primary": "#e8d4c0",
+        "textOnCard": "#e8d4c0"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "stars",
+          "count": 60
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "stardream": {
+      "id": "stardream",
+      "title": "星梦奇缘",
+      "ogEmoji": "✨",
+      "icon": "✨",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿你眼里有星辰，心里有山海",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #0a0530 0%, #1a0a40 30%, #200d50 50%, #0d1b3e 75%, #060818 100%)",
+        "borderGradient": "",
+        "primary": "#fffde7",
+        "textOnCard": "rgba(232,223,245,0.9)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "stars",
+          "count": 3
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "stargazing": {
+      "id": "stargazing",
+      "title": "星空望远镜",
+      "ogEmoji": "🔭",
+      "icon": "🔭",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你的眼眸永远映照星光",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "radial-gradient(ellipse at 50% 30%, #0a1628 0%, #050a1a 60%, #020408 100%)",
+        "borderGradient": "",
+        "primary": "#ffd700",
+        "textOnCard": "#fffde7"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "stars",
+          "count": 85
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "starlight": {
+      "id": "starlight",
+      "title": "璀璨星光",
+      "ogEmoji": "✨",
+      "icon": "✨",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿你的心永远有星光指引前行的路",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "radial-gradient(ellipse at 30% 20%, rgba(100, 80, 200, 0.2) 0%, transparent 45%)",
+        "borderGradient": "linear-gradient(135deg, rgba(255,215,0,0.6), rgba(160,232,255,0.4), rgba(255,184,208,0.4), rgba(255,215,0,0.6))",
+        "primary": "#ffd700",
+        "textOnCard": "rgba(255, 255, 255, 0.9)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "stars",
+          "count": 87
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "starlit": {
+      "id": "starlit",
+      "title": "星光物语",
+      "ogEmoji": "✨",
+      "icon": "✨",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿每一颗星星都为你闪耀，愿每一个夜晚都有温柔相伴",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #040610 0%, #08091a 30%, #0d1438 55%, #0a1230 75%, #060d20 100%)",
+        "borderGradient": "linear-gradient(135deg, #ffd97d 0%, var(--star-warm) 25%, #ffd97d 50%, var(--star-warm) 75%, #ffd97d 100%)",
+        "primary": "#ffe4a0",
+        "textOnCard": "#fff"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "sparkles",
+          "count": 12
+        },
+        {
+          "type": "stars",
+          "count": 83
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "steampunk": {
+      "id": "steampunk",
+      "title": "蒸汽朋克祝福",
+      "ogEmoji": "⚙️",
+      "icon": "⚙️",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿你的生活充满机械之美与蒸汽之梦",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "radial-gradient(ellipse at 30% 20%, rgba(139, 105, 20, 0.25) 0%, transparent 50%)",
+        "borderGradient": "linear-gradient(135deg, #b8860b 0%, #8b6914 25%, var(--brass-light) 50%, #8b6914 75%, var(--brass) 100%)",
+        "primary": "#daa520",
+        "textOnCard": "#e8d5a3"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "sunflower": {
+      "id": "sunflower",
+      "title": "向日葵阳光",
+      "ogEmoji": "🌻",
+      "icon": "🌻",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你像向日葵一样，\\n永远向着阳光，温暖而明亮。",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #87ceeb 0%, #ffd89b 40%, #ffb347 70%, #ff8c42 100% )",
+        "borderGradient": "linear-gradient(135deg, #ffd700, #ffb347, #ff8c42, #ffc040, #ffd700 )",
+        "primary": "#8B4500",
+        "textOnCard": "#5a3000"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "clouds",
+          "count": 3
+        },
+        {
+          "type": "sparkles",
+          "count": 10
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "sunrise": {
+      "id": "sunrise",
+      "title": "日出晨曦",
+      "ogEmoji": "🌅",
+      "icon": "🌅",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿每一个清晨，都带着光",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #1a0a2e 0%, #3d1a5c 18%, #c0447a 38%, #e8705a 52%, #f4a030 65%, #ffd060 78%, #fff0a0 88%, #fff8d0 100%)",
+        "borderGradient": "",
+        "primary": "#4a2800",
+        "textOnCard": "#4a2800"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "birds",
+          "count": 3
+        },
+        {
+          "type": "clouds",
+          "count": 5
+        },
+        {
+          "type": "rays",
+          "count": 16
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "sunset": {
+      "id": "sunset",
+      "title": "日落暖心",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你如日落般从容，愿每一段离别都通向新的相遇",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #1a0a2e 0%, #2d1b4e 20%, #c04030 50%, #e87040 65%, #f4a460 80%, #fcd080 100%)",
+        "borderGradient": "",
+        "primary": "#c04030",
+        "textOnCard": "#4a2a1a"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "lightDots",
+          "count": 18
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "sweet": {
+      "id": "sweet",
+      "title": "甜蜜糖果",
+      "ogEmoji": "🍬",
+      "icon": "🍬",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你的生活像糖果一样甜蜜，每一天都充满小小的惊喜与幸福",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #fff5f8 0%, #ffeef5 40%, #f0fff5 75%, #e8fff5 100%)",
+        "borderGradient": "linear-gradient(135deg, #ff9a9e, #fad0c4, #a8edea, #fed6e3, #ff9a9e)",
+        "primary": "transparent",
+        "textOnCard": "#7a5570"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "stars",
+          "count": 32
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "tea": {
+      "id": "tea",
+      "title": "暖茶香",
+      "ogEmoji": "💌",
+      "icon": "🍵",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿这杯热茶能温暖你的心",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #2d1f14 0%, #3d2a1a 30%, #4a3520 60%, #2d1f14 100%)",
+        "borderGradient": "",
+        "primary": "#4a3728",
+        "textOnCard": "rgba(74,55,40,0.85)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "teachers-day": {
+      "id": "teachers-day",
+      "title": "教师节祝福",
+      "ogEmoji": "🌻",
+      "icon": "🌻",
+      "defaultName": "亲爱的老师",
+      "defaultBlessing": "师恩如海，铭记于心",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #f5efe0 0%, #e8d5b0 40%, #d4b87a 80%, #c8a255 100%)",
+        "borderGradient": "",
+        "primary": "#8b6914",
+        "textOnCard": "#6b5520"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "goldParticles",
+          "count": 12
+        },
+        {
+          "type": "objects",
+          "count": 18
+        },
+        {
+          "type": "stars",
+          "count": 6
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "teatime": {
+      "id": "teatime",
+      "title": "下午茶时光",
+      "ogEmoji": "🍪",
+      "icon": "🍪",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿你的每一天都如下午茶般温馨甜蜜",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "radial-gradient(ellipse at 15% 85%, rgba(168, 197, 160, 0.2) 0%, transparent 45%)",
+        "borderGradient": "linear-gradient(135deg, #c8854a, var(--rose-pink), #a8c5a0, var(--caramel))",
+        "primary": "#5a3825",
+        "textOnCard": "#5a3825"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "sparkles",
+          "count": 12
+        },
+        {
+          "type": "steam",
+          "count": 4
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "template": {
+      "id": "template",
+      "title": "小荧贺卡",
+      "ogEmoji": "💌",
+      "icon": "🎂",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿岁月温柔，愿一切美好如期而至",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #1a1a2e 0%, #1a1a2e 100%)",
+        "borderGradient": "linear-gradient(135deg, #ffd700, var(--border-to), #ffd700)",
+        "primary": "#ffd700",
+        "textOnCard": "#fff4cc"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": true,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "thanksgiving": {
+      "id": "thanksgiving",
+      "title": "感恩节祝福",
+      "ogEmoji": "🍁",
+      "icon": "🍁",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "感恩节快乐！感谢生命中每一个温暖的瞬间",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #8B4513 0%, #D2691E 20%, #F4A460 45%, #DEB887 70%, #8B4513 100%)",
+        "borderGradient": "",
+        "primary": "transparent",
+        "textOnCard": "#5D4037"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "lightDots",
+          "count": 12
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "thankyou": {
+      "id": "thankyou",
+      "title": "感恩祝福",
+      "ogEmoji": "🌻",
+      "icon": "🌻",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "感谢一路有你，愿温暖与美好永远相伴",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #2d2006 0%, #5c3d00 30%, #8b6914 60%, #c49a2a 100%)",
+        "borderGradient": "linear-gradient(135deg, #ffe066, #ffb347, #ff8c00, #ffd700)",
+        "primary": "#ffe066",
+        "textOnCard": "#fff8e1"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "feathers",
+          "count": 10
+        },
+        {
+          "type": "lightDots",
+          "count": 10
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "ticket": {
+      "id": "ticket",
+      "title": "浪漫车票",
+      "ogEmoji": "🎫",
+      "icon": "🚂",
+      "defaultName": "幸福站",
+      "defaultBlessing": "愿这趟旅程\\n开往皆是美好",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "radial-gradient(ellipse at 20% 20%, rgba(218, 165, 32, 0.12) 0%, transparent 50%)",
+        "borderGradient": "",
+        "primary": "",
+        "textOnCard": "#3d2b1f"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "tokyo": {
+      "id": "tokyo",
+      "title": "樱花东京",
+      "ogEmoji": "🌸",
+      "icon": "🌸",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你如樱花般绚烂，每一次绽放都温柔了时光",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #fce4ec 0%, #f8bbd0 30%, #f48fb1 60%, #fce4ec 100%)",
+        "borderGradient": "linear-gradient(135deg, #f48fb1, #f06292, #ec407a, #f48fb1)",
+        "primary": "#880e4f",
+        "textOnCard": "#4a0010"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "petals",
+          "count": 18
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "travel": {
+      "id": "travel",
+      "title": "旅行手账",
+      "ogEmoji": "🛫",
+      "icon": "✈",
+      "defaultName": "亲爱的旅客",
+      "defaultBlessing": "愿你的每一段旅程\\n都充满惊喜与美好",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "radial-gradient(ellipse at 20% 30%, rgba(200,180,140,0.2) 0%, transparent 50%)",
+        "borderGradient": "linear-gradient( 90deg, #8a6a4a 0px, #a07850 3px, #8a6a4a 6px, #7a5a3a 9px, #8a6a4a 12px )",
+        "primary": "#3a2a1a",
+        "textOnCard": "#4a3a2a"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "twilight": {
+      "id": "twilight",
+      "title": "黄昏玫瑰庭园",
+      "ogEmoji": "🌅",
+      "icon": "🌹",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿你的生活如黄昏般温柔，每一天都值得期待",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #2d1b4e 0%, #5a2d7a 20%, #a0406a 40%, #d4607a 55%, #f4845f 70%, #f5c842 85%, #fff0e8 100%)",
+        "borderGradient": "linear-gradient(135deg, #f4845f, #e87fa0, #a0406a, #6b3fa0, #f5c842)",
+        "primary": "#f5c842",
+        "textOnCard": ""
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "petals",
+          "count": 10
+        },
+        {
+          "type": "sparkles",
+          "count": 12
+        }
+      ],
+      "hasFlipBack": true,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "typewriter": {
+      "id": "typewriter",
+      "title": "亲笔信笺",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "见字如面，展信安好。\\n有些话平时不好意思说，就让这封信替我开口吧。",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "radial-gradient(ellipse at 30% 20%, rgba(220,180,120,0.12) 0%, transparent 50%)",
+        "borderGradient": "",
+        "primary": "#2a1e10",
+        "textOnCard": "#2a1e10"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "feathers",
+          "count": 10
+        },
+        {
+          "type": "sparkles",
+          "count": 12
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "valentine": {
+      "id": "valentine",
+      "title": "情人节",
+      "ogEmoji": "💝",
+      "icon": "💝",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿爱与温柔永远伴你左右",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #1a0510 0%, #3d0a20 40%, #6b1a35 100%)",
+        "borderGradient": "linear-gradient(135deg, #e91e63, #f48fb1, #e91e63, #c2185b)",
+        "primary": "transparent",
+        "textOnCard": "#880e4f"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "hearts",
+          "count": 10
+        },
+        {
+          "type": "petals",
+          "count": 18
+        },
+        {
+          "type": "sparkles",
+          "count": 30
+        }
+      ],
+      "hasFlipBack": true,
+      "hasAge": false,
+      "hasDate": false,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "vintage": {
+      "id": "vintage",
+      "title": "复古剪贴簿",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿时光温柔以待",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "#f4ede0",
+        "borderGradient": "linear-gradient(135deg, #c8a870, #8b6914, #c8a870, #a07830, #c8a870)",
+        "primary": "#2c1810",
+        "textOnCard": "#3d2817"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "wedding": {
+      "id": "wedding",
+      "title": "婚礼祝福",
+      "ogEmoji": "💍",
+      "icon": "💍",
+      "defaultName": "",
+      "defaultBlessing": "",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #fdf6ee 0%, #f5e6d3 40%, #edd9c0 100%)",
+        "borderGradient": "linear-gradient(135deg, #d4a843, #f0d080, #d4a843, #e8c860, #d4a843)",
+        "primary": "#5a3800",
+        "textOnCard": "rgba(100,75,30,0.88)"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "petals",
+          "count": 14
+        },
+        {
+          "type": "sparkles",
+          "count": 18
+        }
+      ],
+      "hasFlipBack": true,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "winter": {
+      "id": "winter",
+      "title": "冬日暖雪",
+      "ogEmoji": "❄️",
+      "icon": "❄️",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿你的冬天温暖如初雪般纯净美好",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "radial-gradient(ellipse at 50% 0%, #1b3a5c 0%, #0d1b2a 50%, #060e18 100%)",
+        "borderGradient": "linear-gradient(135deg, #a8d0e6, #c8e8f8, #ffd194, var(--frost-blue))",
+        "primary": "#e8f4fc",
+        "textOnCard": "#d0e8f8"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "snowflakes",
+          "count": 10
+        },
+        {
+          "type": "stars",
+          "count": 35
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "wish": {
+      "id": "wish",
+      "title": "许愿星",
+      "ogEmoji": "💌",
+      "icon": "⭐",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿你的愿望都能成真\\n愿星光照亮你前行的路",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(160deg, #030912 0%, #0a1635 50%, #05102a 100%)",
+        "borderGradient": "linear-gradient(135deg, #c8a8ff, #9b6fdf, #c8a8ff, #b090f0, #c8a8ff)",
+        "primary": "transparent",
+        "textOnCard": "rgba(220,210,255,0.9)"
+      },
+      "layout": [
+        "icon",
+        "title",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [
+        {
+          "type": "stars",
+          "count": 56
+        }
+      ],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": true
+    },
+    "wishpond": {
+      "id": "wishpond",
+      "title": "许愿池畔",
+      "ogEmoji": "💌",
+      "icon": "🌹",
+      "defaultName": "亲爱的",
+      "defaultBlessing": "愿你许下的愿望都能成真",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #87ceeb 0%, #b8d4e3 30%, #d4c4a8 60%, #c8b88a 100%)",
+        "borderGradient": "",
+        "primary": "#f0e6d3",
+        "textOnCard": "rgba(240,230,211,0.9)"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    },
+    "wisteria": {
+      "id": "wisteria",
+      "title": "紫藤花语祝福",
+      "ogEmoji": "💌",
+      "icon": "💌",
+      "defaultName": "亲爱的你",
+      "defaultBlessing": "愿时光温柔，愿你被世界温柔以待",
+      "defaultFrom": "",
+      "fontFamily": "serif",
+      "theme": {
+        "bgGradient": "linear-gradient(180deg, #f5e6f0 0%, #e8d0e0 25%, #dcc0d8 50%, #d4b8d0 75%, #c9a0b5 100% )",
+        "borderGradient": "linear-gradient(135deg, #9b6d9e, var(--wisteria-pink), #e8d0e0, var(--wisteria-purple))",
+        "primary": "#6b3a6b",
+        "textOnCard": "#9b6d9e"
+      },
+      "layout": [
+        "icon",
+        "name",
+        "date",
+        "blessing",
+        "from"
+      ],
+      "particles": [],
+      "hasFlipBack": false,
+      "hasAge": false,
+      "hasDate": true,
+      "hasFrom": true,
+      "hasTitle": false
+    }
+  }
+}

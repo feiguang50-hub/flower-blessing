@@ -13,7 +13,7 @@
 
 ### 在线使用
 
-打开 [`index.html`](./index.html)，选择主题、填写姓名/祝福/署名，点"生成链接"即可。
+打开 [`index.html`](./index.html)，可搜索或分类浏览全部 159 个场景，填写姓名/祝福/署名后预览并分享。新链接统一使用 `card.html?scene=<id>`；原有 `card-<scene>.html` 链接继续兼容。
 
 ### 本地预览
 
@@ -29,13 +29,15 @@ python -m http.server 8000
 
 ```
 flower-blessing/
-├── index.html              # 卡片生成器（表单 UI）
+├── index.html              # 159 场景卡片生成器（搜索、填写、预览与分享）
 ├── card.html               # 通用渲染模板（被所有场景共享）
 ├── config.js               # 主题配置（生成器侧）
 ├── assets/
 │   ├── scenes.json         # 159 个场景的视觉配置
+│   ├── css/generator.css   # 生成器界面样式
 │   ├── css/card-base.css   # 基础样式
 │   └── js/
+│       ├── generator.js    # 生成器交互与统一链接生成
 │       ├── card.js         # 主渲染逻辑
 │       └── particles.js    # 粒子效果工厂
 ├── lib/                    # Three.js（3D demo 使用）

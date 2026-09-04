@@ -99,7 +99,7 @@
     }
 
     // 7. 翻转卡片
-    if (scene.flipBack) {
+    if (scene.hasFlipBack) {
       const wrap = document.getElementById('cardWrap');
       wrap.classList.add('flippable');
       wrap.addEventListener('click', () => {
@@ -164,7 +164,7 @@
     if (t.fontFamily)        vars.push(`--font-display: ${t.fontFamily};`);
     let css = `:root{${vars.join('')}}`;
     if (t.cardBgBlur !== false) css += `.card{backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}`;
-    if (scene.flipBack) css += `.card-wrap.flippable{cursor:pointer;}`;
+    if (scene.hasFlipBack) css += `.card-wrap.flippable{cursor:pointer;}`;
     return css;
   }
 

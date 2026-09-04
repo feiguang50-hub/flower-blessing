@@ -36,6 +36,12 @@ if (!script.includes("flipBack.removeAttribute('hidden')")) {
 if (!scenes.scenes || Object.keys(scenes.scenes).length === 0) {
   throw new Error('assets/scenes.json 中没有可用场景');
 }
+if (script.includes('scene.flipBack')) {
+  throw new Error('渲染器必须使用场景契约字段 hasFlipBack');
+}
+if (!script.includes('scene.hasFlipBack')) {
+  throw new Error('渲染器没有读取场景契约字段 hasFlipBack');
+}
 
 console.log(
   `card contract OK: ${targets.size} 个绑定目标，` +

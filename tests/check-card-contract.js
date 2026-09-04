@@ -42,6 +42,9 @@ if (script.includes('scene.flipBack')) {
 if (!script.includes('scene.hasFlipBack')) {
   throw new Error('渲染器没有读取场景契约字段 hasFlipBack');
 }
+if (!script.includes('location.hash')) {
+  throw new Error('渲染器不支持隐私友好的 URL 片段参数');
+}
 if (!script.includes('normalizeBreaks(scene.defaultBlessing')) {
   throw new Error('渲染器没有兼容旧场景中的 HTML 换行');
 }

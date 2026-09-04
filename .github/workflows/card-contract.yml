@@ -17,3 +17,4 @@ jobs:
         with:
           node-version: 22
       - run: node tests/check-card-contract.js
+      - run: node tests/check-generator-contract.js

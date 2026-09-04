@@ -61,7 +61,7 @@
     setText('nameEl', nameInput || scene.defaultName || '');
     setText('ageEl', computeAge(dateInput) || '');
     setText('dateEl', dateInput || scene.defaultDate || '');
-    setText('blessingEl', blessingInput || scene.defaultBlessing || '');
+    setText('blessingEl', blessingInput !== null ? blessingInput : normalizeBreaks(scene.defaultBlessing || ''));
     const from = fromInput || scene.defaultFrom || '';
     setText('fromEl', from ? '— ' + from : '');
     setText('trailing', scene.trailing || '');
@@ -181,6 +181,10 @@
     if (!gradient) return null;
     const m = String(gradient).match(/#[0-9a-fA-F]{3,8}/);
     return m ? m[0] : null;
+  }
+
+  function normalizeBreaks(text) {
+    return String(text || '').replace(/<br\s*\/?\s*>/gi, '\n');
   }
 
   // 暴露给调试

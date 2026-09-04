@@ -42,6 +42,9 @@ if (script.includes('scene.flipBack')) {
 if (!script.includes('scene.hasFlipBack')) {
   throw new Error('渲染器没有读取场景契约字段 hasFlipBack');
 }
+if (!script.includes('normalizeBreaks(scene.defaultBlessing')) {
+  throw new Error('渲染器没有兼容旧场景中的 HTML 换行');
+}
 
 console.log(
   `card contract OK: ${targets.size} 个绑定目标，` +

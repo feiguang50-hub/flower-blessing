@@ -7,7 +7,7 @@
   'use strict';
 
   // === URL 参数 ===
-  const params = new URLSearchParams(location.search);
+  const params = new URLSearchParams(location.hash.length > 1 ? location.hash.slice(1) : location.search);
   const sceneId = params.get('scene') || guessScene();
   const nameInput = params.get('n');
   const blessingInput = params.get('b');

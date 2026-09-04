@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="zh-CN"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#09090f"><meta name="description" content="从 159 种场景中制作可分享的动态祝福卡片。">
-<title>Flower Blessing · 定制祝福卡</title><link rel="stylesheet" href="assets/css/generator.css?v=3">
+<meta name="theme-color" content="#09090f"><meta name="description" content="从 159 种动态场景中挑选心意，制作一张真正属于你的祝福卡。">
+<title>Flower Blessing · 定制祝福卡</title><link rel="stylesheet" href="assets/css/generator-v4.css?v=4">
 </head><body>
 <div class="ambient" aria-hidden="true"></div>
 <header><a class="brand" href="./"><b>✦</b><span><strong>FLOWER</strong><small>BLESSING</small></span></a><span class="count" id="sceneCount">载入中…</span></header>
@@ -12,7 +12,9 @@
   <nav class="steps"><button class="active" data-step="1"><b>1</b>选择场景</button><i></i><button data-step="2"><b>2</b>填写祝福</button><i></i><button data-step="3"><b>3</b>预览分享</button></nav>
   <section class="panel active" id="panel1"><div class="heading"><div><p>STEP 01</p><h2>这次想表达什么？</h2></div></div>
     <label class="search"><span>⌕</span><input id="sceneSearch" type="search" placeholder="搜索生日、毕业、感谢、节日……"></label>
-    <div class="filters" id="filters"></div><div class="scene-grid" id="sceneGrid"></div><p class="empty" id="emptyState" hidden>没有找到匹配的场景，换个词试试。</p>
+    <div class="filters" id="filters"></div>
+    <div class="collection-head"><span id="collectionTitle">为你精选</span><button class="link" id="toggleAll">查看全部 159 种</button></div>
+    <div class="scene-grid" id="sceneGrid"></div><p class="empty" id="emptyState" hidden>没有找到匹配的场景，换个词试试。</p>
     <button class="primary wide" id="toDetails">下一步 · 写下祝福</button>
   </section>
   <section class="panel" id="panel2"><div class="heading"><div><p>STEP 02</p><h2>写下你的心意</h2></div><button class="link" data-go="1">重新选场景</button></div>
@@ -22,7 +24,7 @@
       <label class="full"><span>祝福语</span><textarea id="blessingInput" maxlength="160" rows="4" placeholder="写下你真正想说的话"></textarea><small id="wordCount">0 / 160</small></label>
       <label><span>日期 <em>选填</em></span><input id="dateInput" type="date"></label>
       <label id="backField"><span>翻面惊喜 <em>选填</em></span><input id="backInput" maxlength="80" placeholder="点击卡片后显示的话"></label>
-    </div><p class="privacy">◌ 姓名和祝福会写在分享网址中，请勿填写联系方式等敏感信息。</p>
+    </div><p class="privacy">◌ 姓名和祝福仅保存在链接的本地片段中，不会随页面请求发送；收到链接的人仍可看到，请勿填写敏感信息。</p>
     <div class="actions"><button class="secondary" data-go="1">上一步</button><button class="primary" id="toPreview">预览贺卡</button></div>
   </section>
   <section class="panel" id="panel3"><div class="heading"><div><p>STEP 03</p><h2>完成，看看效果</h2></div><button class="link" data-go="2">修改内容</button></div>
@@ -31,4 +33,4 @@
     <div class="actions"><button class="secondary" id="makeAnother">再做一张</button><button class="primary" id="shareButton">分享贺卡</button></div>
   </section>
 </section></main><div class="toast" id="toast" role="status"></div><footer>FLOWER BLESSING · OPEN SOURCE UNDER MIT</footer>
-<script src="assets/js/generator.js?v=3"></script></body></html>
+<script src="assets/js/generator.js?v=4"></script></body></html>

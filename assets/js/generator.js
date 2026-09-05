@@ -8,9 +8,9 @@ const groups=[
  ['心意',['thank','apology','friendship','missyou','recovery','cheer','goodluck','wish']],
  ['风景氛围',['sakura','star','moon','snow','rain','ocean','garden','sunset','sunrise','aurora','beach']]
 ];
-const state={scenes:{},selected:'birthday',filter:'精选',query:'',showAll:false};
+const state={scenes:{},selected:'birthday',filter:'精选',query:'',showAll:false,drafts:{},initialized:false};
 const $=id=>document.getElementById(id);
-const plain=v=>String(v||'').replace(/<br\s*\/?\s*>/gi,'\n');
+const plain=v=>String(v||'').replace(/\\n/g,'\n').replace(/<br\s*\/?\s*>/gi,'\n');
 const norm=v=>plain(v).toLowerCase().replace(/\s+/g,'');
 const esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const styleNames={birthday:'经典烛光',cake:'奶油蛋糕','children-birthday':'童趣派对',demo:'简约光影',full:'星空信笺',template:'暖金生日',bubble:'梦幻渐变',dreambubble:'轻盈泡泡',garden:'玫瑰夜色',rosegarden:'盛放玫瑰',sakura:'花瓣祝福',sakurapromise:'树下约定'};
@@ -23,10 +23,11 @@ fetch('assets/scenes.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('HT
 }).catch(e=>{$('sceneCount').textContent='载入失败';$('sceneGrid').innerHTML='<p class="empty">场景配置载入失败，请刷新重试。</p>';console.error(e)});
 
 function bind(){
- $('sceneSearch').addEventListener('input',e=>{state.query=norm(e.target.value);state.showAll=!!state.query;scenes()});
- $('toggleAll').addEventListener('click',()=>{state.showAll=!state.showAll;state.filter=state.showAll?'全部':'精选';filters();scenes()});
+ $('sceneSearch').addEventListener('input',e=>{state.query=norm(e.target.value);scenes()});
+ $('toggleAll').addEventListener('click',()=>{state.showAll=state.filter==='精选';state.filter=state.showAll?'全部':'精选';filters();scenes()});
  $('toDetails').addEventListener('click',()=>go(2));$('toPreview').addEventListener('click',preview);
  $('blessingInput').addEventListener('input',()=>{$('wordCount').textContent=$('blessingInput').value.length+' / 160'});
+ document.querySelectorAll('[data-step]').forEach(b=>b.addEventListener('click',()=>+b.dataset.step===3?preview():go(+b.dataset.step)));
  document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(+b.dataset.go)));
  $('copyButton').addEventListener('click',copy);$('shareButton').addEventListener('click',share);$('makeAnother').addEventListener('click',reset);
 }
@@ -44,7 +45,7 @@ function category(id,s){
 }
 function descriptor(id,s){return styleNames[id]||(s.hasFlipBack?'可翻面互动':'动态场景')}
 function scenes(){
- let list=Object.entries(state.scenes).filter(([id,s])=>category(id,s)&&(!state.query||norm(id+' '+s.title+' '+s.defaultBlessing+' '+descriptor(id,s)).includes(state.query)));
+ let list=Object.entries(state.scenes).filter(([id,s])=>state.query?norm(id+' '+s.title+' '+s.defaultBlessing+' '+descriptor(id,s)).includes(state.query):category(id,s));
  if(state.filter==='精选'&&!state.query){const rank=[...recentIds(),...featuredIds];list.sort((a,b)=>rank.indexOf(a[0])-rank.indexOf(b[0]))}
  $('emptyState').hidden=!!list.length;
  $('collectionTitle').textContent=state.query?`找到 ${list.length} 个场景`:state.filter==='精选'?(recentIds().length?'最近使用与精选':'为你精选'):`${state.filter} · ${list.length} 种`;
@@ -55,17 +56,18 @@ function scenes(){
  $('sceneGrid').querySelectorAll('button').forEach(b=>b.onclick=()=>select(b.dataset.scene));
 }
 function select(id,track=true){
+ if(state.initialized)state.drafts[state.selected]={blessing:$('blessingInput').value,back:$('backInput').value};
  state.selected=id;if(track)remember(id);scenes();const s=state.scenes[id];if(!s)return;
  $('selectedScene').innerHTML=`<b>${esc(s.icon||s.ogEmoji||'💌')}</b><span><strong>${esc(s.title||id)}</strong><small>${esc(descriptor(id,s))} · 可随时更换</small></span>`;
- $('blessingInput').value=plain(s.defaultBlessing);$('wordCount').textContent=$('blessingInput').value.length+' / 160';
+ const draft=state.drafts[id];$('blessingInput').value=draft?draft.blessing:plain(s.defaultBlessing);$('backInput').value=draft?draft.back:'';state.initialized=true;$('wordCount').textContent=$('blessingInput').value.length+' / 160';
  $('backField').hidden=!s.hasFlipBack;if(!s.hasFlipBack)$('backInput').value='';
 }
 function go(n){document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id==='panel'+n));document.querySelectorAll('.steps button').forEach((b,i)=>{b.classList.toggle('active',i+1===n);b.classList.toggle('done',i+1<n)});window.scrollTo({top:document.querySelector('.builder').offsetTop-15,behavior:'smooth'})}
-function url(){const p=new URLSearchParams({scene:state.selected});[['n',$('nameInput').value.trim()],['b',$('blessingInput').value.trim()],['f',$('fromInput').value.trim()],['d',$('dateInput').value],['back',$('backInput').value.trim()]].forEach(([k,v])=>{if(v)p.set(k,v)});return new URL('card.html#'+p,location.href).href}
-function preview(){if(!$('nameInput').value.trim()){$('nameInput').focus();toast('请先填写收卡人');return}const u=url();$('resultUrl').value=u;$('cardPreview').src=u;remember(state.selected);go(3)}
+function url(){const p=new URLSearchParams({scene:state.selected});[['n',$('nameInput').value.trim()],['b',$('blessingInput').value.trim()],['f',$('fromInput').value.trim()],['d',$('dateInput').value],['back',$('backInput').value.trim()]].forEach(([k,v])=>{if(v||k==='b'||k==='f')p.set(k,v)});return new URL('card.html#'+p,location.href).href}
+function preview(){if(!$('nameInput').value.trim()){go(2);$('nameInput').focus();toast('请先填写收卡人');return}if(!$('blessingInput').value.trim()){go(2);$('blessingInput').focus();toast('写一句祝福，再送出这张卡吧');return}const u=url();$('resultUrl').value=u;const frame=$('cardPreview').cloneNode(false);frame.src=u;$('cardPreview').replaceWith(frame);remember(state.selected);go(3)}
 function copy(){const t=$('resultUrl').value;if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(t).then(()=>toast('链接已复制')).catch(fallback);else fallback()}
-function fallback(){const i=$('resultUrl');i.focus();i.select();try{document.execCommand('copy');toast('链接已复制')}catch(e){toast('请长按链接复制')}}
-function share(){const u=$('resultUrl').value,s=state.scenes[state.selected]||{};if(navigator.share)navigator.share({title:s.title||'专属祝福卡',text:'送你一张专属祝福卡',url:u}).catch(()=>{});else copy()}
-function reset(){['nameInput','fromInput','dateInput','backInput'].forEach(id=>$(id).value='');state.query='';state.filter='精选';state.showAll=false;$('sceneSearch').value='';select(state.scenes.birthday?'birthday':Object.keys(state.scenes)[0],false);filters();go(1)}
+function fallback(){const i=$('resultUrl');i.focus();i.select();try{if(!document.execCommand('copy'))throw Error('copy failed');toast('链接已复制')}catch(e){toast('请长按链接复制')}}
+function share(){const u=$('resultUrl').value,s=state.scenes[state.selected]||{};if(navigator.share)navigator.share({title:s.title||'专属祝福卡',text:'送你一张专属祝福卡',url:u}).catch(e=>{if(e.name!=='AbortError')copy()});else copy()}
+function reset(){state.drafts={};state.initialized=false;['nameInput','fromInput','dateInput','backInput'].forEach(id=>$(id).value='');state.query='';state.filter='精选';state.showAll=false;$('sceneSearch').value='';select(state.scenes.birthday?'birthday':Object.keys(state.scenes)[0],false);filters();go(1)}
 function toast(t){const el=$('toast');el.textContent=t;el.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove('show'),1800)}
 })();

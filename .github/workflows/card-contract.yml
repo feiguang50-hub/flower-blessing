@@ -15,6 +15,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
       - run: node tests/check-card-contract.js
       - run: node tests/check-generator-contract.js
+
+      - run: npm install --prefix /tmp/flower-test jsdom@30.0.1 --no-audit --no-fund
+      - run: NODE_PATH=/tmp/flower-test/node_modules node tests/interaction.cjs

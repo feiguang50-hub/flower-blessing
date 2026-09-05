@@ -6,6 +6,8 @@
 (function () {
   'use strict';
 
+  window.addEventListener('hashchange', () => location.reload());
+
   // === URL 参数 ===
   const params = new URLSearchParams(location.hash.length > 1 ? location.hash.slice(1) : location.search);
   const sceneId = params.get('scene') || guessScene();
@@ -62,7 +64,7 @@
     setText('ageEl', computeAge(dateInput) || '');
     setText('dateEl', dateInput || scene.defaultDate || '');
     setText('blessingEl', blessingInput !== null ? blessingInput : normalizeBreaks(scene.defaultBlessing || ''));
-    const from = fromInput || scene.defaultFrom || '';
+    const from = fromInput !== null ? fromInput : scene.defaultFrom || '';
     setText('fromEl', from ? '— ' + from : '');
     setText('trailing', scene.trailing || '');
     setText('backEl', backInput || scene.defaultBack || '点击卡片\n翻开惊喜');
@@ -72,7 +74,7 @@
     toggleVisible('title-el', !!(scene.titleEl || (scene.title && scene.title !== scene.ogEmoji)));
     toggleVisible('age-row', scene.layout && scene.layout.includes('age'));
     toggleVisible('date', scene.layout && scene.layout.includes('date'));
-    toggleVisible('from', !!(fromInput || scene.defaultFrom));
+    toggleVisible('from', !!from);
     toggleVisible('trailing', !!scene.trailing);
 
     // 5. 背景层（极光 / 网格 / 纯色）
@@ -102,11 +104,17 @@
     if (scene.hasFlipBack) {
       const wrap = document.getElementById('cardWrap');
       wrap.classList.add('flippable');
-      wrap.addEventListener('click', () => {
+      const openButton = document.getElementById('openBack');
+      openButton.hidden = false;
+      openButton.addEventListener('click', () => {
         const flipBack = document.getElementById('flipBack');
         flipBack.removeAttribute('hidden');
         flipBack.classList.add('shown');
+        document.getElementById('closeBack').focus();
       });
+      const close = () => {const overlay=document.getElementById('flipBack');overlay.hidden=true;overlay.classList.remove('shown');openButton.focus()};
+      document.getElementById('closeBack').addEventListener('click', close);
+      document.getElementById('flipBack').addEventListener('keydown', e => {if(e.key==='Escape')close();if(e.key==='Tab'){e.preventDefault();document.getElementById('closeBack').focus()}});
     }
   }
 
@@ -184,7 +192,7 @@
   }
 
   function normalizeBreaks(text) {
-    return String(text || '').replace(/<br\s*\/?\s*>/gi, '\n');
+    return String(text || '').replace(/\\n/g,'\n').replace(/<br\s*\/?\s*>/gi, '\n');
   }
 
   // 暴露给调试

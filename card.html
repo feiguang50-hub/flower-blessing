@@ -12,7 +12,7 @@
 <meta name="twitter:title" data-bind="og-title" content="贺卡">
 <meta name="twitter:description" content="点击打开，你们的专属回忆在里面哦">
 
-<link rel="stylesheet" href="assets/css/card-base.css">
+<link rel="stylesheet" href="assets/css/card-base.css?v=5">
 
 <style data-bind="theme-css"></style>
 </head>
@@ -36,16 +36,18 @@
     <div class="from" id="fromEl" data-bind="from" hidden></div>
     <div class="card-trailing" data-bind="trailing" hidden></div>
   </div>
+<button id="openBack" class="card-action" hidden>还有一句话，想告诉你 ↗</button>
 </div>
 
 <!-- Flip-back card (used by flip-card scenes like valentine) -->
-<div class="flip-back-overlay" id="flipBack" hidden>
+<div class="flip-back-overlay" id="flipBack" role="dialog" aria-modal="true" aria-label="翻面惊喜" hidden>
   <div class="flip-back-card">
+    <button id="closeBack" class="card-action">返回贺卡 ×</button>
     <div class="flip-back-text" id="backEl">点击卡片<br>翻开惊喜</div>
   </div>
 </div>
 
 <script src="assets/js/particles.js"></script>
-<script src="assets/js/card.js"></script>
+<script src="assets/js/card.js?v=5"></script>
 </body>
 </html>
